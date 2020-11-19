@@ -1,2 +1,2 @@
-# Contributing to the cDataLib.
-Adding an [issue](https://github.com/Oblivious-Oblivious/cDataLib/issues)
+# Contributing to the cEmeralds.
+Adding an [issue](https://github.com/Oblivious-Oblivious/cEmeralds/issues)
