@@ -17,16 +17,16 @@
 *.pch
 
 # Libraries
-*.lib
-*.a
-*.la
-*.lo
+# *.lib
+# *.a
+# *.la
+# *.lo
 
 # Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+# *.dll
+# *.so
+# *.so.*
+# *.dylib
 
 # Executables
 *.exe
@@ -43,7 +43,7 @@
 *.pdb
 
 # Kernel Module Compile Results
-*.mod*
+# *.mod*
 *.cmd
 .tmp_versions/
 modules.order
