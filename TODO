@@ -1,0 +1,42 @@
+--> YAML CONFIG FILE <--
+
+name: testlib
+version: 0.1.0
+
+dependencies:
+    testdep1: Oblivious-Oblivious/testdep1
+    testdep2: Oblivious-Oblivious/testdep2
+
+license: GPLv3
+
+/* name, version, dependencies, license */
+
+
+
+--> EM COMMANDS <--
+
+em init [:name]
+    -> Generates a new em.yml file
+    -> Check for existence of :name directory
+    -> Generate the emfile, possibly git init as well
+
+em list
+    -> Lists installs dependencies
+    -> Reads the dependencies option and lists
+    -> Possibly notifies on which of them are installed or not
+    
+em install
+    -> Resolves and install dependencies
+    -> Cross check for existence of emfiles according to the libs' em.yml
+    -> Grab from public git repositories
+    -> Resolve into a `libs` directory
+
+em build [lib | app]
+    -> Compiles dependencies into shared libraries
+    -> For a lib it creates a shared library
+    -> For an app it compiles everything into a single executable
+    -> The result is saved in an `export` directory
+
+em version
+    -> Shows the version of an emerald
+    -> Reads the version option of the em.yml
