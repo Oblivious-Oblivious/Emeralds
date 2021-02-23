@@ -16,7 +16,7 @@
 struct read_handler {
     FILE *fd;
     char *filepath;
-} read_handler;
+};
 
 /**
  * @func: read_handler_new

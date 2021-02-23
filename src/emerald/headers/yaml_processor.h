@@ -2,11 +2,10 @@
 #define __YAML_PROCESSOR_H_
 
 #include "vector.h"
-#include "string.h"
 
 struct yaml_processor {
     char *filename;
-} yaml_processor;
+};
 
 /**
  * @func: yaml_processor_new

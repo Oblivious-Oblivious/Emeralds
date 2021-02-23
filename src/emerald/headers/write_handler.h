@@ -15,7 +15,7 @@
 struct write_handler {
     FILE *fd;
     char *filepath;
-} write_handler;
+};
 
 /**
  * @func: write_handler_new
