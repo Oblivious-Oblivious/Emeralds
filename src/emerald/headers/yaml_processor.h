@@ -12,4 +12,11 @@
  */
 vector *get_dependencies_from_yaml(void);
 
+/**
+ * @func: get_version_from_yaml
+ * @brief Read the version field from the yaml file
+ * @return string* -> The version as a string object
+ */
+string *get_version_from_yaml(void);
+
 #endif

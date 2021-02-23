@@ -80,5 +80,5 @@ bool compile_as_library(void) {
 }
 
 char *get_em_version(void) {
-    return string_get(string_new("cEmeralds: 0.1.0"));
+    return string_get(get_version_from_yaml());
 }

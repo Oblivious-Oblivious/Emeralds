@@ -36,7 +36,6 @@ default:
 	$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT)
 	$(RM) -r export && mkdir export
 	mv $(OUTPUT) export/
-	./export/$(OUTPUT)
 
 run: default
 

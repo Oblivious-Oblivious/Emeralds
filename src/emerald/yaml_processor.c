@@ -24,3 +24,21 @@ vector *get_dependencies_from_yaml(void) {
 
     return deps;
 }
+
+string *get_version_from_yaml(void) {
+    char *line;
+    string *version;
+
+    struct read_handler *h = read_handler_new();
+    if(!read_handler_open(h, "em.yml")) return string_new("Error on reading version!");
+
+    /* Skip to the version part */
+    while((line = read_handler_read_line(h))) {
+        version = string_new(line);
+        
+        string *l = string_substring(version, 0, 7);
+        if(!strcmp(string_get(l), "version:")) break;
+    }
+
+    return version;
+}
