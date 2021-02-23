@@ -7,5 +7,6 @@
 #include "emerald/headers/vector.h"
 #include "emerald/headers/command_processor.h"
 #include "emerald/headers/yaml_processor.h"
+#include "emerald/headers/os_definitions.h"
 
 #endif

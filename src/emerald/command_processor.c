@@ -1,19 +1,28 @@
 #include "headers/command_processor.h"
-#include "headers/string.h"
 
 char *initialize_em_library(char *name) {
     printf("Initializing a new emerald with name `%s`\n", name);
 
+    make_directory(name);
     struct write_handler *h = write_handler_new();
 
     /* Overrides any previous instance with the same name */
-    if(!write_handler_open(h, name)) return "Error on openning file";
+    string *str = string_new(name);
+    string_add_str(str, "/em.yml");
+    char *filepath = string_get(str);
+    if(!write_handler_open(h, filepath)) return "Error on openning file";
     
     if(!write_handler_write(h, "name: ")) return "Error on writing data to file";
     if(!write_handler_write(h, name)) return "Error on writing the name of the library";
     if(!write_handler_write(h, "\nversion: 0.1.0\n\ndependencies:\n\nlicense: GPLv3\n")) return "Error on writing data to file";
+    if(!write_handler_close(h)) return "Error on closing the file";
 
     /* TODO -> GENERATE A GIT FILE AS WELL */
+    str = string_new(name);
+    string_add_str(str, "/.gitignore");
+    char *git_filepath = string_get(str);
+    if(!write_handler_open(h, git_filepath)) return "Error on openning file";
+    if(!write_handler_close(h)) return "Error on openning file";
 
     /* Successful creation */
     return name;

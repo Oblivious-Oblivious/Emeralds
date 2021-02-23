@@ -3,6 +3,7 @@
 
 #include "write_handler.h"
 #include "yaml_processor.h"
+#include "directories.h"
 
 #include "vector.h"
 #include "string.h"
