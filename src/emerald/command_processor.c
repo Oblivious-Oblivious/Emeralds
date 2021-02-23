@@ -1,5 +1,23 @@
 #include "headers/command_processor.h"
 
+static void list_deps(string *dep) {
+    /* Skip empty lines */
+    if(!strcmp(string_get(dep), "")) return;
+
+    /* Remove the first 2 spaces */
+    string_skip(dep, 2);
+    printf("%s\n", string_get(dep));
+}
+
+static void install_deps(string *dep) {
+    /* Skip empty lines */
+    if(!strcmp(string_get(dep), "")) return;
+
+    /* Remove the first 2 spaces */
+    string_skip(dep, 2);
+    printf("Installing `%s` ...\n", string_get(dep));
+}
+
 char *initialize_em_library(char *name) {
     printf("Initializing a new emerald with name `%s`\n", name);
 
@@ -28,17 +46,27 @@ char *initialize_em_library(char *name) {
     return name;
 }
 
-vector *get_dependencies(void) {
+size_t get_dependencies(void) {
     printf("Listing dependencies...\n");
 
-    /* TODO -> OPTIMIZE REPETITION */
-    struct yaml_processor *y = yaml_processor_new("test");
-    return get_dependencies_from_yaml(y);
+    vector *deps = get_dependencies_from_yaml();
+    vector_map(deps, (vector_lambda)list_deps);
+
+    return vector_length(deps);
 }
 
 bool install_dependencies(void) {
     printf("Installing dependencies...\n");
-    return false;
+
+    make_directory("libs");
+
+    vector *deps = get_dependencies_from_yaml();
+    if(vector_length(deps) == 0)
+        return false;
+    else
+        vector_map(deps, (vector_lambda)install_deps);
+    
+    return true;
 }
 
 bool compile_as_executable(void) {

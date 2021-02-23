@@ -19,9 +19,9 @@ char *initialize_em_library(char *name);
 /**
  * @func: get_dependencies
  * @brief Get the list of dependencies from the yaml file in a vector
- * @return vector* -> The created list
+ * @return size_t -> The length of the dependencies vector
  */
-vector *get_dependencies(void);
+size_t get_dependencies(void);
 
 /**
  * @func: install_dependencies
