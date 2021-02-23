@@ -1,14 +1,7 @@
-#MODE = run
-#MODE = build
-#MODE = spec
-#MODE = init
-
-INPUT = src/emerald.c
-
-CC = clang
+CC = gcc
 OPT = -O2
 VERSION = -std=c11
-OUTPUT = emerald
+OUTPUT = em
 
 FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
 WARNINGS = -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-macro-redefined
@@ -17,10 +10,20 @@ REMOVE_WARNNINGS =
 HEADERS =
 LIBS =
 
+INPUT = src/emerald.c \
+		src/emerald/string.c \
+		src/emerald/vector.c \
+		src/emerald/read_handler.c \
+		src/emerald/write_handler.c \
+		src/emerald/yaml_processor.c \
+		src/emerald/command_processor.c
+
 TESTFILES = sources/emerald/string.c \
 			sources/emerald/vector.c \
 			sources/emerald/read_handler.c \
-			sources/emerald/write_handler.c
+			sources/emerald/write_handler.c \
+			sources/emerald/yaml_processor.c \
+			sources/emerald/command_processor.c
 
 TESTINPUT = emerald.spec.c
 TESTOUTPUT = specs_results
@@ -50,4 +53,5 @@ clean:
 	$(RM) -r spec/$(TESTOUTPUT)
 	$(RM) -r spec/sources
 	$(RM) -r export
+	$(RM) spec/a.out
 
