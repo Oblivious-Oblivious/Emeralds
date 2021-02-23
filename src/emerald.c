@@ -1,9 +1,5 @@
 #include "emerald.h"
 
-void print_strings(void *item) {
-    printf("%s\n", (char*)item);
-}
-
 void usage(void) {
     printf("%s\n", "Usage.");
     exit(1);
@@ -21,7 +17,7 @@ int main(int argc, char **argv) {
         initialize_em_library(name);
     }
     else if(!strcmp(action, "list"))
-        vector_map(get_dependencies(), (vector_lambda)print_strings);
+        get_dependencies();
     else if(!strcmp(action, "install"))
         install_dependencies();
     else if(!strcmp(action, "build")) {
