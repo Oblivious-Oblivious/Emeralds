@@ -7,6 +7,8 @@
 #include "standard_string.h" /* strlen, strcmp, memmove */
 #include "standard_boolean.h"
 
+#include "vector.h"
+
 /** The initial minimum size of a string **/
 static const size_t string_init_capacity = 32;
 
@@ -140,6 +142,23 @@ size_t string_length(string *sb);
  * @return A boolean signaling if the strings are equal
  **/
 unsigned char string_equals(string *sb, string *other);
+
+/**
+ * @func: string_dup
+ * @desc: Return a memory duplicate string
+ * @param sb -> The string to duplicate
+ * @return The dup string
+ **/
+string *string_dup(string *sb);
+
+/**
+ * @func: string_split
+ * @desc: Splits a string to a spesific delimeter
+ * @param str -> The string to split
+ * @param delimeter -> The string delimeter
+ * @return A vector with the string tokens
+ **/
+vector *string_split(string *str, string *delimeter);
 
 /**
  * @func: string_identifier
