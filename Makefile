@@ -1,7 +1,6 @@
 CC = clang
 OPT = -O2
 VERSION = -std=c11
-OUTPUT = em
 
 FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
 WARNINGS = -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-macro-redefined
@@ -10,23 +9,10 @@ REMOVE_WARNNINGS =
 HEADERS =
 LIBS =
 
-INPUT = src/emerald.c \
-		src/emerald/string.c \
-		src/emerald/vector.c \
-		src/emerald/read_handler.c \
-		src/emerald/write_handler.c \
-		src/emerald/yaml_processor.c \
-		src/emerald/command_processor.c \
-		src/emerald/directories.c
+INPUT = src/emerald.c src/emerald/*.c
+OUTPUT = em
 
-TESTFILES = sources/emerald/string.c \
-			sources/emerald/vector.c \
-			sources/emerald/read_handler.c \
-			sources/emerald/write_handler.c \
-			sources/emerald/yaml_processor.c \
-			sources/emerald/command_processor.c \
-			sources/emerald/directories.c
-
+TESTFILES = sources/emerald/*.c
 TESTINPUT = emerald.spec.c
 TESTOUTPUT = specs_results
 
