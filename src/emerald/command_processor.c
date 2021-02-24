@@ -1,4 +1,5 @@
 #include "headers/command_processor.h"
+#include "headers/string.h"
 
 static void list_deps(string *dep) {
     /* Skip empty lines */
@@ -15,7 +16,33 @@ static void install_deps(string *dep) {
 
     /* Remove the first 2 spaces */
     string_skip(dep, 2);
-    printf("Installing `%s` ...\n", string_get(dep));
+
+    /* Craft the github link */
+    string *library = string_new("https://github.com/");
+    vector *parts = string_split(dep, string_new(":"));
+    string *liblink = vector_get(parts, 1);
+    string_skip(liblink, 1); /* Remove trailing space */
+    string_add_str(library, string_get(liblink));
+
+    /* Create the directory to clone the dependencies at */
+    string *dep_path = string_new("libs/");
+    string_add_str(dep_path, string_get(vector_get(parts, 0)));
+    make_directory(string_get(dep_path));
+
+    /* Compile the deps */
+    string *command = string_new("git clone ");
+    string_add_str(command, string_get(library));
+
+    /* Execute git clone */
+    system(string_get(command));
+
+    /* Move to the libs library */
+    string *move_command = string_new("mv ");
+    string_add_str(move_command, string_get(vector_get(parts, 0)));
+    /* TODO -> FIX ADD STR SEEMS TO FAIL AT SMALL NAMES */
+    string_add_str(move_command, " libs/");
+    printf("move command: %s\n\n", string_get(move_command));
+    system(string_get(move_command));
 }
 
 char *initialize_em_library(char *name) {
@@ -69,6 +96,7 @@ bool install_dependencies(void) {
     return true;
 }
 
+/* TODO -> COMPLETE THE COMPILATION COMMANDS */
 bool compile_as_executable(void) {
     printf("Compiling as an executable...\n");
     return false;
