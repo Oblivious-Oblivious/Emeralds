@@ -25,7 +25,6 @@ typedef void* (*vector_lambda)();
  * @param length -> The total number of values
  **/
 typedef struct vector {
-    /* TODO -> USE A TYPED UNION INSTEAD OF VOID POINTERS */
     void **items;
     size_t alloced;
     size_t length;

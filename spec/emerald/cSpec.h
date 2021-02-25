@@ -1133,7 +1133,6 @@ static void cspec_export_to_xml(void) {
  * @desc: Export test results into a markdown file
  **/
 static void cspec_export_to_md(void) {
-    /* TODO COMPLETE EXPORTING TO MD */
 }
 
 /**
@@ -1141,7 +1140,6 @@ static void cspec_export_to_md(void) {
  * @desc: Export test results into an html file
  **/
 static void cspec_export_to_html(void) {
-    /* TODO COMPLETE EXPORTING TO HTML */
 }
 
 /**
@@ -1751,7 +1749,6 @@ define_assert_array(
  * @param actual -> The value passed by the user
  * @param expected -> The value `actual` is tested against
  **/
-/* TODO -> CONVERT FROM A BLOCK TO A FUNCTION */
 #define cspec_to_string_charptr_write(actual, expected) CSPEC_BLOCK( \
     cspec->current_actual = cspec_string_new(actual); \
     cspec->current_expected = cspec_string_new(expected); \
@@ -1919,7 +1916,6 @@ define_assert_array(
  * @param actual -> The value passed by the user
  * @param expected -> The value `actual` is tested against
  **/
-/* TODO -> CONVERT FROM A BLOCK TO A FUNCTION */
 #define cspec_to_string_double_write(actual, expected) CSPEC_BLOCK( \
     cspec->current_actual = cspec_string_new(""); \
     cspec->current_expected = cspec_string_new(""); \
@@ -2189,7 +2185,6 @@ define_assert_array(
  * @param actual -> The value passed by the user
  * @param expected -> The value `actual` is tested against
  **/
-/* TODO -> CONVERT FROM A BLOCK TO A FUNCTION */
 #define cspec_to_string_int_write(actual, expected) CSPEC_BLOCK( \
     cspec->current_actual = cspec_string_new(""); \
     cspec->current_expected = cspec_string_new(""); \

@@ -201,7 +201,6 @@ char *string_identifier(string *sb) {
 }
 
 void string_iterate(string *sb, string_lambda apply) {
-    /* TODO -> Convert check to asserts */
     if(sb == NULL || apply == NULL) return;
 
     char *sb_str = string_get(sb);
