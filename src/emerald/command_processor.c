@@ -178,17 +178,23 @@ char *initialize_em_library(char *name) {
     write_handler_close(h);
 
     /* Initialize a git directory */
-    system("git init .");
+    system("git init . >/dev/null 2>&1");
     string *move_git = string_new("mv .git ");
     string_add_str(move_git, name);
     string_add_str(move_git, "/");
+    string *git = string_new(name);
+    string_add_str(git, "/.git");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(git));
     system(string_get(move_git));
 
     /* wget a GPLv3 license */
-    system("wget https://www.gnu.org/licenses/gpl-3.0.txt");
+    system("wget https://www.gnu.org/licenses/gpl-3.0.txt >/dev/null 2>&1");
     string *move_license = string_new("mv gpl-3.0.txt ");
     string_add_str(move_license, name);
     string_add_str(move_license, "/LICENSE");
+    string *license = string_new(name);
+    string_add_str(license, "/LICENSE");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(license));
     system(string_get(move_license));
 
     /* TODO -> STRING BUILDER FAILS TO ADD ON UNKOWN CONDITIONS AS OF NOW */
