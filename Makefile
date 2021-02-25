@@ -1,3 +1,5 @@
+NAME = emerald
+
 CC = clang
 OPT = -O2
 VERSION = -std=c11
@@ -9,11 +11,11 @@ REMOVE_WARNNINGS =
 HEADERS =
 LIBS =
 
-INPUT = src/emerald.c src/emerald/*.c
+INPUT = src/$(NAME).c src/$(NAME)/*.c
 OUTPUT = em
 
-TESTFILES = sources/emerald/*.c
-TESTINPUT = emerald.spec.c
+TESTFILES = sources/$(NAME)/*.c
+TESTINPUT = $(NAME).spec.c
 TESTOUTPUT = specs_results
 
 all: default
@@ -40,5 +42,4 @@ clean:
 	$(RM) -r spec/$(TESTOUTPUT)
 	$(RM) -r spec/sources
 	$(RM) -r export
-	$(RM) spec/a.out
 
