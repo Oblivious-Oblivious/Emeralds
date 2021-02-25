@@ -3,13 +3,19 @@
 name: testlib
 version: 0.1.0
 
-dependencies:
+dependencies: # -> Git repositories
     testdep1: Oblivious-Oblivious/testdep1
     testdep2: Oblivious-Oblivious/testdep2
 
 license: GPLv3
 
-/* name, version, dependencies, license */
+install: make # -> Simple makefile
+install: clang src/lib.c src/lib/*.c # -> Custom command
+
+postinstall: em install # -> Recursively install dependencies
+portinstall: # -> No more dependencies to install
+
+/* name, version, dependencies, license, install, postinstall */
 
 
 
