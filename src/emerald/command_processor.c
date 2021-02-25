@@ -8,7 +8,8 @@ static void list_deps(string *dep) {
 
     /* Remove the first 2 spaces */
     string_skip(dep, 2);
-    printf("%s\n", string_get(dep));
+    vector *depname = string_split(dep, string_new("/"));
+    printf("  * %s\n", string_get(vector_get(depname, vector_length(depname) - 1)));
 }
 
 static void install_deps(string *dep) {
@@ -36,6 +37,7 @@ static void install_deps(string *dep) {
     string_add_str(command, string_get(library));
 
     /* Execute git clone */
+    printf("%sFetching%s %s\n", "\033[38;5;207m", "\033[0m", string_get(library));
     system(string_get(command));
 
     /* Move to the libs library */
@@ -56,6 +58,7 @@ char *initialize_em_library(char *name) {
     /* Write the em.yml file */
     string *str = string_new(name);
     string_add_str(str, "/em.yml");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(str));
     write_handler_open(h, string_get(str));
     write_handler_write(h, "name: ");
     write_handler_write(h, name);
@@ -65,17 +68,30 @@ char *initialize_em_library(char *name) {
     /* Write the makefile */
     str = string_new(name);
     string_add_str(str, "/Makefile");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(str));
     write_handler_open(h, string_get(str));
     write_handler_write(h, "NAME = ");
     write_handler_write(h, name);
     write_handler_write(h, "\n\nCC = clang\nOPT = -O2\nVERSION = -std=c11\n\nFLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\nWARNINGS = \nUNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi\nREMOVE_WARNINGS = \nLIBS = \n\nINPUT = src/$(NAME).c src/$(NAME)/*.c\nOUTPUT = $(NAME)\n\nTESTFILES = sources/$(NAME)/*.c\nTESTINPUT = $(NAME).spec.c\nTESTOUTPUT = spec_results\n\nall: default\n\ndefault:\n\t$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT)\n\t$(RM) -r export && mkdir export\n\tmv $(OUTPUT) export/\n\ntest:\n\tmkdir spec/sources/ && cp -r src/* spec/sources/\n\tcd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(TESTOUTPUT) $(TESTFILES) $(TESTINPUT)\n\t@echo\n\t./spec/$(TESTOUTPUT)\n\nspec: test\n\nclean:\n\t$(RM) -r spec/$(TESTOUTPUT)\n\t$(RM) -r spec/sources\n\t$(RM) -r export\n\n");
     write_handler_close(h);
 
-    /* Write the gitignore file */
+    /* Write the .gitignore file */
     str = string_new(name);
     string_add_str(str, "/.gitignore");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(str));
     write_handler_open(h, string_get(str));
-    /* TODO -> GENERATE .GIT OPTIONS */
+    write_handler_write(h, "#Prerequisites\n*.d\n\n# Object files\n*.o\n*.ko\n*.obj\n*.elf\n\n# Linker output\n*.ilk\n*.map\n*.exp\n\n# Precompiled Headers\n*.gch\n*.pch\n\n# Executables\n*.exe\n*.out\n*.app\n*.i*86\n*.x86_64\n*.hex\n\n# Debug files\n*.dSYM/\n*.su\n*.idb\n*.pdb\n\n# Kernel Module Compile Results\n# *.mod*\n*.cmd\n.tmp_versions/\nmodules.order\nModule.symvers\nMkfile.old\ndkms.conf\n");
+    write_handler_close(h);
+
+    /* Generate a README.md */
+    string *readme = string_new(name);
+    string_add_str(readme, "/README.md");
+    write_handler_open(h, string_get(readme));
+    write_handler_write(h, "# ");
+    write_handler_write(h, name);
+    write_handler_write(h, "\n\nTODO: Write a description here\n\n# Installation\n\nTODO: Write installation instructions here\n\n## Usage\n\nTODO: Write usage instructions here\n\n## Development\n\nTODO: Write development instructions here\n\n## Contributing\n\n1. Fork it (<https://github.com/your-github-user/");
+    write_handler_write(h, name);
+    write_handler_write(h, "/fork>)\n2. Create your feature branch (`git checkout -b my-new-feature`)\n3. Commit your changes (`git commit -am 'Add some feature'`)\n4. Push to the branch (`git push origin my-new-feature`)\n5. Create a new Pull Request\n\n## Contributors\n\n- [YourName](https://github.com/your-github-user) - creator and maintainer\n");
     write_handler_close(h);
 
     /* Create source files */
@@ -90,6 +106,7 @@ char *initialize_em_library(char *name) {
     string_add_str(src_dir_c, "/src/");
     string_add_str(src_dir_c, name);
     string_add_str(src_dir_c, ".c");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(src_dir_c));
     write_handler_open(h, string_get(src_dir_c));
     write_handler_write(h, "#include \"");
     write_handler_write(h, name);
@@ -99,6 +116,7 @@ char *initialize_em_library(char *name) {
     string_add_str(src_dir_h, "/src/");
     string_add_str(src_dir_h, name);
     string_add_str(src_dir_h, ".h");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(src_dir_h));
     write_handler_open(h, string_get(src_dir_h));
     write_handler_write(h, "#ifndef __");
     write_handler_write(h, name);
@@ -115,6 +133,7 @@ char *initialize_em_library(char *name) {
     string_add_str(app_c, name);
     make_directory(string_get(app_c));
     string_add_str(app_c, "/get_value.c");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(app_c));
     write_handler_open(h, string_get(app_c));
     write_handler_write(h, "#include \"headers/get_value.h\"\n\nchar *get_value(void) {\n    return \"Hello, World!\";\n}\n");
     write_handler_close(h);
@@ -125,6 +144,7 @@ char *initialize_em_library(char *name) {
     string_add_str(app_h, "/headers");
     make_directory(string_get(app_h));
     string_add_str(app_h, "/get_value.h");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(app_h));
     write_handler_open(h, string_get(app_h));
     write_handler_write(h, "#ifndef __GET_VALUE_H_\n#define __GET_VALUE_H_\n\n/**\n * @func: get_value\n * @brief Returns a greeting as a char*\n * @return char* -> \"Hello, World!\"\n */\nchar *get_value(void);\n\n#endif\n");
     write_handler_close(h);
@@ -136,6 +156,7 @@ char *initialize_em_library(char *name) {
     string *spec_c = string_dup(spec_str);
     string_add_str(spec_c, name);
     string_add_str(spec_c, ".spec.c");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(spec_c));
     write_handler_open(h, string_get(spec_c));
     write_handler_write(h, "#include \"");
     write_handler_write(h, name);
@@ -145,6 +166,7 @@ char *initialize_em_library(char *name) {
     string *spec_h = string_dup(spec_str);
     string_add_str(spec_h, name);
     string_add_str(spec_h, ".spec.h");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(spec_h));
     write_handler_open(h, string_get(spec_h));
     write_handler_write(h, "#ifndef __");
     write_handler_write(h, name);
@@ -155,6 +177,20 @@ char *initialize_em_library(char *name) {
     write_handler_write(h, ".h\"\n\n#include <string.h>\n\n#endif\n");
     write_handler_close(h);
 
+    /* Initialize a git directory */
+    system("git init .");
+    string *move_git = string_new("mv .git ");
+    string_add_str(move_git, name);
+    string_add_str(move_git, "/");
+    system(string_get(move_git));
+
+    /* wget a GPLv3 license */
+    system("wget https://www.gnu.org/licenses/gpl-3.0.txt");
+    string *move_license = string_new("mv gpl-3.0.txt ");
+    string_add_str(move_license, name);
+    string_add_str(move_license, "/LICENSE");
+    system(string_get(move_license));
+
     /* TODO -> STRING BUILDER FAILS TO ADD ON UNKOWN CONDITIONS AS OF NOW */
 
     /* Successful creation */
@@ -162,7 +198,7 @@ char *initialize_em_library(char *name) {
 }
 
 size_t get_dependencies(void) {
-    printf("Listing dependencies...\n");
+    printf("Emeralds installed:\n");
 
     vector *deps = get_dependencies_from_yaml();
     vector_map(deps, (vector_lambda)list_deps);
@@ -171,7 +207,7 @@ size_t get_dependencies(void) {
 }
 
 bool install_dependencies(void) {
-    printf("Installing dependencies...\n");
+    printf("%sResolving%s dependencies...\n", "\033[38;5;207m", "\033[0m");
 
     make_directory("libs");
 
