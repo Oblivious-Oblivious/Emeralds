@@ -19,4 +19,32 @@ vector *get_dependencies_from_yaml(void);
  */
 string *get_version_from_yaml(void);
 
+/**
+ * @func: get_install_script_from_yaml
+ * @brief Get the install script from yaml file
+ * @return string* -> The install field
+ */
+string *get_install_script_from_yaml(void);
+
+/**
+ * @func: get_lib_install_script_from_yaml
+ * @brief Get the lib install script from yaml file
+ * @return string* -> The lib_install field
+ */
+string *get_lib_install_script_from_yaml(void);
+
+/**
+ * @func: get_postinstall_script_from_yaml
+ * @brief Get the postinstall script from yaml file
+ * @return string* -> The postinstall field
+ */
+string *get_postinstall_script_from_yaml(void);
+
+/**
+ * @func: get_test_script_from_yaml
+ * @brief Get the test script from yaml file
+ * @return string* -> The test field
+ */
+string *get_test_script_from_yaml(void);
+
 #endif

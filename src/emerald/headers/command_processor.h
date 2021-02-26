@@ -45,6 +45,13 @@ bool compile_as_executable(void);
 bool compile_as_library(void);
 
 /**
+ * @func: run_test_script
+ * @brief Runs the test script defined in the em.yml file
+ * @return bool -> A flag signaling if the tests ran successful
+ */
+bool run_test_script(void);
+
+/**
  * @func: get_em_version
  * @brief Get the em version from the yaml file
  * @return char* -> The version

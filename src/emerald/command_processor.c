@@ -56,30 +56,30 @@ char *initialize_em_library(char *name) {
     make_directory(name);
 
     /* Write the em.yml file */
-    string *str = string_new(name);
-    string_add_str(str, "/em.yml");
-    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(str));
-    write_handler_open(h, string_get(str));
+    string *emfile = string_new(name);
+    string_add_str(emfile, "/em.yml");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(emfile));
+    write_handler_open(h, string_get(emfile));
     write_handler_write(h, "name: ");
     write_handler_write(h, name);
-    write_handler_write(h, "\nversion: 0.1.0\n\ndependencies:\n\nlicense: GPLv3\n\ninstall: make\n\npostinstall: #\n");
+    write_handler_write(h, "\nversion: 0.1.0\n\ndependencies:\n\nlicense: GPLv3\n\ninstall: make\nlib_install: make lib\npostinstall: #\ntest: make test\n");
     write_handler_close(h);
 
     /* Write the makefile */
-    str = string_new(name);
-    string_add_str(str, "/Makefile");
-    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(str));
-    write_handler_open(h, string_get(str));
+    string *makefile = string_new(name);
+    string_add_str(makefile, "/Makefile");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(makefile));
+    write_handler_open(h, string_get(makefile));
     write_handler_write(h, "NAME = ");
     write_handler_write(h, name);
-    write_handler_write(h, "\n\nCC = clang\nOPT = -O2\nVERSION = -std=c11\n\nFLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\nWARNINGS = \nUNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi\nREMOVE_WARNINGS = \nLIBS = \n\nINPUT = src/$(NAME).c src/$(NAME)/*.c\nOUTPUT = $(NAME)\n\nTESTFILES = sources/$(NAME)/*.c\nTESTINPUT = $(NAME).spec.c\nTESTOUTPUT = spec_results\n\nall: default\n\ndefault:\n\t$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT)\n\t$(RM) -r export && mkdir export\n\tmv $(OUTPUT) export/\n\ntest:\n\tmkdir spec/sources/ && cp -r src/* spec/sources/\n\tcd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(TESTOUTPUT) $(TESTFILES) $(TESTINPUT)\n\t@echo\n\t./spec/$(TESTOUTPUT)\n\nspec: test\n\nclean:\n\t$(RM) -r spec/$(TESTOUTPUT)\n\t$(RM) -r spec/sources\n\t$(RM) -r export\n\n");
+    write_handler_write(h, "\n\nCC = clang\nOPT = -O2\nVERSION = -std=c11\n\nFLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\nWARNINGS = \nUNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi\nREMOVE_WARNINGS = \nLIBS = \n\nINPUT = src/$(NAME).c src/$(NAME)/*.c\nOUTPUT = $(NAME)\n\nTESTFILES = sources/$(NAME)/*.c\nTESTINPUT = $(NAME).spec.c\nTESTOUTPUT = spec_results\n\nall: default\n\ndefault:\n\t$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT)\n\t$(RM) -r export && mkdir export\n\tmv $(OUTPUT) export/\n\nlib: default\n\ntest:\n\tmkdir spec/sources/ && cp -r src/* spec/sources/\n\tcd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(TESTOUTPUT) $(TESTFILES) $(TESTINPUT)\n\t@echo\n\t./spec/$(TESTOUTPUT)\n\nspec: test\n\nclean:\n\t$(RM) -r spec/$(TESTOUTPUT)\n\t$(RM) -r spec/sources\n\t$(RM) -r export\n\n");
     write_handler_close(h);
 
     /* Write the .gitignore file */
-    str = string_new(name);
-    string_add_str(str, "/.gitignore");
-    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(str));
-    write_handler_open(h, string_get(str));
+    string *gitignore = string_new(name);
+    string_add_str(gitignore, "/.gitignore");
+    printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(gitignore));
+    write_handler_open(h, string_get(gitignore));
     write_handler_write(h, "#Prerequisites\n*.d\n\n# Object files\n*.o\n*.ko\n*.obj\n*.elf\n\n# Linker output\n*.ilk\n*.map\n*.exp\n\n# Precompiled Headers\n*.gch\n*.pch\n\n# Executables\n*.exe\n*.out\n*.app\n*.i*86\n*.x86_64\n*.hex\n\n# Debug files\n*.dSYM/\n*.su\n*.idb\n*.pdb\n\n# Kernel Module Compile Results\n# *.mod*\n*.cmd\n.tmp_versions/\nmodules.order\nModule.symvers\nMkfile.old\ndkms.conf\n");
     write_handler_close(h);
 
@@ -226,15 +226,22 @@ bool install_dependencies(void) {
     return true;
 }
 
-/* TODO -> COMPLETE THE COMPILATION COMMANDS */
+bool run_test_script(void) {
+    printf("%sRunning%s tests...\n", "\033[38;5;207m", "\033[0m");
+    system(string_get(get_test_script_from_yaml()));
+    return true;
+}
+
 bool compile_as_executable(void) {
-    printf("Compiling as an executable...\n");
-    return false;
+    printf("%sCompiling%s as an executable...\n", "\033[38;5;207m", "\033[0m");
+    system(string_get(get_install_script_from_yaml()));
+    return true;
 }
 
 bool compile_as_library(void) {
-    printf("Compiling as a library...\n");
-    return false;
+    printf("%sCompiling%s as a library...\n", "\033[38;5;207m", "\033[0m");
+    system(string_get(get_lib_install_script_from_yaml()));
+    return true;
 }
 
 char *get_em_version(void) {

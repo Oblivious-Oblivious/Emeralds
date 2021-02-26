@@ -12,8 +12,10 @@ license: GPLv3
 install: make # -> Simple makefile
 install: clang src/lib.c src/lib/*.c # -> Custom command
 
+libinstall: make lib
+
 postinstall: em install # -> Recursively install dependencies
-portinstall: # -> No more dependencies to install
+postinstall: # -> No more dependencies to install
 
 /* name, version, dependencies, license, install, postinstall */
 

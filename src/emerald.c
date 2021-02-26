@@ -4,11 +4,12 @@ void usage(void) {
     printf("emerald/em [<command>]\n\n");
     printf("Commands:\n");
     printf("    build [app | lib] - Build the application in the `export` directory.\n");
+    printf("    help              - Print this help message.\n");
     printf("    init [name]       - Initialize a new library with an em.yml file.\n");
     printf("    install           - Install dependencies recursively for each included library.\n");
     printf("    list              - List dependencies in the em file.\n");
+    printf("    test              - Run the script of tests.\n");
     printf("    version           - Print the current version of the emerald.\n");
-    printf("    help              - Print this help message.\n");
     exit(1);
 }
 
@@ -38,6 +39,8 @@ int main(int argc, char **argv) {
         else
             usage();
     }
+    else if(!strcmp(action, "test"))
+        run_test_script();
     else if(!strcmp(action, "version"))
         printf("%s\n", get_em_version());
     else if(!strcmp(action, "help"))
