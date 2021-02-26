@@ -2,7 +2,7 @@
 #define __EMERALD_SPEC_H_
 
 /* Library includes */
-#include "sources/emerald.h"
+#include "../src/emerald.h"
 
 /* Spec includes */
 #include "emerald/string.module.h"

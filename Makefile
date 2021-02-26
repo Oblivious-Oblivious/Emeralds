@@ -14,7 +14,7 @@ LIBS =
 INPUT = src/$(NAME).c src/$(NAME)/*.c
 OUTPUT = em
 
-TESTFILES = sources/$(NAME)/*.c
+TESTFILES = ../src/$(NAME)/*.c
 TESTINPUT = $(NAME).spec.c
 TESTOUTPUT = specs_results
 
@@ -30,11 +30,9 @@ run: default
 build: default
 
 test:
-	mkdir spec/sources && cp -R src/* spec/sources/
 	cd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(TESTOUTPUT) $(TESTFILES) $(TESTINPUT)
 	@echo
 	./spec/$(TESTOUTPUT)
-	$(RM) -r $(TESTOUTPUT)
 
 spec: test
 
