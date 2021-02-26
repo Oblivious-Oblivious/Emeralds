@@ -153,7 +153,8 @@ char *initialize_em_library(char *name) {
     string *spec_str = string_new(name);
     string_add_str(spec_str, "/spec/");
     make_directory(string_get(spec_str));
-    string *spec_c = string_dup(spec_str);
+    string *spec_c = string_new(name);
+    string_add_str(spec_c, "/spec/");
     string_add_str(spec_c, name);
     string_add_str(spec_c, ".spec.c");
     printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(spec_c));
@@ -163,7 +164,8 @@ char *initialize_em_library(char *name) {
     write_handler_write(h, ".spec.h\"\n\n");
     write_handler_write(h, "int main(void) {\n    char *v = get_value();\n    int res = strcmp(v, \"Hello, World!\");\n\n    if(res == 0) printf(\"Test (1) passed\\n\");\n\n    return 0;\n}\n");
     write_handler_close(h);
-    string *spec_h = string_dup(spec_str);
+    string *spec_h = string_new(name);
+    string_add_str(spec_h, "/spec/");
     string_add_str(spec_h, name);
     string_add_str(spec_h, ".spec.h");
     printf("    %screate%s  %s\n", "\033[38;5;207m", "\033[0m", string_get(spec_h));
