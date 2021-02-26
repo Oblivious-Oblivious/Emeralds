@@ -186,9 +186,11 @@ static size_t cspec_get_timer(void) {
 
 
 /** @param bool -> A 'big' enough size to hold both 1 and 0 **/
-typedef unsigned char bool;
-#define true 1
-#define false 0
+#ifndef bool
+    #define bool
+    #define true 1
+    #define false 0
+#endif
 
 /**
  * @func: cspec_lambda
