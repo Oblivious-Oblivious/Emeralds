@@ -51,3 +51,5 @@ em version
 
 em help
     -> Shows the usage information
+
+TODO -> ADD VERSION CONTROL AND CI

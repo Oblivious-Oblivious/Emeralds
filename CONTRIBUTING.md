@@ -1,2 +1,2 @@
-# Contributing to the cEmeralds.
-Adding an [issue](https://github.com/Oblivious-Oblivious/cEmeralds/issues)
+# Contributing to the Emeralds.
+Adding an [issue](https://github.com/Oblivious-Oblivious/Emeralds/issues)
