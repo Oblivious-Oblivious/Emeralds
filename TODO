@@ -46,3 +46,6 @@ em build [lib | app]
 em version
     -> Shows the version of an emerald
     -> Reads the version option of the em.yml
+
+em help
+    -> Shows the usage information
