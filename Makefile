@@ -6,8 +6,8 @@ VERSION = -std=c11
 
 FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
 WARNINGS = -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-macro-redefined
-UNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi
-REMOVE_WARNNINGS =
+UNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi -Wno-format
+#REMOVE_WARNINGS = -Wno-void-pointer-to-int-cast
 HEADERS =
 LIBS =
 
