@@ -243,3 +243,8 @@ string *string_substring(string *str, size_t from, size_t __to) {
     string_shorten(strdup, __to - from + 1);
     return strdup;
 }
+
+void string_free(string *sb) {
+    free(sb->str);
+    free(sb);
+}

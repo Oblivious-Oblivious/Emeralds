@@ -124,3 +124,9 @@ void *vector_reduce(vector *v, vector_lambda fold) {
     
     return accumulator;
 }
+
+void vector_free(vector *v) {
+    /* TODO -> FIGURE OUT RECURSIVE DESTRUCTION */
+    free(v->items);
+    free(v);
+}

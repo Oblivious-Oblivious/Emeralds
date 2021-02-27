@@ -213,4 +213,11 @@ string *string_dup(string *sb);
  **/
 string *string_substring(string *sb, size_t from, size_t __to);
 
+/**
+ * @func: string_free
+ * @brief Deallocates the memory of the string
+ * @param sb -> The string to free
+ */
+void string_free(string *sb);
+
 #endif

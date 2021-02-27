@@ -12,6 +12,9 @@ static void list_deps(string *dep) {
     string_skip(dep, 2);
     vector *depname = string_split(dep, string_new("/"));
     printf("  * %s\n", string_get(vector_get(depname, vector_length(depname) - 1)));
+
+    string_free(dep);
+    vector_free(depname);
 }
 
 static void install_deps(string *dep) {
@@ -24,30 +27,32 @@ static void install_deps(string *dep) {
     /* Craft the github link */
     string *library = string_new("https://github.com/");
     vector *parts = string_split(dep, string_new(":"));
+    string *libpath = vector_get(parts, 0);
     string *liblink = vector_get(parts, 1);
     string_skip(liblink, 1); /* Remove trailing space */
     string_add_str(library, string_get(liblink));
 
-    /* Create the directory to clone the dependencies at */
-    string *dep_path = string_new("libs/");
-    string_add_str(dep_path, string_get(vector_get(parts, 0)));
     /* TODO -> DELETE DIRECTORY FIRST BEFORE OVERWRITTING LIBS */
-    make_directory(string_get(dep_path));
 
     /* Compile the deps */
     string *command = string_new("git clone ");
-    string_add_str(command, string_get(library));
+    string_add_str(command, "https://github.com/");
+    string_add_str(command, string_get(liblink));
+    string_add_str(command, " libs/");
+    string_add_str(command, string_get(libpath));
 
     /* Execute git clone */
     printf("%sFetching%s %s\n", "\033[38;5;207m", "\033[0m", string_get(library));
     system(string_get(command));
 
-    /* Move to the libs library */
-    string *move_command = string_new("mv ");
-    string_add_str(move_command, string_get(vector_get(parts, 0)));
     /* TODO -> FIX ADD STR SEEMS TO FAIL AT SMALL NAMES */
-    string_add_str(move_command, " libs/");
-    system(string_get(move_command));
+
+    string_free(dep);
+    string_free(library);
+    vector_free(parts);
+    string_free(liblink);
+    string_free(libpath);
+    string_free(command);
 }
 
 char *initialize_em_library(char *name) {
@@ -201,21 +206,47 @@ char *initialize_em_library(char *name) {
     write_handler_write(h, ".h\"\n\n#include <string.h>\n\n#endif\n");
     write_handler_close(h);
 
+    string_free(emfile);
+    string_free(move_git);
+    string_free(git);
+    string_free(move_license);
+    string_free(license);
+    string_free(makefile);
+    string_free(gitignore);
+    string_free(readme);
+    string_free(src_dir);
+    string_free(src_dir_name);
+    string_free(src_dir_c);
+    string_free(src_dir_h);
+    string_free(app_c);
+    string_free(app_h);
+    string_free(spec_str);
+    string_free(spec_c);
+    string_free(spec_h);
+
     /* Successful creation */
     return name;
 }
 
 size_t get_dependencies(void) {
-    printf("Emeralds installed:\n");
+    printf("Emeralds used:\n");
 
     vector *deps = get_dependencies_from_yaml();
     vector_map(deps, (vector_lambda)list_deps);
 
-    return vector_length(deps);
+    size_t ret = vector_length(deps);
+
+    vector_free(deps);
+
+    return ret;
 }
 
 bool install_dependencies(void) {
     printf("%sResolving%s dependencies...\n", "\033[38;5;207m", "\033[0m");
+
+    /* TODO -> CARE FOR CROSS PLATFORM COMPILATION */
+    system("rm -rf libs");
+    /***********************************************/
 
     make_directory("libs");
 
@@ -224,6 +255,8 @@ bool install_dependencies(void) {
         return false;
     else
         vector_map(deps, (vector_lambda)install_deps);
+
+    vector_free(deps);
     
     return true;
 }

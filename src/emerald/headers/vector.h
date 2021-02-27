@@ -122,4 +122,11 @@ vector *vector_filter(vector *v, vector_lambda filter);
  **/
 void *vector_reduce(vector *v, vector_lambda fold);
 
+/**
+ * @func: vector_free
+ * @brief Deallocated the vector memory
+ * @param v -> The vector to free
+ */
+void vector_free(vector *v);
+
 #endif
