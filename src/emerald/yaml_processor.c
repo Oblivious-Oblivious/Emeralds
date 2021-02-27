@@ -119,7 +119,28 @@ string *get_test_script_from_yaml(void) {
         if(!strcmp(string_get(l), "test:")) break;
     }
 
-    vector *install_line = string_split(script, string_new(":"));
-    string_skip(vector_get(install_line, 1), 1);
-    return vector_get(install_line, 1);
+    vector *test_line = string_split(script, string_new(":"));
+    string_skip(vector_get(test_line, 1), 1);
+    return vector_get(test_line, 1);
 }
+
+string *get_clean_script_from_yaml(void) {
+    char *line;
+    string *script;
+
+    struct read_handler *h = read_handler_new();
+    if(!read_handler_open(h, "em.yml")) return string_new("Error on reading the clean script");
+
+    /* Skip to the clean part */
+    while((line = read_handler_read_line(h))) {
+        script = string_new(line);
+
+        string *l = string_substring(script, 0, 5);
+        if(!strcmp(string_get(l), "clean:")) break;
+    }
+
+    vector *clean_line = string_split(script, string_new(":"));
+    string_skip(vector_get(clean_line, 1), 1);
+    return vector_get(clean_line, 1);
+}
+

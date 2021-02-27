@@ -1,9 +1,10 @@
 #include "emerald.h"
 
 void usage(void) {
-    printf("emerald/em [<command>]\n\n");
+    printf("emeralds/em [<command>]\n\n");
     printf("Commands:\n");
     printf("    build [app | lib] - Build the application in the `export` directory.\n");
+    printf("    clean             - Run the clean script\n");
     printf("    help              - Print this help message.\n");
     printf("    init [name]       - Initialize a new library with an em.yml file.\n");
     printf("    install           - Install dependencies recursively for each included library.\n");
@@ -45,6 +46,8 @@ int main(int argc, char **argv) {
         printf("%s\n", get_em_version());
     else if(!strcmp(action, "help"))
         usage();
+    else if(!strcmp(action, "clean"))
+        run_clean_script();
     else
         usage();
 

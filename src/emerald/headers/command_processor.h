@@ -52,6 +52,13 @@ bool compile_as_library(void);
 bool run_test_script(void);
 
 /**
+ * @func: run_clean_script
+ * @brief Runs the clean script defined in the em.yml file
+ * @return bool -> A flag signaling if the clean script was executed
+*/
+bool run_clean_script(void);
+
+/**
  * @func: get_em_version
  * @brief Get the em version from the yaml file
  * @return char* -> The version

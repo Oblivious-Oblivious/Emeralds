@@ -65,7 +65,7 @@ char *initialize_em_library(char *name) {
     write_handler_open(h, string_get(emfile));
     write_handler_write(h, "name: ");
     write_handler_write(h, name);
-    write_handler_write(h, "\nversion: 0.1.0\n\ndependencies:\n\nlicense: GPLv3\n\ninstall: make\nlib_install: make lib\npostinstall: #\ntest: make test\n");
+    write_handler_write(h, "\nversion: 0.1.0\n\ndependencies:\n\nlicense: GPLv3\n\ninstall: make\nlib_install: make lib\npostinstall: #\ntest: make test\nclean: make clean\n");
     write_handler_close(h);
 
     /* Initialize a git directory */
@@ -260,6 +260,12 @@ bool install_dependencies(void) {
 bool run_test_script(void) {
     printf("%sRunning%s tests...\n", "\033[38;5;207m", "\033[0m");
     system(string_get(get_test_script_from_yaml()));
+    return true;
+}
+
+bool run_clean_script(void) {
+    printf("%sCleaning%s the library files...\n", "\033[38;5;207m", "\033[0m");
+    system(string_get(get_clean_script_from_yaml()));
     return true;
 }
 

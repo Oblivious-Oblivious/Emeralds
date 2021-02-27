@@ -47,4 +47,11 @@ string *get_postinstall_script_from_yaml(void);
  */
 string *get_test_script_from_yaml(void);
 
+/**
+ * @func: get_clean_script_from_yaml
+ * @brief Get the clean sript from the yaml file
+ * @return string* -> The clean field
+ */
+string *get_clean_script_from_yaml(void);
+
 #endif
