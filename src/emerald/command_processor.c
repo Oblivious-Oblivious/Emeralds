@@ -2,8 +2,6 @@
 #include "headers/string.h"
 #include "headers/write_handler.h"
 
-/* TODO -> HANDLE MEMORY DEALLOCATION */
-
 static void list_deps(string *dep) {
     /* Skip empty lines */
     if(!strcmp(string_get(dep), "")) return;
@@ -31,8 +29,6 @@ static void install_deps(string *dep) {
     string *liblink = vector_get(parts, 1);
     string_skip(liblink, 1); /* Remove trailing space */
     string_add_str(library, string_get(liblink));
-
-    /* TODO -> DELETE DIRECTORY FIRST BEFORE OVERWRITTING LIBS */
 
     /* Compile the deps */
     string *command = string_new("git clone ");

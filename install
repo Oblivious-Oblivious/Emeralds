@@ -1,0 +1,10 @@
+#!/bin/bash
+
+make
+chown -R $(whoami) /usr/local/bin
+cd export && cp em emeralds && cd ..
+cp export/* /usr/local/bin/
+#echo "export PATH=\$PATH:/usr/local/bin" >> ~/.bashrc
+source ~/.bashrc
+#make clean
+
