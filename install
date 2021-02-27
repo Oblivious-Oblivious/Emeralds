@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 make
 chown -R $(whoami) /usr/local/bin
