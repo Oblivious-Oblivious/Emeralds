@@ -66,16 +66,16 @@ class Emerald::CommandProcessor
 
         # Write the em.yml file
         puts "#{"create".colorize(:magenta)} #{name}/em.yml";
-        File.write "#{name}/em.yml", "name: #{name}\nversion: 0.1.0\n\ndependencies:\n\nlicense: GPLv3\n\ninstall: make\nlib_install: make lib\npostinstall: #\ntest: make test\nclean: make clean\n";
+        File.write "#{name}/em.yml", "name: #{name}\nversion: 0.1.0\n\ndependencies:\n\nlicense: GPLv3\n\napplication: make\nlibrary: make lib\npostinstall: #\ntest: make test\nclean: make clean\n";
 
         # Initialize a git directory
         puts "#{"create".colorize(:magenta)} #{name}/.git";
-        `git init #{name}/ >/dev/null 2>&1`;
+        `git init #{name}/`;
 
         # Wget a GPLv3 license
         # TODO -> CARE FOR CROSS COMPILATION
         puts "#{"create".colorize(:magenta)} #{name}/LICENSE";
-        `wget -O #{name}/LICENSE https://www.gnu.org/licenses/gpl-3.0.txt >/dev/null 2>&1`;
+        `wget -O #{name}/LICENSE https://www.gnu.org/licenses/gpl-3.0.txt`;
 
         # Write the makefile
         puts "#{"create".colorize(:magenta)} #{name}/Makefile";
@@ -158,7 +158,7 @@ class Emerald::CommandProcessor
     ##
     def compile_as_executable
         puts "#{"Compiling".colorize(:magenta)} as an executable...";
-        puts `#{yaml.get_field "install"}`;
+        puts `#{yaml.get_field "application"}`;
         true;
     end
 
@@ -169,7 +169,7 @@ class Emerald::CommandProcessor
     ##
     def compile_as_library
         puts "#{"Compiling".colorize(:magenta)} as a library...";
-        puts `#{yaml.get_field "lib_install"}`;
+        puts `#{yaml.get_field "library"}`;
         true;
     end
 

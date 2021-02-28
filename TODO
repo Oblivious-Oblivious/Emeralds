@@ -9,17 +9,17 @@ dependencies: # -> Git repositories
 
 license: GPLv3
 
-install: make # -> Simple makefile
-install: clang src/lib.c src/lib/*.c # -> Custom command
+application: make # -> Simple makefile
+application: clang src/lib.c src/lib/*.c # -> Custom command
 
-lib_install: make lib
+library: make lib
 
 postinstall: em install # -> Recursively install dependencies
 postinstall: # -> No more dependencies to install
 
 clean: make clean
 
-/* name, version, dependencies, license, install, lib_install, postinstall, clean */
+/* name, version, dependencies, license, application, library, postinstall, clean */
 
 
 
@@ -53,5 +53,3 @@ em version
 
 em help
     -> Shows the usage information
-
-TODO -> ADD VERSION CONTROL AND CI
