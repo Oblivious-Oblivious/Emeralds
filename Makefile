@@ -1,7 +1,6 @@
 INPUT = emeralds.cr
 
-all:
-	crystal src/$(INPUT)
+all: build
 
 remake_export:
 	$(RM) -r export

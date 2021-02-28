@@ -62,7 +62,7 @@ class Emerald::CommandProcessor
         puts "Initializing a new emerald with name `#{name}`";
 
         # Create the lib directory
-        Dir.mkdir name, mode: 751;
+        Dir.mkdir name;
 
         # Write the em.yml file
         puts "#{"create".colorize(:magenta)} #{name}/em.yml";
@@ -75,7 +75,7 @@ class Emerald::CommandProcessor
         # Wget a GPLv3 license
         # TODO -> CARE FOR CROSS COMPILATION
         puts "#{"create".colorize(:magenta)} #{name}/LICENSE";
-        `wget -O #{name}/LICENSE https://www.gnu.org/licenses/gpl-3.0.txt`;
+        `wget -O #{name}/LICENSE https://www.gnu.org/licenses/gpl-3.0.txt >/dev/null 2>&1`;
 
         # Write the makefile
         puts "#{"create".colorize(:magenta)} #{name}/Makefile";
@@ -90,9 +90,9 @@ class Emerald::CommandProcessor
         File.write "#{name}/README.md", "# #{name}\n\nTODO: Write a description here\n\n# Installation\n\nTODO: Write installation instructions here\n\n## Usage\n\nTODO: Write usage instructions here\n\n## Development\n\nTODO: Write development instructions here\n\n## Contributing\n\n1. Fork it (<https://github.com/your-github-user/#{name}/fork>)\n2. Create your feature branch (`git checkout -b my-new-feature`)\n3. Commit your changes (`git commit -am 'Add some feature'`)\n4. Push to the branch (`git push origin my-new-feature`)\n5. Create a new Pull Request\n\n## Contributors\n\n- [YourName](https://github.com/your-github-user) - creator and maintainer\n";
 
         # Create source directories
-        Dir.mkdir "#{name}/src", mode: 751;
-        Dir.mkdir "#{name}/src/#{name}", mode: 751;
-        Dir.mkdir "#{name}/src/#{name}/headers", mode: 751;
+        Dir.mkdir "#{name}/src";
+        Dir.mkdir "#{name}/src/#{name}";
+        Dir.mkdir "#{name}/src/#{name}/headers";
 
         # Create source files
         puts "#{"create".colorize(:magenta)} #{name}/src/#{name}.c";
@@ -105,7 +105,7 @@ class Emerald::CommandProcessor
         File.write "#{name}/src/#{name}/headers/get_value.h", "#ifndef __GET_VALUE_H_\n#define __GET_VALUE_H_\n\n/**\n * @func: get_value\n * @brief Returns a greeting as a char*\n * @return char* -> \"Hello, World!\"\n */\nchar *get_value(void);\n\n#endif\n";
 
         # Create spec files
-        Dir.mkdir "#{name}/spec", mode: 751;
+        Dir.mkdir "#{name}/spec";
         puts "#{"create".colorize(:magenta)} #{name}/spec/#{name}.spec.c";
         File.write "#{name}/spec/#{name}.spec.c", "#include \"#{name}.spec.h\"\n\nint main(void) {\n    char *v = get_value();\n    int res = strcmp(v, \"Hello, World!\");\n\n    if(res == 0) printf(\"Test (1) passed\\n\");\n\n    return 0;\n}\n";
         puts "#{"create".colorize(:magenta)} #{name}/spec/#{name}.spec.h";
@@ -142,7 +142,7 @@ class Emerald::CommandProcessor
 
         # Recreate libs directory
         FileUtils.rm_rf "libs";
-        Dir.mkdir "libs", mode: 751;
+        Dir.mkdir "libs";
         
         yaml.get_dependencies.each do |dep|
             install_dep dep;
