@@ -1,3 +1,4 @@
+require "file_utils"
 require "colorize"
 
 require "./yaml_processor"
@@ -140,9 +141,7 @@ class Emerald::CommandProcessor
         puts "#{"Resolving".colorize(:magenta)} dependencies...";
 
         # Recreate libs directory
-        if Dir.exists? "libs"
-            Dir.delete "libs";
-        end
+        FileUtils.rm_rf "libs";
         Dir.mkdir "libs", mode: 751;
 
         deps = yaml.get_dependencies;
