@@ -3,20 +3,17 @@ INPUT = emeralds.cr
 all:
 	crystal src/$(INPUT)
 
-remake_bin:
-	$(RM) -r bin
-	mkdir bin
+remake_export:
+	$(RM) -r export
+	mkdir export
 
-build: remake_bin
-	crystal build --release src/$(INPUT) -o bin/em
-	cp bin/em bin/emeralds
-
-run:
-	./bin/em
+build: remake_export
+	crystal build --release src/$(INPUT) -o export/em
+	cp export/em export/emeralds
 
 document:
 	$(RM) -r ./docs
 	crystal docs src/*.cr
 
 clean:
-	$(RM) -r ./bin
+	$(RM) -r ./export
