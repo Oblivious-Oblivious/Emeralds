@@ -1,4 +1,4 @@
-require "./emerald/**"
+require "./emeralds/**"
 
 class Emerald::Main
     getter :cmd;
