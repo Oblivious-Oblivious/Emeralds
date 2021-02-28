@@ -143,10 +143,8 @@ class Emerald::CommandProcessor
         # Recreate libs directory
         FileUtils.rm_rf "libs";
         Dir.mkdir "libs", mode: 751;
-
-        deps = yaml.get_dependencies;
         
-        deps.each do |dep|
+        yaml.get_dependencies.each do |dep|
             install_dep dep;
         end
 
@@ -160,7 +158,7 @@ class Emerald::CommandProcessor
     ##
     def compile_as_executable
         puts "#{"Compiling".colorize(:magenta)} as an executable...";
-        puts `#{yaml.get_install_script}`;
+        puts `#{yaml.get_field "install"}`;
         true;
     end
 
@@ -171,7 +169,7 @@ class Emerald::CommandProcessor
     ##
     def compile_as_library
         puts "#{"Compiling".colorize(:magenta)} as a library...";
-        puts `#{yaml.get_lib_install_script}`;
+        puts `#{yaml.get_field "lib_install"}`;
         true;
     end
 
@@ -182,7 +180,7 @@ class Emerald::CommandProcessor
     ##
     def run_test_script
         puts "#{"Running".colorize(:magenta)} test...";
-        puts `#{yaml.get_test_script}`;
+        puts `#{yaml.get_field "test"}`;
         true;
     end
 
@@ -193,7 +191,7 @@ class Emerald::CommandProcessor
     ##
     def run_clean_script
         puts "#{"Cleaning".colorize(:magenta)} the library files...";
-        puts `#{yaml.get_clean_script}`;
+        puts `#{yaml.get_field "clean"}`;
         true;
     end
 
@@ -203,6 +201,6 @@ class Emerald::CommandProcessor
     # @return -> The version
     ##
     def get_em_version
-        yaml.get_version;
+        yaml.get_field "version";
     end
 end
