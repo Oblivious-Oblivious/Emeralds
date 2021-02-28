@@ -1,43 +1,22 @@
-NAME = emerald
+INPUT = emeralds.cr
 
-CC = clang
-OPT = -O2
-VERSION = -std=c11
+all:
+	crystal src/$(INPUT)
 
-FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
-WARNINGS = -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-macro-redefined
-UNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi -Wno-format
-#REMOVE_WARNINGS = -Wno-void-pointer-to-int-cast
-HEADERS =
-LIBS =
+remake_bin:
+	$(RM) -r bin
+	mkdir bin
 
-INPUT = src/$(NAME).c src/$(NAME)/*.c
-OUTPUT = em
+build: remake_bin
+	crystal build --release src/$(INPUT) -o bin/em
+	cp bin/em bin/emeralds
 
-TESTFILES = ../src/$(NAME)/*.c
-TESTINPUT = $(NAME).spec.c
-TESTOUTPUT = specs_results
+run:
+	./bin/em
 
-all: default
-
-default:
-	$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT)
-	$(RM) -r export && mkdir export
-	mv $(OUTPUT) export/
-
-run: default
-
-build: default
-
-test:
-	cd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(TESTOUTPUT) $(TESTFILES) $(TESTINPUT)
-	@echo
-	./spec/$(TESTOUTPUT)
-
-spec: test
+document:
+	$(RM) -r ./docs
+	crystal docs src/*.cr
 
 clean:
-	$(RM) -r spec/$(TESTOUTPUT)
-	$(RM) -r spec/sources
-	$(RM) -r export
-
+	$(RM) -r ./bin

@@ -1,0 +1,12 @@
+name: emeralds
+version: 0.2.0
+
+authors:
+  - Thanasis Papapostolou (Oblivious) <me262thanos@gmail.com>
+
+description: |
+  A package manager for C
+
+crystal: 0.36.1
+
+license: GPLv3
