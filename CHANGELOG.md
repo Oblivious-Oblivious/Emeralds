@@ -1,3 +1,7 @@
+# Changes for Emeralds 0.2.0 (28-02-2021)
+
+* Migrated the whole codebase to crystal-lang
+
 # Changes for Emeralds 0.1.0 (22-06-2020)
 
 * Adds the first version of the package manager.
