@@ -14,12 +14,23 @@ Run the install script
 
 ## Usage
 
-TODO: Write usage instructions here
+`em help` # Prints the list of commands and how to use
+
+### Sample usage
+* `em init testapp`
+* `em list`
+* (Add dependencies to the em.yml)
+* `em install`
+* `em test`
+* `em build app`
+* `./export/testapp`
 
 ## Development
 
-TODO:
 * Implement recursive dependency management
+* Add version control and CI
+* Write tests
+* Add a `em loc` command for counting lines of code
 
 ## Contributing
 
