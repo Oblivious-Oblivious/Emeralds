@@ -28,10 +28,9 @@ Run the install script
 ## Development
 
 * Implement recursive dependency management
-* Implement library installing
+* Add a `em loc` command for counting lines of code
 * Add version control and CI
 * Write tests
-* Add a `em loc` command for counting lines of code
 
 ## Contributing
 
