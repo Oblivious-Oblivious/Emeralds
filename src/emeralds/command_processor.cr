@@ -55,7 +55,7 @@ class Emeralds::CommandProcessor
         puts "    loc               - Count the sloc lines of code in the project\n"
         puts "    test              - Run the script of tests.\n";
         puts "    version           - Print the current version of the emerald.\n";
-        exit 1;
+        exit 0;
     end
 
     ##
