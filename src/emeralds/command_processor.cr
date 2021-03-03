@@ -27,6 +27,11 @@ class Emerald::CommandProcessor
                 .map(&.lstrip "\"")
                 .map(&.rstrip "\"");
             `git clone https://github.com/#{parts[1]} libs/#{parts[0]}`;
+
+            Dir.cd "libs/#{parts[0]}";
+            `em install`;
+            `em build lib`
+            Dir.cd "../../";
         end
     end
 
@@ -79,7 +84,7 @@ class Emerald::CommandProcessor
 
         # Write the makefile
         puts "#{"create".colorize(:magenta)} #{name}/Makefile";
-        File.write "#{name}/Makefile", "NAME = #{name}\n\nCC = clang\nOPT = -O2\nVERSION = -std=c11\n\nFLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\nWARNINGS = \nUNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi\nREMOVE_WARNINGS = \nLIBS = \n\nINPUTFILES = src/$(NAME)/*.c\nINPUT = src/$(NAME).c\nOUTPUT = $(NAME)\n\nTESTFILES = ../src/$(NAME)/*.c\nTESTINPUT = $(NAME).spec.c\nTESTOUTPUT = spec_results\n\nall: default\n\nmake_export:\n\t$(RM) -r export && mkdir export\n\ncopy_headers:\n\tmkdir export/$(NAME) && mkdir export/$(NAME)/headers\n\tcp src/$(NAME)/headers/* export/$(NAME)/headers/\n\ndefault: make_export\n\t$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT) $(INPUTFILES)\n\tmv $(OUTPUT) export/\n\nlib: make_export copy_headers\n\t$(CC) -c $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) $(INPUTFILES)\n\tar -rcs $(OUTPUT).a *.o\n\tmv $(OUTPUT).a export/lib$(OUTPUT).a\n\t$(RM) -r *.o\n\ntest:\n\tcd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(TESTOUTPUT) $(TESTFILES) $(TESTINPUT)\n\t@echo\n\t./spec/$(TESTOUTPUT)\n\nspec: test\n\nclean:\n\t$(RM) -r spec/$(TESTOUTPUT)\n\t$(RM) -r export\n\n";
+        File.write "#{name}/Makefile", "NAME = #{name}\n\nCC = clang\nOPT = -O2\nVERSION = -std=c11\n\nFLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\nWARNINGS = \nUNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi\nREMOVE_WARNINGS = \nLIBS = \n\nINPUTFILES = src/$(NAME)/*.c\nINPUT = src/$(NAME).c\nOUTPUT = $(NAME)\n\nTESTFILES = ../src/$(NAME)/*.c\nTESTINPUT = $(NAME).spec.c\nTESTOUTPUT = spec_results\n\nall: default\n\nmake_export:\n\t$(RM) -r export && mkdir export\n\ncopy_headers:\n\tmkdir export/$(NAME) && mkdir export/$(NAME)/headers\n\tcp src/$(NAME)/headers/* export/$(NAME)/headers/\n\tcp src/$(NAME).h export/\n\ndefault: make_export\n\t$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT) $(INPUTFILES)\n\tmv $(OUTPUT) export/\n\nlib: make_export copy_headers\n\t$(CC) -c $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) $(INPUTFILES)\n\tar -rcs $(OUTPUT).a *.o\n\tmv $(OUTPUT).a export/lib$(OUTPUT).a\n\t$(RM) -r *.o\n\ntest:\n\tcd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(TESTOUTPUT) $(TESTFILES) $(TESTINPUT)\n\t@echo\n\t./spec/$(TESTOUTPUT)\n\nspec: test\n\nclean:\n\t$(RM) -r spec/$(TESTOUTPUT)\n\t$(RM) -r export\n\n";
 
         # Write the .gitignore file
         puts "#{"create".colorize(:magenta)} #{name}/.gitignore";
