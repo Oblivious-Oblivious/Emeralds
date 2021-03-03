@@ -62,7 +62,7 @@ class Emeralds::CommandProcessor
 
         # Write the em.yml file
         puts "  #{ARROW} em.yml";
-        File.write "#{name}/em.yml", "name: #{name}\nversion: 0.1.0\n\ndependencies:\n\nlicense: GPLv3\n\napplication: make\nlibrary: make lib\ntest: make test\nclean: make clean\n";
+        File.write "#{name}/em.yml", "name: #{name}\nversion: 0.1.0\n\ndependencies:\n  cSpec: Oblivious-Oblivious/cSpec\n\nlicense: GPLv3\n\napplication: make\nlibrary: make lib\ntest: make test\nclean: make clean\n";
 
         # Initialize a git directory
         puts "  #{ARROW} .git";
@@ -75,7 +75,7 @@ class Emeralds::CommandProcessor
 
         # Write the makefile
         puts "  #{ARROW} Makefile";
-        File.write "#{name}/Makefile", "NAME = #{name}\n\nCC = clang\nOPT = -O2\nVERSION = -std=c11\n\nFLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\nWARNINGS = \nUNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi\nREMOVE_WARNINGS = \nLIBS = \n\nINPUTFILES = src/$(NAME)/*.c\nINPUT = src/$(NAME).c\nOUTPUT = $(NAME)\n\nTESTFILES = ../src/$(NAME)/*.c\nTESTINPUT = $(NAME).spec.c\nTESTOUTPUT = spec_results\n\nall: default\n\nmake_export:\n\t$(RM) -r export && mkdir export\n\ncopy_headers:\n\tmkdir export/$(NAME) && mkdir export/$(NAME)/headers\n\tcp src/$(NAME)/headers/* export/$(NAME)/headers/\n\tcp src/$(NAME).h export/\n\ndefault: make_export\n\t$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT) $(INPUTFILES)\n\tmv $(OUTPUT) export/\n\nlib: make_export copy_headers\n\t$(CC) -c $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) $(INPUTFILES)\n\tar -rcs $(OUTPUT).a *.o\n\tmv $(OUTPUT).a export/lib$(OUTPUT).a\n\t$(RM) -r *.o\n\ntest:\n\tcd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(TESTOUTPUT) $(TESTFILES) $(TESTINPUT)\n\t@echo\n\t./spec/$(TESTOUTPUT)\n\nspec: test\n\nclean:\n\t$(RM) -r spec/$(TESTOUTPUT)\n\t$(RM) -r export\n\n";
+        File.write "#{name}/Makefile", "NAME = #{name}\n\nCC = clang\nOPT = -O2\nVERSION = -std=c11\n\nFLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\nWARNINGS = -Wno-incompatible-pointer-types\nUNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi\nREMOVE_WARNINGS = -Wno-int-conversion\nLIBS = \n\nINPUTFILES = src/$(NAME)/*.c\nINPUT = src/$(NAME).c\nOUTPUT = $(NAME)\n\nTESTFILES = ../src/$(NAME)/*.c\nTESTINPUT = $(NAME).spec.c\nTESTOUTPUT = spec_results\n\nall: default\n\nmake_export:\n\t$(RM) -r export && mkdir export\n\ncopy_headers:\n\tmkdir export/$(NAME) && mkdir export/$(NAME)/headers\n\tcp src/$(NAME)/headers/* export/$(NAME)/headers/\n\tcp src/$(NAME).h export/\n\ndefault: make_export\n\t$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT) $(INPUTFILES)\n\tmv $(OUTPUT) export/\n\nlib: make_export copy_headers\n\t$(CC) -c $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) $(INPUTFILES)\n\tar -rcs $(OUTPUT).a *.o\n\tmv $(OUTPUT).a export/lib$(OUTPUT).a\n\t$(RM) -r *.o\n\ntest:\n\tcd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(TESTOUTPUT) $(TESTFILES) $(TESTINPUT)\n\t@echo\n\t./spec/$(TESTOUTPUT)\n\nspec: test\n\nclean:\n\t$(RM) -r spec/$(TESTOUTPUT)\n\t$(RM) -r export\n\n";
 
         # Write the .gitignore file
         puts "  #{ARROW} .gitignore";
@@ -107,9 +107,9 @@ class Emeralds::CommandProcessor
         Dir.mkdir "#{name}/spec";
         puts "  #{ARROW} spec"
         puts "    #{ARROW} #{name}.spec.c";
-        File.write "#{name}/spec/#{name}.spec.c", "#include \"#{name}.spec.h\"\n\nint main(void) {\n    char *v = get_value();\n    int res = strcmp(v, \"Hello, World!\");\n\n    if(res == 0) printf(\"Test (1) passed\\n\");\n\n    return 0;\n}\n";
+        File.write "#{name}/spec/#{name}.spec.c", "#include \"#{name}.spec.h\"\n\nmodule(T_#{name}, {\n\tdescribe(\"#get_value\", {\n\t\tit(\"returns `Hello, World!`\", {\n\t\t\tassert_that_charptr(get_value() equals to \"Hello, World!\");\n\t\t});\n\t});\n});\n\nspec_suite({\n\tT_#{name}();\n});\n\nspec({\n\trun_spec_suite(\"all\");\n});\n";
         puts "    #{ARROW} #{name}.spec.h";
-        File.write "#{name}/spec/#{name}.spec.h", "#ifndef __#{name.upcase}_SPEC_H_\n#define __#{name.upcase}_SPEC_H_\n\n#include \"../src/#{name}.h\"\n\n#include <string.h>\n\n#endif\n";
+        File.write "#{name}/spec/#{name}.spec.h", "#ifndef __#{name.upcase}_SPEC_H_\n#define __#{name.upcase}_SPEC_H_\n\n#include \"../src/#{name}.h\"\n#include \"../libs/cSpec/export/cSpec.h\"\n\n#endif\n";
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
 
         # Sucessful creation

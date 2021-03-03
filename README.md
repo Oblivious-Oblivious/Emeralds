@@ -24,7 +24,6 @@ Run the install script
 ### Sample usage
 * `em init testapp`
 * `em list`
-* (Add dependencies to the em.yml)
 * `em install`
 * `em test`
 * `em build app`
@@ -32,7 +31,6 @@ Run the install script
 
 ## Development
 
-* Make cSpec a dependency by default
 * Refactor the initialization method using functionality that writes strings to variable files
 
 ## Contributing
