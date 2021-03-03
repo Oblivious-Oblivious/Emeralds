@@ -1,4 +1,5 @@
-INPUT = emeralds.cr
+NAME = emeralds
+INPUT = $(NAME).cr
 
 all: build
 
@@ -9,6 +10,11 @@ remake_export:
 build: remake_export
 	crystal build --release src/$(INPUT) -o export/em
 	cp export/em export/emeralds
+
+test:
+	crystal spec ./spec/$(NAME).spec.cr
+
+spec: test
 
 document:
 	$(RM) -r ./docs
