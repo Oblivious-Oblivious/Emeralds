@@ -1,5 +1,12 @@
 require "./emeralds/**"
 
+module Emerald
+    COG       = "⚙".colorize(:light_green).mode(:dim).to_s;
+    ARROW     = "➔".colorize(:dark_gray).to_s;
+    CHECKMARK = "✔".colorize(:light_green).to_s;
+    DIAMOND   = "◈";
+end
+
 class Emerald::Main
     getter :cmd;
 
@@ -13,33 +20,65 @@ class Emerald::Main
 
         case action
         when "init"
-            cmd.usage if ARGV.size < 2;
-            cmd.initialize_em_library ARGV[1];
-        when "list"
-            cmd.get_dependencies;
-        when "install"
-            cmd.install_dependencies;
-        when "build"
-            cmd.usage if ARGV.size < 2;
-            if ARGV[1] == "app"
-                cmd.compile_as_executable;
-            elsif ARGV[1] == "lib"
-                cmd.compile_as_library;
-            else
-                cmd.usage;
+            elapsed = Time.measure do
+                cmd.usage if ARGV.size < 2;
+                cmd.initialize_em_library ARGV[1];
             end
+            puts "All done in #{elapsed.total_seconds
+                .format(decimal_places: 3)} seconds"
+                .colorize(:white).mode(:bold);
+        when "list"
+            elapsed = Time.measure { cmd.get_dependencies; };
+            puts "All done in #{elapsed.total_seconds
+                .format(decimal_places: 3)} seconds"
+                .colorize(:white).mode(:bold);
+        when "install"
+            elapsed = Time.measure { cmd.install_dependencies; };
+            puts "All done in #{elapsed.total_seconds
+                .format(decimal_places: 3)} seconds"
+                .colorize(:white).mode(:bold);
+        when "build"
+            elapsed = Time.measure do
+                cmd.usage if ARGV.size < 2;
+                if ARGV[1] == "app"
+                    cmd.compile_as_executable;
+                elsif ARGV[1] == "lib"
+                    cmd.compile_as_library;
+                else
+                    cmd.usage;
+                end
+            end
+            puts "All done in #{elapsed.total_seconds
+                .format(decimal_places: 3)} seconds"
+                .colorize(:white).mode(:bold);
         when "test"
-            cmd.run_test_script;
+            elapsed = Time.measure { cmd.run_test_script; };
+            puts "All done in #{elapsed.total_seconds
+                .format(decimal_places: 3)} seconds"
+                .colorize(:white).mode(:bold);
         when "version"
-            puts cmd.get_em_version;
+            elapsed = Time.measure { puts cmd.get_em_version; };
+            puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
+            puts "All done in #{elapsed.total_seconds
+                .format(decimal_places: 3)} seconds"
+                .colorize(:white).mode(:bold);
         when "help"
             cmd.usage;
         when "clean"
-            cmd.run_clean_script;
+            elapsed = Time.measure { cmd.run_clean_script; };
+            puts "All done in #{elapsed.total_seconds
+                .format(decimal_places: 3)} seconds"
+                .colorize(:white).mode(:bold);
         when "loc"
-            data = cmd.count_lines_of_code;
-            puts "Files: #{data[0]}";
-            puts "Lines of code: #{data[1]}"
+            elapsed = Time.measure do
+                data = cmd.count_lines_of_code;
+                puts "  #{COG} Files: #{data[0].to_s.colorize(:white).mode(:bold)}";
+                puts "  #{COG} Lines of code: #{data[1].to_s.colorize(:white).mode(:bold)}"
+                puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
+            end
+            puts "All done in #{elapsed.total_seconds
+                .format(decimal_places: 3)} seconds"
+                .colorize(:white).mode(:bold);
         else
             cmd.usage;
         end
