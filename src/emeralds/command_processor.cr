@@ -76,7 +76,7 @@ class Emeralds::CommandProcessor
 
         # Write the em.yml file
         puts "  #{ARROW} em.yml";
-        File.write "#{name}/em.yml", "name: #{name}\nversion: 0.1.0\n\ndependencies:\n\nlicense: GPLv3\n\napplication: make\nlibrary: make lib\npostinstall: #\ntest: make test\nclean: make clean\n";
+        File.write "#{name}/em.yml", "name: #{name}\nversion: 0.1.0\n\ndependencies:\n\nlicense: GPLv3\n\napplication: make\nlibrary: make lib\ntest: make test\nclean: make clean\n";
 
         # Initialize a git directory
         puts "  #{ARROW} .git";

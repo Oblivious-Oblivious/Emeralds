@@ -27,8 +27,6 @@ Run the install script
 
 ## Development
 
-* Implement recursive dependency management
-* Make CLI interface look like mint-lang
 * Add version control and CI
 * Write tests
 
