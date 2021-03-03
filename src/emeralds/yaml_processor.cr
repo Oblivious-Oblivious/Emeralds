@@ -6,6 +6,40 @@ require "yaml"
 ##
 class Emeralds::YamlProcessor
     ##
+    # @message: read_and_return
+    # @brief Secures field from nullity
+    # @param field -> The specific field we are searching for
+    # @param from -> The yaml object to search from
+    # @return -> The value of the field
+    ##
+    private def read_and_return(field, from) : String
+        if from[field].to_s == "nil"
+            "";
+        else
+            from[field].to_s;
+        end
+    end
+
+    ##
+    # @message: read_and_return_dependencies
+    # @brief Secures dependencies field from nullity
+    # @param from -> The yaml object to read from
+    # @return -> The value of the dependencies in array form
+    ##
+    private def read_and_return_dependencies(from) : Array(String)
+        if !from["dependencies"]
+            [] of String;
+        else
+            # Remove brackets and split at commas
+            from["dependencies"]
+                .to_s
+                .lstrip("{")
+                .rstrip("}")
+                .split(", ");
+        end
+    end
+
+    ##
     # @message: get_dependencies
     # @brief Get the dependencies from yaml file
     # @return -> The list of dependencies
@@ -13,12 +47,8 @@ class Emeralds::YamlProcessor
     def get_dependencies : Array(String)
         if File.exists?("em.yml")
             yaml = File.open("em.yml") { |f| YAML.parse f; }.as_h;
-            if !yaml["dependencies"]
-                [] of String;
-            else
-                # Remove brackets and split at commas
-                yaml["dependencies"].to_s.lstrip("{").rstrip("}").split(", ");
-            end
+            
+            read_and_return_dependencies from: yaml;
         else
             [] of String;
         end
@@ -30,12 +60,12 @@ class Emeralds::YamlProcessor
     # @return -> The string field we are searching for
     ##
     def get_field(field : String ) : String
-        yaml = File.open("em.yml") { |f| YAML.parse f; }.as_h;
+        if File.exists?("em.yml")
+            yaml = File.open("em.yml") { |f| YAML.parse f; }.as_h;
 
-        if yaml[field].to_s == "nil"
-            "";
+            read_and_return field, from: yaml;
         else
-            yaml[field].to_s;
+            "";
         end
     end
 
@@ -48,26 +78,15 @@ class Emeralds::YamlProcessor
         num = 0;
         loc = 0;
 
-        Dir.glob "src/**/*.c" do |file|
+        Dir.glob PATHS do |file|
             num += 1;
-            loc += File.read(file).split("\n").select { |line| line != "" }.size;
+            loc += File
+                .read(file)
+                .split("\n")
+                .select { |line| line != "" }
+                .size;
         end
-
-        Dir.glob "src/**/*.h" do |file|
-            num += 1;
-            loc += File.read(file).split("\n").select { |line| line != "" }.size;
-        end
-
-        Dir.glob "spec/**/*.c" do |file|
-            num += 1;
-            loc += File.read(file).split("\n").select { |line| line != "" }.size;
-        end
-
-        Dir.glob "spec/**/*.h" do |file|
-            num += 1;
-            loc += File.read(file).split("\n").select { |line| line != "" }.size;
-        end
-
+        
         [num, loc];
     end
 end

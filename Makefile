@@ -13,6 +13,7 @@ build: remake_export
 
 test:
 	crystal spec ./spec/$(NAME).spec.cr
+	$(RM) -r testapp
 
 spec: test
 
