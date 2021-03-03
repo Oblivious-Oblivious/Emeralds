@@ -36,6 +36,10 @@ class Emerald::Main
             cmd.usage;
         when "clean"
             cmd.run_clean_script;
+        when "loc"
+            data = cmd.count_lines_of_code;
+            puts "Files: #{data[0]}";
+            puts "Lines of code: #{data[1]}"
         else
             cmd.usage;
         end

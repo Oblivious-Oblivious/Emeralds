@@ -31,4 +31,31 @@ class Emerald::YamlProcessor
             yaml[field].to_s;
         end
     end
+
+    def get_lines_of_code : Array(Int32)
+        num = 0;
+        loc = 0;
+
+        Dir.glob "src/**/*.c" do |file|
+            num += 1;
+            loc += File.read(file).split("\n").select { |line| line != "" }.size;
+        end
+
+        Dir.glob "src/**/*.h" do |file|
+            num += 1;
+            loc += File.read(file).split("\n").select { |line| line != "" }.size;
+        end
+
+        Dir.glob "spec/**/*.c" do |file|
+            num += 1;
+            loc += File.read(file).split("\n").select { |line| line != "" }.size;
+        end
+
+        Dir.glob "spec/**/*.h" do |file|
+            num += 1;
+            loc += File.read(file).split("\n").select { |line| line != "" }.size;
+        end
+
+        [num, loc];
+    end
 end

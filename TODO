@@ -53,3 +53,9 @@ em version
 
 em help
     -> Shows the usage information
+
+em clean
+    -> Cleans all dependency and export files
+
+em loc
+    -> Counts the number of files and lines of code of the project

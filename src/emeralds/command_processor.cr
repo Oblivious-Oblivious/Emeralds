@@ -52,6 +52,7 @@ class Emerald::CommandProcessor
         puts "    init [name]       - Initialize a new library with an em.yml file.\n";
         puts "    install           - Install dependencies recursively for each included library.\n";
         puts "    list              - List dependencies in the em file.\n";
+        puts "    loc               - Count the sloc lines of code in the project\n"
         puts "    test              - Run the script of tests.\n";
         puts "    version           - Print the current version of the emerald.\n";
         exit 1;
@@ -207,5 +208,15 @@ class Emerald::CommandProcessor
     ##
     def get_em_version
         yaml.get_field "version";
+    end
+
+    ##
+    # @message: count_lines_of_code
+    # @brief Count the number of lines of code
+    # @return -> loc
+    ##
+    def count_lines_of_code
+        puts "#{"Counting".colorize(:magenta)} Lines of Code...";
+        yaml.get_lines_of_code;
     end
 end
