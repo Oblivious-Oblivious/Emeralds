@@ -32,8 +32,6 @@ Run the install script
 
 ## Development
 
-* Write tests
-
 ## Contributing
 
 1. Fork it (<https://github.com/Oblivious-Oblivious/Emeralds/fork>)
