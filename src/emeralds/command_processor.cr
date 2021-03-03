@@ -3,10 +3,6 @@ require "colorize"
 
 require "./yaml_processor"
 
-##
-# @class CommandProcessor
-# @brief Bundles up the code for all commands
-##
 class Emeralds::CommandProcessor
     getter yaml;
 
@@ -39,10 +35,6 @@ class Emeralds::CommandProcessor
         @yaml = YamlProcessor.new;
     end
 
-    ##
-    # @message usage
-    # @brief Outputs example usage for emeralds
-    ##
     def usage
         puts "emeralds/em [<command>]\n\n";
         puts "Commands:\n";
@@ -58,12 +50,6 @@ class Emeralds::CommandProcessor
         exit 0;
     end
 
-    ##
-    # @message: initialize_em_library
-    # @brief Initialize a new emfile with the name specified
-    # @param name The name of the new library
-    # @return -> The name, if the library was created successfully
-    ##
     def initialize_em_library(name : String) : String
         puts "Emeralds - Initializing a new project".colorize(:white).mode(:bold);
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
@@ -130,11 +116,6 @@ class Emeralds::CommandProcessor
         name;
     end
 
-    ##
-    # @message: get_dependencies
-    # @brief Get the list of dependencies from the yaml file in a vector
-    # @return -> The length of the dependencies vector
-    ##
     def get_dependencies
         puts "Emeralds - Em libraries used:".colorize(:white).mode(:bold);
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
@@ -149,11 +130,6 @@ class Emeralds::CommandProcessor
         deps.size;
     end
 
-    ##
-    # @message: install_dependencies
-    # @brief Installs all missing dependencies for the em library
-    # @return -> A flag signaling if the install was successful
-    ##
     def install_dependencies
         puts "Emeralds - Resolving dependencies...".colorize(:white).mode(:bold);
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
@@ -170,11 +146,6 @@ class Emeralds::CommandProcessor
         true;
     end
 
-    ##
-    # @message: compile_as_executable
-    # @brief Compile libraries into shared libraries and source code as a binary executable
-    # @return -> A flag signaling if the compilation was sucessful
-    ##
     def compile_as_executable
         puts "Emeralds - Compiling as an executable...".colorize(:white).mode(:bold);
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
@@ -185,11 +156,6 @@ class Emeralds::CommandProcessor
         true;
     end
 
-    ##
-    # @message: compile_as_library
-    # @brief Compile both libraries and source files into shared libraries
-    # @return -> A flag signaling if the compilation was sucessful
-    ##
     def compile_as_library
         puts "Emeralds - Compiling as a library...".colorize(:white).mode(:bold);
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
@@ -200,11 +166,6 @@ class Emeralds::CommandProcessor
         true;
     end
 
-    ##
-    # @message: run_test_script
-    # @brief Runs the test script defined in the em.yml file
-    # @return -> A flag signaling if the tests ran successful
-    ##
     def run_test_script
         puts "Emeralds - Running tests...".colorize(:white).mode(:bold);
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
@@ -215,11 +176,6 @@ class Emeralds::CommandProcessor
         true;
     end
 
-    ##
-    # @message: run_clean_script
-    # @brief Runs the clean script defined in the em.yml file
-    # @return -> A flag signaling if the clean script was executed
-    ##
     def run_clean_script
         puts "Emeralds - Cleaning the library files...".colorize(:white).mode(:bold);
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
@@ -230,11 +186,6 @@ class Emeralds::CommandProcessor
         true;
     end
 
-    ##
-    # @message: get_em_version
-    # @brief Get the em version from the yaml file
-    # @return -> The version
-    ##
     def get_em_version
         name = yaml.get_field "name";
         puts "#{name} - Version".colorize(:white).mode(:bold);
@@ -242,11 +193,6 @@ class Emeralds::CommandProcessor
         "#{name} v#{yaml.get_field "version"}";
     end
 
-    ##
-    # @message: count_lines_of_code
-    # @brief Count the number of lines of code
-    # @return -> loc
-    ##
     def count_lines_of_code
         puts "Counting Lines of Code...".colorize(:white).mode(:bold);
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
