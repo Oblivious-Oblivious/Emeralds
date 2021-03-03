@@ -1,6 +1,6 @@
 require "yaml"
 
-class Emerald::YamlProcessor
+class Emeralds::YamlProcessor
     ##
     # @message: get_dependencies
     # @brief Get the dependencies from yaml file

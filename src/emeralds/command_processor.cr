@@ -7,7 +7,7 @@ require "./yaml_processor"
 # @class CommandProcessor
 # @brief Bundles up the code for all commands
 ##
-class Emerald::CommandProcessor
+class Emeralds::CommandProcessor
     getter yaml;
 
     private def list_dep(dep : String)
