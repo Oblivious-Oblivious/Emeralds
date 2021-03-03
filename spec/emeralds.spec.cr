@@ -1,7 +1,7 @@
 require "./spec_helper"
 
-describe Emerald do
+describe Emeralds do
     it "works" do
-        false.should eq true;
+        true.should eq true;
     end
 end
