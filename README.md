@@ -32,6 +32,9 @@ Run the install script
 
 ## Development
 
+* Make cSpec a dependency by default
+* Refactor the initialization method using functionality that writes strings to variable files
+
 ## Contributing
 
 1. Fork it (<https://github.com/Oblivious-Oblivious/Emeralds/fork>)
