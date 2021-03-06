@@ -23,17 +23,20 @@ Run the install script
 
 ### Sample usage
 * `em init testapp`
+* `cd testapp`
 * `em list`
 * `em install`
 * `em test`
 * `em build app`
 * `./export/testapp`
+* `em clean`
 
 ## Development
 
-* Refactor the initialization method using functionality that writes strings to variable files
 * Add option for debug and release compilation
 * Add Makefile variables on a crystal option parser
+* Add options for operating system specific compilation
+* Refactor the initialization method using functionality that writes strings to variable files
 
 ## Contributing
 
