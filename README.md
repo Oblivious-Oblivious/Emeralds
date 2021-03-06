@@ -32,6 +32,8 @@ Run the install script
 ## Development
 
 * Refactor the initialization method using functionality that writes strings to variable files
+* Add option for debug and release compilation
+* Add Makefile variables on a crystal option parser
 
 ## Contributing
 
