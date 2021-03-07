@@ -53,7 +53,8 @@ class Emeralds::FileCreatorHelper
             data << "WARNINGS = -Wno-incompatible-pointer-types\n";
             data << "UNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi\n";
             data << "REMOVE_WARNINGS = -Wno-int-conversion\n";
-            data << "LIBS = \n\n";
+            data << "NIX_LIBS = -shared -fPIC\n"
+            data << "OSX_LIBS = -c\n\n";
 
             data << "INPUTFILES = src/$(NAME)/*.c\n";
             data << "INPUT = src/$(NAME).c\n";
@@ -80,13 +81,13 @@ class Emeralds::FileCreatorHelper
             data << "lib: $(shell uname)\n\n";
 
             data << "Darwin: make_export copy_headers\n\t";
-                data << "$(CC) -c $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) $(INPUTFILES)\n\t";
+                data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(OSX_LIBS) $(INPUTFILES)\n\t";
                 data << "llvm-ar -rcs $(OUTPUT).so *.o\n\t";
                 data << "mv $(OUTPUT).so export/\n\t";
                 data << "$(RM) -r *.o\n\n";
             
             data << "Linux: make_export copy_headers\n\t";
-                data << "$(CC) -c $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT).so $(INPUTFILES)\n\t";
+                data << "$(CC) -c $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(NIX_LIBS) -o $(OUTPUT).so $(INPUTFILES)\n\t";
                 data << "mv $(OUTPUT).so export/\n\n";
 
             data << "test:\n\t";
