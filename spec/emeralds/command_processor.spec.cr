@@ -54,7 +54,7 @@ describe Emeralds::CommandProcessor do
 
     it "gets the number of files and lines of code in the project" do
         Dir.cd "testapp";
-        cmd.count_lines_of_code.should eq [6, 35];
+        cmd.count_lines_of_code.should eq [6, 42];
         Dir.cd "..";
     end
 end

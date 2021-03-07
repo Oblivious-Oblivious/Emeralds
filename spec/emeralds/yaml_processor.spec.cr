@@ -100,7 +100,7 @@ describe Emeralds::YamlProcessor do
         `em init testapp`;
         Dir.cd "testapp";
 
-        yaml.get_lines_of_code.should eq [6, 35];
+        yaml.get_lines_of_code.should eq [6, 42];
 
         Dir.cd "..";
         FileUtils.rm_rf "testapp";
