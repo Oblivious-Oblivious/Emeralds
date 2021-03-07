@@ -146,7 +146,9 @@ class Emeralds::FileCreatorHelper
             data << "modules.order\n";
             data << "Module.symvers\n";
             data << "Mkfile.old\n";
-            data << "dkms.conf\n";
+            data << "dkms.conf\n\n";
+
+            data << "libs/\n";
         end
         File.write "#{name}/.gitignore", data;
     end
