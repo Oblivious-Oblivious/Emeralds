@@ -87,7 +87,7 @@ class Emeralds::FileCreatorHelper
                 data << "$(RM) -r *.o\n\n";
             
             data << "Linux: make_export copy_headers\n\t";
-                data << "$(CC) -c $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(NIX_LIBS) -o $(OUTPUT).so $(INPUTFILES)\n\t";
+                data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(NIX_LIBS) -o $(OUTPUT).so $(INPUTFILES)\n\t";
                 data << "mv $(OUTPUT).so export/\n\n";
 
             data << "test:\n\t";
