@@ -105,6 +105,18 @@ class Emeralds::CommandProcessor
         true;
     end
 
+    def install_dev_dependencies
+        puts "Emeralds - Resolving development dependencies...".colorize(:white).mode(:bold);
+        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
+        
+        yaml.get_dev_dependencies.each do |dep|
+            install_dep dep;
+        end
+
+        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
+        true;
+    end
+
     def compile_as_executable
         puts "Emeralds - Compiling as an executable...".colorize(:white).mode(:bold);
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);

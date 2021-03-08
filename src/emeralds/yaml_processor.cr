@@ -22,11 +22,34 @@ class Emeralds::YamlProcessor
         end
     end
 
+    private def read_and_return_dev_dependencies(from)
+        if !from["dev-dependencies"]
+            [] of String;
+        else
+            # Remove brackets and split at commas
+            from["dev-dependencies"]
+                .to_s
+                .lstrip("{")
+                .rstrip("}")
+                .split(", ");
+        end
+    end
+
     def get_dependencies : Array(String)
         if File.exists?("em.yml")
             yaml = File.open("em.yml") { |f| YAML.parse f; }.as_h;
             
             read_and_return_dependencies from: yaml;
+        else
+            [] of String;
+        end
+    end
+
+    def get_dev_dependencies : Array(String)
+        if File.exists?("em.yml")
+            yaml = File.open("em.yml") { |f| YAML.parse f; }.as_h;
+            
+            read_and_return_dev_dependencies from: yaml;
         else
             [] of String;
         end

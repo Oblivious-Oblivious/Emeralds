@@ -17,7 +17,9 @@ class Emeralds::FileCreatorHelper
             data << "name: #{name}\n";
             data << "version: 0.1.0\n\n";
 
-            data << "dependencies:\n";
+            data << "dependencies:\n\n";
+
+            data << "dev-dependencies:\n";
             data << "  cSpec: Oblivious-Oblivious/cSpec\n\n";
 
             data << "license: GPLv3\n\n";

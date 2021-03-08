@@ -26,7 +26,15 @@ class Emeralds::Main
                 .format(decimal_places: 3)} seconds"
                 .colorize(:white).mode(:bold);
         when "install"
-            elapsed = Time.measure { cmd.install_dependencies; };
+            elapsed = Time.measure do
+                if ARGV.size < 2
+                    cmd.install_dependencies;
+                elsif ARGV.size == 2 && ARGV[1] == "dev"
+                    cmd.install_dev_dependencies;
+                else
+                    cmd.usage;
+                end
+            end
             puts "All done in #{elapsed.total_seconds
                 .format(decimal_places: 3)} seconds"
                 .colorize(:white).mode(:bold);
