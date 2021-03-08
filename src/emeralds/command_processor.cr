@@ -8,7 +8,7 @@ class Emeralds::CommandProcessor
     getter :yaml;
 
     private def get_parts(from : String) : Array(String)
-        dep.split(" => ")
+        from.split(" => ")
            .map(&.lstrip "\"")
            .map(&.rstrip "\"");
     end
