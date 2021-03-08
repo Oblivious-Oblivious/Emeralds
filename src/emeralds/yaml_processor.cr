@@ -9,49 +9,15 @@ class Emeralds::YamlProcessor
         end
     end
 
-    private def read_and_return_dependencies(from) : Array(String)
-        if !from["dependencies"]
+    private def read_and_return_dependencies(from : String) : Array(String)
+        if !from || from == ""
             [] of String;
         else
             # Remove brackets and split at commas
-            from["dependencies"]
-                .to_s
+            from.to_s
                 .lstrip("{")
                 .rstrip("}")
                 .split(", ");
-        end
-    end
-
-    private def read_and_return_dev_dependencies(from)
-        if !from["dev-dependencies"]
-            [] of String;
-        else
-            # Remove brackets and split at commas
-            from["dev-dependencies"]
-                .to_s
-                .lstrip("{")
-                .rstrip("}")
-                .split(", ");
-        end
-    end
-
-    def get_dependencies : Array(String)
-        if File.exists?("em.yml")
-            yaml = File.open("em.yml") { |f| YAML.parse f; }.as_h;
-            
-            read_and_return_dependencies from: yaml;
-        else
-            [] of String;
-        end
-    end
-
-    def get_dev_dependencies : Array(String)
-        if File.exists?("em.yml")
-            yaml = File.open("em.yml") { |f| YAML.parse f; }.as_h;
-            
-            read_and_return_dev_dependencies from: yaml;
-        else
-            [] of String;
         end
     end
 
@@ -63,6 +29,14 @@ class Emeralds::YamlProcessor
         else
             "";
         end
+    end
+
+    def get_dependencies : Array(String)
+        read_and_return_dependencies from: get_field "dependencies";
+    end
+
+    def get_dev_dependencies : Array(String)
+        read_and_return_dependencies from: get_field "dev-dependencies";
     end
 
     def get_lines_of_code : Array(Int32)

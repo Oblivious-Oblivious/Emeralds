@@ -7,29 +7,26 @@ require "./file_creator_helper"
 class Emeralds::CommandProcessor
     getter :yaml;
 
+    private def get_parts(from : String) : Array(String)
+        dep.split(" => ")
+           .map(&.lstrip "\"")
+           .map(&.rstrip "\"");
+    end
+
     private def list_dep(dep : String)
-        if dep != ""
-            parts = dep
-                .split(" => ")
-                .map(&.lstrip "\"")
-                .map(&.rstrip "\"");
-            puts "  #{COG} #{parts[0]}";
-        end
+        parts = get_parts from: dep;
+        puts "  #{COG} #{parts[0]}";
     end
 
     private def install_dep(dep : String)
-        if dep != ""
-            parts = dep
-                .split(" => ")
-                .map(&.lstrip "\"")
-                .map(&.rstrip "\"");
-            `git clone https://github.com/#{parts[1]} libs/#{parts[0]}`;
+        parts = get_parts from: dep;
+        `git clone https://github.com/#{parts[1]} libs/#{parts[0]}`;
 
-            Dir.cd "libs/#{parts[0]}";
-            `em install`;
-            `em build lib`
-            Dir.cd "../../";
-        end
+        # TODO -> REMOVE BEFORE INSTALLING OR RE-INSTALLING
+        Dir.cd "libs/#{parts[0]}";
+        `em install`;
+        `em build lib`
+        Dir.cd "../../";
     end
 
     def initialize
@@ -43,7 +40,7 @@ class Emeralds::CommandProcessor
         puts "    clean             - Run the clean script\n";
         puts "    help              - Print this help message.\n";
         puts "    init [name]       - Initialize a new library with an em.yml file.\n";
-        puts "    install           - Install dependencies recursively for each included library.\n";
+        puts "    install [ | dev]  - Install dependencies recursively for each included library.\n";
         puts "    list              - List dependencies in the em file.\n";
         puts "    loc               - Count the sloc lines of code in the project\n"
         puts "    test              - Run the script of tests.\n";
@@ -82,7 +79,7 @@ class Emeralds::CommandProcessor
         deps = yaml.get_dependencies;
 
         deps.each do |dep|
-            list_dep dep;
+            list_dep dep if dep != "";
         end
         
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
@@ -98,7 +95,7 @@ class Emeralds::CommandProcessor
         Dir.mkdir "libs";
         
         yaml.get_dependencies.each do |dep|
-            install_dep dep;
+            install_dep dep if dep != "";
         end
 
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
@@ -110,7 +107,7 @@ class Emeralds::CommandProcessor
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
         
         yaml.get_dev_dependencies.each do |dep|
-            install_dep dep;
+            install_dep dep if dep != "";
         end
 
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
