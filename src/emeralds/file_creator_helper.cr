@@ -56,7 +56,8 @@ class Emeralds::FileCreatorHelper
             data << "UNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi\n";
             data << "REMOVE_WARNINGS = -Wno-int-conversion\n";
             data << "NIX_LIBS = -shared -fPIC\n"
-            data << "OSX_LIBS = -c\n\n";
+            data << "OSX_LIBS = -c\n";
+            data << "DEPS = $(shell find ./libs -name \"*.*o\" | xargs ls -d)\n\n";
 
             data << "INPUTFILES = src/$(NAME)/*.c\n";
             data << "INPUT = src/$(NAME).c\n";
@@ -77,23 +78,21 @@ class Emeralds::FileCreatorHelper
                 data << "cp src/$(NAME).h export/\n\n";
             
             data << "default: make_export\n\t";
-                data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT) $(INPUTFILES)\n\t";
+                data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
                 data << "mv $(OUTPUT) export/\n\n";
 
             data << "lib: $(shell uname)\n\n";
 
             data << "Darwin: make_export copy_headers\n\t";
                 data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(OSX_LIBS) $(INPUTFILES)\n\t";
-                data << "llvm-ar -rcs $(OUTPUT).so *.o\n\t";
-                data << "mv $(OUTPUT).so export/\n\t";
-                data << "$(RM) -r *.o\n\n";
+                data << "mv *.o export/\n\n";
             
             data << "Linux: make_export copy_headers\n\t";
                 data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(NIX_LIBS) -o $(OUTPUT).so $(INPUTFILES)\n\t";
                 data << "mv $(OUTPUT).so export/\n\n";
 
             data << "test:\n\t";
-                data << "cd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) -Wno-implicit-function-declaration $(LIBS) -o $(TESTOUTPUT) $(TESTFILES) $(TESTINPUT)\n\t";
+                data << "cd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) -Wno-implicit-function-declaration $(LIBS) -o $(TESTOUTPUT) $(DEPS) $(TESTFILES) $(TESTINPUT)\n\t";
                 data << "@echo\n\t";
                 data << "./spec/$(TESTOUTPUT)\n\n";
 

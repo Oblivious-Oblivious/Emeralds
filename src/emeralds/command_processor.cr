@@ -20,9 +20,11 @@ class Emeralds::CommandProcessor
 
     private def install_dep(dep : String)
         parts = get_parts from: dep;
-        `git clone https://github.com/#{parts[1]} libs/#{parts[0]}`;
 
-        # TODO -> REMOVE BEFORE INSTALLING OR RE-INSTALLING
+        # Remove before installing or re-installing
+        FileUtils.rm_rf "libs/#{parts[0]}";
+
+        `git clone https://github.com/#{parts[1]} libs/#{parts[0]}`;
         Dir.cd "libs/#{parts[0]}";
         `em install`;
         `em build lib`
@@ -91,9 +93,10 @@ class Emeralds::CommandProcessor
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
 
         # Recreate libs directory
-        FileUtils.rm_rf "libs";
-        Dir.mkdir "libs";
-        
+        unless Dir.exists? "libs"
+            Dir.mkdir "libs";
+        end
+
         yaml.get_dependencies.each do |dep|
             install_dep dep if dep != "";
         end
