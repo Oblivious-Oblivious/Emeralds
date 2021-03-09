@@ -74,7 +74,7 @@ class Emeralds::FileCreatorHelper
 
             data << "copy_headers:\n\t";
                 data << "mkdir export/$(NAME) && mkdir export/$(NAME)/headers\n\t";
-                data << "cp src/$(NAME)/headers/* export/$(NAME)/headers/\n\t";
+                data << "cp -r src/$(NAME)/headers/* export/$(NAME)/headers/\n\t";
                 data << "cp src/$(NAME).h export/\n\n";
             
             data << "default: make_export\n\t";
