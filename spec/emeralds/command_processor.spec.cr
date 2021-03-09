@@ -9,7 +9,8 @@ describe Emeralds::CommandProcessor do
         Dir.cd "testapp";
         
         # Initials do not have dependencies
-        cmd.get_dependencies.should eq 0;
+        # but have cSpec as a dev-dependency
+        cmd.get_dependencies.should eq 1;
         Dir.cd "..";
     end
 

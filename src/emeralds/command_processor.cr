@@ -79,13 +79,17 @@ class Emeralds::CommandProcessor
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
 
         deps = yaml.get_dependencies;
-
         deps.each do |dep|
             list_dep dep if dep != "";
         end
-        
+
+        dev_deps = yaml.get_dev_dependencies;
+        dev_deps.each do |dep|
+            list_dep dep if dep != "";
+        end
+
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
-        deps.size;
+        deps.size + dev_deps.size;
     end
 
     def install_dependencies
