@@ -1,6 +1,6 @@
 #!/bin/sh
 
 make build
-chown -R $(whoami) /usr/local/bin
+#chown -R $(whoami) /usr/local/bin
 cp export/* /usr/local/bin/
 
