@@ -63,8 +63,8 @@ class Emeralds::FileCreatorHelper
             data << "INPUT = src/$(NAME).c\n";
             data << "OUTPUT = $(NAME)\n\n";
 
-            data << "TESTFILES = ../src/$(NAME)/*.c\n";
-            data << "TESTINPUT = $(NAME).spec.c\n";
+            data << "TESTFILES = src/$(NAME)/*.c\n";
+            data << "TESTINPUT = spec/$(NAME).spec.c\n";
             data << "TESTOUTPUT = spec_results\n\n";
 
             data << "all: default\n\n";
