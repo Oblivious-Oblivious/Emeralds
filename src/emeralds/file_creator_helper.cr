@@ -92,14 +92,14 @@ class Emeralds::FileCreatorHelper
                 data << "mv $(OUTPUT).so export/\n\n";
 
             data << "test:\n\t";
-                data << "cd spec && $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) -Wno-implicit-function-declaration $(LIBS) -o $(TESTOUTPUT) $(DEPS) $(TESTFILES) $(TESTINPUT)\n\t";
+                data << "$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) -Wno-implicit-function-declaration $(LIBS) -o $(TESTOUTPUT) $(DEPS) $(TESTFILES) $(TESTINPUT)\n\t";
                 data << "@echo\n\t";
-                data << "./spec/$(TESTOUTPUT)\n\n";
+                data << "./$(TESTOUTPUT)\n\n";
 
             data << "spec: test\n\n";
 
             data << "clean:\n\t";
-                data << "$(RM) -r spec/$(TESTOUTPUT)\n\t";
+                data << "$(RM) -r $(TESTOUTPUT)\n\t";
                 data << "$(RM) -r export\n\n";
         end
         File.write "#{name}/Makefile", data;
