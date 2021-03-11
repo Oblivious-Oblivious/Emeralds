@@ -32,7 +32,12 @@ class Emeralds::CommandProcessor
         `em build lib`;
 
         # Remove duplicate .o files
-        `rm $(find ./libs -name "*.*o" | xargs ls -d)`;
+        ofiles = `find ./libs -name "*.*o"`;
+        olist = ofiles.split("\n");
+        olist.pop;
+        olist.each do |item|
+            `rm #{item}`;
+        end
 
         Dir.cd "../../";
     end
