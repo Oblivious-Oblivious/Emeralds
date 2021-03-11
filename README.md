@@ -26,6 +26,7 @@ Run the install script
 * `cd testapp`
 * `em list`
 * `em install`
+* `em install dev`
 * `em test`
 * `em build app`
 * `./export/testapp`
@@ -33,10 +34,9 @@ Run the install script
 
 ## Development
 
+* Create a dependency tree, remove duplicate entries and then install
 * Add option for debug and release compilation
 * Add Makefile variables on a crystal option parser
-* Add options for operating system specific compilation
-* Create a dependency tree, remove duplicate entries and then install
 * Refactor the initialization method using functionality that writes strings to variable files
 
 ## Contributing
