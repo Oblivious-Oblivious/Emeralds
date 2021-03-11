@@ -34,10 +34,9 @@ Run the install script
 
 ## Development
 
-* Create a dependency tree, remove duplicate entries and then install
+* Test for library removal correctness
 * Add option for debug and release compilation
 * Add Makefile variables on a crystal option parser
-* Refactor the initialization method using functionality that writes strings to variable files
 
 ## Contributing
 
