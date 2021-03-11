@@ -72,6 +72,18 @@ class Emeralds::Install < Emeralds::Command
     end
 end
 
+class Emeralds::InstallDev < Emeralds::Command
+    def message
+        "Emeralds - Resolving development dependencies...";
+    end
+
+    def block
+        -> {
+            cmd.install_dev_dependencies;
+        };
+    end
+end
+
 class Emeralds::Build < Emeralds::Command
     def message
         "Emeralds - Compiling ...";
@@ -87,6 +99,18 @@ class Emeralds::Build < Emeralds::Command
             else
                 cmd.usage;
             end
+        };
+    end
+end
+
+class Emeralds::BuildLibrary < Emeralds::Command
+    def message
+        "Emeralds - Compiling as a library...";
+    end
+
+    def block
+        -> {
+            cmd.compile_as_library;
         };
     end
 end
@@ -143,12 +167,13 @@ end
 
 class Emeralds::Help < Emeralds::Command
     def message
-        "";
+        "Emeralds - Help/Usage";
     end
 
     def block
         -> {
             cmd.usage;
+            exit 0;
         };
     end
 end

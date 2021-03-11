@@ -24,10 +24,16 @@ class Emeralds::CommandProcessor
         # Remove before installing or re-installing
         FileUtils.rm_rf "libs/#{parts[0]}";
 
-        `git clone https://github.com/#{parts[1]} libs/#{parts[0]}`;
+        puts " #{COG} Installing `#{parts[0]}`";
+        `git clone https://github.com/#{parts[1]} libs/#{parts[0]} 2>&1`;
         Dir.cd "libs/#{parts[0]}";
+
         `em install`;
-        `em build lib`
+        `em build lib`;
+
+        # Remove duplicate .o files
+        `rm $(find ./libs -name "*.*o" | xargs ls -d)`;
+
         Dir.cd "../../";
     end
 
@@ -47,13 +53,9 @@ class Emeralds::CommandProcessor
         puts "    loc               - Count the sloc lines of code in the project\n"
         puts "    test              - Run the script of tests.\n";
         puts "    version           - Print the current version of the emerald.\n";
-        exit 0;
     end
 
     def initialize_em_library(name : String) : String
-        puts "Emeralds - Initializing a new project".colorize(:white).mode(:bold);
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
-
         fch = FileCreatorHelper.new name;
         fch.create_lib_directory;
 
@@ -67,17 +69,12 @@ class Emeralds::CommandProcessor
         fch.create_source_directories;
         fch.create_source_files;
         fch.create_spec_files;
-        
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
 
         # Sucessful creation
         name;
     end
 
     def get_dependencies
-        puts "Emeralds - Em libraries used:".colorize(:white).mode(:bold);
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
-
         deps = yaml.get_dependencies;
         deps.each do |dep|
             list_dep dep if dep != "";
@@ -88,13 +85,11 @@ class Emeralds::CommandProcessor
             list_dep dep if dep != "";
         end
 
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
         deps.size + dev_deps.size;
     end
 
     def install_dependencies
-        puts "Emeralds - Resolving dependencies...".colorize(:white).mode(:bold);
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
+        # puts "PWD: #{Dir.current}";
 
         # Recreate libs directory
         unless Dir.exists? "libs"
@@ -102,76 +97,45 @@ class Emeralds::CommandProcessor
         end
 
         yaml.get_dependencies.each do |dep|
-            install_dep dep if dep != "";
+            install_dep dep unless dep == "";
         end
 
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
         true;
     end
 
     def install_dev_dependencies
-        puts "Emeralds - Resolving development dependencies...".colorize(:white).mode(:bold);
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
-        
         yaml.get_dev_dependencies.each do |dep|
-            install_dep dep if dep != "";
+            install_dep dep unless dep == "";
         end
-
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
         true;
     end
 
     def compile_as_executable
-        puts "Emeralds - Compiling as an executable...".colorize(:white).mode(:bold);
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
-
         puts `#{yaml.get_field "application"}`;
-
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
         true;
     end
 
     def compile_as_library
-        puts "Emeralds - Compiling as a library...".colorize(:white).mode(:bold);
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
-
         puts `#{yaml.get_field "library"}`;
-
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
         true;
     end
 
     def run_test_script
-        puts "Emeralds - Running tests...".colorize(:white).mode(:bold);
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
-
         puts `#{yaml.get_field "test"}`;
-
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
         true;
     end
 
     def run_clean_script
-        puts "Emeralds - Cleaning the library files...".colorize(:white).mode(:bold);
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
-
         puts `#{yaml.get_field "clean"}`;
-
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
         true;
     end
 
     def get_em_version
         name = yaml.get_field "name";
-        puts "#{name} - Version".colorize(:white).mode(:bold);
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
         "#{name} v#{yaml.get_field "version"}";
     end
 
     def count_lines_of_code
-        puts "Counting Lines of Code...".colorize(:white).mode(:bold);
-        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
-
         yaml.get_lines_of_code;
     end
 end
