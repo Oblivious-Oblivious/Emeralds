@@ -57,7 +57,7 @@ class Emeralds::FileCreatorHelper
             data << "REMOVE_WARNINGS = -Wno-int-conversion\n";
             data << "NIX_LIBS = -shared -fPIC\n"
             data << "OSX_LIBS = -c\n";
-            data << "DEPS = $(shell find ./libs -name \"*.*o\" | xargs ls -d)\n\n";
+            data << "DEPS = export/*.*o $(shell find ./libs -name \"*.*o\")\n\n";
 
             data << "INPUTFILES = src/$(NAME)/*.c\n";
             data << "INPUT = src/$(NAME).c\n";
@@ -81,7 +81,8 @@ class Emeralds::FileCreatorHelper
                 data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
                 data << "mv $(OUTPUT) export/\n\n";
 
-            data << "lib: $(shell uname)\n\n";
+            data << "lib: $(shell uname)\n\t";
+                data << "cp $(shell find ./libs -name \"*.*o\") export/\n\n";
 
             data << "Darwin: make_export copy_headers\n\t";
                 data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(OSX_LIBS) $(INPUTFILES)\n\t";

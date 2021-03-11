@@ -28,16 +28,9 @@ class Emeralds::CommandProcessor
         `git clone https://github.com/#{parts[1]} libs/#{parts[0]} 2>&1`;
         Dir.cd "libs/#{parts[0]}";
 
+        # # TODO -> Fix for dev-deps as well
         `em install`;
         `em build lib`;
-
-        # Remove duplicate .o files
-        ofiles = `find ./libs -name "*.*o"`;
-        olist = ofiles.split("\n");
-        olist.pop;
-        olist.each do |item|
-            `rm #{item}`;
-        end
 
         Dir.cd "../../";
     end
@@ -94,8 +87,6 @@ class Emeralds::CommandProcessor
     end
 
     def install_dependencies
-        # puts "PWD: #{Dir.current}";
-
         # Recreate libs directory
         unless Dir.exists? "libs"
             Dir.mkdir "libs";
@@ -109,9 +100,15 @@ class Emeralds::CommandProcessor
     end
 
     def install_dev_dependencies
+        # Recreate libs directory
+        unless Dir.exists? "libs"
+            Dir.mkdir "libs";
+        end
+
         yaml.get_dev_dependencies.each do |dep|
             install_dep dep unless dep == "";
         end
+
         true;
     end
 

@@ -34,7 +34,6 @@ Run the install script
 
 ## Development
 
-* Test for library removal correctness
 * Add option for debug and release compilation
 * Add Makefile variables on a crystal option parser
 
