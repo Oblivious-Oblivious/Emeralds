@@ -8,7 +8,7 @@ abstract class Emeralds::Command
     abstract def message;
     abstract def block;
 
-    def banner : String
+    def banner
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
     end
 
