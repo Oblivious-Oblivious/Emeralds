@@ -92,7 +92,8 @@ class Emeralds::FileCreatorHelper
                 data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(NIX_LIBS) -o $(OUTPUT).so $(INPUTFILES)\n\t";
                 data << "mv $(OUTPUT).so export/\n\n";
 
-            data << "test: make_export\n\t";
+            data << "test:\n\t";
+                data << "mkdir export\n\t";
                 data << "$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) -Wno-implicit-function-declaration $(LIBS) -o $(TESTOUTPUT) $(DEPS) $(TESTFILES) $(TESTINPUT)\n\t";
                 data << "@echo\n\t";
                 data << "./$(TESTOUTPUT)\n\n";
