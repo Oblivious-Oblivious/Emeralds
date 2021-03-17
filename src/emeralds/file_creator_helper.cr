@@ -211,8 +211,8 @@ class Emeralds::FileCreatorHelper
     private def create_src_header
         puts "    #{ARROW} #{name}.h";
         data = String.build do |data|
-            data << "#ifndef __#{name.upcase}_H_\n"
-            data << "#define __#{name.upcase}_H_\n\n";
+            data << "#ifndef __#{name.gsub("-", "_").upcase}_H_\n"
+            data << "#define __#{name.gsub("-", "_").upcase}_H_\n\n";
             
             data << "#include <stdio.h>\n\n";
             
@@ -288,8 +288,8 @@ class Emeralds::FileCreatorHelper
     def create_spec_header
         puts "    #{ARROW} #{name}.spec.h";
         data = String.build do |data|
-            data << "#ifndef __#{name.upcase}_SPEC_H_\n";
-            data << "#define __#{name.upcase}_SPEC_H_\n\n";
+            data << "#ifndef __#{name.gsub("-", "_").upcase}_SPEC_H_\n";
+            data << "#define __#{name.gsub("-", "_").upcase}_SPEC_H_\n\n";
 
             data << "#include \"../src/#{name}.h\"\n";
             data << "#include \"../libs/cSpec/export/cSpec.h\"\n\n";
