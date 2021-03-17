@@ -267,7 +267,7 @@ class Emeralds::FileCreatorHelper
         data = String.build do |data|
             data << "#include \"#{name}.spec.h\"\n\n";
 
-            data << "module(T_#{name}, {\n";
+            data << "module(T_#{name.gsub("-", "_")}, {\n";
             data << "    describe(\"#get_value\", {\n";
             data << "        it(\"returns `Hello, World!`\", {\n";
             data << "            assert_that_charptr(get_value() equals to \"Hello, World!\");\n";
@@ -276,7 +276,7 @@ class Emeralds::FileCreatorHelper
             data << "});\n\n";
 
             data << "spec_suite({\n";
-            data << "    T_#{name}();\n";
+            data << "    T_#{name.gsub("-", "_")}();\n";
             data << "});\n\n";
 
             data << "spec({\n";
