@@ -34,6 +34,8 @@ Run the install script
 
 ## Development
 
+* (LOOK AT SET-MERGE-JOIN) Use the same tactic of bundling .o files when building as an app
+* Add LOC option for libs source files
 * Add option for debug and release compilation
 * Add Makefile variables on a crystal option parser
 
