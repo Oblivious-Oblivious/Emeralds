@@ -10,4 +10,10 @@ module Emeralds
         Path.new("spec/**/*.spec.c"),
         Path.new("spec/**/*.spec.h")
     ];
+
+    DEPSPATHS = [
+        # TODO FIX
+        Path.new("libs/**/*.c"),
+        Path.new("libs/**/*.h")
+    ];
 end

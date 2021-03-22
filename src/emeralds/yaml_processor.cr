@@ -54,4 +54,20 @@ class Emeralds::YamlProcessor
         
         [num, loc];
     end
+
+    def get_deps_lines_of_code : Array(Int32)
+        num = 0;
+        loc = 0;
+
+        Dir.glob DEPSPATHS do |file|
+            num += 1;
+            loc += File
+                .read(file)
+                .split("\n")
+                .select { |line| line != "" }
+                .size;
+        end
+        
+        [num, loc];
+    end
 end

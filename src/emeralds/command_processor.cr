@@ -48,7 +48,7 @@ class Emeralds::CommandProcessor
         puts "    init [name]       - Initialize a new library with an em.yml file.\n";
         puts "    install [ | dev]  - Install dependencies recursively for each included library.\n";
         puts "    list              - List dependencies in the em file.\n";
-        puts "    loc               - Count the sloc lines of code in the project\n"
+        puts "    loc [ | deps]     - Count the sloc lines of code in the project\n"
         puts "    test              - Run the script of tests.\n";
         puts "    version           - Print the current version of the emerald.\n";
     end
@@ -139,5 +139,9 @@ class Emeralds::CommandProcessor
 
     def count_lines_of_code
         yaml.get_lines_of_code;
+    end
+
+    def count_deps_lines_of_code
+        yaml.get_deps_lines_of_code;
     end
 end

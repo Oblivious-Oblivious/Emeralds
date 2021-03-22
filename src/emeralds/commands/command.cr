@@ -158,9 +158,17 @@ class Emeralds::Loc < Emeralds::Command
 
     def block
         -> {
-            data = cmd.count_lines_of_code;
-            puts "  #{COG} Files: #{data[0].to_s.colorize(:white).mode(:bold)}";
-            puts "  #{COG} Lines of code: #{data[1].to_s.colorize(:white).mode(:bold)}"
+            if ARGV.size < 2;
+                data = cmd.count_lines_of_code;
+                puts "  #{COG} Files: #{data[0].to_s.colorize(:white).mode(:bold)}";
+                puts "  #{COG} Lines of code: #{data[1].to_s.colorize(:white).mode(:bold)}";
+            elsif ARGV[1] == "deps"
+                data = cmd.count_deps_lines_of_code;
+                puts "  #{COG} Files: #{data[0].to_s.colorize(:white).mode(:bold)}";
+                puts "  #{COG} Lines of code: #{data[1].to_s.colorize(:white).mode(:bold)}";
+            else
+                cmd.usage;
+            end
         };
     end
 end
