@@ -35,10 +35,9 @@ Run the install script
 ## Development
 
 * (LOOK PROJECTS) Use the same tactic of bundling .o files when building as an app
-* Add LOC option for libs source files
 * Remove `.git` from dependencies when installing
+* Remove the nee for a makefile
 * Add option for debug and release compilation
-* Add Makefile variables on a crystal option parser
 
 ## Contributing
 

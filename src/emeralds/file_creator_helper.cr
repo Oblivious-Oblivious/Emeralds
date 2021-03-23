@@ -74,23 +74,23 @@ class Emeralds::FileCreatorHelper
 
             data << "copy_headers:\n\t";
                 data << "mkdir export/$(NAME) && mkdir export/$(NAME)/headers\n\t";
-                data << "cp -r src/$(NAME)/headers/* export/$(NAME)/headers/\n\t";
-                data << "cp src/$(NAME).h export/\n\n";
+                data << "cp -r src/$(NAME)/headers/* export/$(NAME)/headers/ >/dev/null 2>&1 || true\n\t";
+                data << "cp src/$(NAME).h export/ >/dev/null 2>&1 || true\n\n";
             
             data << "default: make_export\n\t";
                 data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
-                data << "mv $(OUTPUT) export/\n\n";
+                data << "mv $(OUTPUT) export/ >/dev/null 2>&1 || true\n\n";
 
             data << "lib: $(shell uname)\n\t";
-                data << "cp $(shell find ./libs -name \"*.*o\") export/\n\n";
+                data << "cp $(shell find ./libs -name \"*.*o\") export/ >/dev/null 2>&1 || true\n\n";
 
             data << "Darwin: make_export copy_headers\n\t";
                 data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(OSX_LIBS) $(INPUTFILES)\n\t";
-                data << "mv *.o export/\n\n";
+                data << "mv *.o export/ >/dev/null 2>&1 || true\n\n";
             
             data << "Linux: make_export copy_headers\n\t";
                 data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(NIX_LIBS) -o $(OUTPUT).so $(INPUTFILES)\n\t";
-                data << "mv $(OUTPUT).so export/\n\n";
+                data << "mv $(OUTPUT).so export/ >/dev/null 2>&1 || true\n\n";
 
             data << "test:\n\t";
                 data << "mkdir export; $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) -Wno-implicit-function-declaration $(LIBS) -o $(TESTOUTPUT) $(DEPS) $(TESTFILES) $(TESTINPUT)\n\t";
