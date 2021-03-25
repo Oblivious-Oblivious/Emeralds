@@ -5,3 +5,4 @@
 *.dwarf
 
 fix_linux
+.DS_Store

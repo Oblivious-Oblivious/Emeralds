@@ -27,6 +27,7 @@ class Emeralds::CommandProcessor
         puts " #{COG} Installing `#{parts[0]}`";
         `git clone https://github.com/#{parts[1]} libs/#{parts[0]} 2>&1`;
         Dir.cd "libs/#{parts[0]}";
+        `rm -rf .git*`;
 
         # # TODO -> Fix for dev-deps as well
         `em install`;

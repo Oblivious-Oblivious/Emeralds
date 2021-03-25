@@ -34,8 +34,8 @@ Run the install script
 
 ## Development
 
+* Fix tests reading .o files twice
 * (LOOK PROJECTS) Use the same tactic of bundling .o files when building as an app
-* Remove `.git` from dependencies when installing
 * Remove the nee for a makefile
 * Add option for debug and release compilation
 
