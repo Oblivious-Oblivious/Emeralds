@@ -42,15 +42,15 @@ class Emeralds::CommandProcessor
     def usage
         puts "emeralds/em [<command>]\n\n";
         puts "Commands:\n";
-        puts "    build [app | lib] - Build the application in the `export` directory.\n";
-        puts "    clean             - Run the clean script\n";
-        puts "    help              - Print this help message.\n";
-        puts "    init [name]       - Initialize a new library with an em.yml file.\n";
-        puts "    install [ | dev]  - Install dependencies recursively for each included library.\n";
-        puts "    list              - List dependencies in the em file.\n";
-        puts "    loc [ | deps]     - Count the sloc lines of code in the project\n"
-        puts "    test              - Run the script of tests.\n";
-        puts "    version           - Print the current version of the emerald.\n";
+        puts "    build [app | lib] [debug | release] - Build the application in the `export` directory.\n";
+        puts "    clean                               - Run the clean script\n";
+        puts "    help                                - Print this help message.\n";
+        puts "    init [name]                         - Initialize a new library with an em.yml file.\n";
+        puts "    install [ | dev]                    - Install dependencies recursively for each included library.\n";
+        puts "    list                                - List dependencies in the em file.\n";
+        puts "    loc [ | deps]                       - Count the sloc lines of code in the project\n"
+        puts "    test                                - Run the script of tests.\n";
+        puts "    version                             - Print the current version of the emerald.\n";
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
     end
 
@@ -113,13 +113,21 @@ class Emeralds::CommandProcessor
         true;
     end
 
-    def compile_as_executable
-        puts `#{yaml.get_field "application"}`;
+    def compile_as_executable(mode : String)
+        if mode == "release"
+            puts `#{yaml.get_field "application_release"}`;
+        else
+            puts `#{yaml.get_field "application_debug"}`;
+        end
         true;
     end
 
-    def compile_as_library
-        puts `#{yaml.get_field "library"}`;
+    def compile_as_library(mode : String)
+        if mode == "release"
+            puts `#{yaml.get_field "library_release"}`;
+        else
+            puts `#{yaml.get_field "library_debug"}`;
+        end
         true;
     end
 

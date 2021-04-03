@@ -78,26 +78,50 @@ class Emeralds::InstallDev < Emeralds::Command
     end
 end
 
-class Emeralds::Build < Emeralds::Command
+class Emeralds::BuildDebug < Emeralds::Command
     def message
         "Emeralds - Compiling as an app...";
     end
 
     def block
         -> {
-            cmd.compile_as_executable;
+            cmd.compile_as_executable "debug";
         };
     end
 end
 
-class Emeralds::BuildLibrary < Emeralds::Command
+class Emeralds::BuildRelease < Emeralds::Command
+    def message
+        "Emeralds - Compiling as an app...";
+    end
+
+    def block
+        -> {
+            cmd.compile_as_executable "release";
+        };
+    end
+end
+
+class Emeralds::BuildLibraryDebug < Emeralds::Command
     def message
         "Emeralds - Compiling as a library...";
     end
 
     def block
         -> {
-            cmd.compile_as_library;
+            cmd.compile_as_library "debug";
+        };
+    end
+end
+
+class Emeralds::BuildLibraryRelease < Emeralds::Command
+    def message
+        "Emeralds - Compiling as a library...";
+    end
+
+    def block
+        -> {
+            cmd.compile_as_library "release";
         };
     end
 end

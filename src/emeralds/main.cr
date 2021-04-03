@@ -20,10 +20,23 @@ class Emeralds::Main
                 Emeralds::Help.new.run;
             end
         when "build"
+            Emeralds::Help.new.run if ARGV.size < 3;
             if ARGV[1] == "app"
-                Emeralds::Build.new.run;
+                if ARGV[2] == "debug"
+                    Emeralds::BuildDebug.new.run;
+                elsif ARGV[2] == "release"
+                    Emeralds::BuildRelease.new.run;
+                else
+                    Emeralds::Help.new.run;
+                end
             elsif ARGV[1] == "lib"
-                Emeralds::BuildLibrary.new.run;
+                if ARGV[2] == "debug"
+                    Emeralds::BuildLibraryDebug.new.run;
+                elsif ARGV[2] == "release"
+                    Emeralds::BuildLibraryRelease.new.run;
+                else
+                    Emeralds::Help.new.run;
+                end
             else
                 Emeralds::Help.new.run;
             end

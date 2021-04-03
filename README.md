@@ -34,7 +34,6 @@ Run the install script
 
 ## Development
 
-* Add option for debug and release compilation
 * Include installation instructions for wget and git requirements
 * Remove the need for a makefile
 

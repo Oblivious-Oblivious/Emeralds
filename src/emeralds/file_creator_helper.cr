@@ -24,8 +24,10 @@ class Emeralds::FileCreatorHelper
 
             data << "license: GPLv3\n\n";
 
-            data << "application: make app\n";
-            data << "library: make lib\n";
+            data << "application_debug: make app_debug\n";
+            data << "application_release: make app_release\n";
+            data << "library_debug: make lib_debug\n";
+            data << "library_release: make lib_release\n";
             data << "test: make test\n";
             data << "clean: make clean\n";
         end
@@ -47,11 +49,14 @@ class Emeralds::FileCreatorHelper
         data = String.build do |data|
             data << "NAME = #{name}\n\n";
             data << "CC = clang\n";
-            data << "OPT = -O2\n";
-            data << "DEBUG = -g\n";
-            data << "VERSION = -std=c11\n\n";
 
-            data << "FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\n";
+            data << "DEBUG_OPT = -Og -g\n";
+            data << "DEBUG_VERSION = -std=c89\n\n";
+            data << "DEBUG_FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\n";
+            data << "RELEASE_OPT = -O2\n";
+            data << "RELEASE_VERSION = -std=c11\n\n";
+            data << "RELEASE_FLAGS =\n";
+
             data << "WARNINGS = -Wno-incompatible-pointer-types\n";
             data << "UNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi\n";
             data << "REMOVE_WARNINGS = -Wno-int-conversion\n";
@@ -67,7 +72,7 @@ class Emeralds::FileCreatorHelper
             data << "TESTINPUT = spec/$(NAME).spec.c\n";
             data << "TESTOUTPUT = spec_results\n\n";
 
-            data << "all: app\n\n";
+            data << "all: app_debug\n\n";
 
             data << "make_export:\n\t";
                 data << "$(RM) -r export && mkdir export\n\n";
@@ -77,17 +82,26 @@ class Emeralds::FileCreatorHelper
                 data << "cp -r src/$(NAME)/headers/* export/$(NAME)/headers/ >/dev/null 2>&1 || true\n\t";
                 data << "cp src/$(NAME).h export/ >/dev/null 2>&1 || true\n\n";
             
-            data << "app: make_export\n\t";
-                data << "$(CC) $(OPT) $(DEBUG) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
+            data << "app_debug: make_export\n\t";
+                data << "$(CC) $(DEBUG_OPT) $(DEBUG_VERSION) $(DEBUG_FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
+                data << "mv $(OUTPUT) export/ >/dev/null 2>&1 || true\n\n";
+            
+            data << "app_release: make_export\n\t";
+                data << "$(CC) $(RELEASE_OPT) $(RELEASE_VERSION) $(RELEASE_FLAGS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
                 data << "mv $(OUTPUT) export/ >/dev/null 2>&1 || true\n\n";
 
-            data << "lib: make_export copy_headers\n\t";
-                data << "$(CC) $(OPT) $(DEBUG) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) $(INPUTFILES)\n\t";
+            data << "lib_debug: make_export copy_headers\n\t";
+                data << "$(CC) $(DEBUG_OPT) $(DEBUG_VERSION) $(DEBUG_FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) $(INPUTFILES)\n\t";
+                data << "mv *.o export/ >/dev/null 2>&1 || true\n\t";
+                data << "mv $(shell find ./libs -name \"*.*o\") export/ >/dev/null 2>&1 || true\n\n";
+
+            data << "lib_release: make_export copy_headers\n\t";
+                data << "$(CC) $(RELEASE_OPT) $(RELEASE_VERSION) $(RELEASE_FLAGS) $(LIBS) $(INPUTFILES)\n\t";
                 data << "mv *.o export/ >/dev/null 2>&1 || true\n\t";
                 data << "mv $(shell find ./libs -name \"*.*o\") export/ >/dev/null 2>&1 || true\n\n";
 
             data << "test:\n\t";
-                data << "mkdir export >/dev/null 2>&1 || true; $(CC) $(OPT) $(DEBUG) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(TEST_WARNINGS) -o spec/$(TESTOUTPUT) $(DEPS) $(TESTFILES) $(TESTINPUT)\n\t";
+                data << "mkdir export >/dev/null 2>&1 || true; $(CC) $(RELEASE_OPT) $(RELEASE_VERSION) $(RELEASE_FLAGS) $(TEST_WARNINGS) -o spec/$(TESTOUTPUT) $(DEPS) $(TESTFILES) $(TESTINPUT)\n\t";
                 data << "@echo\n\t";
                 data << "./spec/$(TESTOUTPUT)\n\n";
 
