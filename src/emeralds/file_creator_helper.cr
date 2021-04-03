@@ -38,7 +38,6 @@ class Emeralds::FileCreatorHelper
     end
 
     def wget_a_gplv3_license
-        # TODO -> CARE FOR CROSS COMPILATION
         puts "  #{ARROW} LICENSE";
         `wget -O #{name}/LICENSE https://www.gnu.org/licenses/gpl-3.0.txt >/dev/null 2>&1`;
     end
@@ -49,15 +48,18 @@ class Emeralds::FileCreatorHelper
             data << "NAME = #{name}\n\n";
             data << "CC = clang\n";
             data << "OPT = -O2\n";
+            data << "DEBUG = -g\n";
             data << "VERSION = -std=c11\n\n";
 
             data << "FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\n";
             data << "WARNINGS = -Wno-incompatible-pointer-types\n";
             data << "UNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi\n";
             data << "REMOVE_WARNINGS = -Wno-int-conversion\n";
-            data << "NIX_LIBS = -shared -fPIC\n"
+            data << "TEST_WARNINGS = -Wno-implicit-function-declaration\n";
+            # data << "NIX_LIBS = -shared -fPIC\n";
+            data << "NIX_LIBS = -c\n";
             data << "OSX_LIBS = -c\n";
-            data << "DEPS = $(shell find ./export -name \"*.*o\") $(shell find ./libs -name \"*.*o\")\n\n";
+            data << "DEPS = $(shell find ./export -name \"*.*o\")\n\n";
 
             data << "INPUTFILES = src/$(NAME)/*.c\n";
             data << "INPUT = src/$(NAME).c\n";
@@ -78,29 +80,30 @@ class Emeralds::FileCreatorHelper
                 data << "cp src/$(NAME).h export/ >/dev/null 2>&1 || true\n\n";
             
             data << "default: make_export\n\t";
-                data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
+                data << "$(CC) $(OPT) $(DEBUG) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
                 data << "mv $(OUTPUT) export/ >/dev/null 2>&1 || true\n\n";
 
             data << "lib: $(shell uname)\n\t";
-                data << "cp $(shell find ./libs -name \"*.*o\") export/ >/dev/null 2>&1 || true\n\n";
+                data << "mv $(shell find ./libs -name \"*.*o\") export/ >/dev/null 2>&1 || true\n\n";
 
             data << "Darwin: make_export copy_headers\n\t";
-                data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(OSX_LIBS) $(INPUTFILES)\n\t";
+                data << "$(CC) $(OPT) $(DEBUG) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(OSX_LIBS) $(INPUTFILES)\n\t";
                 data << "mv *.o export/ >/dev/null 2>&1 || true\n\n";
             
             data << "Linux: make_export copy_headers\n\t";
-                data << "$(CC) $(OPT) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(NIX_LIBS) -o $(OUTPUT).so $(INPUTFILES)\n\t";
-                data << "mv $(OUTPUT).so export/ >/dev/null 2>&1 || true\n\n";
+                data << "$(CC) $(OPT) $(DEBUG) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(NIX_LIBS) -o $(OUTPUT).so $(INPUTFILES)\n\t";
+                # data << "mv $(OUTPUT).so export/ >/dev/null 2>&1 || true\n\n";
+                data << "mv *.o export/ >/dev/null 2>&1 || true\n\n";
 
             data << "test:\n\t";
-                data << "mkdir export; $(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) -Wno-implicit-function-declaration $(LIBS) -o $(TESTOUTPUT) $(DEPS) $(TESTFILES) $(TESTINPUT)\n\t";
+                data << "mkdir export >/dev/null 2>&1 || true; $(CC) $(OPT) $(DEBUG) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(TEST_WARNINGS) -o spec/$(TESTOUTPUT) $(DEPS) $(TESTFILES) $(TESTINPUT)\n\t";
                 data << "@echo\n\t";
-                data << "./$(TESTOUTPUT)\n\n";
+                data << "./spec/$(TESTOUTPUT)\n\n";
 
             data << "spec: test\n\n";
 
             data << "clean:\n\t";
-                data << "$(RM) -r $(TESTOUTPUT)\n\t";
+                data << "$(RM) -r spec/$(TESTOUTPUT)\n\t";
                 data << "$(RM) -r export\n\n";
         end
         File.write "#{name}/Makefile", data;
