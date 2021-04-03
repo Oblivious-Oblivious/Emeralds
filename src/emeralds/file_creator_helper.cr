@@ -83,7 +83,7 @@ class Emeralds::FileCreatorHelper
 
             data << "lib: make_export copy_headers\n\t";
                 data << "$(CC) $(OPT) $(DEBUG) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) $(INPUTFILES)\n\t";
-                data << "mv *.o export/ >/dev/null 2>&1 || true\n\n";
+                data << "mv *.o export/ >/dev/null 2>&1 || true\n\t";
                 data << "mv $(shell find ./libs -name \"*.*o\") export/ >/dev/null 2>&1 || true\n\n";
 
             data << "test:\n\t";
