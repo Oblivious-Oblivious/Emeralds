@@ -24,7 +24,7 @@ class Emeralds::FileCreatorHelper
 
             data << "license: GPLv3\n\n";
 
-            data << "application: make\n";
+            data << "application: make app\n";
             data << "library: make lib\n";
             data << "test: make test\n";
             data << "clean: make clean\n";
@@ -56,9 +56,7 @@ class Emeralds::FileCreatorHelper
             data << "UNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi\n";
             data << "REMOVE_WARNINGS = -Wno-int-conversion\n";
             data << "TEST_WARNINGS = -Wno-implicit-function-declaration\n";
-            # data << "NIX_LIBS = -shared -fPIC\n";
-            data << "NIX_LIBS = -c\n";
-            data << "OSX_LIBS = -c\n";
+            data << "LIBS = -c\n";
             data << "DEPS = $(shell find ./export -name \"*.*o\")\n\n";
 
             data << "INPUTFILES = src/$(NAME)/*.c\n";
@@ -69,7 +67,7 @@ class Emeralds::FileCreatorHelper
             data << "TESTINPUT = spec/$(NAME).spec.c\n";
             data << "TESTOUTPUT = spec_results\n\n";
 
-            data << "all: default\n\n";
+            data << "all: app\n\n";
 
             data << "make_export:\n\t";
                 data << "$(RM) -r export && mkdir export\n\n";
@@ -79,21 +77,14 @@ class Emeralds::FileCreatorHelper
                 data << "cp -r src/$(NAME)/headers/* export/$(NAME)/headers/ >/dev/null 2>&1 || true\n\t";
                 data << "cp src/$(NAME).h export/ >/dev/null 2>&1 || true\n\n";
             
-            data << "default: make_export\n\t";
-                data << "$(CC) $(OPT) $(DEBUG) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
+            data << "app: make_export\n\t";
+                data << "$(CC) $(OPT) $(DEBUG) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
                 data << "mv $(OUTPUT) export/ >/dev/null 2>&1 || true\n\n";
 
-            data << "lib: $(shell uname)\n\t";
+            data << "lib: make_export copy_headers\n\t";
+                data << "$(CC) $(OPT) $(DEBUG) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) $(INPUTFILES)\n\t";
+                data << "mv *.o export/ >/dev/null 2>&1 || true\n\n";
                 data << "mv $(shell find ./libs -name \"*.*o\") export/ >/dev/null 2>&1 || true\n\n";
-
-            data << "Darwin: make_export copy_headers\n\t";
-                data << "$(CC) $(OPT) $(DEBUG) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(OSX_LIBS) $(INPUTFILES)\n\t";
-                data << "mv *.o export/ >/dev/null 2>&1 || true\n\n";
-            
-            data << "Linux: make_export copy_headers\n\t";
-                data << "$(CC) $(OPT) $(DEBUG) $(VERSION) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(NIX_LIBS) -o $(OUTPUT).so $(INPUTFILES)\n\t";
-                # data << "mv $(OUTPUT).so export/ >/dev/null 2>&1 || true\n\n";
-                data << "mv *.o export/ >/dev/null 2>&1 || true\n\n";
 
             data << "test:\n\t";
                 data << "mkdir export >/dev/null 2>&1 || true; $(CC) $(OPT) $(DEBUG) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(TEST_WARNINGS) -o spec/$(TESTOUTPUT) $(DEPS) $(TESTFILES) $(TESTINPUT)\n\t";
