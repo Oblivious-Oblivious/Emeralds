@@ -129,8 +129,7 @@ end
 
 # Defines the main functionality when running the system
 class Emeralds::Main
-    # Runs a the progeram that parses the option
-    # TODO Use an option parser
+    # Runs the program that parses the option
     def run
     end
 end

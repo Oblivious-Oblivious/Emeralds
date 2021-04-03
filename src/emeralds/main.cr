@@ -12,9 +12,21 @@ class Emeralds::Main
         when "list"
             Emeralds::List.new.run;
         when "install"
-            Emeralds::Install.new.run;
+            if ARGV.size < 2
+                Emeralds::Install.new.run;
+            elsif ARGV[1] == "dev"
+                Emeralds::InstallDev.new.run;
+            else
+                Emeralds::Help.new.run;
+            end
         when "build"
-            Emeralds::Build.new.run;
+            if ARGV[1] == "app"
+                Emeralds::Build.new.run;
+            elsif ARGV[1] == "lib"
+                Emeralds::BuildLibrary.new.run;
+            else
+                Emeralds::Help.new.run;
+            end
         when "test"
             Emeralds::Test.new.run;
         when "version"
@@ -22,7 +34,13 @@ class Emeralds::Main
         when "clean"
             Emeralds::Clean.new.run;
         when "loc"
-            Emeralds::Loc.new.run;
+            if ARGV.size < 2
+                Emeralds::Loc.new.run;
+            elsif ARGV[1] == "deps"
+                Emeralds::LocDeps.new.run;
+            else
+                Emeralds::Help.new.run;
+            end
         when "help"
             Emeralds::Help.new.run;
         else

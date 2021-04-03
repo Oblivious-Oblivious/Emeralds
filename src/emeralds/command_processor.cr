@@ -29,7 +29,6 @@ class Emeralds::CommandProcessor
         Dir.cd "libs/#{parts[0]}";
         `rm -rf .git*`;
 
-        # # TODO -> Fix for dev-deps as well
         `em install`;
         `em build lib`;
 
@@ -52,6 +51,7 @@ class Emeralds::CommandProcessor
         puts "    loc [ | deps]     - Count the sloc lines of code in the project\n"
         puts "    test              - Run the script of tests.\n";
         puts "    version           - Print the current version of the emerald.\n";
+        puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
     end
 
     def initialize_em_library(name : String) : String

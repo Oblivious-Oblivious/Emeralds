@@ -61,13 +61,7 @@ class Emeralds::Install < Emeralds::Command
 
     def block
         -> {
-            if ARGV.size < 2
-                cmd.install_dependencies;
-            elsif ARGV.size == 2 && ARGV[1] == "dev"
-                cmd.install_dev_dependencies;
-            else
-                cmd.usage;
-            end
+            cmd.install_dependencies;
         };
     end
 end
@@ -86,19 +80,12 @@ end
 
 class Emeralds::Build < Emeralds::Command
     def message
-        "Emeralds - Compiling ...";
+        "Emeralds - Compiling as an app...";
     end
 
     def block
         -> {
-            cmd.usage if ARGV.size < 2;
-            if ARGV[1] == "app"
-                cmd.compile_as_executable;
-            elsif ARGV[1] == "lib"
-                cmd.compile_as_library;
-            else
-                cmd.usage;
-            end
+            cmd.compile_as_executable;
         };
     end
 end
@@ -158,18 +145,24 @@ class Emeralds::Loc < Emeralds::Command
 
     def block
         -> {
-            if ARGV.size < 2;
-                data = cmd.count_lines_of_code;
-                puts "  #{COG} Files: #{data[0].to_s.colorize(:white).mode(:bold)}";
-                puts "  #{COG} Lines of code: #{data[1].to_s.colorize(:white).mode(:bold)}";
-            elsif ARGV[1] == "deps"
-                data = cmd.count_deps_lines_of_code;
-                puts "  #{COG} Files: #{data[0].to_s.colorize(:white).mode(:bold)}";
-                puts "  #{COG} Lines of code: #{data[1].to_s.colorize(:white).mode(:bold)}";
-            else
-                cmd.usage;
-            end
+            data = cmd.count_lines_of_code;
+            puts "  #{COG} Files: #{data[0].to_s.colorize(:white).mode(:bold)}";
+            puts "  #{COG} Lines of code: #{data[1].to_s.colorize(:white).mode(:bold)}";
         };
+    end
+end
+
+class Emeralds::LocDeps < Emeralds::Command
+    def message
+        "Counting Lines of Code for dependencies...";
+    end
+
+    def block
+        -> {
+            data = cmd.count_deps_lines_of_code;
+            puts "  #{COG} Files: #{data[0].to_s.colorize(:white).mode(:bold)}";
+            puts "  #{COG} Lines of code: #{data[1].to_s.colorize(:white).mode(:bold)}";
+        }
     end
 end
 
