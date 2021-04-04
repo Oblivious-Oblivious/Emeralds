@@ -4,20 +4,31 @@ require "colorize"
 require "./yaml_processor"
 require "./file_creator_helper"
 
+# Bundles up the code for all commands
 class Emeralds::CommandProcessor
     getter :yaml;
 
+    # Split The YAML object on the "=>" to get the github repository
+    #
+    # from -> The string containing the name and link of the current dependencies to draw
+    # return -> The formatted array of name and github link
     private def get_parts(from : String) : Array(String)
         from.split(" => ")
            .map(&.lstrip "\"")
            .map(&.rstrip "\"");
     end
 
+    # List a dependency as formatted text
+    #
+    # dep -> The name of the dependecy to list
     private def list_dep(dep : String)
         parts = get_parts from: dep;
         puts "  #{COG} #{parts[0]}";
     end
 
+    # Install a dependency and its dependencies
+    #
+    # dep -> The name of the dependecy to install
     private def install_dep(dep : String)
         parts = get_parts from: dep;
 
@@ -39,6 +50,7 @@ class Emeralds::CommandProcessor
         @yaml = YamlProcessor.new;
     end
 
+    # Outputs example usage for emeralds
     def usage
         puts "emeralds/em [<command>]\n\n";
         puts "Commands:\n";
@@ -54,6 +66,10 @@ class Emeralds::CommandProcessor
         puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
     end
 
+    # Initialize a new emfile with the name specified
+    #
+    # name -> The name of the new library
+    # return -> The name, if the library was created successfully
     def initialize_em_library(name : String) : String
         fch = FileCreatorHelper.new name;
         fch.create_lib_directory;
@@ -73,6 +89,9 @@ class Emeralds::CommandProcessor
         name;
     end
 
+    # Get the list of dependencies from the yaml file in a vector
+    #
+    # return -> The length of the dependencies vector
     def get_dependencies
         deps = yaml.get_dependencies;
         deps.each do |dep|
@@ -87,6 +106,9 @@ class Emeralds::CommandProcessor
         deps.size + dev_deps.size;
     end
 
+    # Installs all missing dependencies for the em library
+    #
+    # return -> A flag signaling if the install was successful
     def install_dependencies
         # Recreate libs directory
         unless Dir.exists? "libs"
@@ -100,6 +122,9 @@ class Emeralds::CommandProcessor
         true;
     end
 
+    # Installs all missing development dependencies for the em library
+    #
+    # return -> A flag signaling if the install was successful
     def install_dev_dependencies
         # Recreate libs directory
         unless Dir.exists? "libs"
@@ -113,6 +138,9 @@ class Emeralds::CommandProcessor
         true;
     end
 
+    # Compile libraries into shared libraries and source code as a binary executable
+    #
+    # return -> A flag signaling if the compilation was sucessful
     def compile_as_executable(mode : String)
         if mode == "release"
             puts `#{yaml.get_field "application_release"}`;
@@ -122,6 +150,9 @@ class Emeralds::CommandProcessor
         true;
     end
 
+    # Compile both libraries and source files into shared libraries
+    #
+    # return -> A flag signaling if the compilation was sucessful
     def compile_as_library(mode : String)
         if mode == "release"
             puts `#{yaml.get_field "library_release"}`;
@@ -131,25 +162,40 @@ class Emeralds::CommandProcessor
         true;
     end
 
+    # Runs the test script defined in the em.yml file
+    #
+    # return -> A flag signaling if the tests ran successful
     def run_test_script
         puts `#{yaml.get_field "test"}`;
         true;
     end
 
+    # Runs the clean script defined in the em.yml file
+    #
+    # return -> A flag signaling if the clean script was executed
     def run_clean_script
         puts `#{yaml.get_field "clean"}`;
         true;
     end
 
+    # Get the em version from the yaml file
+    #
+    # return -> The version
     def get_em_version
         name = yaml.get_field "name";
         "#{name} v#{yaml.get_field "version"}";
     end
 
+    # Count the number of lines of code
+    #
+    # return -> loc
     def count_lines_of_code
         yaml.get_lines_of_code;
     end
 
+    # Count the number of lines of code in dependencies
+    #
+    # return -> loc of libs
     def count_deps_lines_of_code
         yaml.get_deps_lines_of_code;
     end

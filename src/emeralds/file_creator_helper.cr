@@ -1,3 +1,4 @@
+# Helper module of bundled functions for writing initial files
 class Emeralds::FileCreatorHelper
     getter :name;
 
@@ -6,11 +7,13 @@ class Emeralds::FileCreatorHelper
     )
     end
 
+    # Creates the library directories
     def create_lib_directory
         puts "#{COG} Creating directory: #{name.colorize(:light_green).mode(:bold)}";
         Dir.mkdir name;
     end
 
+    # Creates the initial emfile
     def write_em_file
         puts "  #{ARROW} em.yml";
         data = String.build do |data|
@@ -34,16 +37,20 @@ class Emeralds::FileCreatorHelper
         File.write "#{name}/em.yml", data;
     end
 
+    # Creates a new git repository
     def initialize_git_directory
         puts "  #{ARROW} .git";
         `git init #{name}/`;
     end
 
+    # Resolves a GPLv3 license from the web
+    # TODO -> USES WGET MAKE SURE IT IS INSTALLED ON TARGET MACHINE
     def wget_a_gplv3_license
         puts "  #{ARROW} LICENSE";
         `wget -O #{name}/LICENSE https://www.gnu.org/licenses/gpl-3.0.txt >/dev/null 2>&1`;
     end
 
+    # Creates the initial makefile for compilations
     def write_makefile
         puts "  #{ARROW} Makefile";
         data = String.build do |data|
@@ -114,6 +121,7 @@ class Emeralds::FileCreatorHelper
         File.write "#{name}/Makefile", data;
     end
 
+    # Creates the .gitignore file
     def write_gitignore_file
         puts "  #{ARROW} .gitignore";
         data = String.build do |data|
@@ -163,6 +171,7 @@ class Emeralds::FileCreatorHelper
         File.write "#{name}/.gitignore", data;
     end
 
+    # Creates the initial README.md file
     def generate_readme
         puts "  #{ARROW} README.md";
         data = String.build do |data|
@@ -198,12 +207,14 @@ class Emeralds::FileCreatorHelper
         File.write "#{name}/README.md", data;
     end
 
+    # Creates the dummy source directory
     def create_source_directories
         Dir.mkdir "#{name}/src";
         Dir.mkdir "#{name}/src/#{name}";
         Dir.mkdir "#{name}/src/#{name}/headers";
     end
 
+    # Create a dummy main source file
     private def create_src_main
         puts "    #{ARROW} #{name}.c";
         data = String.build do |data|
@@ -216,6 +227,8 @@ class Emeralds::FileCreatorHelper
         end
         File.write "#{name}/src/#{name}.c", data;
     end
+
+    # Create a dummy lib header file
     private def create_src_header
         puts "    #{ARROW} #{name}.h";
         data = String.build do |data|
@@ -230,6 +243,8 @@ class Emeralds::FileCreatorHelper
         end
         File.write "#{name}/src/#{name}.h", data;
     end
+
+    # Create a dummy lib source file
     private def create_value_main
         puts "      #{ARROW} get_value.c";
         data = String.build do |data|
@@ -241,6 +256,8 @@ class Emeralds::FileCreatorHelper
         end
         File.write "#{name}/src/#{name}/get_value.c", data;
     end
+
+    # Creates a dummy lib header file
     private def create_value_header
         puts "        #{ARROW} get_value.h";
         data = String.build do |data|
@@ -270,6 +287,7 @@ class Emeralds::FileCreatorHelper
         create_value_header;
     end
 
+    # Cretes a dummy spec file using cSpec
     def create_spec_main
         puts "    #{ARROW} #{name}.spec.c";
         data = String.build do |data|
@@ -293,6 +311,8 @@ class Emeralds::FileCreatorHelper
         end
         File.write "#{name}/spec/#{name}.spec.c", data;
     end
+
+    # Cretes a dummy cSpec helper file
     def create_spec_header
         puts "    #{ARROW} #{name}.spec.h";
         data = String.build do |data|
@@ -306,6 +326,8 @@ class Emeralds::FileCreatorHelper
         end
         File.write "#{name}/spec/#{name}.spec.h", data;
     end
+
+    # Calls the create methods
     def create_spec_files
         Dir.mkdir "#{name}/spec";
         puts "  #{ARROW} spec";

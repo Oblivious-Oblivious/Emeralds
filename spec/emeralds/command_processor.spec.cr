@@ -38,13 +38,13 @@ describe Emeralds::CommandProcessor do
 
     it "compiles as an executable" do
         Dir.cd "testapp";
-        cmd.compile_as_executable.should eq true;
+        cmd.compile_as_executable("release").should eq true;
         Dir.cd "..";
     end
 
     it "compiles as a library" do
         Dir.cd "testapp";
-        cmd.compile_as_library.should eq true;
+        cmd.compile_as_library("release").should eq true;
         Dir.cd "..";
     end
 
