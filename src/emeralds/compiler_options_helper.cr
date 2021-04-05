@@ -99,33 +99,36 @@ class Emeralds::CompilerOptionsHelper
     def self.generate_makefile
         puts "  #{ARROW} Makefile";
         data = String.build do |data|
-            data << "NAME = #{name}\n\n";
-            data << "CC = clang\n";
+            data << "NAME = #{O["name"]}\n\n";
+            data << "CC = #{O["cc"]}\n";
 
-            data << "DEBUG_OPT = -Og -g\n";
-            data << "DEBUG_VERSION = -std=c89\n\n";
-            data << "DEBUG_FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\n";
-            data << "RELEASE_OPT = -O2\n";
-            data << "RELEASE_VERSION = -std=c11\n\n";
-            data << "RELEASE_FLAGS =\n";
+            data << "DEBUG_OPT = #{O["debug_opt"]}\n";
+            data << "DEBUG_VERSION = #{O["debug_version"]}\n";
+            data << "DEBUG_FLAGS = #{O["debug_flags"]}\n\n";
 
-            data << "WARNINGS = -Wno-incompatible-pointer-types\n";
-            data << "UNUSED_WARNINGS = -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi\n";
-            data << "REMOVE_WARNINGS = -Wno-int-conversion\n";
-            data << "TEST_WARNINGS = -Wno-implicit-function-declaration\n";
-            data << "LIBS = -c\n";
+            data << "RELEASE_OPT = #{O["release_opt"]}\n";
+            data << "RELEASE_VERSION = #{O["release_version"]}\n";
+            data << "RELEASE_FLAGS = #{O["release_flags"]}\n\n";
+
+            data << "WARNINGS = #{O["warnings"]}\n";
+            data << "UNUSED_WARNINGS = #{O["unused_warnings"]}\n";
+            data << "REMOVE_WARNINGS = #{O["remove_warnings"]}\n";
+            data << "TEST_WARNINGS = #{O["test_warnings"]}\n";
+            data << "LIBS = #{O["libs"]}\n";
+            # TODO -> DIFFERS FROM OPTIONS
             data << "DEPS = $(shell find ./export -name \"*.*o\")\n\n";
 
-            data << "INPUTFILES = src/$(NAME)/*.c\n";
-            data << "INPUT = src/$(NAME).c\n";
-            data << "OUTPUT = $(NAME)\n\n";
+            data << "INPUTFILES = #{O["inputfiles"]}\n";
+            data << "INPUT = #{O["input"]}\n";
+            data << "OUTPUT = #{O["output"]}\n\n";
 
-            data << "TESTFILES = src/$(NAME)/*.c\n";
-            data << "TESTINPUT = spec/$(NAME).spec.c\n";
-            data << "TESTOUTPUT = spec_results\n\n";
+            data << "TESTFILES = #{O["testfiles"]}\n";
+            data << "TESTINPUT = #{O["testinput"]}\n";
+            data << "TESTOUTPUT = #{O["testoutput"]}\n\n";
 
             data << "all: app_debug\n\n";
 
+            # TODO -> KEEP FORMATTING
             data << "make_export:\n\t";
                 data << "$(RM) -r export && mkdir export\n\n";
 

@@ -178,6 +178,18 @@ class Emeralds::Clean < Emeralds::Command
     end
 end
 
+class Emeralds::GenerateMakefile < Emeralds::Command
+    def message
+        "Emeralds - Generating a makefile...";
+    end
+
+    def block
+        -> {
+            cmd.generate_makefile;
+        };
+    end
+end
+
 class Emeralds::Loc < Emeralds::Command
     def message
         "Counting Lines of Code...";

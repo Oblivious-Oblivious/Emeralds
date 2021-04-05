@@ -48,6 +48,8 @@ class Emeralds::Main
             Emeralds::Version.new.run;
         when "clean"
             Emeralds::Clean.new.run;
+        when "makefile"
+            Emeralds::GenerateMakefile.new.run;
         when "loc"
             if ARGV.size < 2
                 Emeralds::Loc.new.run;
