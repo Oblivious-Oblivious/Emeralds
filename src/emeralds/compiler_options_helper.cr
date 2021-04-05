@@ -84,7 +84,7 @@ class Emeralds::CompilerOptionsHelper
 
         puts;
         puts "./spec/#{O["testoutput"]}";
-        `./spec/#{O["testoutput"]}`;
+        puts `./spec/#{O["testoutput"]}`;
     end
 
     def self.clean_script

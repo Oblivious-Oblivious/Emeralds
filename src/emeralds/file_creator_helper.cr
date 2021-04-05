@@ -26,6 +26,8 @@ module Emeralds::FileCreatorHelper
             data << "dev-dependencies:\n";
             data << "  cSpec: Oblivious-Oblivious/cSpec\n\n";
 
+            data << "build: #\n\n";
+
             data << "license: GPLv3\n\n";
         end
         File.write "#{name}/em.yml", data;

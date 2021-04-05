@@ -42,7 +42,7 @@ class Emeralds::CommandProcessor
         `rm -rf .git*`;
 
         `em install`;
-        `em build lib`;
+        `em build lib release`;
 
         Dir.cd "../../";
     end
@@ -143,7 +143,11 @@ class Emeralds::CommandProcessor
     #
     # return -> A flag signaling if the compilation was sucessful
     def compile_as_executable(mode : String)
-        if mode == "release"
+        override = yaml.get_field "build";
+        if override != "#"
+            puts override;
+            `#{override}`;
+        elsif mode == "release"
             Emeralds::CompilerOptionsHelper.application_release;
         else
             Emeralds::CompilerOptionsHelper.application_debug;
@@ -155,7 +159,11 @@ class Emeralds::CommandProcessor
     #
     # return -> A flag signaling if the compilation was sucessful
     def compile_as_library(mode : String)
-        if mode == "release"
+        override = yaml.get_field "build";
+        if override != "#"
+            puts override;
+            `#{override}`;
+        elsif mode == "release"
             Emeralds::CompilerOptionsHelper.library_release;
         else
             Emeralds::CompilerOptionsHelper.library_debug;
