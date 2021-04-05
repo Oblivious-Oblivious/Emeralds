@@ -13,7 +13,7 @@ class Emeralds::CompilerOptionsHelper
         "warnings" => "-Wno-incompatible-pointer-types",
         "unused_warnings" => "-Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi",
         "remove_warnings" => "-Wno-int-conversion",
-        "test_warnings" => "-Wno-implicit-function-declaration",
+        "test_warnings" => "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types",
         "libs" => "-c",
         "deps" => "$(find ./export -name \"*.*o\" >/dev/null 2>&1)",
         "inputfiles" => "src/#{YamlProcessor.new.get_field "name"}/*.c",
