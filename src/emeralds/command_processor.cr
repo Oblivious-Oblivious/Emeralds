@@ -3,6 +3,7 @@ require "colorize"
 
 require "./yaml_processor"
 require "./file_creator_helper"
+require "./compiler_options_helper"
 
 # Bundles up the code for all commands
 class Emeralds::CommandProcessor
@@ -60,6 +61,7 @@ class Emeralds::CommandProcessor
         puts "    init [name]                         - Initialize a new library with an em.yml file.\n";
         puts "    install [ | dev]                    - Install dependencies recursively for each included library.\n";
         puts "    list                                - List dependencies in the em file.\n";
+        puts "    makefile                            - Generate a makefile for independent compilation\n";
         puts "    loc [ | deps]                       - Count the sloc lines of code in the project\n"
         puts "    test                                - Run the script of tests.\n";
         puts "    version                             - Print the current version of the emerald.\n";
@@ -71,19 +73,18 @@ class Emeralds::CommandProcessor
     # name -> The name of the new library
     # return -> The name, if the library was created successfully
     def initialize_em_library(name : String) : String
-        fch = FileCreatorHelper.new name;
-        fch.create_lib_directory;
+        Emeralds::FileCreatorHelper.name = name;
+        Emeralds::FileCreatorHelper.create_lib_directory;
 
         puts "#{COG} Writing initial files:";
-        fch.write_em_file;
-        fch.initialize_git_directory;
-        fch.wget_a_gplv3_license;
-        fch.write_makefile;
-        fch.write_gitignore_file;
-        fch.generate_readme;
-        fch.create_source_directories;
-        fch.create_source_files;
-        fch.create_spec_files;
+        Emeralds::FileCreatorHelper.write_em_file;
+        Emeralds::FileCreatorHelper.initialize_git_directory;
+        Emeralds::FileCreatorHelper.wget_a_gplv3_license;
+        Emeralds::FileCreatorHelper.write_gitignore_file;
+        Emeralds::FileCreatorHelper.generate_readme;
+        Emeralds::FileCreatorHelper.create_source_directories;
+        Emeralds::FileCreatorHelper.create_source_files;
+        Emeralds::FileCreatorHelper.create_spec_files;
 
         # Sucessful creation
         name;
@@ -143,9 +144,9 @@ class Emeralds::CommandProcessor
     # return -> A flag signaling if the compilation was sucessful
     def compile_as_executable(mode : String)
         if mode == "release"
-            puts `#{yaml.get_field "application_release"}`;
+            Emeralds::CompilerOptionsHelper.application_release;
         else
-            puts `#{yaml.get_field "application_debug"}`;
+            Emeralds::CompilerOptionsHelper.application_debug;
         end
         true;
     end
@@ -155,9 +156,9 @@ class Emeralds::CommandProcessor
     # return -> A flag signaling if the compilation was sucessful
     def compile_as_library(mode : String)
         if mode == "release"
-            puts `#{yaml.get_field "library_release"}`;
+            Emeralds::CompilerOptionsHelper.library_release;
         else
-            puts `#{yaml.get_field "library_debug"}`;
+            Emeralds::CompilerOptionsHelper.library_debug;
         end
         true;
     end
@@ -166,24 +167,21 @@ class Emeralds::CommandProcessor
     #
     # return -> A flag signaling if the tests ran successful
     def run_test_script
-        puts `#{yaml.get_field "test"}`;
-        true;
+        Emeralds::CompilerOptionsHelper.test_script;
     end
 
     # Runs the clean script defined in the em.yml file
     #
     # return -> A flag signaling if the clean script was executed
     def run_clean_script
-        puts `#{yaml.get_field "clean"}`;
-        true;
+        Emeralds::CompilerOptionsHelper.clean_script;
     end
 
     # Get the em version from the yaml file
     #
     # return -> The version
     def get_em_version
-        name = yaml.get_field "name";
-        "#{name} v#{yaml.get_field "version"}";
+        "#{yaml.get_field "name"} v#{yaml.get_field "version"}";
     end
 
     # Count the number of lines of code
@@ -198,5 +196,10 @@ class Emeralds::CommandProcessor
     # return -> loc of libs
     def count_deps_lines_of_code
         yaml.get_deps_lines_of_code;
+    end
+
+    # Generates a makefile for compiling apps without Emeralds
+    def generate_makefile
+        Emeralds::CompilerOptionsHelper.generate_makefile;
     end
 end

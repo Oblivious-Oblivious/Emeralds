@@ -35,7 +35,6 @@ Run the install script
 ## Development
 
 * Include installation instructions for wget and git requirements
-* Remove the need for a makefile
 
 ## Contributing
 
