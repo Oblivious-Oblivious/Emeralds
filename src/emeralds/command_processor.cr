@@ -144,7 +144,7 @@ class Emeralds::CommandProcessor
     # return -> A flag signaling if the compilation was sucessful
     def compile_as_executable(mode : String)
         override = yaml.get_field "build";
-        if override != "#"
+        if override.strip != ""
             puts override;
             `#{override}`;
         elsif mode == "release"
@@ -160,7 +160,7 @@ class Emeralds::CommandProcessor
     # return -> A flag signaling if the compilation was sucessful
     def compile_as_library(mode : String)
         override = yaml.get_field "build";
-        if override != "#"
+        if override.strip != ""
             puts override;
             `#{override}`;
         elsif mode == "release"
