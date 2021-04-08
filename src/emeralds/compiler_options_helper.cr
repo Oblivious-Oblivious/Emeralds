@@ -16,11 +16,11 @@ class Emeralds::CompilerOptionsHelper
         "test_warnings" => "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types",
         "libs" => "-c",
         "deps" => "$(find ./export -name \"*.*o\" >/dev/null 2>&1)",
-        "inputfiles" => "src/#{YamlProcessor.new.get_field "name"}/*.c",
-        "input" => "src/#{YamlProcessor.new.get_field "name"}.c",
+        "inputfiles" => "$(find src/#{YamlProcessor.new.get_field "name"}/*.c)",
+        "input" => "$(find src/#{YamlProcessor.new.get_field "name"}.c)",
         "output" => "#{YamlProcessor.new.get_field "name"}",
-        "testfiles" => "src/#{YamlProcessor.new.get_field "name"}/*.c",
-        "testinput" => "spec/#{YamlProcessor.new.get_field "name"}.spec.c",
+        "testfiles" => "$(find src/#{YamlProcessor.new.get_field "name"}/*.c)",
+        "testinput" => "$(find spec/#{YamlProcessor.new.get_field "name"}.spec.c)",
         "testoutput" => "spec_results"
     };
 

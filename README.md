@@ -34,6 +34,7 @@ Run the install script
 
 ## Development
 
+* Fix a bug where it crashes the array search when getting a field from the yaml files
 * Include installation instructions for wget and git requirements
 
 ## Contributing
