@@ -15,12 +15,11 @@ class Emeralds::CompilerOptionsHelper
         "remove_warnings" => "-Wno-int-conversion",
         "test_warnings" => "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types",
         "libs" => "-c",
-        "deps" => "$(find ./export -name \"*.*o\" >/dev/null 2>&1)",
-        "inputfiles" => "$(find src/#{YamlProcessor.new.get_field "name"}/*.c)",
-        "input" => "$(find src/#{YamlProcessor.new.get_field "name"}.c)",
+        "deps" => "$(find ./export -name \"*.*o\" 2>&1 | grep -v \"No such file or directory\")",
+        "inputfiles" => "$(find src/#{YamlProcessor.new.get_field "name"}/*.c 2>&1 | grep -v \"No such file or directory\")",
+        "input" => "$(find src/#{YamlProcessor.new.get_field "name"}.c 2>&1 | grep -v \"No such file or directory\")",
         "output" => "#{YamlProcessor.new.get_field "name"}",
-        "testfiles" => "$(find src/#{YamlProcessor.new.get_field "name"}/*.c)",
-        "testinput" => "$(find spec/#{YamlProcessor.new.get_field "name"}.spec.c)",
+        "testinput" => "$(find spec/#{YamlProcessor.new.get_field "name"}.spec.c 2>&1 | grep -v \"No such file or directory\")",
         "testoutput" => "spec_results"
     };
 
@@ -38,12 +37,12 @@ class Emeralds::CompilerOptionsHelper
     end
     def self.copy_libraries_to_export
         `mv *.o export/ >/dev/null 2>&1 || true`;
-        `mv $(find ./libs -name "*.*o" >/dev/null 2>&1) export/ >/dev/null 2>&1 || true`;
+        `cp -r $(find ./libs -name "*.*o") export/ >/dev/null 2>&1 || true`;
     end
 
     def self.application_debug
         self.make_export;
-        cmd = "#{O["cc"]} #{O["debug_opt"]} #{O["debug_version"]} #{O["debug_flags"]} #{O["warnings"]} #{O["remove_warnings"]} #{O["unused_warnings"]} -o #{O["output"]} #{O["input"]} #{O["inputfiles"]} #{O["deps"]}";
+        cmd = "#{O["cc"]} #{O["debug_opt"]} #{O["debug_version"]} #{O["debug_flags"]} #{O["warnings"]} #{O["remove_warnings"]} #{O["unused_warnings"]} -o #{O["output"]} #{O["input"]} #{O["inputfiles"]} #{O["deps"]} 2>&1 | grep -v \"no input files\"";
         puts cmd;
         `#{cmd}`;
         self.move_output_to_export;
@@ -51,7 +50,7 @@ class Emeralds::CompilerOptionsHelper
 
     def self.application_release
         self.make_export;
-        cmd = "#{O["cc"]} #{O["release_opt"]} #{O["release_version"]} #{O["release_flags"]} -o #{O["output"]} #{O["input"]} #{O["inputfiles"]} #{O["deps"]}";
+        cmd = "#{O["cc"]} #{O["release_opt"]} #{O["release_version"]} #{O["release_flags"]} -o #{O["output"]} #{O["input"]} #{O["inputfiles"]} #{O["deps"]} 2>&1 | grep -v \"no input files\"";
         puts cmd;
         `#{cmd}`;
         self.move_output_to_export;
@@ -60,7 +59,7 @@ class Emeralds::CompilerOptionsHelper
     def self.library_debug
         self.make_export;
         self.copy_headers;
-        cmd = "#{O["cc"]} #{O["debug_opt"]} #{O["debug_version"]} #{O["debug_flags"]} #{O["warnings"]} #{O["remove_warnings"]} #{O["unused_warnings"]} #{O["libs"]} #{O["inputfiles"]}";
+        cmd = "#{O["cc"]} #{O["debug_opt"]} #{O["debug_version"]} #{O["debug_flags"]} #{O["warnings"]} #{O["remove_warnings"]} #{O["unused_warnings"]} #{O["libs"]} #{O["inputfiles"]} 2>&1 | grep -v \"no input files\"";
         puts cmd;
         `#{cmd}`;
         self.copy_libraries_to_export;
@@ -69,14 +68,16 @@ class Emeralds::CompilerOptionsHelper
     def self.library_release
         self.make_export;
         self.copy_headers;
-        cmd = "#{O["cc"]} #{O["release_opt"]} #{O["release_version"]} #{O["release_flags"]} #{O["libs"]} #{O["inputfiles"]}";
+        cmd = "#{O["cc"]} #{O["release_opt"]} #{O["release_version"]} #{O["release_flags"]} #{O["libs"]} #{O["inputfiles"]} 2>&1 | grep -v \"no input files\"";
         puts cmd;
         `#{cmd}`;
         self.copy_libraries_to_export;
     end
 
     def self.test_script
-        cmd = "#{O["cc"]} #{O["release_opt"]} #{O["release_version"]} #{O["release_flags"]} #{O["test_warnings"]} -o spec/#{O["testoutput"]} #{O["deps"]} #{O["testfiles"]} #{O["testinput"]}";
+        self.copy_libraries_to_export;
+        self.library_release;
+        cmd = "#{O["cc"]} #{O["release_opt"]} #{O["release_version"]} #{O["release_flags"]} #{O["test_warnings"]} -o spec/#{O["testoutput"]} #{O["deps"]} #{O["testinput"]} 2>&1 | grep -v \"no input files\"";
 
         `mkdir export >/dev/null 2>&1 || true`;
         puts cmd;
@@ -122,7 +123,6 @@ class Emeralds::CompilerOptionsHelper
             data << "INPUT = #{O["input"]}\n";
             data << "OUTPUT = #{O["output"]}\n\n";
 
-            data << "TESTFILES = #{O["testfiles"]}\n";
             data << "TESTINPUT = #{O["testinput"]}\n";
             data << "TESTOUTPUT = #{O["testoutput"]}\n\n";
 
@@ -155,8 +155,8 @@ class Emeralds::CompilerOptionsHelper
                 data << "mv *.o export/ >/dev/null 2>&1 || true\n\t";
                 data << "mv $(shell find ./libs -name \"*.*o\") export/ >/dev/null 2>&1 || true\n\n";
 
-            data << "test:\n\t";
-                data << "mkdir export >/dev/null 2>&1 || true; $(CC) $(RELEASE_OPT) $(RELEASE_VERSION) $(RELEASE_FLAGS) $(TEST_WARNINGS) -o spec/$(TESTOUTPUT) $(DEPS) $(TESTFILES) $(TESTINPUT)\n\t";
+            data << "test: lib_release\n\t";
+                data << "$(CC) $(RELEASE_OPT) $(RELEASE_VERSION) $(RELEASE_FLAGS) $(TEST_WARNINGS) -o spec/$(TESTOUTPUT) $(DEPS) $(TESTINPUT)\n\t";
                 data << "@echo\n\t";
                 data << "./spec/$(TESTOUTPUT)\n\n";
 
