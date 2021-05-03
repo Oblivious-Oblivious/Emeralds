@@ -36,6 +36,7 @@ Run the install script
 
 * Fix makefile generation to use $(shell) instead of regular $()
 * Fix a bug where it crashes the array search when getting a field from the yaml files
+* Add functionality for creating new .c/.h pairs with include guards etc.
 * Convert bash searches to crystal glob serches for writing makefile fields
 * Include installation instructions for wget and git requirements
 
