@@ -35,7 +35,7 @@ class Emeralds::YamlProcessor
     #
     # field -> The specific field we are searching for
     # return -> The string field we are searching for
-    def get_field(field : String ) : String
+    def get_field(field : String) : String
         if File.exists?("em.yml")
             yaml = File.open("em.yml") { |f| YAML.parse f; }.as_h;
 

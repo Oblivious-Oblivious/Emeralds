@@ -23,7 +23,7 @@ class Emeralds::CompilerOptionsHelper
         "testoutput" => "spec_results"
     };
 
-    # TODO -> MAKE CROSS PLATFORM
+    # TODO Make cross platform
     def self.make_export
         `rm -rf export && mkdir export`;
     end
@@ -116,7 +116,7 @@ class Emeralds::CompilerOptionsHelper
             data << "REMOVE_WARNINGS = #{O["remove_warnings"]}\n";
             data << "TEST_WARNINGS = #{O["test_warnings"]}\n";
             data << "LIBS = #{O["libs"]}\n";
-            # TODO -> DIFFERS FROM OPTIONS
+            # TODO Differs from options
             data << "DEPS = $(shell find ./export -name \"*.*o\")\n\n";
 
             data << "INPUTFILES = #{O["inputfiles"]}\n";
@@ -128,7 +128,7 @@ class Emeralds::CompilerOptionsHelper
 
             data << "all: app_debug\n\n";
 
-            # TODO -> KEEP FORMATTING
+            # TODO Keep formatting
             data << "make_export:\n\t";
                 data << "$(RM) -r export && mkdir export\n\n";
 

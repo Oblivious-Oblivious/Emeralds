@@ -16,7 +16,7 @@ module Emeralds
 
     # Dependecy source file paths
     DEPSPATHS = [
-        # TODO FIX
+        # TODO Fix
         Path.new("libs/**/*.c"),
         Path.new("libs/**/*.h")
     ];
