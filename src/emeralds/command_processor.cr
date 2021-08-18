@@ -1,10 +1,6 @@
 require "file_utils"
 require "colorize"
 
-require "./yaml_processor"
-require "./file_creator_helper"
-require "./compiler_options_helper"
-
 # Bundles up the code for all commands
 class Emeralds::CommandProcessor
     getter :yaml;
