@@ -1,7 +1,7 @@
 require "yaml"
 
 # Helper functions for reading from the em.yml file
-module Emeralds::YamlProcessor
+module Emeralds::YamlHelper
     # Secures field from nullity
     # 
     # field -> The specific field we are searching for

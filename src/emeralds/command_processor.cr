@@ -84,12 +84,12 @@ class Emeralds::CommandProcessor
     #
     # return -> The length of the dependencies vector
     def get_dependencies
-        deps = Emeralds::YamlProcessor.get_dependencies;
+        deps = Emeralds::YamlHelper.get_dependencies;
         deps.each do |dep|
             list_dep dep if dep != "";
         end
 
-        dev_deps = Emeralds::YamlProcessor.get_dev_dependencies;
+        dev_deps = Emeralds::YamlHelper.get_dev_dependencies;
         dev_deps.each do |dep|
             list_dep dep if dep != "";
         end
@@ -106,7 +106,7 @@ class Emeralds::CommandProcessor
             Dir.mkdir "libs";
         end
 
-        Emeralds::YamlProcessor.get_dependencies.each do |dep|
+        Emeralds::YamlHelper.get_dependencies.each do |dep|
             install_dep dep unless dep == "";
         end
 
@@ -122,7 +122,7 @@ class Emeralds::CommandProcessor
             Dir.mkdir "libs";
         end
 
-        Emeralds::YamlProcessor.get_dev_dependencies.each do |dep|
+        Emeralds::YamlHelper.get_dev_dependencies.each do |dep|
             install_dep dep unless dep == "";
         end
 
@@ -133,7 +133,7 @@ class Emeralds::CommandProcessor
     #
     # return -> A flag signaling if the compilation was sucessful
     def compile_as_executable(mode : String)
-        override = Emeralds::YamlProcessor.get_field "build";
+        override = Emeralds::YamlHelper.get_field "build";
         if override.strip != ""
             puts override;
             `#{override}`;
@@ -149,7 +149,7 @@ class Emeralds::CommandProcessor
     #
     # return -> A flag signaling if the compilation was sucessful
     def compile_as_library(mode : String)
-        override = Emeralds::YamlProcessor.get_field "build";
+        override = Emeralds::YamlHelper.get_field "build";
         if override.strip != ""
             puts override;
             `#{override}`;
@@ -179,21 +179,21 @@ class Emeralds::CommandProcessor
     #
     # return -> The version
     def get_em_version
-        "#{Emeralds::YamlProcessor.get_field "name"} v#{Emeralds::YamlProcessor.get_field "version"}";
+        "#{Emeralds::YamlHelper.get_field "name"} v#{Emeralds::YamlHelper.get_field "version"}";
     end
 
     # Count the number of lines of code
     #
     # return -> loc
     def count_lines_of_code
-        Emeralds::YamlProcessor.get_lines_of_code;
+        Emeralds::YamlHelper.get_lines_of_code;
     end
 
     # Count the number of lines of code in dependencies
     #
     # return -> loc of libs
     def count_deps_lines_of_code
-        Emeralds::YamlProcessor.get_deps_lines_of_code;
+        Emeralds::YamlHelper.get_deps_lines_of_code;
     end
 
     # Generates a makefile for compiling apps without Emeralds
