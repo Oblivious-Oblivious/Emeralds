@@ -28,7 +28,7 @@ Run the install script
 * `em install`
 * `em install dev`
 * `em test`
-* `em build app`
+* `em build app release`
 * `./export/testapp`
 * `em clean`
 
