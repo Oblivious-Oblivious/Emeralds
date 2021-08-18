@@ -1,10 +1,7 @@
-require "./command_processor"
-require "./commands/**"
-
 # Defines the main functionality when running the system
-class Emeralds::Main
+module Emeralds::Main
     # Runs the program that parses the option
-    def run
+    def self.run
         Emeralds::Help.new.run if ARGV.size < 1;
         action = ARGV[0];
 

@@ -1,3 +1,3 @@
 require "./emeralds/**"
 
-Emeralds::Main.new.run;
+Emeralds::Main.run;
