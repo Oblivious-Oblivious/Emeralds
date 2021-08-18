@@ -3,8 +3,6 @@ require "colorize"
 
 # Bundles up the code for all commands
 class Emeralds::CommandProcessor
-    getter :yaml;
-
     # Split The YAML object on the "=>" to get the github repository
     #
     # from -> The string containing the name and link of the current dependencies to draw
@@ -41,10 +39,6 @@ class Emeralds::CommandProcessor
         `em build lib release`;
 
         Dir.cd "../../";
-    end
-
-    def initialize
-        @yaml = YamlProcessor.new;
     end
 
     # Outputs example usage for emeralds
@@ -90,12 +84,12 @@ class Emeralds::CommandProcessor
     #
     # return -> The length of the dependencies vector
     def get_dependencies
-        deps = yaml.get_dependencies;
+        deps = Emeralds::YamlProcessor.get_dependencies;
         deps.each do |dep|
             list_dep dep if dep != "";
         end
 
-        dev_deps = yaml.get_dev_dependencies;
+        dev_deps = Emeralds::YamlProcessor.get_dev_dependencies;
         dev_deps.each do |dep|
             list_dep dep if dep != "";
         end
@@ -112,7 +106,7 @@ class Emeralds::CommandProcessor
             Dir.mkdir "libs";
         end
 
-        yaml.get_dependencies.each do |dep|
+        Emeralds::YamlProcessor.get_dependencies.each do |dep|
             install_dep dep unless dep == "";
         end
 
@@ -128,7 +122,7 @@ class Emeralds::CommandProcessor
             Dir.mkdir "libs";
         end
 
-        yaml.get_dev_dependencies.each do |dep|
+        Emeralds::YamlProcessor.get_dev_dependencies.each do |dep|
             install_dep dep unless dep == "";
         end
 
@@ -139,7 +133,7 @@ class Emeralds::CommandProcessor
     #
     # return -> A flag signaling if the compilation was sucessful
     def compile_as_executable(mode : String)
-        override = yaml.get_field "build";
+        override = Emeralds::YamlProcessor.get_field "build";
         if override.strip != ""
             puts override;
             `#{override}`;
@@ -155,7 +149,7 @@ class Emeralds::CommandProcessor
     #
     # return -> A flag signaling if the compilation was sucessful
     def compile_as_library(mode : String)
-        override = yaml.get_field "build";
+        override = Emeralds::YamlProcessor.get_field "build";
         if override.strip != ""
             puts override;
             `#{override}`;
@@ -185,21 +179,21 @@ class Emeralds::CommandProcessor
     #
     # return -> The version
     def get_em_version
-        "#{yaml.get_field "name"} v#{yaml.get_field "version"}";
+        "#{Emeralds::YamlProcessor.get_field "name"} v#{Emeralds::YamlProcessor.get_field "version"}";
     end
 
     # Count the number of lines of code
     #
     # return -> loc
     def count_lines_of_code
-        yaml.get_lines_of_code;
+        Emeralds::YamlProcessor.get_lines_of_code;
     end
 
     # Count the number of lines of code in dependencies
     #
     # return -> loc of libs
     def count_deps_lines_of_code
-        yaml.get_deps_lines_of_code;
+        Emeralds::YamlProcessor.get_deps_lines_of_code;
     end
 
     # Generates a makefile for compiling apps without Emeralds

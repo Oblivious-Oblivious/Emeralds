@@ -1,8 +1,8 @@
 # A module for setting options and compile flags
 # Also can generate a makefile with those options for standalone usage
-class Emeralds::CompilerOptionsHelper
+module Emeralds::CompilerOptionsHelper
     O = {
-        "name" => "#{YamlProcessor.new.get_field "name"}",
+        "name" => "#{Emeralds::YamlProcessor.get_field "name"}",
         "cc" => "clang",
         "debug_opt" => "-Og -g",
         "debug_version" => "-std=c89",
@@ -16,10 +16,10 @@ class Emeralds::CompilerOptionsHelper
         "test_warnings" => "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types",
         "libs" => "-c",
         "deps" => "$(find ./export -name \"*.*o\" 2>&1 | grep -v \"No such file or directory\")",
-        "inputfiles" => "$(find src/#{YamlProcessor.new.get_field "name"}/*.c 2>&1 | grep -v \"No such file or directory\")",
-        "input" => "$(find src/#{YamlProcessor.new.get_field "name"}.c 2>&1 | grep -v \"No such file or directory\")",
-        "output" => "#{YamlProcessor.new.get_field "name"}",
-        "testinput" => "$(find spec/#{YamlProcessor.new.get_field "name"}.spec.c 2>&1 | grep -v \"No such file or directory\")",
+        "inputfiles" => "$(find src/#{Emeralds::YamlProcessor.get_field "name"}/*.c 2>&1 | grep -v \"No such file or directory\")",
+        "input" => "$(find src/#{Emeralds::YamlProcessor.get_field "name"}.c 2>&1 | grep -v \"No such file or directory\")",
+        "output" => "#{Emeralds::YamlProcessor.get_field "name"}",
+        "testinput" => "$(find spec/#{Emeralds::YamlProcessor.get_field "name"}.spec.c 2>&1 | grep -v \"No such file or directory\")",
         "testoutput" => "spec_results"
     };
 
