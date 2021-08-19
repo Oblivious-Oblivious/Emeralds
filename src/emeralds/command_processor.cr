@@ -51,6 +51,7 @@ class Emeralds::CommandProcessor
         puts "    init [name]                         - Initialize a new library with an em.yml file.\n";
         puts "    install [ | dev]                    - Install dependencies recursively for each included library.\n";
         puts "    list                                - List dependencies in the em file.\n";
+        # TODO Fix makefile
         # puts "    makefile                            - Generate a makefile for independent compilation\n";
         puts "    loc [ | deps]                       - Count the sloc lines of code in the project\n"
         puts "    test                                - Run the script of tests.\n";
