@@ -86,6 +86,7 @@ module Emeralds::CompilerOptionsHelper
         puts;
         puts "./spec/#{O["testoutput"]}";
         puts `./spec/#{O["testoutput"]}`;
+        true;
     end
 
     def self.clean_script
@@ -94,6 +95,7 @@ module Emeralds::CompilerOptionsHelper
 
         puts "rm -rf export";
         `rm -rf export`;
+        true;
     end
 
     # Creates the initial makefile for compilations
