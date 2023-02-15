@@ -1,13 +1,12 @@
 # Emeralds
 
-A module/package manager for C applications.  
-
 [![Built with Crystal](https://img.shields.io/badge/built%20with-crystal-000000.svg?)](https://crystal-lang.org/)
-[![GPLv3 License](https://img.shields.io/badge/license-GPL%20v3-yellow.svg)](./COPYING)
+[![GPLv3 License](https://img.shields.io/badge/license-GPL%20v3-yellow.svg)](./LICENSE)
 
-[![CircleCI](https://circleci.com/gh/Oblivious-Oblivious/Emeralds.svg?style=shield)](https://circleci.com/gh/Oblivious-Oblivious/Emeralds)
 [![CI](https://github.com/Oblivious-Oblivious/Emeralds/workflows/CI/badge.svg)](https://github.com/Oblivious-Oblivious/Emeralds/actions?query=workflow%3ACI)
 [![CI (nightly)](https://github.com/Oblivious-Oblivious/Emeralds/workflows/CI%20(nightly)/badge.svg)](https://github.com/Oblivious-Oblivious/Emeralds/actions?query=workflow%3A%22CI+%28nightly%29%22)
+
+A module/package manager for C applications.
 
 ## Installation
 
