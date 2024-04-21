@@ -9,7 +9,7 @@ class Emeralds::BuildLibraryDebug < Emeralds::Command
   # into shared libraries in debug mode
   def block
     -> {
-      return if try_override_command;
+      return if Emeralds::CommandProcessor.try_override_command;
       Emeralds::CompilerOptionsHelper.library_debug;
     };
   end

@@ -9,7 +9,7 @@ class Emeralds::BuildDebug < Emeralds::Command
   # code as a binary executable in debug mode
   def block
     -> {
-      return if try_override_command;
+      return if Emeralds::CommandProcessor.try_override_command;
       Emeralds::CompilerOptionsHelper.application_debug;
     };
   end
