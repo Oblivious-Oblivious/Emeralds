@@ -5,9 +5,10 @@ class Emeralds::GenerateMakefile < Emeralds::Command
     "Emeralds - Generating a makefile...";
   end
 
+  # Generates a makefile for compiling apps without Emeralds
   def block
     -> {
-      cmd.generate_makefile;
+      Emeralds::CompilerOptionsHelper.generate_makefile;
     };
   end
 end

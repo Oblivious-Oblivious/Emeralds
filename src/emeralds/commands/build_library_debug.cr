@@ -5,9 +5,12 @@ class Emeralds::BuildLibraryDebug < Emeralds::Command
     "Emeralds - Compiling as a library...";
   end
 
+  # Compile both libraries and source files
+  # into shared libraries in debug mode
   def block
     -> {
-      cmd.compile_as_library "debug";
+      return if try_override_command;
+      Emeralds::CompilerOptionsHelper.library_debug;
     };
   end
 end

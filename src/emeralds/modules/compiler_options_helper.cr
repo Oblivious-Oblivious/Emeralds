@@ -1,40 +1,18 @@
 # A module for setting options and compile flags
 # Also can generate a makefile with those options for standalone usage
 module Emeralds::CompilerOptionsHelper
-  O = {
-    "name"            => "#{Emeralds::YamlHelper.get_field "name"}",
-    "cc"              => "clang",
-    "debug_opt"       => "-Og -g",
-    "debug_version"   => "-std=c89",
-    "debug_flags"     => "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic",
-    "release_opt"     => "-O2",
-    "release_version" => "-std=c2x",
-    "release_flags"   => "",
-    "warnings"        => "-Wno-incompatible-pointer-types",
-    "unused_warnings" => "-Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi",
-    "remove_warnings" => "-Wno-int-conversion",
-    "test_warnings"   => "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types",
-    "libs"            => "-c",
-    "deps"            => "$(find ./export -name \"*.*o\" 2>&1 | grep -v \"No such file or directory\")",
-    "inputfiles"      => "$(find src/#{Emeralds::YamlHelper.get_field "name"}/*.c 2>&1 | grep -v \"No such file or directory\")",
-    "input"           => "$(find src/#{Emeralds::YamlHelper.get_field "name"}.c 2>&1 | grep -v \"No such file or directory\")",
-    "output"          => "#{Emeralds::YamlHelper.get_field "name"}",
-    "testinput"       => "$(find spec/#{Emeralds::YamlHelper.get_field "name"}.spec.c 2>&1 | grep -v \"No such file or directory\")",
-    "testoutput"      => "spec_results",
-  }; # TODO Make cross platform
-
   def self.make_export
     `rm -rf export && mkdir export`;
   end
 
   def self.copy_headers
-    `mkdir export/#{O["name"]} && mkdir export/#{O["name"]}/headers`;
-    `cp -r src/#{O["name"]}/headers/* export/#{O["name"]}/headers/ >/dev/null 2>&1 || true`;
-    `cp src/#{O["name"]}.h export/ >/dev/null 2>&1 || true`;
+    `mkdir export/#{Emeralds::OPT["name"]} && mkdir export/#{Emeralds::OPT["name"]}/headers`;
+    `cp -r src/#{Emeralds::OPT["name"]}/headers/* export/#{Emeralds::OPT["name"]}/headers/ >/dev/null 2>&1 || true`;
+    `cp src/#{Emeralds::OPT["name"]}.h export/ >/dev/null 2>&1 || true`;
   end
 
   def self.move_output_to_export
-    `mv #{O["output"]} export/ >/dev/null 2>&1 || true`;
+    `mv #{Emeralds::OPT["output"]} export/ >/dev/null 2>&1 || true`;
   end
 
   def self.copy_libraries_to_export
@@ -44,7 +22,7 @@ module Emeralds::CompilerOptionsHelper
 
   def self.application_debug
     self.make_export;
-    cmd = "#{O["cc"]} #{O["debug_opt"]} #{O["debug_version"]} #{O["debug_flags"]} #{O["warnings"]} #{O["remove_warnings"]} #{O["unused_warnings"]} -o #{O["output"]} #{O["input"]} #{O["inputfiles"]} #{O["deps"]} 2>&1 | grep -v \"no input files\"";
+    cmd = "#{Emeralds::OPT["cc"]} #{Emeralds::OPT["debug_opt"]} #{Emeralds::OPT["debug_version"]} #{Emeralds::OPT["debug_flags"]} #{Emeralds::OPT["warnings"]} #{Emeralds::OPT["remove_warnings"]} #{Emeralds::OPT["unused_warnings"]} -o #{Emeralds::OPT["output"]} #{Emeralds::OPT["input"]} #{Emeralds::OPT["inputfiles"]} #{Emeralds::OPT["deps"]} 2>&1 | grep -v \"no input files\"";
     puts cmd;
     `#{cmd}`;
     self.move_output_to_export;
@@ -52,7 +30,7 @@ module Emeralds::CompilerOptionsHelper
 
   def self.application_release
     self.make_export;
-    cmd = "#{O["cc"]} #{O["release_opt"]} #{O["release_version"]} #{O["release_flags"]} -o #{O["output"]} #{O["input"]} #{O["inputfiles"]} #{O["deps"]} 2>&1 | grep -v \"no input files\"";
+    cmd = "#{Emeralds::OPT["cc"]} #{Emeralds::OPT["release_opt"]} #{Emeralds::OPT["release_version"]} #{Emeralds::OPT["release_flags"]} -o #{Emeralds::OPT["output"]} #{Emeralds::OPT["input"]} #{Emeralds::OPT["inputfiles"]} #{Emeralds::OPT["deps"]} 2>&1 | grep -v \"no input files\"";
     puts cmd;
     `#{cmd}`;
     self.move_output_to_export;
@@ -61,7 +39,7 @@ module Emeralds::CompilerOptionsHelper
   def self.library_debug
     self.make_export;
     self.copy_headers;
-    cmd = "#{O["cc"]} #{O["debug_opt"]} #{O["debug_version"]} #{O["debug_flags"]} #{O["warnings"]} #{O["remove_warnings"]} #{O["unused_warnings"]} #{O["libs"]} #{O["inputfiles"]} 2>&1 | grep -v \"no input files\"";
+    cmd = "#{Emeralds::OPT["cc"]} #{Emeralds::OPT["debug_opt"]} #{Emeralds::OPT["debug_version"]} #{Emeralds::OPT["debug_flags"]} #{Emeralds::OPT["warnings"]} #{Emeralds::OPT["remove_warnings"]} #{Emeralds::OPT["unused_warnings"]} #{Emeralds::OPT["libs"]} #{Emeralds::OPT["inputfiles"]} 2>&1 | grep -v \"no input files\"";
     puts cmd;
     `#{cmd}`;
     self.copy_libraries_to_export;
@@ -70,7 +48,7 @@ module Emeralds::CompilerOptionsHelper
   def self.library_release
     self.make_export;
     self.copy_headers;
-    cmd = "#{O["cc"]} #{O["release_opt"]} #{O["release_version"]} #{O["release_flags"]} #{O["libs"]} #{O["inputfiles"]} 2>&1 | grep -v \"no input files\"";
+    cmd = "#{Emeralds::OPT["cc"]} #{Emeralds::OPT["release_opt"]} #{Emeralds::OPT["release_version"]} #{Emeralds::OPT["release_flags"]} #{Emeralds::OPT["libs"]} #{Emeralds::OPT["inputfiles"]} 2>&1 | grep -v \"no input files\"";
     puts cmd;
     `#{cmd}`;
     self.copy_libraries_to_export;
@@ -79,19 +57,19 @@ module Emeralds::CompilerOptionsHelper
   def self.test_script
     self.copy_libraries_to_export;
     self.library_release;
-    cmd = "#{O["cc"]} #{O["release_opt"]} #{O["release_version"]} #{O["release_flags"]} #{O["test_warnings"]} -o spec/#{O["testoutput"]} #{O["deps"]} #{O["testinput"]} 2>&1 | grep -v \"no input files\"";
+    cmd = "#{Emeralds::OPT["cc"]} #{Emeralds::OPT["release_opt"]} #{Emeralds::OPT["release_version"]} #{Emeralds::OPT["release_flags"]} #{Emeralds::OPT["test_warnings"]} -o spec/#{Emeralds::OPT["testoutput"]} #{Emeralds::OPT["deps"]} #{Emeralds::OPT["testinput"]} 2>&1 | grep -v \"no input files\"";
     `mkdir export >/dev/null 2>&1 || true`;
     puts cmd;
     `#{cmd}`;
     puts;
-    puts "./spec/#{O["testoutput"]}";
-    puts `./spec/#{O["testoutput"]}`;
+    puts "./spec/#{Emeralds::OPT["testoutput"]}";
+    puts `./spec/#{Emeralds::OPT["testoutput"]}`;
     true;
   end
 
   def self.clean_script
-    puts "rm -rf spec/#{O["testoutput"]}";
-    `rm -rf spec/#{O["testoutput"]}`;
+    puts "rm -rf spec/#{Emeralds::OPT["testoutput"]}";
+    `rm -rf spec/#{Emeralds::OPT["testoutput"]}`;
     puts "rm -rf export";
     `rm -rf export`;
     true;
@@ -102,31 +80,31 @@ module Emeralds::CompilerOptionsHelper
     puts "  #{ARROW} Makefile";
 
     data = String.build do |data|
-      data << "NAME = #{O["name"]}\n\n";
+      data << "NAME = #{Emeralds::OPT["name"]}\n\n";
 
-      data << "CC = #{O["cc"]}\n";
-      data << "DEBUG_OPT = #{O["debug_opt"]}\n";
-      data << "DEBUG_VERSION = #{O["debug_version"]}\n";
-      data << "DEBUG_FLAGS = #{O["debug_flags"]}\n\n";
+      data << "CC = #{Emeralds::OPT["cc"]}\n";
+      data << "DEBUG_OPT = #{Emeralds::OPT["debug_opt"]}\n";
+      data << "DEBUG_VERSION = #{Emeralds::OPT["debug_version"]}\n";
+      data << "DEBUG_FLAGS = #{Emeralds::OPT["debug_flags"]}\n\n";
 
-      data << "RELEASE_OPT = #{O["release_opt"]}\n";
-      data << "RELEASE_VERSION = #{O["release_version"]}\n";
-      data << "RELEASE_FLAGS = #{O["release_flags"]}\n\n";
+      data << "RELEASE_OPT = #{Emeralds::OPT["release_opt"]}\n";
+      data << "RELEASE_VERSION = #{Emeralds::OPT["release_version"]}\n";
+      data << "RELEASE_FLAGS = #{Emeralds::OPT["release_flags"]}\n\n";
 
-      data << "WARNINGS = #{O["warnings"]}\n";
-      data << "UNUSED_WARNINGS = #{O["unused_warnings"]}\n";
-      data << "REMOVE_WARNINGS = #{O["remove_warnings"]}\n";
-      data << "TEST_WARNINGS = #{O["test_warnings"]}\n";
-      data << "LIBS = #{O["libs"]}\n";
+      data << "WARNINGS = #{Emeralds::OPT["warnings"]}\n";
+      data << "UNUSED_WARNINGS = #{Emeralds::OPT["unused_warnings"]}\n";
+      data << "REMOVE_WARNINGS = #{Emeralds::OPT["remove_warnings"]}\n";
+      data << "TEST_WARNINGS = #{Emeralds::OPT["test_warnings"]}\n";
+      data << "LIBS = #{Emeralds::OPT["libs"]}\n";
       # TODO Differs from options
       data << "DEPS = $(shell find ./export -name \"*.*o\")\n\n";
 
-      data << "INPUTFILES = #{O["inputfiles"]}\n";
-      data << "INPUT = #{O["input"]}\n";
-      data << "OUTPUT = #{O["output"]}\n\n";
+      data << "INPUTFILES = #{Emeralds::OPT["inputfiles"]}\n";
+      data << "INPUT = #{Emeralds::OPT["input"]}\n";
+      data << "OUTPUT = #{Emeralds::OPT["output"]}\n\n";
 
-      data << "TESTINPUT = #{O["testinput"]}\n";
-      data << "TESTOUTPUT = #{O["testoutput"]}\n\n";
+      data << "TESTINPUT = #{Emeralds::OPT["testinput"]}\n";
+      data << "TESTOUTPUT = #{Emeralds::OPT["testoutput"]}\n\n";
 
       data << "all: app_debug\n\n";
 

@@ -5,9 +5,10 @@ class Emeralds::Clean < Emeralds::Command
     "Emeralds - Cleaning the library files...";
   end
 
+  # Runs the clean script defined in the em.yml file
   def block
     -> {
-      cmd.run_clean_script;
+      Emeralds::CompilerOptionsHelper.clean_script;
     };
   end
 end

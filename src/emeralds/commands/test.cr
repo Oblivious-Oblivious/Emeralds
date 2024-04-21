@@ -5,9 +5,10 @@ class Emeralds::Test < Emeralds::Command
     "Emeralds - Running tests...";
   end
 
+  # Runs the test script defined in the em.yml file
   def block
     -> {
-      cmd.run_test_script;
+      Emeralds::CompilerOptionsHelper.test_script;
     };
   end
 end

@@ -5,9 +5,12 @@ class Emeralds::BuildLibraryRelease < Emeralds::Command
     "Emeralds - Compiling as a library...";
   end
 
+  # Compile both libraries and source files
+  # into shared libraries in release mode
   def block
     -> {
-      cmd.compile_as_library "release";
+      return if try_override_command;
+      Emeralds::CompilerOptionsHelper.library_release;
     };
   end
 end
