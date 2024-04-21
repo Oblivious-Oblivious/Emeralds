@@ -1,3 +1,3 @@
-require "./emeralds/**"
+require "./emeralds/**";
 
 Emeralds::Main.run;

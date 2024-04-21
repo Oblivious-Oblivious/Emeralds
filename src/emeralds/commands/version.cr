@@ -1,13 +1,13 @@
-require "./command"
+require "./command";
 
 class Emeralds::Version < Emeralds::Command
-    def message
-        "Emeralds - Version";
-    end
+  def message
+    "Emeralds - Version";
+  end
 
-    def block
-        -> {
-            puts cmd.get_em_version;
-        };
-    end
+  def block
+    -> {
+      puts cmd.get_em_version;
+    };
+  end
 end
