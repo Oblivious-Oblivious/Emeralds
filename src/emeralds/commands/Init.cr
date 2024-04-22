@@ -274,8 +274,7 @@ class Emeralds::Init < Emeralds::Command
   # Initialize a new emfile with the name specified
   def block
     -> {
-      usage if ARGV.size < 2;
-      @name = ARGV[1];
+      @name = ARGV[1] unless ARGV.size < 2;
 
       create_lib_directory;
       puts "#{COG} Writing initial files:";

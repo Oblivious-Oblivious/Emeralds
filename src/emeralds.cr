@@ -2,6 +2,10 @@ require "yaml";
 require "colorize";
 require "file_utils";
 
+require "./emeralds/extensions/Command+install";
+require "./emeralds/extensions/Command+move_copy";
+require "./emeralds/extensions/Command+try_override_command";
+
 require "./emeralds/commands/Command";
 require "./emeralds/commands/BuildAppDebug";
 require "./emeralds/commands/BuildAppRelease";
