@@ -13,11 +13,11 @@ module Emeralds
     "remove_warnings" => "-Wno-int-conversion",
     "test_warnings"   => "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types",
     "libs"            => "-c",
-    "deps"            => "$(find ./export -name \"*.*o\" 2>&1 | grep -v \"No such file or directory\")",
-    "inputfiles"      => "$(find src/#{Emeralds::YamlReader.get_field "name"}/*.c 2>&1 | grep -v \"No such file or directory\")",
-    "input"           => "$(find src/#{Emeralds::YamlReader.get_field "name"}.c 2>&1 | grep -v \"No such file or directory\")",
+    "deps"            => "find ./export -name \"*.*o\" 2>&1 | grep -v \"No such file or directory\"",
+    "inputfiles"      => "find src/#{Emeralds::YamlReader.get_field "name"}/*.c 2>&1 | grep -v \"No such file or directory\"",
+    "input"           => "find src/#{Emeralds::YamlReader.get_field "name"}.c 2>&1 | grep -v \"No such file or directory\"",
     "output"          => "#{Emeralds::YamlReader.get_field "name"}",
-    "testinput"       => "$(find spec/#{Emeralds::YamlReader.get_field "name"}.spec.c 2>&1 | grep -v \"No such file or directory\")",
+    "testinput"       => "find spec/#{Emeralds::YamlReader.get_field "name"}.spec.c 2>&1 | grep -v \"No such file or directory\"",
     "testoutput"      => "spec_results",
-  }; # TODO Make cross platform
+  }; # TODO - Make cross platform
 end

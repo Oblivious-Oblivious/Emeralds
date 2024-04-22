@@ -25,19 +25,17 @@ class Emeralds::GenerateMakefile < Emeralds::Command
         data << "REMOVE_WARNINGS = #{Emeralds::OPT["remove_warnings"]}\n";
         data << "TEST_WARNINGS = #{Emeralds::OPT["test_warnings"]}\n";
         data << "LIBS = #{Emeralds::OPT["libs"]}\n";
-        # TODO Differs from options
-        data << "DEPS = $(shell find ./export -name \"*.*o\")\n\n";
+        data << "DEPS = $(shell #{Emeralds::OPT["deps"]})\n\n";
 
-        data << "INPUTFILES = #{Emeralds::OPT["inputfiles"]}\n";
-        data << "INPUT = #{Emeralds::OPT["input"]}\n";
+        data << "INPUTFILES = $(shell #{Emeralds::OPT["inputfiles"]})\n";
+        data << "INPUT = $(shell #{Emeralds::OPT["input"]})\n";
         data << "OUTPUT = #{Emeralds::OPT["output"]}\n\n";
 
-        data << "TESTINPUT = #{Emeralds::OPT["testinput"]}\n";
+        data << "TESTINPUT = $(shell #{Emeralds::OPT["testinput"]})\n";
         data << "TESTOUTPUT = #{Emeralds::OPT["testoutput"]}\n\n";
 
         data << "all: app_debug\n\n";
 
-        # TODO Keep formatting
         data << "make_export:\n\t";
           data << "$(RM) -r export && mkdir export\n\n";
 
