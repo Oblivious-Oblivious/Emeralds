@@ -8,7 +8,6 @@ class Emeralds::Test < Emeralds::Command
     -> {
       copy_libraries_to_export;
       library_release;
-      pp "RUN TESTTSS";
       cmd = "#{Emeralds::OPT["cc"]} #{Emeralds::OPT["release_opt"]} #{Emeralds::OPT["release_version"]} #{Emeralds::OPT["release_flags"]} #{Emeralds::OPT["test_warnings"]} -o spec/#{Emeralds::OPT["testoutput"]} $(#{Emeralds::OPT["deps"]}) $(#{Emeralds::OPT["testinput"]}) 2>&1 | grep -v \"no input files\"";
       `mkdir export >/dev/null 2>&1 || true`;
       puts cmd;
