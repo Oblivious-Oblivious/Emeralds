@@ -1,6 +1,3 @@
-require "file_utils";
-require "colorize";
-
 # Bundles up the code for all commands
 class Emeralds::CommandProcessor
   # Split The YAML object on the "=>" to get the github repository

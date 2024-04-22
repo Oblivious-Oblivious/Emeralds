@@ -1,5 +1,3 @@
-require "./command";
-
 class Emeralds::Help < Emeralds::Command
   def message
     "Emeralds - Help/Usage";

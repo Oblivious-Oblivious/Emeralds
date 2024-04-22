@@ -1,5 +1,3 @@
-require "./command";
-
 class Emeralds::Test < Emeralds::Command
   def message
     "Emeralds - Running tests...";

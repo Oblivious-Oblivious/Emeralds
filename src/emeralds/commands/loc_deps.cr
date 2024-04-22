@@ -1,5 +1,3 @@
-require "./command";
-
 class Emeralds::LocDeps < Emeralds::Command
   def message
     "Counting Lines of Code for dependencies...";

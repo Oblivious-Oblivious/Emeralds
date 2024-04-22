@@ -1,5 +1,3 @@
-require "./command";
-
 class Emeralds::Init < Emeralds::Command
   # Creates the library directories
   private def create_lib_directory

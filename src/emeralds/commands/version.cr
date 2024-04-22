@@ -1,5 +1,3 @@
-require "./command";
-
 class Emeralds::Version < Emeralds::Command
   def message
     "Emeralds - Version";

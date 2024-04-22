@@ -1,5 +1,3 @@
-require "./command";
-
 class Emeralds::BuildRelease < Emeralds::Command
   def message
     "Emeralds - Compiling as an app...";

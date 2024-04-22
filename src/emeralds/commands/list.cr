@@ -1,5 +1,3 @@
-require "./command";
-
 class Emeralds::List < Emeralds::Command
   # List a dependency as formatted text
   #

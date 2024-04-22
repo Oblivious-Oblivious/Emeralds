@@ -1,5 +1,3 @@
-require "yaml";
-
 # Helper functions for reading from the em.yml file
 module Emeralds::YamlHelper
   # Secures field from nullity

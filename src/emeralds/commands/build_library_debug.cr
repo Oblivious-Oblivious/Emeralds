@@ -1,5 +1,3 @@
-require "./command";
-
 class Emeralds::BuildLibraryDebug < Emeralds::Command
   def message
     "Emeralds - Compiling as a library...";

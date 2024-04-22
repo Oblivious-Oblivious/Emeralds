@@ -1,5 +1,3 @@
-require "./command";
-
 class Emeralds::Install < Emeralds::Command
   def message
     "Emeralds - Resolving dependencies...";
