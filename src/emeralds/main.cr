@@ -39,6 +39,8 @@ module Emeralds::Main
       else
         Emeralds::Help.new.run;
       end
+    when "run"
+      Emeralds::Run.new.run;
     when "test"
       Emeralds::Test.new.run;
     when "version"

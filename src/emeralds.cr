@@ -20,6 +20,7 @@ require "./emeralds/commands/Install";
 require "./emeralds/commands/List";
 require "./emeralds/commands/LocDeps";
 require "./emeralds/commands/Loc";
+require "./emeralds/commands/Run";
 require "./emeralds/commands/Test";
 require "./emeralds/commands/Version";
 
