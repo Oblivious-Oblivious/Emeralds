@@ -1,5 +1,5 @@
 name: emeralds
-version: 1.1.0
+version: 1.2.0
 
 authors:
   - Athanasios Papapostolou (Oblivious) <thanos.papap42@gmail.com>
@@ -7,6 +7,6 @@ authors:
 description: |
   A package manager for C
 
-crystal: 1.0.0
+crystal: 1.12.1
 
 license: GPLv3

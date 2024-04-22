@@ -1,10 +1,17 @@
+# Changes for Emeralds 1.2.0 (23-04-2024)
+
+* Refactored codebase for easier management.
+* Fixed makefile generation, now all find commands work properly.
+* Added a new `run` command for running the compiled executable.
+* Clean commands also remove dSYM files.
+
 # Changes for Emeralds 1.1.0 (04-04-2021)
 
 * Fixed display bugs on all operating systems.
 * Implemented a cross platform compilation makefile.
 * Added support for debug and release builds.
 * Added support for counting lines of code in library emeralds.
-* Moved documentation to individual classes rather than all together in a docs file
+* Moved documentation to individual classes rather than all together in a docs file.
 
 # Changes for Emeralds 1.0.0 (04-03-2021)
 
@@ -13,12 +20,12 @@
 * Added recursive installation of dependencies and code for each emerald.
 * Added instructions for installation and usage.
 * Added functionality for counting lines of code in the project.
-* Added cSpec as a default dependency
+* Added cSpec as a default dependency.
 * Fixed directory bugs.
 
 # Changes for Emeralds 0.2.0 (28-02-2021)
 
-* Migrated the whole codebase to crystal-lang
+* Migrated the whole codebase to crystal-lang.
 
 # Changes for Emeralds 0.1.0 (22-06-2020)
 

@@ -32,9 +32,8 @@ Run the install script
 
 ## Development
 
-* Fix a bug where it crashes the array search when getting a field from the yaml files
+* Make sure we store PWD at runtime so that symlinks do not break execution.
 * Add functionality for creating new .c/.h pairs with include guards etc.
-* Convert bash searches to crystal glob serches for writing makefile fields
 * Include installation instructions for wget and git requirements
 
 ## Contributing

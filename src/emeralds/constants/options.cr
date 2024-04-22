@@ -19,5 +19,5 @@ module Emeralds
     "output"          => "#{Emeralds::YamlReader.get_field "name"}",
     "testinput"       => "find spec/#{Emeralds::YamlReader.get_field "name"}.spec.c 2>&1 | grep -v \"No such file or directory\"",
     "testoutput"      => "spec_results",
-  }; # TODO - Make cross platform
+  }; # TODO - Make cross platform, convert bash searches to crystal glob serches for writing makefile fields
 end
