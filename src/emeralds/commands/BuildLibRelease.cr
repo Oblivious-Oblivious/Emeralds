@@ -1,4 +1,4 @@
-class Emeralds::BuildLibraryRelease < Emeralds::Command
+class Emeralds::BuildLibRelease < Emeralds::Command
   def message
     "Emeralds - Compiling as a library...";
   end

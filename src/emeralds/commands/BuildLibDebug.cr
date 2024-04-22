@@ -1,4 +1,4 @@
-class Emeralds::BuildLibraryDebug < Emeralds::Command
+class Emeralds::BuildLibDebug < Emeralds::Command
   def message
     "Emeralds - Compiling as a library...";
   end

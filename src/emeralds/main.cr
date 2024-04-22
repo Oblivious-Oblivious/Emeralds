@@ -22,17 +22,17 @@ module Emeralds::Main
 
       if ARGV[1] == "app"
         if ARGV[2] == "debug"
-          Emeralds::BuildDebug.new.run;
+          Emeralds::BuildAppDebug.new.run;
         elsif ARGV[2] == "release"
-          Emeralds::BuildRelease.new.run;
+          Emeralds::BuildAppRelease.new.run;
         else
           Emeralds::Help.new.run;
         end
       elsif ARGV[1] == "lib"
         if ARGV[2] == "debug"
-          Emeralds::BuildLibraryDebug.new.run;
+          Emeralds::BuildLibDebug.new.run;
         elsif ARGV[2] == "release"
-          Emeralds::BuildLibraryRelease.new.run;
+          Emeralds::BuildLibRelease.new.run;
         else
           Emeralds::Help.new.run;
         end
