@@ -2,11 +2,11 @@ def write_em_file
   File.write "em.yml", "name: testapp\nversion: 0.1.0\n\ndependencies:\n  cSpec: Oblivious-Oblivious/cSpec\n  cDataLib: Oblivious-Oblivious/cDataLib\n\nlicense: GPLv3\n\napplication: make\nlibrary: make lib\ntest: make test\nclean: make clean\n";
 end
 
-describe Emeralds::YamlHelper do
+describe Emeralds::YamlReader do
   context "when em.yml file does not exist" do
     it "fails to read the file and prints a friendly statement" do
       Dir.cd "spec";
-      Emeralds::YamlHelper.get_dependencies.should eq [] of String;
+      Emeralds::YamlReader.get_dependencies.should eq [] of String;
       Dir.cd "..";
     end
   end
@@ -16,7 +16,7 @@ describe Emeralds::YamlHelper do
       Dir.cd "spec";
 
       write_em_file;
-      Emeralds::YamlHelper.get_dependencies.should eq ["\"cSpec\" => \"Oblivious-Oblivious/cSpec\"", "\"cDataLib\" => \"Oblivious-Oblivious/cDataLib\""];
+      Emeralds::YamlReader.get_dependencies.should eq ["\"cSpec\" => \"Oblivious-Oblivious/cSpec\"", "\"cDataLib\" => \"Oblivious-Oblivious/cDataLib\""];
       FileUtils.rm_rf "em.yml";
 
       Dir.cd "..";
@@ -27,7 +27,7 @@ describe Emeralds::YamlHelper do
     Dir.cd "spec";
     write_em_file;
 
-    Emeralds::YamlHelper.get_field("name").should eq "testapp";
+    Emeralds::YamlReader.get_field("name").should eq "testapp";
 
     FileUtils.rm_rf "em.yml";
     Dir.cd "..";
@@ -37,7 +37,7 @@ describe Emeralds::YamlHelper do
       Dir.cd "spec";
       write_em_file;
 
-      Emeralds::YamlHelper.get_field("version").should eq "0.1.0";
+      Emeralds::YamlReader.get_field("version").should eq "0.1.0";
 
       FileUtils.rm_rf "em.yml";
       Dir.cd "..";
@@ -47,7 +47,7 @@ describe Emeralds::YamlHelper do
       Dir.cd "spec";
       write_em_file;
 
-      Emeralds::YamlHelper.get_field("license").should eq "GPLv3";
+      Emeralds::YamlReader.get_field("license").should eq "GPLv3";
 
       FileUtils.rm_rf "em.yml";
       Dir.cd "..";
@@ -57,7 +57,7 @@ describe Emeralds::YamlHelper do
       Dir.cd "spec";
       write_em_file;
 
-      Emeralds::YamlHelper.get_field("application").should eq "make";
+      Emeralds::YamlReader.get_field("application").should eq "make";
 
       FileUtils.rm_rf "em.yml";
       Dir.cd "..";
@@ -67,7 +67,7 @@ describe Emeralds::YamlHelper do
     Dir.cd "spec";
     write_em_file;
 
-    Emeralds::YamlHelper.get_field("library").should eq "make lib";
+    Emeralds::YamlReader.get_field("library").should eq "make lib";
 
     FileUtils.rm_rf "em.yml";
     Dir.cd "..";
@@ -77,7 +77,7 @@ describe Emeralds::YamlHelper do
     Dir.cd "spec";
     write_em_file;
 
-    Emeralds::YamlHelper.get_field("test").should eq "make test";
+    Emeralds::YamlReader.get_field("test").should eq "make test";
 
     FileUtils.rm_rf "em.yml";
     Dir.cd "..";
@@ -87,7 +87,7 @@ describe Emeralds::YamlHelper do
     Dir.cd "spec";
     write_em_file;
 
-    Emeralds::YamlHelper.get_field("clean").should eq "make clean";
+    Emeralds::YamlReader.get_field("clean").should eq "make clean";
 
     FileUtils.rm_rf "em.yml";
     Dir.cd "..";
@@ -98,7 +98,7 @@ describe Emeralds::YamlHelper do
     `em init testapp`;
     Dir.cd "testapp";
 
-    Emeralds::YamlHelper.get_lines_of_code.should eq [6, 42];
+    Emeralds::YamlReader.get_lines_of_code.should eq [6, 42];
 
     Dir.cd "..";
     FileUtils.rm_rf "testapp";

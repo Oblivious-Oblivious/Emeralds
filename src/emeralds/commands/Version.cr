@@ -6,10 +6,10 @@ class Emeralds::Version < Emeralds::Command
   # Get the em version from the yaml file
   def block
     -> {
-      if Emeralds::YamlHelper.get_field("name") == ""
+      if Emeralds::YamlReader.get_field("name") == ""
         puts "Not a valid library (missing `em.yml`)";
       else
-        puts "#{Emeralds::YamlHelper.get_field "name"} v#{Emeralds::YamlHelper.get_field "version"}";
+        puts "#{Emeralds::YamlReader.get_field "name"} v#{Emeralds::YamlReader.get_field "version"}";
       end
     };
   end

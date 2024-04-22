@@ -10,8 +10,8 @@ class Emeralds::Install < Emeralds::Command
         Dir.mkdir "libs";
       end
 
-      Emeralds::YamlHelper.get_dependencies.each do |dep|
-        Emeralds::CommandProcessor.install_dep dep unless dep == "";
+      Emeralds::YamlReader.get_dependencies.each do |dep|
+        install_dep dep unless dep == "";
       end
     };
   end

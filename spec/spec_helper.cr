@@ -6,7 +6,7 @@ require "file_utils";
 require "../src/emeralds/constants/cli";
 require "../src/emeralds/constants/version";
 
-require "../src/emeralds/modules/YamlHelper";
+require "../src/emeralds/modules/YamlReader";
 
 # Fix the test output
 FileUtils.rm_rf "testapp";

@@ -6,7 +6,10 @@ class Emeralds::Clean < Emeralds::Command
   # Runs the clean script defined in the em.yml file
   def block
     -> {
-      Emeralds::CompilerOptionsHelper.clean_script;
+      puts "rm -rf spec/#{Emeralds::OPT["testoutput"]}";
+      `rm -rf spec/#{Emeralds::OPT["testoutput"]}`;
+      puts "rm -rf export";
+      `rm -rf export`;
     };
   end
 end

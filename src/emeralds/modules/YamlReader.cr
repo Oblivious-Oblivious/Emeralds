@@ -1,5 +1,5 @@
 # Helper functions for reading from the em.yml file
-module Emeralds::YamlHelper
+module Emeralds::YamlReader
   # Secures field from nullity
   #
   # field -> The specific field we are searching for

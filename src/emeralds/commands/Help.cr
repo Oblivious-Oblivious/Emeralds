@@ -6,7 +6,7 @@ class Emeralds::Help < Emeralds::Command
   # Prints the help text block and exits
   def block
     -> {
-      Emeralds::CommandProcessor.usage;
+      usage;
       exit 0;
     };
   end

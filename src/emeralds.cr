@@ -23,10 +23,8 @@ require "./emeralds/constants/cli";
 require "./emeralds/constants/options";
 require "./emeralds/constants/version";
 
-require "./emeralds/modules/CompilerOptionsHelper";
-require "./emeralds/modules/YamlHelper";
+require "./emeralds/modules/YamlReader";
 
-require "./emeralds/CommandProcessor";
 require "./emeralds/main";
 
 Emeralds::Main.run;

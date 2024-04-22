@@ -3,7 +3,7 @@ class Emeralds::List < Emeralds::Command
   #
   # dep -> The name of the dependecy to list
   private def list_dep(dep)
-    parts = Emeralds::CommandProcessor.get_parts from: dep;
+    parts = get_parts from: dep;
     puts "  #{COG} #{parts[0]}";
   end
 
@@ -14,12 +14,12 @@ class Emeralds::List < Emeralds::Command
   # Get the list of dependencies from the yaml file in a vector
   def block
     -> {
-      deps = Emeralds::YamlHelper.get_dependencies;
+      deps = Emeralds::YamlReader.get_dependencies;
       deps.each do |dep|
         list_dep dep if dep != "";
       end
 
-      dev_deps = Emeralds::YamlHelper.get_dev_dependencies;
+      dev_deps = Emeralds::YamlReader.get_dev_dependencies;
       dev_deps.each do |dep|
         list_dep dep if dep != "";
       end

@@ -1,6 +1,6 @@
 module Emeralds
   OPT = {
-    "name"            => "#{Emeralds::YamlHelper.get_field "name"}",
+    "name"            => "#{Emeralds::YamlReader.get_field "name"}",
     "cc"              => "clang",
     "debug_opt"       => "-Og -g",
     "debug_version"   => "-std=c89",
@@ -14,10 +14,10 @@ module Emeralds
     "test_warnings"   => "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types",
     "libs"            => "-c",
     "deps"            => "$(find ./export -name \"*.*o\" 2>&1 | grep -v \"No such file or directory\")",
-    "inputfiles"      => "$(find src/#{Emeralds::YamlHelper.get_field "name"}/*.c 2>&1 | grep -v \"No such file or directory\")",
-    "input"           => "$(find src/#{Emeralds::YamlHelper.get_field "name"}.c 2>&1 | grep -v \"No such file or directory\")",
-    "output"          => "#{Emeralds::YamlHelper.get_field "name"}",
-    "testinput"       => "$(find spec/#{Emeralds::YamlHelper.get_field "name"}.spec.c 2>&1 | grep -v \"No such file or directory\")",
+    "inputfiles"      => "$(find src/#{Emeralds::YamlReader.get_field "name"}/*.c 2>&1 | grep -v \"No such file or directory\")",
+    "input"           => "$(find src/#{Emeralds::YamlReader.get_field "name"}.c 2>&1 | grep -v \"No such file or directory\")",
+    "output"          => "#{Emeralds::YamlReader.get_field "name"}",
+    "testinput"       => "$(find spec/#{Emeralds::YamlReader.get_field "name"}.spec.c 2>&1 | grep -v \"No such file or directory\")",
     "testoutput"      => "spec_results",
   }; # TODO Make cross platform
 end
