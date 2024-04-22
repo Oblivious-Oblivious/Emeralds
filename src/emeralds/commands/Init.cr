@@ -251,7 +251,7 @@ class Emeralds::Init < Emeralds::Command
       data << "#define __#{name.gsub("-", "_").upcase}_SPEC_H_\n\n";
 
       data << "#include \"../src/#{name}.h\"\n";
-      data << "#include \"../libs/cSpec/export/cSpec.h\"\n\n";
+      data << "#include \"../libs/cSpec/cSpec.h\"\n\n";
 
       data << "#endif\n";
     end
