@@ -22,4 +22,4 @@ document:
 	crystal docs src/*.cr
 
 clean:
-	$(RM) -r ./export
+	$(RM) -r export

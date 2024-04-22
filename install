@@ -3,4 +3,3 @@
 make build
 #chown -R $(whoami) /usr/local/bin
 cp export/* /usr/local/bin/
-
