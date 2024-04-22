@@ -68,9 +68,10 @@ class Emeralds::GenerateMakefile < Emeralds::Command
           data << "./spec/$(TESTOUTPUT)\n\n";
 
         data << "spec: test\n\n";
-          data << "clean:\n\t";
+
+        data << "clean:\n\t";
           data << "$(RM) -r spec/$(TESTOUTPUT)\n\t";
-          data << "$(RM) -r export\n\n";
+          data << "$(RM) -r export *.dSYM\n\n";
       end
 
       File.write "Makefile", data;

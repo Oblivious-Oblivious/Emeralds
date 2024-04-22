@@ -8,8 +8,8 @@ class Emeralds::Clean < Emeralds::Command
     -> {
       puts "rm -rf spec/#{Emeralds::OPT["testoutput"]}";
       `rm -rf spec/#{Emeralds::OPT["testoutput"]}`;
-      puts "rm -rf export";
-      `rm -rf export`;
+      puts "rm -rf export *.dSYM";
+      `rm -rf export *.dSYM`;
     };
   end
 end
