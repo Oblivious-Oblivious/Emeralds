@@ -1,11 +1,11 @@
-# Changes for Emeralds 1.2.0 (23-04-2024)
+# Changes for Emeralds 0.5.0 (23-04-2024)
 
 * Refactored codebase for easier management.
 * Fixed makefile generation, now all find commands work properly.
 * Added a new `run` command for running the compiled executable.
 * Clean commands also remove dSYM files.
 
-# Changes for Emeralds 1.1.0 (04-04-2021)
+# Changes for Emeralds 0.4.0 (04-04-2021)
 
 * Fixed display bugs on all operating systems.
 * Implemented a cross platform compilation makefile.
@@ -13,7 +13,7 @@
 * Added support for counting lines of code in library emeralds.
 * Moved documentation to individual classes rather than all together in a docs file.
 
-# Changes for Emeralds 1.0.0 (04-03-2021)
+# Changes for Emeralds 0.3.0 (04-03-2021)
 
 * Fixed testing and CI for the project.
 * Added compilation to static libraries.
