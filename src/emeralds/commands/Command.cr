@@ -36,7 +36,7 @@ abstract class Emeralds::Command
   private def library_release
     make_export;
     copy_headers;
-    cmd = "#{Emeralds::OPT["cc"]} #{Emeralds::OPT["release_opt"]} #{Emeralds::OPT["release_version"]} #{Emeralds::OPT["release_flags"]} #{Emeralds::OPT["release_warnings"]} #{Emeralds::OPT["libs"]} $(#{Emeralds::OPT["inputfiles"]})";
+    cmd = "#{OPT["cc"]} #{OPT["release_opt"]} #{OPT["release_version"]} #{OPT["release_flags"]} #{OPT["release_warnings"]} #{OPT["libs"]} $(#{OPT["inputfiles"]})";
     puts cmd;
     `#{cmd}`;
     copy_libraries_to_export;

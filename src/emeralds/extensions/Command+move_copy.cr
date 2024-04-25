@@ -9,7 +9,7 @@ abstract class Emeralds::Command
   end
 
   private def move_output_to_export
-    `mv #{Emeralds::OPT["output"]} export/ >/dev/null 2>&1 || true`;
+    `mv #{OPT["output"]} export/ >/dev/null 2>&1 || true`;
   end
 
   private def copy_libraries_to_export

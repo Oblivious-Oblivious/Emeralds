@@ -10,7 +10,7 @@ class Emeralds::BuildAppDebug < Emeralds::Command
       return if try_override_command;
 
       make_export;
-      cmd = "#{Emeralds::OPT["cc"]} #{Emeralds::OPT["debug_opt"]} #{Emeralds::OPT["debug_version"]} #{Emeralds::OPT["debug_flags"]} #{Emeralds::OPT["debug_warnings"]} #{Emeralds::OPT["unused_warnings"]} -o #{Emeralds::OPT["output"]} $(#{Emeralds::OPT["input"]}) $(#{Emeralds::OPT["inputfiles"]}) $(#{Emeralds::OPT["deps"]})";
+      cmd = "#{OPT["cc"]} #{OPT["debug_opt"]} #{OPT["debug_version"]} #{OPT["debug_flags"]} #{OPT["debug_warnings"]} #{OPT["unused_warnings"]} -o #{OPT["output"]} $(#{OPT["input"]}) $(#{OPT["inputfiles"]}) $(#{OPT["deps"]})";
       puts cmd;
       `#{cmd}`;
       move_output_to_export;

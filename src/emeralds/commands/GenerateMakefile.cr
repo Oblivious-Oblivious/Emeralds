@@ -9,30 +9,30 @@ class Emeralds::GenerateMakefile < Emeralds::Command
       puts "  #{ARROW} Makefile";
 
       data = String.build do |data|
-        data << "NAME = #{Emeralds::OPT["name"]}\n\n";
+        data << "NAME = #{OPT["name"]}\n\n";
 
-        data << "CC = #{Emeralds::OPT["cc"]}\n";
-        data << "DEBUG_OPT = #{Emeralds::OPT["debug_opt"]}\n";
-        data << "DEBUG_VERSION = #{Emeralds::OPT["debug_version"]}\n";
-        data << "DEBUG_FLAGS = #{Emeralds::OPT["debug_flags"]}\n\n";
+        data << "CC = #{OPT["cc"]}\n";
+        data << "DEBUG_OPT = #{OPT["debug_opt"]}\n";
+        data << "DEBUG_VERSION = #{OPT["debug_version"]}\n";
+        data << "DEBUG_FLAGS = #{OPT["debug_flags"]}\n\n";
 
-        data << "RELEASE_OPT = #{Emeralds::OPT["release_opt"]}\n";
-        data << "RELEASE_VERSION = #{Emeralds::OPT["release_version"]}\n";
-        data << "RELEASE_FLAGS = #{Emeralds::OPT["release_flags"]}\n\n";
+        data << "RELEASE_OPT = #{OPT["release_opt"]}\n";
+        data << "RELEASE_VERSION = #{OPT["release_version"]}\n";
+        data << "RELEASE_FLAGS = #{OPT["release_flags"]}\n\n";
 
-        data << "WARNINGS = #{Emeralds::OPT["debug_warnings"]}\n";
-        data << "UNUSED_WARNINGS = #{Emeralds::OPT["unused_warnings"]}\n";
-        data << "RELEASE_WARNINGS = #{Emeralds::OPT["release_warnings"]}\n";
-        data << "TEST_WARNINGS = #{Emeralds::OPT["test_warnings"]}\n";
-        data << "LIBS = #{Emeralds::OPT["libs"]}\n";
-        data << "DEPS = $(shell #{Emeralds::OPT["deps"]})\n\n";
+        data << "WARNINGS = #{OPT["debug_warnings"]}\n";
+        data << "UNUSED_WARNINGS = #{OPT["unused_warnings"]}\n";
+        data << "RELEASE_WARNINGS = #{OPT["release_warnings"]}\n";
+        data << "TEST_WARNINGS = #{OPT["test_warnings"]}\n";
+        data << "LIBS = #{OPT["libs"]}\n";
+        data << "DEPS = $(shell #{OPT["deps"]})\n\n";
 
-        data << "INPUTFILES = $(shell #{Emeralds::OPT["inputfiles"]})\n";
-        data << "INPUT = $(shell #{Emeralds::OPT["input"]})\n";
-        data << "OUTPUT = #{Emeralds::OPT["output"]}\n\n";
+        data << "INPUTFILES = $(shell #{OPT["inputfiles"]})\n";
+        data << "INPUT = $(shell #{OPT["input"]})\n";
+        data << "OUTPUT = #{OPT["output"]}\n\n";
 
-        data << "TESTINPUT = $(shell #{Emeralds::OPT["testinput"]})\n";
-        data << "TESTOUTPUT = #{Emeralds::OPT["testoutput"]}\n\n";
+        data << "TESTINPUT = $(shell #{OPT["testinput"]})\n";
+        data << "TESTOUTPUT = #{OPT["testoutput"]}\n\n";
 
         data << "all: app_debug\n\n";
 

@@ -6,7 +6,7 @@ class Emeralds::Run < Emeralds::Command
   # Count the number of lines of code
   def block
     -> {
-      puts `./export/#{Emeralds::OPT["output"]}`;
+      puts `./export/#{OPT["output"]}`;
     };
   end
 end
