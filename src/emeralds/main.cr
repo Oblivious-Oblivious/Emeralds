@@ -6,7 +6,11 @@ module Emeralds::Main
     action = ARGV[0]
     case action
     when "init"
-      Emeralds::Init.new.run;
+      if ARGV.size == 1
+        Emeralds::Help.new.run;
+      else
+        Emeralds::Init.new.run;
+      end
     when "list"
       Emeralds::List.new.run;
     when "install"
