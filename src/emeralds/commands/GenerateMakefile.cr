@@ -20,9 +20,9 @@ class Emeralds::GenerateMakefile < Emeralds::Command
         data << "RELEASE_VERSION = #{Emeralds::OPT["release_version"]}\n";
         data << "RELEASE_FLAGS = #{Emeralds::OPT["release_flags"]}\n\n";
 
-        data << "WARNINGS = #{Emeralds::OPT["warnings"]}\n";
+        data << "WARNINGS = #{Emeralds::OPT["debug_warnings"]}\n";
         data << "UNUSED_WARNINGS = #{Emeralds::OPT["unused_warnings"]}\n";
-        data << "REMOVE_WARNINGS = #{Emeralds::OPT["remove_warnings"]}\n";
+        data << "RELEASE_WARNINGS = #{Emeralds::OPT["release_warnings"]}\n";
         data << "TEST_WARNINGS = #{Emeralds::OPT["test_warnings"]}\n";
         data << "LIBS = #{Emeralds::OPT["libs"]}\n";
         data << "DEPS = $(shell #{Emeralds::OPT["deps"]})\n\n";
@@ -45,20 +45,20 @@ class Emeralds::GenerateMakefile < Emeralds::Command
           data << "cp src/$(NAME).h export/ >/dev/null 2>&1 || true\n\n";
 
         data << "app_debug: make_export\n\t";
-          data << "$(CC) $(DEBUG_OPT) $(DEBUG_VERSION) $(DEBUG_FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
+          data << "$(CC) $(DEBUG_OPT) $(DEBUG_VERSION) $(DEBUG_FLAGS) $(WARNINGS) $(UNUSED_WARNINGS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
           data << "mv $(OUTPUT) export/ >/dev/null 2>&1 || true\n\n";
 
         data << "app_release: make_export\n\t";
-          data << "$(CC) $(RELEASE_OPT) $(RELEASE_VERSION) $(RELEASE_FLAGS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
+          data << "$(CC) $(RELEASE_OPT) $(RELEASE_VERSION) $(RELEASE_FLAGS) $(RELEASE_WARNINGS) -o $(OUTPUT) $(INPUT) $(INPUTFILES) $(DEPS)\n\t";
           data << "mv $(OUTPUT) export/ >/dev/null 2>&1 || true\n\n";
 
         data << "lib_debug: make_export copy_headers\n\t";
-          data << "$(CC) $(DEBUG_OPT) $(DEBUG_VERSION) $(DEBUG_FLAGS) $(WARNINGS) $(REMOVE_WARNINGS) $(UNUSED_WARNINGS) $(LIBS) $(INPUTFILES)\n\t";
+          data << "$(CC) $(DEBUG_OPT) $(DEBUG_VERSION) $(DEBUG_FLAGS) $(WARNINGS) $(UNUSED_WARNINGS) $(LIBS) $(INPUTFILES)\n\t";
           data << "mv *.o export/ >/dev/null 2>&1 || true\n\t";
           data << "mv $(shell find ./libs -name \"*.*o\") export/ >/dev/null 2>&1 || true\n\n";
 
         data << "lib_release: make_export copy_headers\n\t";
-          data << "$(CC) $(RELEASE_OPT) $(RELEASE_VERSION) $(RELEASE_FLAGS) $(LIBS) $(INPUTFILES)\n\t";
+          data << "$(CC) $(RELEASE_OPT) $(RELEASE_VERSION) $(RELEASE_FLAGS) $(RELEASE_WARNINGS) $(LIBS) $(INPUTFILES)\n\t";
           data << "mv *.o export/ >/dev/null 2>&1 || true\n\t";
           data << "mv $(shell find ./libs -name \"*.*o\") export/ >/dev/null 2>&1 || true\n\n";
 
