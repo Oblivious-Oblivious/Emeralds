@@ -45,6 +45,12 @@ module Emeralds::Main
       else
         Emeralds::Help.new.run;
       end
+    when "add"
+      if ARGV.size == 1
+        Emeralds::Help.new.run;
+      else
+        Emeralds::Add.new.run;
+      end
     when "run"
       Emeralds::Run.new.run;
     when "test"

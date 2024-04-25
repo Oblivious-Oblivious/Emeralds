@@ -4,9 +4,8 @@ abstract class Emeralds::Command
   end
 
   private def copy_headers
-    `mkdir export/#{Emeralds::OPT["name"]} && mkdir export/#{Emeralds::OPT["name"]}/headers`;
-    `cp -r src/#{Emeralds::OPT["name"]}/headers/* export/#{Emeralds::OPT["name"]}/headers/ >/dev/null 2>&1 || true`;
-    `cp src/#{Emeralds::OPT["name"]}.h export/ >/dev/null 2>&1 || true`;
+    `cp -r src/* export/ >/dev/null 2>&1 || true`;
+    `rm export/**/*.c >/dev/null 2>&1 || true`;
   end
 
   private def move_output_to_export

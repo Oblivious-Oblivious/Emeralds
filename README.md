@@ -27,13 +27,13 @@ Run the install script
 * `em install dev`
 * `em test`
 * `em build app release`
-* `./export/testapp`
+* `em run`
 * `em clean`
 
 ## Development
 
 * Make sure we store PWD at runtime so that symlinks do not break execution.
-* Add functionality for creating new .c/.h pairs with include guards etc.
+* Remove all direct `cmd` commands and replace with cross platform crystal ones.
 * Allow for custom cflags inside of emfile.
 * Include installation instructions for wget and git requirements.
 
