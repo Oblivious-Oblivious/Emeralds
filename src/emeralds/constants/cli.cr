@@ -6,8 +6,6 @@ module Emeralds
   CHECKMARK = "✔".colorize(:light_green).to_s;
   DIAMOND   = "◈";
 
-  # TODO - Revamp paths
-
   # Paths of source files (for counting lines) 
   PATHS = [
     Path.new("src/**/*.c"),

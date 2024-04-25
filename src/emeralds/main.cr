@@ -14,6 +14,8 @@ module Emeralds::Main
         Emeralds::Install.new.run;
       elsif ARGV[1] == "dev"
         Emeralds::InstallDev.new.run;
+      elsif ARGV[1] == "all"
+        Emeralds::InstallAll.new.run;
       else
         Emeralds::Help.new.run;
       end

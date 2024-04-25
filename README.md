@@ -35,7 +35,6 @@ Run the install script
 * Make sure we store PWD at runtime so that symlinks do not break execution.
 * Add functionality for creating new .c/.h pairs with include guards etc.
 * Allow for custom cflags inside of emfile.
-* Add an `em install all` command for both local and dev dependencies
 * Include installation instructions for wget and git requirements.
 
 ## Contributing

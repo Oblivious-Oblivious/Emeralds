@@ -42,8 +42,6 @@ abstract class Emeralds::Command
     copy_libraries_to_export;
   end
 
-  # TODO - Compile into static libraries instead of shared
-
   # Main method that runs and times the command block.
   def run
     puts message.colorize(:white).mode(:bold);
