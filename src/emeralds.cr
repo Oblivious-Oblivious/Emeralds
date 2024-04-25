@@ -5,6 +5,7 @@ require "file_utils";
 require "./emeralds/extensions/Command+install";
 require "./emeralds/extensions/Command+move_copy";
 require "./emeralds/extensions/Command+try_override_command";
+require "./emeralds/extensions/Command+usage";
 
 require "./emeralds/commands/Command";
 require "./emeralds/commands/BuildAppDebug";
