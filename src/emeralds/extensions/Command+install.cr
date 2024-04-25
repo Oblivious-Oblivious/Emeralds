@@ -23,7 +23,7 @@ abstract class Emeralds::Command
     `rm -rf .git*`;
     `em install`;
     `em build lib release`;
-    `find . -mindepth 1 -not -path "./export*" -not -path "./libs*" -exec rm -rf {} +`;
+    `find . -mindepth 1 -not -path "./export*" -not -path "./libs*" -exec rm -rf {} + 2>&1`;
     Dir.cd "../../";
   end
 end
