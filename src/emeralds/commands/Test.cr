@@ -8,13 +8,10 @@ class Emeralds::Test < Emeralds::Command
     -> {
       copy_libraries_to_export;
       library_release;
-      cmd = "#{OPT["cc"]} #{OPT["release_opt"]} #{OPT["release_version"]} #{OPT["release_flags"]} #{OPT["test_warnings"]} -o spec/#{OPT["testoutput"]} $(#{OPT["deps"]}) $(#{OPT["testinput"]})";
-      `mkdir export >/dev/null 2>&1 || true`;
-      puts cmd;
-      `#{cmd}`;
+      TerminalHandler.generic_cmd "mkdir export >/dev/null 2>&1 || true";
+      TerminalHandler.generic_cmd "#{OPT["cc"]} #{OPT["release_opt"]} #{OPT["release_version"]} #{OPT["release_flags"]} #{OPT["test_warnings"]} -o spec/#{OPT["testoutput"]} $(#{OPT["deps"]}) $(#{OPT["testinput"]})", display: true;
       puts;
-      puts "./spec/#{OPT["testoutput"]}";
-      puts `./spec/#{OPT["testoutput"]}`;
+      puts TerminalHandler.generic_cmd "./spec/#{OPT["testoutput"]}", display: true;
     };
   end
 end

@@ -2,7 +2,7 @@ class Emeralds::Init < Emeralds::Command
   # Creates the library directories
   private def create_lib_directory
     puts "#{COG} Creating directory: #{name.colorize(:light_green).mode(:bold)}";
-    Dir.mkdir name;
+    TerminalHandler.mkdir name;
   end
 
   # Creates the initial emfile
@@ -29,13 +29,13 @@ class Emeralds::Init < Emeralds::Command
   # Creates a new git repository
   private def initialize_git_directory
     puts "  #{ARROW} .git";
-    `git init #{name}/`;
+    TerminalHandler.generic_cmd "git init #{name}/";
   end
 
   # Resolves a GPLv3 license from the web
   private def wget_a_gplv3_license
     puts "  #{ARROW} LICENSE";
-    `wget -O #{name}/LICENSE https://www.gnu.org/licenses/gpl-3.0.txt >/dev/null 2>&1`;
+    TerminalHandler.generic_cmd "wget -O #{name}/LICENSE https://www.gnu.org/licenses/gpl-3.0.txt >/dev/null 2>&1";
   end
 
   # Creates the .gitignore file
@@ -130,9 +130,9 @@ class Emeralds::Init < Emeralds::Command
 
   # Creates the dummy source directory
   private def create_source_directories
-    Dir.mkdir "#{name}/src";
-    Dir.mkdir "#{name}/src/#{name}";
-    Dir.mkdir "#{name}/src/#{name}/headers";
+    TerminalHandler.mkdir "#{name}/src";
+    TerminalHandler.mkdir "#{name}/src/#{name}";
+    TerminalHandler.mkdir "#{name}/src/#{name}/headers";
   end
 
   # Create a dummy main source file
@@ -261,7 +261,7 @@ class Emeralds::Init < Emeralds::Command
 
   # Calls the create methods
   private def create_spec_files
-    Dir.mkdir "#{name}/spec";
+    TerminalHandler.mkdir "#{name}/spec";
     puts "  #{ARROW} spec";
     create_spec_main;
     create_spec_header;

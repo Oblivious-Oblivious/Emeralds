@@ -10,9 +10,7 @@ class Emeralds::BuildAppRelease < Emeralds::Command
       return if try_override_command;
 
       make_export;
-      cmd = "#{OPT["cc"]} #{OPT["release_opt"]} #{OPT["release_version"]} #{OPT["release_flags"]} #{OPT["release_warnings"]} -o #{OPT["output"]} $(#{OPT["input"]}) $(#{OPT["inputfiles"]}) $(#{OPT["deps"]})";
-      puts cmd;
-      `#{cmd}`;
+      TerminalHandler.generic_cmd "#{OPT["cc"]} #{OPT["release_opt"]} #{OPT["release_version"]} #{OPT["release_flags"]} #{OPT["release_warnings"]} -o #{OPT["output"]} $(#{OPT["input"]}) $(#{OPT["inputfiles"]}) $(#{OPT["deps"]})", display: true;
       move_output_to_export;
     };
   end

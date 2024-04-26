@@ -6,9 +6,7 @@ class Emeralds::InstallAll < Emeralds::Command
   # Installs all missing development dependencies for the em library
   def block
     -> {
-      unless Dir.exists? "libs"
-        Dir.mkdir "libs";
-      end
+      TerminalHandler.mkdir "libs";
 
       Emeralds::YamlReader.get_dependencies.each do |dep|
         install_dep dep unless dep == "";

@@ -46,7 +46,7 @@ class Emeralds::Add < Emeralds::Command
   def block
     -> {
       if sanitize_filename ARGV[1]
-        Dir.mkdir "src/#{ARGV[1]}";
+        TerminalHandler.mkdir "src/#{ARGV[1]}";
         write_c_file;
         write_h_file;
       else
