@@ -30,7 +30,7 @@ class Emeralds::Add < Emeralds::Command
       data << "#ifndef __#{ARGV[1].gsub("-", "_").upcase}_H_\n";
       data << "#define __#{ARGV[1].gsub("-", "_").upcase}_H_\n\n";
 
-      data << "void #{ARGV[1]}(void);\n\n";
+      data << "void #{ARGV[1]}_dummy(void);\n\n";
 
       data << "#endif\n";
     end
@@ -50,7 +50,7 @@ class Emeralds::Add < Emeralds::Command
         write_c_file;
         write_h_file;
       else
-        puts "Cannot create a pair with name: #{ARGV[1]}.";
+        puts "Cannot create a pair with name: #{ARGV[1]}.".colorize(:light_red);
       end
     };
   end

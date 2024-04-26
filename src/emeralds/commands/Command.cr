@@ -34,6 +34,8 @@ abstract class Emeralds::Command
   end
 
   private def library_release
+    return if try_override_command;
+
     make_export;
     copy_headers;
     cmd = "#{OPT["cc"]} #{OPT["release_opt"]} #{OPT["release_version"]} #{OPT["release_flags"]} #{OPT["release_warnings"]} #{OPT["libs"]} $(#{OPT["inputfiles"]})";

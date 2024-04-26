@@ -26,9 +26,9 @@ class Emeralds::List < Emeralds::Command
 
       no_deps = deps.size + dev_deps.size;
       if no_deps == 1
-        puts "\n#{no_deps} dependency";
+        puts "\n#{ARROW} #{no_deps} dependency";
       else
-        puts "\n#{no_deps} dependencies";
+        puts "\n#{ARROW} #{no_deps} dependencies";
       end
     };
   end
