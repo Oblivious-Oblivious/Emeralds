@@ -30,13 +30,6 @@ Run the install script
 * `em run`
 * `em clean`
 
-## Development
-
-* Make sure we store PWD at runtime so that symlinks do not break execution.
-* Remove all direct `cmd` commands and replace with cross platform crystal ones.
-* Allow for custom cflags inside of emfile.
-* Include installation instructions for wget and git requirements.
-
 ## Contributing
 
 1. Fork it (<https://github.com/Oblivious-Oblivious/Emeralds/fork>)
