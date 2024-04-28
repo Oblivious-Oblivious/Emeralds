@@ -55,42 +55,4 @@ module Emeralds::YamlReader
   def self.get_dev_dependencies
     read_and_return_dependencies from: get_field "dev-dependencies";
   end
-
-  # Read all source files and count the lines of codes
-  #
-  # return -> The total number of files and lines of code
-  def self.get_lines_of_code
-    num = 0;
-    loc = 0;
-
-    Dir.glob PATHS do |file|
-      num += 1;
-      loc += File
-        .read(file)
-        .split("\n")
-        .select { |line| line != "" }
-        .size;
-    end
-
-    [num, loc];
-  end
-
-  # Read all dependency source files and count the lines of codes
-  #
-  # return -> The total number of files and lines of code of libraries
-  def self.get_deps_lines_of_code
-    num = 0;
-    loc = 0;
-
-    Dir.glob DEPSPATHS do |file|
-      num += 1;
-      loc += File
-        .read(file)
-        .split("\n")
-        .select { |line| line != "" }
-        .size;
-    end
-
-    [num, loc];
-  end
 end

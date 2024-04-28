@@ -30,6 +30,7 @@ require "./emeralds/constants/cli";
 require "./emeralds/constants/options";
 require "./emeralds/constants/version";
 
+require "./emeralds/modules/FileHandler";
 require "./emeralds/modules/TerminalHandler";
 require "./emeralds/modules/YamlReader";
 
