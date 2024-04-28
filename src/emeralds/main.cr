@@ -1,7 +1,16 @@
 # Defines the main functionality when running the system
 module Emeralds::Main
+  private def self.ensure_em_yml_or_init
+    if !File.exists?("em.yml") && ARGV.size > 0 && ARGV[0] != "init"
+      puts "#{ARROW} em.yml not found. Please run emeralds init first.";
+      exit 1;
+    else
+      Help.new.run if ARGV.size < 1;
+    end
+  end
+
   def self.run
-    Help.new.run if ARGV.size < 1;
+    ensure_em_yml_or_init;
 
     action = ARGV[0]
     case action

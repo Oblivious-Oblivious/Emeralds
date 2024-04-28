@@ -19,5 +19,5 @@ module Emeralds
     "output"          => "#{YamlReader.get_field "name"}",
     "testinput"       => "#{FileHandler.find("spec/**/*.spec.c").join ' '}",
     "testoutput"      => "spec_results",
-  }; # TODO - Make cross platform, convert bash searches to crystal glob serches for writing makefile fields
+  };
 end

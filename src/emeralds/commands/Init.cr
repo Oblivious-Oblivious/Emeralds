@@ -21,17 +21,17 @@ class Emeralds::Init < Emeralds::Command
       data << "license: GPLv3\n\n";
     end
 
-    File.write "#{ARGV[1]}/em.yml", data;
+    File.write "em.yml", data;
   end
 
   private def initialize_git_directory
     puts "  #{ARROW} .git";
-    TerminalHandler.generic_cmd "git init #{ARGV[1]}/";
+    TerminalHandler.generic_cmd "git init";
   end
 
   private def wget_a_gplv3_license
     puts "  #{ARROW} LICENSE";
-    TerminalHandler.generic_cmd "wget -O #{ARGV[1]}/LICENSE https://www.gnu.org/licenses/gpl-3.0.txt >/dev/null 2>&1";
+    TerminalHandler.generic_cmd "wget -O LICENSE https://www.gnu.org/licenses/gpl-3.0.txt >/dev/null 2>&1";
   end
 
   private def write_gitignore_file
@@ -82,7 +82,7 @@ class Emeralds::Init < Emeralds::Command
       data << "libs/\n";
     end
 
-    File.write "#{ARGV[1]}/.gitignore", data;
+    File.write ".gitignore", data;
   end
 
   private def create_clang_format
@@ -137,7 +137,7 @@ class Emeralds::Init < Emeralds::Command
       data << "SpacesInParens: Never\n\n";
     end
 
-    File.write "#{ARGV[1]}/.clang-format", data;
+    File.write ".clang-format", data;
   end
 
   private def generate_readme
@@ -174,7 +174,7 @@ class Emeralds::Init < Emeralds::Command
       data << "";
     end
 
-    File.write "#{ARGV[1]}/README.md", data;
+    File.write "README.md", data;
   end
 
   private def create_src_main
@@ -191,19 +191,17 @@ class Emeralds::Init < Emeralds::Command
       data << "}\n";
     end
 
-    File.write "#{ARGV[1]}/src/#{ARGV[1]}.c", data;
+    File.write "src/#{ARGV[1]}.c", data;
   end
 
   private def create_source_files
     puts "  #{ARROW} src";
-    TerminalHandler.mkdir "#{ARGV[1]}/src";
+    TerminalHandler.mkdir "src";
     puts "    #{ARROW} get_value";
     puts "      #{ARROW} get_value.c";
     puts "      #{ARROW} get_value.h";
     create_src_main;
-    Dir.cd ARGV[1];
     TerminalHandler.generic_cmd "em add get_value";
-    Dir.cd "..";
   end
 
   private def create_spec_main
@@ -221,12 +219,12 @@ class Emeralds::Init < Emeralds::Command
       data << "}\n";
     end
 
-    File.write "#{ARGV[1]}/spec/#{ARGV[1]}.spec.c", data;
+    File.write "spec/#{ARGV[1]}.spec.c", data;
   end
 
   private def create_spec_files
     puts "  #{ARROW} spec";
-    TerminalHandler.mkdir "#{ARGV[1]}/spec";
+    TerminalHandler.mkdir "spec";
     puts "    #{ARROW} get_value";
     puts "      #{ARROW} get_value.module.spec.h";
     create_spec_main;
@@ -240,16 +238,18 @@ class Emeralds::Init < Emeralds::Command
   def block
     -> {
       create_lib_directory;
+      Dir.cd ARGV[1];
       puts "#{COG} Writing initial files:";
 
+      write_em_file;
       initialize_git_directory;
       create_spec_files;
       create_source_files;
       create_clang_format;
       write_gitignore_file;
-      write_em_file;
       wget_a_gplv3_license;
       generate_readme;
+      Dir.cd "..";
     };
   end
 end
