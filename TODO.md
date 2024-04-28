@@ -6,7 +6,6 @@
   🟥 Remove all direct `cmd` commands and replace with cross platform crystal ones.
   🟥 Allow for custom cflags inside of emfile.
   🟥 Make sure em/emeralds runs only when em.yml file exists.
-  🟥 Include installation instructions for wget and git requirements.
 
 ## (✗) ver. 0.4.0
 -----------------

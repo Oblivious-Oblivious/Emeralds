@@ -14,12 +14,12 @@ class Emeralds::List < Emeralds::Command
   # Get the list of dependencies from the yaml file in a vector
   def block
     -> {
-      deps = Emeralds::YamlReader.get_dependencies;
+      deps = YamlReader.get_dependencies;
       deps.each do |dep|
         list_dep dep if dep != "";
       end
 
-      dev_deps = Emeralds::YamlReader.get_dev_dependencies;
+      dev_deps = YamlReader.get_dev_dependencies;
       dev_deps.each do |dep|
         list_dep dep if dep != "";
       end

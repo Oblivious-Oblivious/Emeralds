@@ -3,7 +3,7 @@ abstract class Emeralds::Command
   #
   # returns -> true if the override was ran else false
   private def try_override_command
-    override = Emeralds::YamlReader.get_field "build";
+    override = YamlReader.get_field "build";
     if override.strip != ""
       TerminalHandler.generic_cmd override, display: true;
       true;

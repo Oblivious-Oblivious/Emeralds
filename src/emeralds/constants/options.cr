@@ -1,6 +1,6 @@
 module Emeralds
   OPT = {
-    "name"            => "#{Emeralds::YamlReader.get_field "name"}",
+    "name"            => "#{YamlReader.get_field "name"}",
     "cc"              => "clang",
     "debug_opt"       => "-Og -g",
     "debug_version"   => "-std=c89",
@@ -16,8 +16,8 @@ module Emeralds
     "deps"            => "find ./export -name \"*.*o\" 2>&1 | grep -v \"No such file or directory\"",
     "inputfiles"      => "find src/**/*.c 2>&1 | grep -v \"No such file or directory\"",
     "input"           => "find src/*.c 2>&1 | grep -v \"No such file or directory\"",
-    "output"          => "#{Emeralds::YamlReader.get_field "name"}",
     "testinput"       => "find spec/*.spec.c 2>&1 | grep -v \"No such file or directory\"",
+    "output"          => "#{YamlReader.get_field "name"}",
     "testoutput"      => "spec_results",
   }; # TODO - Make cross platform, convert bash searches to crystal glob serches for writing makefile fields
 end
