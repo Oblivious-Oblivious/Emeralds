@@ -1,9 +1,6 @@
 # An abstract class for creating command literals
 # implements a `message` and a `block` method
 abstract class Emeralds::Command
-  @name : String = "";
-  getter :name;
-
   # Contains the informational message for the user while performing an Emerald command
   #
   # return -> The string to display
