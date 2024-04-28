@@ -26,12 +26,12 @@ class Emeralds::Init < Emeralds::Command
 
   private def initialize_git_directory
     puts "  #{ARROW} .git";
-    TerminalHandler.generic_cmd "git init";
+    TerminalHandler.git_init;
   end
 
   private def wget_a_gplv3_license
     puts "  #{ARROW} LICENSE";
-    TerminalHandler.generic_cmd "wget -O LICENSE https://www.gnu.org/licenses/gpl-3.0.txt >/dev/null 2>&1";
+    TerminalHandler.wget "https://www.gnu.org/licenses/gpl-3.0.txt", "LICENSE";
   end
 
   private def write_gitignore_file

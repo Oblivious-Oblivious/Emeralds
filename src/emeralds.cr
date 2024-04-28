@@ -1,6 +1,8 @@
 require "yaml";
 require "colorize";
 require "file_utils";
+require "http/client";
+require "git-repository";
 
 require "./emeralds/extensions/Command+install";
 require "./emeralds/extensions/Command+move_copy";

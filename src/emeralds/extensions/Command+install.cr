@@ -18,7 +18,7 @@ abstract class Emeralds::Command
     TerminalHandler.rm "libs/#{parts[0]}";
     puts " #{COG} Installing `#{parts[0]}`";
 
-    TerminalHandler.generic_cmd "git clone https://github.com/#{parts[1]} libs/#{parts[0]} 2>&1";
+    TerminalHandler.git_clone "https://github.com/#{parts[1]}", "libs/#{parts[0]}";
     Dir.cd "libs/#{parts[0]}";
     TerminalHandler.generic_cmd "em install";
     TerminalHandler.generic_cmd "em build lib release";

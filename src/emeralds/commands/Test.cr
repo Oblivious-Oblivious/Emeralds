@@ -13,7 +13,7 @@ class Emeralds::Test < Emeralds::Command
       OPT["deps"] = FileHandler.find_with_pattern("./export", "*.o").join ' ';
       TerminalHandler.generic_cmd "#{OPT["cc"]} #{OPT["release_opt"]} #{OPT["release_version"]} #{OPT["release_flags"]} #{OPT["test_warnings"]} -o spec/#{OPT["testoutput"]} #{OPT["deps"]} #{OPT["testinput"]}", display: true;
       puts;
-      puts TerminalHandler.generic_cmd "./spec/#{OPT["testoutput"]}", display: true;
+      TerminalHandler.run "spec", OPT["testoutput"], display: true;
     };
   end
 end
