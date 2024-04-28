@@ -5,17 +5,17 @@ abstract class Emeralds::Command
   end
 
   private def copy_headers
-    TerminalHandler.generic_cmd "cp -r src/* export/ >/dev/null 2>&1 || true";
-    TerminalHandler.rm "rm -rf export/*.c";
-    TerminalHandler.rm "rm -rf export/**/*.c";
+    TerminalHandler.cp "src/*", "export/";
+    TerminalHandler.rm "export/*.c";
+    TerminalHandler.rm "export/**/*.c";
   end
 
   private def move_output_to_export
-    TerminalHandler.generic_cmd "mv #{OPT["output"]} export/ >/dev/null 2>&1 || true";
+    TerminalHandler.mv "#{OPT["output"]}", "export/";
   end
 
   private def copy_libraries_to_export
-    TerminalHandler.generic_cmd "mv *.o export/ >/dev/null 2>&1 || true";
-    TerminalHandler.generic_cmd "cp -r $(find ./libs -name \"*.*o\") export/ >/dev/null 2>&1 || true";
+    TerminalHandler.mv "*.o", "export/";
+    TerminalHandler.cp "#{FileHandler.find_with_pattern "./libs", "*.o"}", "export/";
   end
 end

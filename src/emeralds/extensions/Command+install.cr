@@ -20,10 +20,12 @@ abstract class Emeralds::Command
 
     TerminalHandler.generic_cmd "git clone https://github.com/#{parts[1]} libs/#{parts[0]} 2>&1";
     Dir.cd "libs/#{parts[0]}";
-    TerminalHandler.rm ".git*";
     TerminalHandler.generic_cmd "em install";
     TerminalHandler.generic_cmd "em build lib release";
     TerminalHandler.generic_cmd "find . -mindepth 1 -not -path \"./export*\" -not -path \"./libs*\" -exec rm -rf {} + 2>&1";
+
+    # TODO - Not working with dotfiles.
+    TerminalHandler.rm "libs/#{parts[0]}/.git*";
     Dir.cd "../../";
   end
 end
