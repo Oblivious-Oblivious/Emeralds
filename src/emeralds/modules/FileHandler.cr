@@ -26,4 +26,14 @@ module Emeralds::FileHandler
     self.get_lines_of_code DEPSPATHS;
   end
 
+  # Delete all paths in base_dir except the excluded array
+  def self.delete_excluded_paths(base_dir, exclude_patterns)
+    Dir.glob("#{base_dir}/**/{*,.*}") do |path|
+      relative_path = path.sub(base_dir, "").lchop('/');
+      next if exclude_patterns.any? do |pattern|
+        pattern.lchop("./") == relative_path || relative_path.starts_with?("#{pattern.lchop("./")}/");
+      end
+      FileUtils.rm_rf(path) unless File.directory?(path) && path == base_dir;
+    end
+  end
 end

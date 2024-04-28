@@ -22,7 +22,7 @@ abstract class Emeralds::Command
     Dir.cd "libs/#{parts[0]}";
     TerminalHandler.generic_cmd "em install";
     TerminalHandler.generic_cmd "em build lib release";
-    TerminalHandler.generic_cmd "find . -mindepth 1 -not -path \"./export*\" -not -path \"./libs*\" -exec rm -rf {} + 2>&1";
+    FileHandler.delete_excluded_paths "./", ["./export", "./libs"];
 
     # TODO - Not working with dotfiles.
     TerminalHandler.rm "libs/#{parts[0]}/.git*";
