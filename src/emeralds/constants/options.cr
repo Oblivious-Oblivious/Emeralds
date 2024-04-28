@@ -13,11 +13,11 @@ module Emeralds
     "unused_warnings" => "-Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi",
     "test_warnings"   => "-Wno-int-conversion -Wno-implicit-function-declaration -Wno-incompatible-pointer-types",
     "libs"            => "-c",
-    "deps"            => "find ./export -name \"*.*o\" 2>&1 | grep -v \"No such file or directory\"",
-    "inputfiles"      => "find src/**/*.c 2>&1 | grep -v \"No such file or directory\"",
-    "input"           => "find src/*.c 2>&1 | grep -v \"No such file or directory\"",
-    "testinput"       => "find spec/*.spec.c 2>&1 | grep -v \"No such file or directory\"",
+    "deps"            => "#{FileHandler.find_with_pattern("./export", "*.o").join ' '}",
+    "inputfiles"      => "#{FileHandler.find("src/**/*.c").tap { |arr| arr.delete("src/#{YamlReader.get_field "name"}.c"); }.join(' ')}",
+    "input"           => "#{FileHandler.find("src/**/*.c").join ' '}",
     "output"          => "#{YamlReader.get_field "name"}",
+    "testinput"       => "#{FileHandler.find("spec/**/*.spec.c").join ' '}",
     "testoutput"      => "spec_results",
   }; # TODO - Make cross platform, convert bash searches to crystal glob serches for writing makefile fields
 end

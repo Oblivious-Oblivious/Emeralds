@@ -8,8 +8,10 @@ class Emeralds::Test < Emeralds::Command
     -> {
       copy_libraries_to_export;
       library_release;
-      TerminalHandler.generic_cmd "#{OPT["cc"]} #{OPT["release_opt"]} #{OPT["release_version"]} #{OPT["release_flags"]} #{OPT["test_warnings"]} -o spec/#{OPT["testoutput"]} $(#{OPT["deps"]}) $(#{OPT["testinput"]})", display: true;
       TerminalHandler.mkdir "export";
+      # NOTE - We bypass optimization and re-evaluate dependecy paths.
+      OPT["deps"] = FileHandler.find_with_pattern("./export", "*.o").join ' ';
+      TerminalHandler.generic_cmd "#{OPT["cc"]} #{OPT["release_opt"]} #{OPT["release_version"]} #{OPT["release_flags"]} #{OPT["test_warnings"]} -o spec/#{OPT["testoutput"]} #{OPT["deps"]} #{OPT["testinput"]}", display: true;
       puts;
       puts TerminalHandler.generic_cmd "./spec/#{OPT["testoutput"]}", display: true;
     };

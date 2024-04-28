@@ -1,3 +1,5 @@
+# TODO - Rework makefile to be simpler and to align with em commands.
+
 class Emeralds::GenerateMakefile < Emeralds::Command
   def message
     "Emeralds - Generating a makefile...";
@@ -55,12 +57,12 @@ class Emeralds::GenerateMakefile < Emeralds::Command
         data << "lib_debug: make_export copy_headers\n\t";
           data << "$(CC) $(DEBUG_OPT) $(DEBUG_VERSION) $(DEBUG_FLAGS) $(WARNINGS) $(UNUSED_WARNINGS) $(LIBS) $(INPUTFILES)\n\t";
           data << "mv *.o export/ >/dev/null 2>&1 || true\n\t";
-          data << "mv $(shell find ./libs -name \"*.*o\") export/ >/dev/null 2>&1 || true\n\n";
+          data << "mv $(shell find ./libs -name \"*.o\") export/ >/dev/null 2>&1 || true\n\n";
 
         data << "lib_release: make_export copy_headers\n\t";
           data << "$(CC) $(RELEASE_OPT) $(RELEASE_VERSION) $(RELEASE_FLAGS) $(RELEASE_WARNINGS) $(LIBS) $(INPUTFILES)\n\t";
           data << "mv *.o export/ >/dev/null 2>&1 || true\n\t";
-          data << "mv $(shell find ./libs -name \"*.*o\") export/ >/dev/null 2>&1 || true\n\n";
+          data << "mv $(shell find ./libs -name \"*.o\") export/ >/dev/null 2>&1 || true\n\n";
 
         data << "test: lib_release\n\t";
           data << "$(CC) $(RELEASE_OPT) $(RELEASE_VERSION) $(RELEASE_FLAGS) $(TEST_WARNINGS) -o spec/$(TESTOUTPUT) $(DEPS) $(TESTINPUT)\n\t";

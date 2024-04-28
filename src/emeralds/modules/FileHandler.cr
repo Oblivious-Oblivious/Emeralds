@@ -26,6 +26,26 @@ module Emeralds::FileHandler
     self.get_lines_of_code DEPSPATHS;
   end
 
+  # Search for a generic term (emulates linux find start_dir)
+  #
+  # return -> An array of all matches.
+  def self.find(start_dir)
+    Dir.glob(start_dir);
+  end
+
+  # Search for all patterns in start_dir (command emulates linux find start_dir -name pattern)
+  #
+  # return -> An array of matches
+  def self.find_with_pattern(start_dir, pattern)
+    matches = [] of String;
+
+    Dir.glob(File.join(start_dir, "**", pattern)) do |file|
+      matches << file if File.file? file
+    end
+
+    matches;
+  end
+
   # Delete all paths in base_dir except the excluded array
   def self.delete_excluded_paths(base_dir, exclude_patterns)
     Dir.glob("#{base_dir}/**/{*,.*}") do |path|
