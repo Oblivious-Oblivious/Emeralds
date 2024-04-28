@@ -12,6 +12,7 @@ A module/package manager for C applications.
 Run the install script
 
 ```
+shards install
 ./install
 ```
 
