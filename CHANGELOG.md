@@ -1,3 +1,13 @@
+# Changes for Emeralds 0.6.0 (28-04-2024)
+
+* Removed unused code.
+* Avoided recursive includes by only keeping exported values on libs.
+* Edited build scripts to run debug and release warnings respectively.
+* Added new commands: em install all, em add, em loc all.
+* Edited em init file architecture.
+* Make sure em/emeralds runs only when em.yml file exists.
+* Removed all direct `cmd` commands and replaced them with cross platform ones.
+
 # Changes for Emeralds 0.5.0 (23-04-2024)
 
 * Refactored codebase for easier management.
