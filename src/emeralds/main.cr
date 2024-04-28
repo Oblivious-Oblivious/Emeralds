@@ -75,6 +75,8 @@ module Emeralds::Main
         Loc.new.run;
       elsif ARGV[1] == "deps"
         LocDeps.new.run;
+      elsif ARGV[1] == "all"
+        LocAll.new.run;
       else
         Help.new.run;
       end

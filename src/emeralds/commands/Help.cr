@@ -17,7 +17,7 @@ class Emeralds::Help < Emeralds::Command
       puts "    install [ | dev | all]              - Install dependencies recursively for each included library.\n";
       puts "    list                                - List dependencies in the em file.\n";
       puts "    makefile                            - Generate a makefile for independent compilation\n";
-      puts "    loc [ | deps]                       - Count the sloc lines of code in the project\n";
+      puts "    loc [ | deps | all]                 - Count the sloc lines of code in the project\n";
       puts "    test                                - Run the script of tests.\n";
       puts "    version                             - Print the current version of the emerald.\n";
       puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
