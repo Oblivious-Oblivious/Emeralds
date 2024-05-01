@@ -1,6 +1,5 @@
 # Defines constants such as version and CLI logger customizations
 module Emeralds
-  # Constants for better displaying of status
   COG       = "⚙".colorize(:light_green).mode(:dim).to_s;
   ARROW     = "➔".colorize(:dark_gray).to_s;
   CHECKMARK = "✔".colorize(:light_green).to_s;
