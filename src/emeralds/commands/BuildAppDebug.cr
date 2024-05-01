@@ -10,7 +10,7 @@ class Emeralds::BuildAppDebug < Emeralds::Command
       return if try_override_command;
 
       make_export;
-      TerminalHandler.generic_cmd "#{OPT["cc"]} #{OPT["debug_opt"]} #{OPT["debug_version"]} #{OPT["debug_flags"]} #{OPT["debug_warnings"]} #{OPT["unused_warnings"]} -o #{OPT["output"]} #{OPT["input"]}", display: true;
+      TerminalHandler.generic_cmd "#{Emeralds.opt["cc"]} #{Emeralds.opt["debug_opt"]} #{Emeralds.opt["debug_version"]} #{Emeralds.opt["debug_flags"]} #{Emeralds.opt["debug_warnings"]} #{Emeralds.opt["unused_warnings"]} -o #{Emeralds.opt["output"]} #{Emeralds.opt["input"]}", display: true;
       move_output_to_export;
     };
   end

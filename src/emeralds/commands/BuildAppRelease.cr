@@ -10,7 +10,7 @@ class Emeralds::BuildAppRelease < Emeralds::Command
       return if try_override_command;
 
       make_export;
-      TerminalHandler.generic_cmd "#{OPT["cc"]} #{OPT["release_opt"]} #{OPT["release_version"]} #{OPT["release_flags"]} #{OPT["release_warnings"]} -o #{OPT["output"]} #{OPT["input"]}", display: true;
+      TerminalHandler.generic_cmd "#{Emeralds.opt["cc"]} #{Emeralds.opt["release_opt"]} #{Emeralds.opt["release_version"]} #{Emeralds.opt["release_flags"]} #{Emeralds.opt["release_warnings"]} -o #{Emeralds.opt["output"]} #{Emeralds.opt["input"]}", display: true;
       move_output_to_export;
     };
   end

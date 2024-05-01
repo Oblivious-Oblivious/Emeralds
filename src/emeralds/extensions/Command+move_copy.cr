@@ -11,7 +11,7 @@ abstract class Emeralds::Command
   end
 
   private def move_output_to_export
-    TerminalHandler.mv "#{OPT["output"]}", "export/";
+    TerminalHandler.mv "#{Emeralds.opt["output"]}", "export/";
   end
 
   private def copy_libraries_to_export

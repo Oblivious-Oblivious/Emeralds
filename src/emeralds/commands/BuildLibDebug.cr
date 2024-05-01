@@ -11,7 +11,7 @@ class Emeralds::BuildLibDebug < Emeralds::Command
 
       make_export;
       copy_headers;
-      TerminalHandler.generic_cmd "#{OPT["cc"]} #{OPT["debug_opt"]} #{OPT["debug_version"]} #{OPT["debug_flags"]} #{OPT["debug_warnings"]} #{OPT["unused_warnings"]} #{OPT["libs"]} #{OPT["inputfiles"]}", display: true;
+      TerminalHandler.generic_cmd "#{Emeralds.opt["cc"]} #{Emeralds.opt["debug_opt"]} #{Emeralds.opt["debug_version"]} #{Emeralds.opt["debug_flags"]} #{Emeralds.opt["debug_warnings"]} #{Emeralds.opt["unused_warnings"]} #{Emeralds.opt["libs"]} #{Emeralds.opt["inputfiles"]}", display: true;
       copy_libraries_to_export;
     };
   end
