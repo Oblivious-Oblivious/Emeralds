@@ -92,19 +92,20 @@ class Emeralds::Init < Emeralds::Command
       data << "---\n";
       data << "BasedOnStyle: LLVM\n\n";
 
-      data << "AlignConsecutiveAssignments:\n\t"
-        data << "Enabled: true\n";
-        data << "AcrossComments: true\n";
-      data << "AlignConsecutiveMacros:\n\t"
-        data << "Enabled: true\n";
-        data << "AcrossComments: true\n";
-      data << "AlignConsecutiveBitFields:\n\t"
-        data << "Enabled: true\n";
-        data << "AcrossComments: true\n";
-      data << "AlignConsecutiveShortCaseStatements:\n\t"
-        data << "Enabled: true\n";
-        data << "AcrossEmptyLines: true\n";
-        data << "AcrossComments: true\n";
+      data << "AlignAfterOpenBracket: BlockIndent\n";
+      data << "AlignConsecutiveAssignments:\n";
+      data << "  Enabled: true\n";
+      data << "  AcrossComments: true\n";
+      data << "AlignConsecutiveMacros:\n";
+      data << "  Enabled: true\n";
+      data << "  AcrossComments: true\n";
+      data << "AlignConsecutiveBitFields:\n";
+      data << "  Enabled: true\n";
+      data << "  AcrossComments: true\n";
+      data << "AlignConsecutiveShortCaseStatements:\n";
+      data << "  Enabled: true\n";
+      data << "  AcrossEmptyLines: true\n";
+      data << "  AcrossComments: true\n";
       data << "AlignEscapedNewlines: Left\n";
       data << "AllowShortBlocksOnASingleLine: Empty\n";
       data << "BinPackArguments: false\n";
@@ -134,7 +135,7 @@ class Emeralds::Init < Emeralds::Command
       data << "SpaceAfterLogicalNot: false\n";
       data << "SpaceBeforeParens: false\n";
       data << "SpacesInContainerLiterals: false\n";
-      data << "SpacesInParens: Never\n\n";
+      data << "SpacesInParens: Never\n";
     end
 
     File.write ".clang-format", data;
