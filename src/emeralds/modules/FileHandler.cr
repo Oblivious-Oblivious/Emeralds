@@ -43,7 +43,7 @@ module Emeralds::FileHandler
       matches << file if File.file? file
     end
 
-    matches;
+    matches.uniq;
   end
 
   # Delete all paths in base_dir except the excluded array
