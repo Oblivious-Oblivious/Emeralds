@@ -9,7 +9,7 @@ class Emeralds::Version < Emeralds::Command
       if YamlReader.get_field("name") == ""
         puts "Not a valid library (missing `em.yml`)".colorize(:light_red);
       else
-        puts "#{ARROW} #{YamlReader.get_field "name"} v#{YamlReader.get_field "version"}";
+        puts "#{Emeralds.arrow} #{YamlReader.get_field "name"} v#{YamlReader.get_field "version"}";
       end
     };
   end

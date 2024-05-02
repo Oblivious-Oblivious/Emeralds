@@ -1,9 +1,20 @@
 # Defines constants such as version and CLI logger customizations
 module Emeralds
-  COG       = "⚙".colorize(:light_green).mode(:dim).to_s;
-  ARROW     = "➔".colorize(:dark_gray).to_s;
-  CHECKMARK = "✔".colorize(:light_green).to_s;
-  DIAMOND   = "◈";
+  def self.cog
+    "⚙".colorize(:light_green).mode(:dim).to_s;
+  end
+
+  def self.arrow
+    "➔".colorize(:dark_gray).to_s;
+  end
+
+  def self.checkmark
+    "✔".colorize(:light_green).to_s;
+  end
+
+  def self.diamond
+    "◈";
+  end
 
   # Paths of source files (for counting lines) 
   PATHS = [

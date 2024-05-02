@@ -1,7 +1,7 @@
 class Emeralds::Init < Emeralds::Command
   private def create_lib_directory
     if validate_filename ARGV[1]
-      puts "#{COG} Creating directory: #{ARGV[1].colorize(:light_green).mode(:bold)}";
+      puts "#{Emeralds.cog} Creating directory: #{ARGV[1].colorize(:light_green).mode(:bold)}";
       TerminalHandler.mkdir ARGV[1];
     else
       puts "Cannot create a new emerald with name: #{ARGV[1]}.".colorize(:light_red);
@@ -10,7 +10,7 @@ class Emeralds::Init < Emeralds::Command
   end
 
   private def write_em_file
-    puts "  #{ARROW} em.yml";
+    puts "  #{Emeralds.arrow} em.yml";
 
     data = String.build do |data|
       data << "name: #{ARGV[1]}\n";
@@ -30,17 +30,17 @@ class Emeralds::Init < Emeralds::Command
   end
 
   private def initialize_git_directory
-    puts "  #{ARROW} .git";
+    puts "  #{Emeralds.arrow} .git";
     TerminalHandler.git_init;
   end
 
   private def wget_a_gplv3_license
-    puts "  #{ARROW} LICENSE";
+    puts "  #{Emeralds.arrow} LICENSE";
     TerminalHandler.wget "https://www.gnu.org/licenses/gpl-3.0.txt", "LICENSE";
   end
 
   private def write_gitignore_file
-    puts "  #{ARROW} .gitignore";
+    puts "  #{Emeralds.arrow} .gitignore";
 
     data = String.build do |data|
       data << "#Prerequisites\n";
@@ -91,7 +91,7 @@ class Emeralds::Init < Emeralds::Command
   end
 
   private def create_clang_format
-    puts "  #{ARROW} .clang-format";
+    puts "  #{Emeralds.arrow} .clang-format";
 
     data = String.build do |data|
       data << "---\n";
@@ -147,7 +147,7 @@ class Emeralds::Init < Emeralds::Command
   end
 
   private def generate_readme
-    puts "  #{ARROW} README.md";
+    puts "  #{Emeralds.arrow} README.md";
 
     data = String.build do |data|
       data << "# #{ARGV[1]}\n\n";
@@ -184,7 +184,7 @@ class Emeralds::Init < Emeralds::Command
   end
 
   private def create_src_main
-    puts "    #{ARROW} #{ARGV[1]}.c";
+    puts "    #{Emeralds.arrow} #{ARGV[1]}.c";
 
     data = String.build do |data|
       data << "#include <stdio.h>\n\n";
@@ -201,17 +201,17 @@ class Emeralds::Init < Emeralds::Command
   end
 
   private def create_source_files
-    puts "  #{ARROW} src";
+    puts "  #{Emeralds.arrow} src";
     TerminalHandler.mkdir "src";
-    puts "    #{ARROW} get_value";
-    puts "      #{ARROW} get_value.c";
-    puts "      #{ARROW} get_value.h";
+    puts "    #{Emeralds.arrow} get_value";
+    puts "      #{Emeralds.arrow} get_value.c";
+    puts "      #{Emeralds.arrow} get_value.h";
     create_src_main;
     TerminalHandler.generic_cmd "em add get_value";
   end
 
   private def create_spec_main
-    puts "    #{ARROW} #{ARGV[1]}.spec.c";
+    puts "    #{Emeralds.arrow} #{ARGV[1]}.spec.c";
 
     data = String.build do |data|
       data << "#include \"get_value/get_value.module.spec.h\"\n\n";
@@ -229,10 +229,10 @@ class Emeralds::Init < Emeralds::Command
   end
 
   private def create_spec_files
-    puts "  #{ARROW} spec";
+    puts "  #{Emeralds.arrow} spec";
     TerminalHandler.mkdir "spec";
-    puts "    #{ARROW} get_value";
-    puts "      #{ARROW} get_value.module.spec.h";
+    puts "    #{Emeralds.arrow} get_value";
+    puts "      #{Emeralds.arrow} get_value.module.spec.h";
     create_spec_main;
   end
 
@@ -245,7 +245,7 @@ class Emeralds::Init < Emeralds::Command
     -> {
       create_lib_directory;
       Dir.cd ARGV[1];
-      puts "#{COG} Writing initial files:";
+      puts "#{Emeralds.cog} Writing initial files:";
 
       write_em_file;
       initialize_git_directory;

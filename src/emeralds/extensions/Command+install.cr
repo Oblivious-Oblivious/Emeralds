@@ -16,7 +16,7 @@ abstract class Emeralds::Command
   private def install_dep(dep)
     parts = get_parts from: dep;
     TerminalHandler.rm (File.join "libs", "#{parts[0]}");
-    puts " #{COG} Installing `#{parts[0]}`";
+    puts " #{Emeralds.cog} Installing `#{parts[0]}`";
 
     TerminalHandler.git_clone "https://github.com/#{parts[1]}", (File.join "libs", "#{parts[0]}");
     Dir.cd (File.join "libs", "#{parts[0]}");

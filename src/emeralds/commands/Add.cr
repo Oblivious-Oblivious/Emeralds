@@ -1,6 +1,6 @@
 class Emeralds::Add < Emeralds::Command
   private def write_c_file
-    puts "  #{ARROW} #{ARGV[1]}.c";
+    puts "  #{Emeralds.arrow} #{ARGV[1]}.c";
 
     data = String.build do |data|
       data << "#include \"#{ARGV[1]}.h\"\n\n";
@@ -12,7 +12,7 @@ class Emeralds::Add < Emeralds::Command
   end
 
   private def write_h_file
-    puts "  #{ARROW} #{ARGV[1]}.h";
+    puts "  #{Emeralds.arrow} #{ARGV[1]}.h";
 
     data = String.build do |data|
       data << "#ifndef __#{ARGV[1].gsub("-", "_").upcase}_H_\n";
@@ -31,7 +31,7 @@ class Emeralds::Add < Emeralds::Command
   end
 
   private def write_spec_file
-    puts "  #{ARROW} #{ARGV[1]}.module.spec.h"
+    puts "  #{Emeralds.arrow} #{ARGV[1]}.module.spec.h"
 
     data = String.build do |data|
       data << "#include \"../../libs/cSpec/export/cSpec.h\"\n\n";
@@ -58,7 +58,7 @@ class Emeralds::Add < Emeralds::Command
   def block
     -> {
       if validate_filename ARGV[1]
-        puts "#{ARROW} #{ARGV[1]}";
+        puts "#{Emeralds.arrow} #{ARGV[1]}";
         TerminalHandler.mkdir (File.join "src", "#{ARGV[1]}");
         write_c_file;
         write_h_file;

@@ -8,8 +8,8 @@ class Emeralds::LocAll < Emeralds::Command
     -> {
       src_data = FileHandler.get_lines_of_code;
       deps_data = FileHandler.get_deps_lines_of_code;
-      puts "  #{COG} Files: #{(src_data[0]+deps_data[0]).to_s.colorize(:white).mode(:bold)}";
-      puts "  #{COG} Lines of code: #{(src_data[1]+deps_data[1]).to_s.colorize(:white).mode(:bold)}";
+      puts "  #{Emeralds.cog} Files: #{(src_data[0]+deps_data[0]).to_s.colorize(:white).mode(:bold)}";
+      puts "  #{Emeralds.cog} Lines of code: #{(src_data[1]+deps_data[1]).to_s.colorize(:white).mode(:bold)}";
     };
   end
 end

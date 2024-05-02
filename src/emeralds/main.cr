@@ -2,7 +2,7 @@
 module Emeralds::Main
   private def self.ensure_em_yml_or_init
     if !File.exists?("em.yml") && ARGV.size > 0 && ARGV[0] != "init"
-      puts "#{ARROW} em.yml not found. Please run emeralds init first.";
+      puts "#{Emeralds.arrow} em.yml not found. Please run emeralds init first.";
       exit 1;
     else
       Help.new.run if ARGV.size < 1;

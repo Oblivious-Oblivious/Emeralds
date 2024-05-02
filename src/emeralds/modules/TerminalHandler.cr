@@ -1,13 +1,13 @@
 module Emeralds::TerminalHandler
   def self.generic_cmd(cmd, display = false)
-    puts "#{ARROW} #{cmd}" if display;
+    puts "#{Emeralds.arrow} #{cmd}" if display;
     `#{cmd}`;
   rescue
     puts "#{cmd}: command not found".colorize(:light_red) if display;
   end
 
   def self.rm(path, display = false)
-    puts "#{ARROW} rm -rf #{path}" if display;
+    puts "#{Emeralds.arrow} rm -rf #{path}" if display;
     Dir.glob path do |file_path|
       FileUtils.rm_rf file_path;
     end
@@ -16,7 +16,7 @@ module Emeralds::TerminalHandler
   end
 
   def self.cp(src_dir, dest_dir, display = false)
-    puts "#{ARROW} cp -r #{src_dir} #{dest_dir}" if display;
+    puts "#{Emeralds.arrow} cp -r #{src_dir} #{dest_dir}" if display;
     Dir.glob src_dir do |file_path|
       FileUtils.cp_r file_path, dest_dir;
     end
@@ -25,7 +25,7 @@ module Emeralds::TerminalHandler
   end
 
   def self.mv(src_path, dest_path, display = false)
-    puts "#{ARROW} mv #{src_path} #{dest_path}" if display;
+    puts "#{Emeralds.arrow} mv #{src_path} #{dest_path}" if display;
     Dir.glob src_path do |file_path|
       FileUtils.mv file_path, File.join(dest_path, File.basename(file_path));
     end
@@ -35,7 +35,7 @@ module Emeralds::TerminalHandler
 
   def self.mkdir(path, display = false)
     unless Dir.exists? path
-      puts "#{ARROW} mkdir #{path}" if display;
+      puts "#{Emeralds.arrow} mkdir #{path}" if display;
     end
     FileUtils.mkdir_p path;
   rescue
@@ -43,7 +43,7 @@ module Emeralds::TerminalHandler
   end
 
   def self.run(executable, display = false)
-    puts "#{ARROW} ./#{executable}" if display;
+    puts "#{Emeralds.arrow} ./#{executable}" if display;
     executable_path = File.join ".", executable;
     output = IO::Memory.new;
     Process.run executable_path, output: output;
@@ -53,7 +53,7 @@ module Emeralds::TerminalHandler
   end
 
   def self.wget(url, output, display = false)
-    puts "#{ARROW} wget -O #{output} #{url}" if display;
+    puts "#{Emeralds.arrow} wget -O #{output} #{url}" if display;
     HTTP::Client.get url do |response|
       File.open output, "w" do |file|
         IO.copy response.body_io, file;
@@ -62,13 +62,13 @@ module Emeralds::TerminalHandler
   end
 
   def self.git_init(display = false)
-    puts "#{ARROW} git init";
+    puts "#{Emeralds.arrow} git init";
     # TODO - Check for cross platform capability
     `git init`;
   end
 
   def self.git_clone(repo_url, repo_name, display = false)
-    puts "#{ARROW} git clone #{repo_url} #{repo_name}" if display;
+    puts "#{Emeralds.arrow} git clone #{repo_url} #{repo_name}" if display;
     client = GitRepository::Generic.new repo_url;
     commit = client.commits(client.default_branch)[0].commit;
     client.fetch_commit commit, "#{repo_name}";

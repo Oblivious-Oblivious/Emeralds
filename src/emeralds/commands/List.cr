@@ -4,7 +4,7 @@ class Emeralds::List < Emeralds::Command
   # dep -> The name of the dependecy to list
   private def list_dep(dep)
     parts = get_parts from: dep;
-    puts "  #{COG} #{parts[0]}";
+    puts "  #{Emeralds.cog} #{parts[0]}";
   end
 
   def message
@@ -26,9 +26,9 @@ class Emeralds::List < Emeralds::Command
 
       no_deps = deps.size + dev_deps.size;
       if no_deps == 1
-        puts "\n#{ARROW} #{no_deps} dependency";
+        puts "\n#{Emeralds.arrow} #{no_deps} dependency";
       else
-        puts "\n#{ARROW} #{no_deps} dependencies";
+        puts "\n#{Emeralds.arrow} #{no_deps} dependencies";
       end
     };
   end
