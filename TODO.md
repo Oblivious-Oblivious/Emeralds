@@ -11,10 +11,7 @@
   🟩 Fix colorize methods that clash (white bold does not apply when it follows another color).
   🟥 In em loc, add a percentage that signifies how much is test code and source code accordingly.
   🟩 Replace all direct paths with File.join
-  🟥 Fix compilation error on generic_cmd
-    ⚙ Installing `Bool`
-      clang: error: no input files
-    ⚙ Installing `cSpec`
+  🟩 Fix compilation error on generic_cmd
   🟥 Fix YamlReader case where key is not found (add custom errors based on key missing)
     Unhandled exception: Missing hash key: "build" (KeyError)
 
