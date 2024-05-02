@@ -1,15 +1,10 @@
 NAME = emeralds
-INPUT = $(NAME).cr
 
 all: build
 
-remake_export:
-	$(RM) -r export
-	mkdir export
-
-build: remake_export
-	crystal build --release src/$(INPUT) -o export/em
-	cp export/em export/emeralds
+build:
+	shards build --release
+	cp bin/emeralds bin/em
 
 test:
 	crystal spec ./spec/$(NAME).spec.cr
@@ -21,4 +16,4 @@ document:
 	crystal docs src/*.cr
 
 clean:
-	$(RM) -r export
+	$(RM) -r bin
