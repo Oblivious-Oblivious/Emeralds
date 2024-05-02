@@ -1,5 +1,6 @@
 #!/bin/sh
 
+rm -rf bin
 make build
 #chown -R $(whoami) /usr/local/bin
 cp bin/em bin/emeralds /usr/local/bin/
