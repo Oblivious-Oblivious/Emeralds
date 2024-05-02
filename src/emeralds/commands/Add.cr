@@ -1,16 +1,4 @@
 class Emeralds::Add < Emeralds::Command
-  private def sanitize_filename(input)
-    forbidden_chars = /[<>:"\/\\|?*\x00-\x1F]/;
-    windows_reserved = /^(con|prn|aux|nul|com[1-9]|lpt[1-9])(\.\w+)?$/i;
-    sanitized = input.gsub forbidden_chars, "_";
-
-    if windows_reserved.match sanitized
-      sanitized = "file_#{sanitized}";
-    end
-
-    sanitized;
-  end
-
   private def write_c_file
     puts "  #{ARROW} #{ARGV[1]}.c";
 
@@ -69,7 +57,7 @@ class Emeralds::Add < Emeralds::Command
   # Count the number of lines of code
   def block
     -> {
-      if sanitize_filename ARGV[1]
+      if validate_filename ARGV[1]
         puts "#{ARROW} #{ARGV[1]}";
         TerminalHandler.mkdir "src/#{ARGV[1]}";
         write_c_file;

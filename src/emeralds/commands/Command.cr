@@ -39,6 +39,16 @@ abstract class Emeralds::Command
     copy_libraries_to_export;
   end
 
+  private def validate_filename(input)
+    forbidden_chars = /[<>:"\/\\|?*\x00-\x1F]/;
+    windows_reserved = /^(con|prn|aux|nul|com[1-9]|lpt[1-9]|com[0-9]+|lpt[0-9]+)$/i;
+
+    !(input.matches? forbidden_chars) &&
+    !(input.strip.empty?) &&
+    !(input.strip.matches? /\A\.+\z/) &&
+    !(windows_reserved.matches? input.strip);
+  end
+
   # Main method that runs and times the command block.
   def run
     puts message.colorize(:white).mode(:bold);

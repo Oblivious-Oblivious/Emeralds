@@ -5,7 +5,7 @@
 ## (✗) ver. 0.7.0
 -----------------
   🟥 Allow for custom cflags inside of emfile.
-  🟥 Validate that `add` and `init` options are valid string names (regex).
+  🟩 Validate that `add` and `init` options are valid string names (regex).
   🟥 Fix colorize methods that clash (white bold does not apply when it follows another color).
   🟥 In em loc, add a percentage that signifies how much is test code and source code accordingly.
   🟥 Replace all direct paths with File.join
@@ -16,7 +16,7 @@
   🟥 Fix YamlReader case where key is not found (add custom errors based on key missing)
     Unhandled exception: Missing hash key: "build" (KeyError)
 
-## (✗) ver. 0.6.0
+## (✓) ver. 0.6.0
 -----------------
   🟩 On `em add newfile` we should also generate tests.
   🟩 Migrate into a `.c/.h` pair architecture so when initting, we `em add get_value` to return hello world.

@@ -1,7 +1,12 @@
 class Emeralds::Init < Emeralds::Command
   private def create_lib_directory
-    puts "#{COG} Creating directory: #{ARGV[1].colorize(:light_green).mode(:bold)}";
-    TerminalHandler.mkdir ARGV[1];
+    if validate_filename ARGV[1]
+      puts "#{COG} Creating directory: #{ARGV[1].colorize(:light_green).mode(:bold)}";
+      TerminalHandler.mkdir ARGV[1];
+    else
+      puts "Cannot create a new emerald with name: #{ARGV[1]}.".colorize(:light_red);
+      exit 1;
+    end
   end
 
   private def write_em_file
