@@ -189,7 +189,7 @@ class Emeralds::Init < Emeralds::Command
     data = String.build do |data|
       data << "#include <stdio.h>\n\n";
 
-      data << "#include \"./get_value/get_value.h\"\n\n";
+      data << "#include \"get_value/get_value.h\"\n\n";
 
       data << "int main(void) {\n";
       data << "  printf(\"%s\\n\", get_value());\n";
@@ -197,7 +197,7 @@ class Emeralds::Init < Emeralds::Command
       data << "}\n";
     end
 
-    File.write "src/#{ARGV[1]}.c", data;
+    File.write (File.join "src", "#{ARGV[1]}.c"), data;
   end
 
   private def create_source_files
@@ -214,7 +214,7 @@ class Emeralds::Init < Emeralds::Command
     puts "    #{ARROW} #{ARGV[1]}.spec.c";
 
     data = String.build do |data|
-      data << "#include \"./get_value/get_value.module.spec.h\"\n\n";
+      data << "#include \"get_value/get_value.module.spec.h\"\n\n";
 
       data << "spec_suite({\n";
       data << "  T_get_value();\n";
@@ -225,7 +225,7 @@ class Emeralds::Init < Emeralds::Command
       data << "}\n";
     end
 
-    File.write "spec/#{ARGV[1]}.spec.c", data;
+    File.write (File.join "spec", "#{ARGV[1]}.spec.c"), data;
   end
 
   private def create_spec_files

@@ -42,14 +42,14 @@ module Emeralds::TerminalHandler
     puts "Could not create directory: #{path}";
   end
 
-  def self.run(path, executable, display = false)
-    puts "#{ARROW} ./#{path}/#{executable}" if display;
-    executable_path = File.join ".", path, executable;
+  def self.run(executable, display = false)
+    puts "#{ARROW} ./#{executable}" if display;
+    executable_path = File.join ".", executable;
     output = IO::Memory.new;
     Process.run executable_path, output: output;
     puts output.to_s;
   rescue
-    puts "Could not run: ./#{path}/#{executable}".colorize(:light_red) if display;
+    puts "Could not run: ./#{executable}".colorize(:light_red) if display;
   end
 
   def self.wget(url, output, display = false)
@@ -71,7 +71,7 @@ module Emeralds::TerminalHandler
     puts "#{ARROW} git clone #{repo_url} #{repo_name}" if display;
     client = GitRepository::Generic.new repo_url;
     commit = client.commits(client.default_branch)[0].commit;
-    client.fetch_commit commit, "./#{repo_name}";
+    client.fetch_commit commit, "#{repo_name}";
   rescue
     puts "Could not clone #{repo_url} to #{repo_name}".colorize(:light_red);
   end

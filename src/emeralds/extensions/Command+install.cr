@@ -15,18 +15,18 @@ abstract class Emeralds::Command
   # dep -> The name of the dependecy to install
   private def install_dep(dep)
     parts = get_parts from: dep;
-    TerminalHandler.rm "libs/#{parts[0]}";
+    TerminalHandler.rm (File.join "libs", "#{parts[0]}");
     puts " #{COG} Installing `#{parts[0]}`";
 
-    TerminalHandler.git_clone "https://github.com/#{parts[1]}", "libs/#{parts[0]}";
-    Dir.cd "libs/#{parts[0]}";
+    TerminalHandler.git_clone "https://github.com/#{parts[1]}", (File.join "libs", "#{parts[0]}");
+    Dir.cd (File.join "libs", "#{parts[0]}");
     TerminalHandler.generic_cmd "em install";
     TerminalHandler.generic_cmd "em build lib release";
-    FileHandler.delete_excluded_paths "./", ["./export", "./libs"];
+    FileHandler.delete_excluded_paths ".", ["export", "libs"];
 
     # TODO - TerminalHanlder.rm Not working with dotfiles.
     `rm -rf libs/#{parts[0]}/.git*`;
     `rm -rf libs/#{parts[0]}/.clang*`;
-    Dir.cd "../../";
+    Dir.cd (File.join "..", "..");
   end
 end

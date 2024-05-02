@@ -36,7 +36,7 @@ abstract class Emeralds::Command
     make_export;
     copy_headers;
     TerminalHandler.generic_cmd "#{Emeralds.opt["cc"]} #{Emeralds.opt["release_opt"]} #{Emeralds.opt["release_version"]} #{Emeralds.opt["release_flags"]} #{Emeralds.opt["release_warnings"]} #{Emeralds.opt["libs"]} #{Emeralds.opt["inputfiles"]}", display: true;
-    copy_libraries_to_export;
+    move_libraries_to_export;
   end
 
   private def validate_filename(input)

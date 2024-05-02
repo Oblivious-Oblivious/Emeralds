@@ -5,17 +5,12 @@ abstract class Emeralds::Command
   end
 
   private def copy_headers
-    TerminalHandler.cp "src/*", "export/";
-    TerminalHandler.rm "export/*.c";
-    TerminalHandler.rm "export/**/*.c";
+    TerminalHandler.cp (File.join "src", "*"), "export";
+    TerminalHandler.rm (File.join "export", "*.c");
+    TerminalHandler.rm (File.join "export", "**", "*.c");
   end
 
-  private def move_output_to_export
-    TerminalHandler.mv "#{Emeralds.opt["output"]}", "export/";
-  end
-
-  private def copy_libraries_to_export
-    TerminalHandler.mv "*.o", "export/";
-    TerminalHandler.cp "#{FileHandler.find_with_pattern "./libs", "*.o"}", "export/";
+  private def move_libraries_to_export
+    TerminalHandler.mv "#{FileHandler.find_with_pattern(File.join(".", "**", "*.o")).join ' '}", "export";
   end
 end

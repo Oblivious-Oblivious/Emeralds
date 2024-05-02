@@ -8,7 +8,7 @@ class Emeralds::Add < Emeralds::Command
       data << "char *#{ARGV[1]}(void) { return \"Hello, World!\"; }\n";
     end
 
-    File.write "src/#{ARGV[1]}/#{ARGV[1]}.c", data;
+    File.write (File.join "src", "#{ARGV[1]}", "#{ARGV[1]}.c"), data;
   end
 
   private def write_h_file
@@ -27,7 +27,7 @@ class Emeralds::Add < Emeralds::Command
       data << "#endif\n";
     end
 
-    File.write "src/#{ARGV[1]}/#{ARGV[1]}.h", data;
+    File.write (File.join "src", "#{ARGV[1]}", "#{ARGV[1]}.h"), data;
   end
 
   private def write_spec_file
@@ -47,7 +47,7 @@ class Emeralds::Add < Emeralds::Command
       data << "})\n";
     end
 
-    File.write "spec/#{ARGV[1]}/#{ARGV[1]}.module.spec.h", data;
+    File.write (File.join "spec", "#{ARGV[1]}", "#{ARGV[1]}.module.spec.h"), data;
   end
 
   def message
@@ -59,10 +59,10 @@ class Emeralds::Add < Emeralds::Command
     -> {
       if validate_filename ARGV[1]
         puts "#{ARROW} #{ARGV[1]}";
-        TerminalHandler.mkdir "src/#{ARGV[1]}";
+        TerminalHandler.mkdir (File.join "src", "#{ARGV[1]}");
         write_c_file;
         write_h_file;
-        TerminalHandler.mkdir "spec/#{ARGV[1]}";
+        TerminalHandler.mkdir (File.join "spec", "#{ARGV[1]}");
         write_spec_file;
       else
         puts "Cannot create a pair with name: #{ARGV[1]}.".colorize(:light_red);

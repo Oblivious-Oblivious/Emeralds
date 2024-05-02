@@ -14,12 +14,12 @@ module Emeralds
       "unused_warnings" => "-Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-extra-semi",
       "test_warnings"   => "-Wno-int-conversion -Wno-implicit-function-declaration -Wno-incompatible-pointer-types",
       "libs"            => "-c",
-      "deps"            => "#{FileHandler.find_with_pattern("./export", "*.o").join ' '} #{FileHandler.find_with_pattern("./libs", "*.o").join ' '}",
-      "inputfiles"      => "#{FileHandler.find("src/**/*.c").tap { |arr| arr.delete("src/#{YamlReader.get_field "name"}.c"); }.join(' ')}",
-      "input"           => "#{FileHandler.find("src/**/*.c").join ' '}",
-      "output"          => "#{YamlReader.get_field "name"}",
-      "testinput"       => "#{FileHandler.find("spec/**/*.spec.c").join ' '}",
-      "testoutput"      => "spec_results",
+      "deps"            => "#{FileHandler.find_with_pattern(File.join("export", "**", "*.o")).join(' ')} #{FileHandler.find_with_pattern(File.join("libs", "**", "*.o")).join(' ')}",
+      "inputfiles"      => "#{FileHandler.find(File.join("src", "**", "*.c")).tap { |arr| arr.delete(File.join("src", "#{YamlReader.get_field("name")}.c")); }.join(' ')}",
+      "input"           => "#{FileHandler.find(File.join("src", "**", "*.c")).join(' ')}",
+      "output"          => "#{File.join("export", YamlReader.get_field("name"))}",
+      "testinput"       => "#{FileHandler.find(File.join("spec", "**", "*.spec.c")).join(' ')}",
+      "testoutput"      => "#{File.join("spec", "spec_results")}",
     };
   end
 end

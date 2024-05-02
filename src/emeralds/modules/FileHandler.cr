@@ -36,10 +36,10 @@ module Emeralds::FileHandler
   # Search for all patterns in start_dir (command emulates linux find start_dir -name pattern)
   #
   # return -> An array of matches
-  def self.find_with_pattern(start_dir, pattern)
+  def self.find_with_pattern(path)
     matches = [] of String;
 
-    Dir.glob(File.join(start_dir, "**", pattern)) do |file|
+    Dir.glob(path) do |file|
       matches << file if File.file? file
     end
 
@@ -48,12 +48,15 @@ module Emeralds::FileHandler
 
   # Delete all paths in base_dir except the excluded array
   def self.delete_excluded_paths(base_dir, exclude_patterns)
-    Dir.glob("#{base_dir}/**/{*,.*}") do |path|
-      relative_path = path.sub(base_dir, "").lchop('/');
+    base_dir_path = Path[base_dir];
+    Dir.glob(base_dir_path.join("**", "{*,.*}")) do |path|
+      path = Path[path];
+      relative_path = path.relative_to(base_dir_path).to_s.lchop('/');
       next if exclude_patterns.any? do |pattern|
-        pattern.lchop("./") == relative_path || relative_path.starts_with?("#{pattern.lchop("./")}/");
+        pattern = pattern.lchop("./");
+        pattern == relative_path || relative_path.starts_with?("#{pattern}/");
       end
-      FileUtils.rm_rf(path) unless File.directory?(path) && path == base_dir;
+      FileUtils.rm_rf(path.to_s) unless File.directory?(path.to_s) && path == base_dir_path;
     end
   end
 end

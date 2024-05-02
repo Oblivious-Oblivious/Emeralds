@@ -7,15 +7,15 @@ module Emeralds
 
   # Paths of source files (for counting lines) 
   PATHS = [
-    Path.new("src/**/*.c"),
-    Path.new("src/**/*.h"),
-    Path.new("spec/**/*.spec.c"),
-    Path.new("spec/**/*.spec.h"),
+    Path.new(File.join "src", "**", "*.c"),
+    Path.new(File.join "src", "**", "*.h"),
+    Path.new(File.join "spec", "**", "*.spec.c"),
+    Path.new(File.join "spec", "**", "*.spec.h"),
   ];
 
   # Dependecy source file paths
   DEPSPATHS = [
-    Path.new("libs/**/*.c"),
-    Path.new("libs/**/*.h"),
+    Path.new(File.join "libs", "**", "*.c"),
+    Path.new(File.join "libs", "**", "*.h"),
   ];
 end

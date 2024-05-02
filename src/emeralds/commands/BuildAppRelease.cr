@@ -11,7 +11,6 @@ class Emeralds::BuildAppRelease < Emeralds::Command
 
       make_export;
       TerminalHandler.generic_cmd "#{Emeralds.opt["cc"]} #{Emeralds.opt["release_opt"]} #{Emeralds.opt["release_version"]} #{Emeralds.opt["release_flags"]} #{Emeralds.opt["release_warnings"]} -o #{Emeralds.opt["output"]} #{Emeralds.opt["input"]}", display: true;
-      move_output_to_export;
     };
   end
 end

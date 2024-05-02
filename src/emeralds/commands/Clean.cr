@@ -6,7 +6,7 @@ class Emeralds::Clean < Emeralds::Command
   # Runs the clean script defined in the em.yml file
   def block
     -> {
-      TerminalHandler.rm "spec/#{Emeralds.opt["testoutput"]}", display: true;
+      TerminalHandler.rm Emeralds.opt["testoutput"], display: true;
       TerminalHandler.rm "export", display: true;
       TerminalHandler.rm "*.dSYM";
     };

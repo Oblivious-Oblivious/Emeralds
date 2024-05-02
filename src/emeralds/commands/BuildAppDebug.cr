@@ -11,7 +11,6 @@ class Emeralds::BuildAppDebug < Emeralds::Command
 
       make_export;
       TerminalHandler.generic_cmd "#{Emeralds.opt["cc"]} #{Emeralds.opt["debug_opt"]} #{Emeralds.opt["debug_version"]} #{Emeralds.opt["debug_flags"]} #{Emeralds.opt["debug_warnings"]} #{Emeralds.opt["unused_warnings"]} -o #{Emeralds.opt["output"]} #{Emeralds.opt["input"]}", display: true;
-      move_output_to_export;
     };
   end
 end
