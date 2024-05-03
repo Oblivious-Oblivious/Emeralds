@@ -9,7 +9,8 @@ class Emeralds::BuildAppDebug < Emeralds::Command
     -> {
       return if try_override_command;
 
-      make_export;
+      TerminalHandler.rm "export";
+      TerminalHandler.mkdir "export";
       TerminalHandler.generic_cmd "#{Emeralds.opt["cc"]} #{Emeralds.opt["debug_opt"]} #{Emeralds.opt["debug_version"]} #{Emeralds.opt["debug_flags"]} #{Emeralds.opt["debug_warnings"]} #{Emeralds.opt["unused_warnings"]} -o #{Emeralds.opt["output"]} #{Emeralds.opt["input"]} 2> /dev/null", display: true;
     };
   end

@@ -4,10 +4,6 @@ require "file_utils";
 require "http/client";
 require "git-repository";
 
-require "./emeralds/extensions/Command+install";
-require "./emeralds/extensions/Command+move_copy";
-require "./emeralds/extensions/Command+try_override_command";
-
 require "./emeralds/commands/Command";
 require "./emeralds/commands/Add";
 require "./emeralds/commands/BuildAppDebug";

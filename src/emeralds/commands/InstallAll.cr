@@ -9,11 +9,11 @@ class Emeralds::InstallAll < Emeralds::Command
       TerminalHandler.mkdir "libs";
 
       YamlReader.get_dependencies.each do |dep|
-        install_dep dep unless dep == "";
+        YamlReader.install_dep dep unless dep == "";
       end
 
       YamlReader.get_dev_dependencies.each do |dep|
-        install_dep dep unless dep == "";
+        YamlReader.install_dep dep unless dep == "";
       end
     };
   end

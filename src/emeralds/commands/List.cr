@@ -1,12 +1,4 @@
 class Emeralds::List < Emeralds::Command
-  # List a dependency as formatted text
-  #
-  # dep -> The name of the dependecy to list
-  private def list_dep(dep)
-    parts = get_parts from: dep;
-    puts "  #{Emeralds.cog} #{parts[0]}";
-  end
-
   def message
     "Emeralds - Em libraries used:";
   end
@@ -16,12 +8,12 @@ class Emeralds::List < Emeralds::Command
     -> {
       deps = YamlReader.get_dependencies;
       deps.each do |dep|
-        list_dep dep if dep != "";
+        YamlReader.list_dep dep if dep != "";
       end
 
       dev_deps = YamlReader.get_dev_dependencies;
       dev_deps.each do |dep|
-        list_dep dep if dep != "";
+        YamlReader.list_dep dep if dep != "";
       end
 
       no_deps = deps.size + dev_deps.size;
