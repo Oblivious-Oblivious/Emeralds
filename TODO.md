@@ -11,7 +11,7 @@
 
 ## (✗) ver. 0.7.0
 -----------------
-  🟥 Do not create new emerald when name already exists.
+  🟩 Do not create new emerald when name already exists.
   🟩 Do not em test when cSpec does not exist (throw error if libs/cSpec empty).
   🟩 Validate that `add` and `init` options are valid string names (regex).
   🟩 Fix colorize methods that clash (white bold does not apply when it follows another color).
