@@ -24,8 +24,7 @@ shards install
 * `em init testapp`
 * `cd testapp`
 * `em list`
-* `em install`
-* `em install dev`
+* `em install all`
 * `em test`
 * `em build app release`
 * `em run`

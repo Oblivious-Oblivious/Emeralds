@@ -9,7 +9,7 @@
   🟥 Allow for custom cflags inside of emfile.
   🟥 Do not include `.o` files from dev-dependencies, only link normal deps (get from yaml list)
 
-## (✗) ver. 0.7.0
+## (✓) ver. 0.7.0
 -----------------
   🟩 Do not create new emerald when name already exists.
   🟩 Do not em test when cSpec does not exist (throw error if libs/cSpec empty).

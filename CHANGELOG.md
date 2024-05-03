@@ -1,4 +1,13 @@
-# Changes for Emeralds 0.6.0 (28-04-2024)
+# Changes for Emeralds 0.7.0 (May 03 2024)
+
+* Fixed YamlReader case where key is not found
+* Fixed compilation error when running gcc or clang without `.c` files.
+* Replace all direct paths with cross platform `File.join`.
+* Added a percentage in `em loc` that signifies how much is test code and source code.
+* Validated that `add` and `init` options are valid string names.
+* Handled command crashing errors like missing files or name collisions.
+
+# Changes for Emeralds 0.6.0 (Apr 28 2024)
 
 * Removed unused code.
 * Avoided recursive includes by only keeping exported values on libs.
@@ -8,14 +17,14 @@
 * Make sure em/emeralds runs only when em.yml file exists.
 * Removed all direct `cmd` commands and replaced them with cross platform ones.
 
-# Changes for Emeralds 0.5.0 (23-04-2024)
+# Changes for Emeralds 0.5.0 (Apr 23 2024)
 
 * Refactored codebase for easier management.
 * Fixed makefile generation, now all find commands work properly.
 * Added a new `run` command for running the compiled executable.
 * Clean commands also remove dSYM files.
 
-# Changes for Emeralds 0.4.0 (04-04-2021)
+# Changes for Emeralds 0.4.0 (Apr 04 2021)
 
 * Fixed display bugs on all operating systems.
 * Implemented a cross platform compilation makefile.
@@ -23,7 +32,7 @@
 * Added support for counting lines of code in library emeralds.
 * Moved documentation to individual classes rather than all together in a docs file.
 
-# Changes for Emeralds 0.3.0 (04-03-2021)
+# Changes for Emeralds 0.3.0 (Mar 04 2021)
 
 * Fixed testing and CI for the project.
 * Added compilation to static libraries.
@@ -33,11 +42,11 @@
 * Added cSpec as a default dependency.
 * Fixed directory bugs.
 
-# Changes for Emeralds 0.2.0 (28-02-2021)
+# Changes for Emeralds 0.2.0 (Feb 28 2021)
 
 * Migrated the whole codebase to crystal-lang.
 
-# Changes for Emeralds 0.1.0 (22-06-2020)
+# Changes for Emeralds 0.1.0 (Jun 22 2020)
 
 * Adds the first version of the package manager.
 * Auto generates a .git repository with .gitignore declarations.
