@@ -93,4 +93,28 @@ module Emeralds::YamlReader
   def self.get_dev_dependencies
     read_and_return_dependencies from: "dev-dependencies";
   end
+
+  # Check if cspec is installed
+  def self.cspec_exists
+    File.exists? File.join("libs", "cSpec", "export", "cSpec.h");
+  end
+
+  # Check if the cspec dependency is defined in the emfile
+  def self.cspec_dep_does_not_exist
+    deps = get_dependencies;
+    dev_deps = get_dev_dependencies;
+    deps.each do |dep|
+      if get_parts(dep)[1] == "Oblivious-Oblivious/cSpec"
+        return false;
+      end
+    end
+    dev_deps.each do |dep|
+      if get_parts(dep)[1] == "Oblivious-Oblivious/cSpec"
+        return false;
+      end
+    end
+    true;
+  rescue
+    true;
+  end
 end

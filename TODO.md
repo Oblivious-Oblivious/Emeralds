@@ -2,12 +2,17 @@
 -----------------
   🟥 Make sure all libraries in -c compile to *.o
   🟥 Maybe add custom errors on YamlReader based on key missing
+  🟥 Revamp colors for text to be white bold and make sure error and success are colored properly.
+
+## (✗) ver. 0.8.0
+-----------------
+  🟥 Allow for custom cflags inside of emfile.
+  🟥 Do not include `.o` files from dev-dependencies, only link normal deps (get from yaml list)
 
 ## (✗) ver. 0.7.0
 -----------------
-  🟥 Allow for custom cflags inside of emfile.
   🟥 Do not create new emerald when name already exists.
-  🟥 Do not em test when cSpec does not exist (throw error if libs/cSpec empty).
+  🟩 Do not em test when cSpec does not exist (throw error if libs/cSpec empty).
   🟩 Validate that `add` and `init` options are valid string names (regex).
   🟩 Fix colorize methods that clash (white bold does not apply when it follows another color).
   🟥 In em loc, add a percentage that signifies how much is test code and source code accordingly.
