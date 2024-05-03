@@ -17,12 +17,17 @@ module Emeralds
   end
 
   # Paths of source files (for counting lines) 
-  PATHS = [
+  SRC_PATHS = [
     Path.new(File.join "src", "**", "*.c"),
     Path.new(File.join "src", "**", "*.h"),
+  ];
+
+  SPEC_PATHS = [
     Path.new(File.join "spec", "**", "*.spec.c"),
     Path.new(File.join "spec", "**", "*.spec.h"),
   ];
+
+  PATHS = SRC_PATHS + SPEC_PATHS;
 
   # Dependecy source file paths
   DEPSPATHS = [
