@@ -1,6 +1,7 @@
 ## (✗) ver. 1.0.0
 -----------------
   🟥 Make sure all libraries in -c compile to *.o
+  🟥 Maybe add custom errors on YamlReader based on key missing
 
 ## (✗) ver. 0.7.0
 -----------------
@@ -12,8 +13,7 @@
   🟥 In em loc, add a percentage that signifies how much is test code and source code accordingly.
   🟩 Replace all direct paths with File.join
   🟩 Fix compilation error on generic_cmd
-  🟥 Fix YamlReader case where key is not found (add custom errors based on key missing)
-    Unhandled exception: Missing hash key: "build" (KeyError)
+  🟩 Fix YamlReader case where key is not found
 
 ## (✓) ver. 0.6.0
 -----------------

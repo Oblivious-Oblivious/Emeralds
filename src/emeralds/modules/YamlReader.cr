@@ -6,11 +6,9 @@ module Emeralds::YamlReader
   # from -> The yaml object to search from
   # return -> The value of the field
   private def self.read_and_return(field, from)
-    if from[field].to_s == "nil"
-      "";
-    else
-      from[field].to_s;
-    end
+    from[field].to_s;
+  rescue
+    "";
   end
 
   # Secures dependencies field from nullity
@@ -18,10 +16,11 @@ module Emeralds::YamlReader
   # from -> The yaml object to read from
   # return -> The value of the dependencies in array form
   private def self.read_and_return_dependencies(from)
-    if !from || from == ""
+    deps = get_field from;
+    if deps == ""
       [] of String;
     else
-      from
+      deps
         .to_s
         .lstrip("{")
         .rstrip("}")
@@ -46,13 +45,13 @@ module Emeralds::YamlReader
   #
   # return -> The list of dependencies
   def self.get_dependencies
-    read_and_return_dependencies from: get_field "dependencies";
+    read_and_return_dependencies from: "dependencies";
   end
 
   # Get the development dependencies from the yaml file
   #
   # return -> The list of development dependencies
   def self.get_dev_dependencies
-    read_and_return_dependencies from: get_field "dev-dependencies";
+    read_and_return_dependencies from: "dev-dependencies";
   end
 end
