@@ -3,6 +3,7 @@
   🟥 Make sure all libraries in -c compile to *.o
   🟥 Maybe add custom errors on YamlReader based on key missing
   🟥 Revamp colors for text to be white bold and make sure error and success are colored properly.
+  🟥 Rework makefile to be simpler and to align with em commands.
 
 ## (✗) ver. 0.8.0
 -----------------
