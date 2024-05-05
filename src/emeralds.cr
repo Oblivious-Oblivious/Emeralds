@@ -4,7 +4,7 @@ require "file_utils";
 require "http/client";
 require "git-repository";
 
-require "./extensions/Hash+sanitize";
+require "./emeralds/extensions/Hash+sanitize";
 
 require "./emeralds/commands/Command";
 require "./emeralds/commands/Add";
