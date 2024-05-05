@@ -67,7 +67,7 @@ abstract class Emeralds::Command
     libs = compile_flags.libs;
     input = Emeralds.opt["app"]["input"];
     output = Emeralds.opt["app"]["output"];
-    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{libs} -o #{output} #{input} 2> /dev/null", display: true;
+    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{libs} -o #{output} #{input}", display: true;
   end
 
   private def build_lib(compile_flags)
@@ -83,8 +83,8 @@ abstract class Emeralds::Command
     warnings = compile_flags.warnings;
     libs = compile_flags.libs;
     input = Emeralds.opt["lib"]["input"];
-    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{libs} -c #{input} 2> /dev/null", display: true;
     TerminalHandler.mv "#{FileHandler.find_with_pattern(File.join(".", "**", "*.o")).join ' '}", "export";
+    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{libs} -c #{input}", display: true;
   end
 
   def wget_license
@@ -137,6 +137,23 @@ abstract class Emeralds::Command
 
   def build_lib_release
     build_lib Emfile.instance.compile_flags.release;
+  end
+
+  def build_test
+    # TODO - Remove duplication (2 problems)
+    #   ["deps"] needs to be an app and lib value
+    #   we should not rebuild export directory (maybe pass a flag)
+    cc = Emfile.instance.compile_flags.cc;
+    opt = Emfile.instance.compile_flags.test.opt;
+    version = Emfile.instance.compile_flags.test.version;
+    flags = Emfile.instance.compile_flags.test.flags;
+    warnings = Emfile.instance.compile_flags.test.warnings;
+    deps = Emeralds.opt["test"]["deps"];
+    input = Emeralds.opt["test"]["input"];
+    output = Emeralds.opt["test"]["output"];
+    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{input}", display: true;
+    puts;
+    TerminalHandler.run output, display: true;
   end
 
   # Main method that runs and times the command block.

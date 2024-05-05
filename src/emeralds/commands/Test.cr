@@ -8,17 +8,7 @@ class Emeralds::Test < Emeralds::Command
     -> {
       if Emfile.cspec_exists
         build_lib_release;
-        cc = Emfile.instance.compile_flags.cc;
-        opt = Emfile.instance.compile_flags.test.opt;
-        version = Emfile.instance.compile_flags.test.version;
-        flags = Emfile.instance.compile_flags.test.flags;
-        warnings = Emfile.instance.compile_flags.test.warnings;
-        deps = Emeralds.opt["test"]["deps"];
-        input = Emeralds.opt["test"]["input"];
-        output = Emeralds.opt["test"]["output"];
-        TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{input} 2> /dev/null", display: true;
-        puts;
-        TerminalHandler.run output, display: true;
+        build_test;
       elsif Emfile.cspec_dep_does_not_exist
         puts "cSpec is not in the list of dependencies".colorize(:light_red);
         puts "#{Emeralds.arrow} Add the dependency like such:\ndev-dependencies:\n  cSpec: Oblivious-Oblivious/cSpec";
