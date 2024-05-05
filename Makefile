@@ -3,7 +3,7 @@ NAME = emeralds
 all: build
 
 build:
-	shards build --release
+	shards build --release --no-debug
 	cp bin/emeralds bin/em
 
 test:
