@@ -54,6 +54,10 @@ abstract class Emeralds::Command
     TerminalHandler.rm (File.join "export", "**", "*.c");
   end
 
+  private def move_objects_to_export
+    TerminalHandler.mv FileHandler.find_with_pattern(File.join(".", "**", "*.o")), "export";
+  end
+
   private def build_app(compile_flags)
     return if try_override_command;
 
@@ -83,8 +87,8 @@ abstract class Emeralds::Command
     warnings = compile_flags.warnings;
     libs = compile_flags.libs;
     input = Emeralds.opt["lib"]["input"];
-    TerminalHandler.mv "#{FileHandler.find_with_pattern(File.join(".", "**", "*.o")).join ' '}", "export";
     TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{libs} -c #{input}", display: true;
+    move_objects_to_export;
   end
 
   def wget_license

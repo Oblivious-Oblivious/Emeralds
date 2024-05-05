@@ -25,10 +25,8 @@ module Emeralds::TerminalHandler
   end
 
   def self.mv(src_path, dest_path, display = false)
-    puts "#{Emeralds.arrow} mv #{src_path} #{dest_path}" if display;
-    Dir.glob src_path do |file_path|
-      FileUtils.mv file_path, File.join(dest_path, File.basename(file_path));
-    end
+    puts "#{Emeralds.arrow} mv #{src_path.join ' '} #{dest_path}" if display;
+    FileUtils.mv src_path, dest_path;
   rescue
     puts "Could not move #{src_path} to #{dest_path}".colorize(:light_red) if display;
   end
