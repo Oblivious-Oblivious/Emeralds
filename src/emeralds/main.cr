@@ -66,6 +66,8 @@ module Emeralds::Main
       Test.new.run;
     when "version"
       Version.new.run;
+    when "license"
+      License.new.run;
     when "clean"
       Clean.new.run;
     when "makefile"

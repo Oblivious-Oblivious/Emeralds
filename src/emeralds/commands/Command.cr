@@ -87,6 +87,32 @@ abstract class Emeralds::Command
     TerminalHandler.mv "#{FileHandler.find_with_pattern(File.join(".", "**", "*.o")).join ' '}", "export";
   end
 
+  def wget_license
+    puts "  #{Emeralds.arrow} LICENSE";
+    case Emfile.instance.license
+    when "mit"
+      TerminalHandler.wget "https://mit-license.org/license.txt", "LICENSE";
+    when "gpl-v2"
+      TerminalHandler.wget "https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt", "LICENSE";
+    when "apache-v2"
+      TerminalHandler.wget "https://www.apache.org/licenses/LICENSE-2.0.txt", "LICENSE";
+    when "gpl-v3"
+      TerminalHandler.wget "https://www.gnu.org/licenses/gpl-3.0.txt", "LICENSE";
+    when "lgpl-v3"
+      TerminalHandler.wget "https://www.gnu.org/licenses/lgpl-3.0.txt", "LICENSE";
+    when "mpl-v2"
+      TerminalHandler.wget "https://www.mozilla.org/media/MPL/2.0/index.f75d2927d3c1.txt", "LICENSE";
+    when "epl-v2"
+      TerminalHandler.wget "https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.txt", "LICENSE";
+    when "agpl-v3"
+      TerminalHandler.wget "https://www.gnu.org/licenses/agpl-3.0.txt", "LICENSE";
+    when "cc0-v1"
+      TerminalHandler.wget "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt", "LICENSE";
+    else
+      TerminalHandler.wget "https://mit-license.org/license.txt", "LICENSE";
+    end
+  end
+
   def validate_filename(input)
     forbidden_chars = /[<>:"\/\\|?*\x00-\x1F]/;
     windows_reserved = /^(con|prn|aux|nul|com[1-9]|lpt[1-9]|com[0-9]+|lpt[0-9]+)$/i;

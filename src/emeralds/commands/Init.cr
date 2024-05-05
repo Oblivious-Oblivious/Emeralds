@@ -54,7 +54,7 @@ class Emeralds::Init < Emeralds::Command
       data << "    }\n";
       data << "  },\n\n";
 
-      data << "  \"license\": \"GPLv3\"\n";
+      data << "  \"license\": \"mit\"\n";
       data << "}\n";
     end
 
@@ -64,11 +64,6 @@ class Emeralds::Init < Emeralds::Command
   private def initialize_git_directory
     puts "  #{Emeralds.arrow} .git";
     TerminalHandler.git_init;
-  end
-
-  private def wget_a_gplv3_license
-    puts "  #{Emeralds.arrow} LICENSE";
-    TerminalHandler.wget "https://www.gnu.org/licenses/gpl-3.0.txt", "LICENSE";
   end
 
   private def write_gitignore_file
@@ -285,7 +280,7 @@ class Emeralds::Init < Emeralds::Command
       create_source_files;
       create_clang_format;
       write_gitignore_file;
-      wget_a_gplv3_license;
+      wget_license;
       generate_readme;
       Dir.cd "..";
     };

@@ -20,6 +20,7 @@ class Emeralds::Help < Emeralds::Command
       puts "    loc [ | deps | all]                 - Count the sloc lines of code in the project\n";
       puts "    test                                - Run the script of tests.\n";
       puts "    version                             - Print the current version of the emerald.\n";
+      puts "    license                             - Update the license notice based on the em.yml value.\n";
       puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
       exit 0;
     };

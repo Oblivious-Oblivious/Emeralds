@@ -35,6 +35,7 @@ require "./emeralds/commands/Init";
 require "./emeralds/commands/Install";
 require "./emeralds/commands/InstallAll";
 require "./emeralds/commands/InstallDev";
+require "./emeralds/commands/License";
 require "./emeralds/commands/List";
 require "./emeralds/commands/Loc";
 require "./emeralds/commands/LocAll";
