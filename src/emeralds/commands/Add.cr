@@ -51,7 +51,7 @@ class Emeralds::Add < Emeralds::Command
   end
 
   def message
-    "Adding new .c/.h pair...";
+    "Emeralds - Adding new .c/.h pair...";
   end
 
   # Count the number of lines of code

@@ -1,6 +1,6 @@
 class Emeralds::Loc < Emeralds::Command
   def message
-    "Counting Lines of Code...";
+    "Emeralds - Counting Lines of Code...";
   end
 
   # Count the number of lines of code

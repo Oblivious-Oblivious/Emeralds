@@ -1,6 +1,6 @@
 class Emeralds::Run < Emeralds::Command
   def message
-    "Running executable...";
+    "Emeralds - Running executable...";
   end
 
   # Count the number of lines of code

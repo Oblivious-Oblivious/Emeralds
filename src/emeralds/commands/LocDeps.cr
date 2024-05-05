@@ -1,6 +1,6 @@
 class Emeralds::LocDeps < Emeralds::Command
   def message
-    "Counting Lines of Code for dependencies...";
+    "Emeralds - Counting Lines of Code for dependencies...";
   end
 
   # Count the number of lines of code in dependencies

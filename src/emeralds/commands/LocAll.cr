@@ -1,6 +1,6 @@
 class Emeralds::LocAll < Emeralds::Command
   def message
-    "Counting all lines of code across source and dependencies...";
+    "Emeralds - Counting all lines of code across source and dependencies...";
   end
 
   # Count the number of lines of code in source and deps
