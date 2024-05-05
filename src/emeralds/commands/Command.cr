@@ -43,27 +43,51 @@ abstract class Emeralds::Command
     end
   end
 
-  private def library_release
-    return if try_override_command;
-
+  private def rebuild_export
     TerminalHandler.rm "export";
     TerminalHandler.mkdir "export";
+  end
+
+  private def move_headers_to_export
     TerminalHandler.cp (File.join "src", "*"), "export";
     TerminalHandler.rm (File.join "export", "*.c");
     TerminalHandler.rm (File.join "export", "**", "*.c");
+  end
+
+  private def build_app(compile_flags)
+    return if try_override_command;
+
+    rebuild_export;
 
     cc = Emfile.instance.compile_flags.cc;
-    opt = Emfile.instance.compile_flags.release.opt;
-    version = Emfile.instance.compile_flags.release.version;
-    flags = Emfile.instance.compile_flags.release.flags;
-    warnings = Emfile.instance.compile_flags.release.warnings;
-    libs = Emfile.instance.compile_flags.release.libs;
+    opt = compile_flags.opt;
+    version = compile_flags.version;
+    flags = compile_flags.flags;
+    warnings = compile_flags.warnings;
+    libs = compile_flags.libs;
+    input = Emeralds.opt["app"]["input"];
+    output = Emeralds.opt["app"]["output"];
+    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{libs} -o #{output} #{input} 2> /dev/null", display: true;
+  end
+
+  private def build_lib(compile_flags)
+    return if try_override_command;
+
+    rebuild_export;
+    move_headers_to_export;
+
+    cc = Emfile.instance.compile_flags.cc;
+    opt = compile_flags.opt;
+    version = compile_flags.version;
+    flags = compile_flags.flags;
+    warnings = compile_flags.warnings;
+    libs = compile_flags.libs;
     input = Emeralds.opt["lib"]["input"];
     TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{libs} -c #{input} 2> /dev/null", display: true;
     TerminalHandler.mv "#{FileHandler.find_with_pattern(File.join(".", "**", "*.o")).join ' '}", "export";
   end
 
-  private def validate_filename(input)
+  def validate_filename(input)
     forbidden_chars = /[<>:"\/\\|?*\x00-\x1F]/;
     windows_reserved = /^(con|prn|aux|nul|com[1-9]|lpt[1-9]|com[0-9]+|lpt[0-9]+)$/i;
 
@@ -71,6 +95,22 @@ abstract class Emeralds::Command
     !(input.strip.empty?) &&
     !(input.strip.matches? /\A\.+\z/) &&
     !(windows_reserved.matches? input.strip);
+  end
+
+  def build_app_debug
+    build_app Emfile.instance.compile_flags.debug;
+  end
+
+  def build_app_release
+    build_app Emfile.instance.compile_flags.release;
+  end
+
+  def build_lib_debug
+    build_lib Emfile.instance.compile_flags.debug;
+  end
+
+  def build_lib_release
+    build_lib Emfile.instance.compile_flags.release;
   end
 
   # Main method that runs and times the command block.

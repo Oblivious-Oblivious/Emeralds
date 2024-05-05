@@ -7,7 +7,7 @@ class Emeralds::Test < Emeralds::Command
   def block
     -> {
       if Emfile.cspec_exists
-        library_release;
+        build_lib_release;
         cc = Emfile.instance.compile_flags.cc;
         opt = Emfile.instance.compile_flags.test.opt;
         version = Emfile.instance.compile_flags.test.version;

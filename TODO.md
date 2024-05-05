@@ -12,7 +12,7 @@
   🟩 Allow for custom cflags inside of emfile.
   🟥 Do not include `.o` files from dev-dependencies, only link normal deps (get from yaml list).
   🟥 In wget_a_gplv3_license, read license field in emfile and wget accordingly.
-  🟥 Abstract compilation command with option selection in custom function.
+  🟩 Abstract compilation command with option selection in custom function.
 
 ## (✓) ver. 0.7.0
 -----------------

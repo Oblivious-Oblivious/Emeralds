@@ -7,8 +7,7 @@ class Emeralds::BuildLibRelease < Emeralds::Command
   # into shared libraries in release mode
   def block
     -> {
-      return if try_override_command;
-      library_release;
+      build_lib_release;
     };
   end
 end
