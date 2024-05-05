@@ -39,7 +39,7 @@ module Emeralds::TerminalHandler
     end
     FileUtils.mkdir_p path;
   rescue
-    puts "Could not create directory: #{path}";
+    puts "Could not create directory: #{path}" if display;
   end
 
   def self.run(executable, display = false)
@@ -62,7 +62,7 @@ module Emeralds::TerminalHandler
   end
 
   def self.git_init(display = false)
-    puts "#{Emeralds.arrow} git init";
+    puts "#{Emeralds.arrow} git init" if display;
     # TODO - Check for cross platform capability
     `git init`;
   end
