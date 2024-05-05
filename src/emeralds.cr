@@ -1,4 +1,4 @@
-require "yaml";
+require "json";
 require "colorize";
 require "file_utils";
 require "http/client";
@@ -28,6 +28,10 @@ require "./emeralds/commands/Version";
 require "./emeralds/constants/cli";
 require "./emeralds/constants/options";
 require "./emeralds/constants/version";
+
+require "./emeralds/emfile/BuildConfig";
+require "./emeralds/emfile/CompileFlags";
+require "./emeralds/emfile/Emfile";
 
 require "./emeralds/modules/FileHandler";
 require "./emeralds/modules/TerminalHandler";
