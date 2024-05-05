@@ -4,6 +4,8 @@ require "file_utils";
 require "http/client";
 require "git-repository";
 
+require "./extensions/Hash+sanitize";
+
 require "./emeralds/commands/Command";
 require "./emeralds/commands/Add";
 require "./emeralds/commands/BuildAppDebug";
@@ -35,7 +37,6 @@ require "./emeralds/emfile/Emfile";
 
 require "./emeralds/modules/FileHandler";
 require "./emeralds/modules/TerminalHandler";
-require "./emeralds/modules/YamlReader";
 
 require "./emeralds/main";
 

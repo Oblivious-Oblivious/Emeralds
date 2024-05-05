@@ -7,10 +7,7 @@ class Emeralds::Install < Emeralds::Command
   def block
     -> {
       TerminalHandler.mkdir "libs";
-
-      YamlReader.get_dependencies.each do |dep|
-        YamlReader.install_dep dep unless dep == "";
-      end
+      Emfile.install_deps Emfile.instance.dependencies;
     };
   end
 end

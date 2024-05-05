@@ -1,14 +1,18 @@
 ## (✗) ver. 1.0.0
 -----------------
-  🟥 Make sure all libraries in -c compile to *.o
-  🟥 Maybe add custom errors on YamlReader based on key missing
+  🟥 Make sure all libraries in -c compile to *.o.
+  🟥 Maybe add custom errors on Emfile based on key missing.
   🟥 Revamp colors for text to be white bold and make sure error and success are colored properly.
+  🟥 Add incremental/individual compilation of files like make.
   🟥 Rework makefile to be simpler and to align with em commands.
+  🟥 Add exceptions instead of conditional checks.
 
 ## (✗) ver. 0.8.0
 -----------------
-  🟥 Allow for custom cflags inside of emfile.
-  🟥 Do not include `.o` files from dev-dependencies, only link normal deps (get from yaml list)
+  🟩 Allow for custom cflags inside of emfile.
+  🟥 Do not include `.o` files from dev-dependencies, only link normal deps (get from yaml list).
+  🟥 In wget_a_gplv3_license, read license field in emfile and wget accordingly.
+  🟥 Abstract compilation command with option selection in custom function.
 
 ## (✓) ver. 0.7.0
 -----------------
@@ -17,9 +21,9 @@
   🟩 Validate that `add` and `init` options are valid string names (regex).
   🟩 Fix colorize methods that clash (white bold does not apply when it follows another color).
   🟩 In em loc, add a percentage that signifies how much is test code and source code accordingly.
-  🟩 Replace all direct paths with File.join
-  🟩 Fix compilation error on generic_cmd
-  🟩 Fix YamlReader case where key is not found
+  🟩 Replace all direct paths with File.join.
+  🟩 Fix compilation error on generic_cmd.
+  🟩 Fix YamlReader case where key is not found.
 
 ## (✓) ver. 0.6.0
 -----------------
@@ -32,4 +36,4 @@
 
 ## (✓) ver. 0.5.0
 -----------------
-  🟩 Add an `em run` command to run the executable in export
+  🟩 Add an `em run` command to run the executable in export.

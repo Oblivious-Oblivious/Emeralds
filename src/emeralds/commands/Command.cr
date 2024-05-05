@@ -34,7 +34,7 @@ abstract class Emeralds::Command
   #
   # returns -> true if the override was ran else false
   private def try_override_command
-    override = YamlReader.get_field "build";
+    override = Emfile.instance.build;
     if override.strip != ""
       TerminalHandler.generic_cmd override, display: true;
       true;
@@ -51,7 +51,15 @@ abstract class Emeralds::Command
     TerminalHandler.cp (File.join "src", "*"), "export";
     TerminalHandler.rm (File.join "export", "*.c");
     TerminalHandler.rm (File.join "export", "**", "*.c");
-    TerminalHandler.generic_cmd "#{Emeralds.opt["cc"]} #{Emeralds.opt["release_opt"]} #{Emeralds.opt["release_version"]} #{Emeralds.opt["release_flags"]} #{Emeralds.opt["release_warnings"]} #{Emeralds.opt["libs"]} #{Emeralds.opt["inputfiles"]} 2> /dev/null", display: true;
+
+    cc = Emfile.instance.compile_flags.cc;
+    opt = Emfile.instance.compile_flags.release.opt;
+    version = Emfile.instance.compile_flags.release.version;
+    flags = Emfile.instance.compile_flags.release.flags;
+    warnings = Emfile.instance.compile_flags.release.warnings;
+    libs = Emfile.instance.compile_flags.release.libs;
+    input = Emeralds.opt["lib"]["input"];
+    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{libs} -c #{input} 2> /dev/null", display: true;
     TerminalHandler.mv "#{FileHandler.find_with_pattern(File.join(".", "**", "*.o")).join ' '}", "export";
   end
 

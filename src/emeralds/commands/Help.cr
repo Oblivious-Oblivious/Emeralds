@@ -13,7 +13,7 @@ class Emeralds::Help < Emeralds::Command
       puts "    run                                 - Run the compiled application.\n";
       puts "    clean                               - Run the clean script\n";
       puts "    help                                - Print this help message.\n";
-      puts "    init [<name>]                       - Initialize a new library with an em.yml file.\n";
+      puts "    init [<name>]                       - Initialize a new library with an em.json file.\n";
       puts "    install [ | dev | all]              - Install dependencies recursively for each included library.\n";
       puts "    list                                - List dependencies in the em file.\n";
       puts "    makefile                            - Generate a makefile for independent compilation\n";

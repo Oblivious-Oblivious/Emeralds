@@ -13,23 +13,52 @@ class Emeralds::Init < Emeralds::Command
   end
 
   private def write_em_file
-    puts "  #{Emeralds.arrow} em.yml";
+    puts "  #{Emeralds.arrow} em.json";
 
     data = String.build do |data|
-      data << "name: #{ARGV[1]}\n";
-      data << "version: 0.1.0\n\n";
+      data << "{\n";
+      data << "  \"name\": \"#{ARGV[1]}\",\n\n";
 
-      data << "dependencies:\n\n";
+      data << "  \"version\": \"0.1.0\",\n\n";
 
-      data << "dev-dependencies:\n";
-      data << "  cSpec: Oblivious-Oblivious/cSpec\n\n";
+      data << "  \"dependencies\": {},\n\n";
 
-      data << "build: #\n\n";
+      data << "  \"dev-dependencies\": {\n";
+      data << "    \"cSpec\": \"Oblivious-Oblivious/cSpec\"\n";
+      data << "  },\n\n";
 
-      data << "license: GPLv3\n\n";
+      data << "  \"build\": \"\",\n\n";
+
+      data << "  \"compile-flags\": {\n";
+      data << "    \"cc\": \"clang\",\n";
+      data << "    \"debug\": {\n";
+      data << "      \"opt\": \"-Og -g\",\n";
+      data << "      \"version\": \"-std=c89\",\n";
+      data << "      \"flags\": \"-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\",\n";
+      data << "      \"warnings\": \"-Wno-int-conversion -Wno-incompatible-pointer-types\",\n";
+      data << "      \"libs\": \"\"\n";
+      data << "    },\n";
+      data << "    \"release\": {\n";
+      data << "      \"opt\": \"-O2\",\n";
+      data << "      \"version\": \"-std=c2x\",\n";
+      data << "      \"flags\": \"\",\n";
+      data << "      \"warnings\": \"-Wno-int-conversion\",\n";
+      data << "      \"libs\": \"\"\n";
+      data << "    },\n";
+      data << "    \"test\": {\n";
+      data << "      \"opt\": \"-O2\",\n";
+      data << "      \"version\": \"-std=c2x\",\n";
+      data << "      \"flags\": \"\",\n";
+      data << "      \"warnings\": \"-Wno-int-conversion -Wno-implicit-function-declaration -Wno-incompatible-pointer-types\",\n";
+      data << "      \"libs\": \"\"\n";
+      data << "    }\n";
+      data << "  },\n\n";
+
+      data << "  \"license\": \"GPLv3\"\n";
+      data << "}\n";
     end
 
-    File.write "em.yml", data;
+    File.write "em.json", data;
   end
 
   private def initialize_git_directory

@@ -11,7 +11,16 @@ class Emeralds::BuildAppRelease < Emeralds::Command
 
       TerminalHandler.rm "export";
       TerminalHandler.mkdir "export";
-      TerminalHandler.generic_cmd "#{Emeralds.opt["cc"]} #{Emeralds.opt["release_opt"]} #{Emeralds.opt["release_version"]} #{Emeralds.opt["release_flags"]} #{Emeralds.opt["release_warnings"]} -o #{Emeralds.opt["output"]} #{Emeralds.opt["input"]} 2> /dev/null", display: true;
+
+      cc = Emfile.instance.compile_flags.cc;
+      opt = Emfile.instance.compile_flags.release.opt;
+      version = Emfile.instance.compile_flags.release.version;
+      flags = Emfile.instance.compile_flags.release.flags;
+      warnings = Emfile.instance.compile_flags.release.warnings;
+      libs = Emfile.instance.compile_flags.release.libs;
+      input = Emeralds.opt["app"]["input"];
+      output = Emeralds.opt["app"]["output"];
+      TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{libs} -o #{output} #{input} 2> /dev/null", display: true;
     };
   end
 end

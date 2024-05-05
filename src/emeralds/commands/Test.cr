@@ -6,12 +6,20 @@ class Emeralds::Test < Emeralds::Command
   # Runs the test script defined in the em.yml file
   def block
     -> {
-      if YamlReader.cspec_exists
+      if Emfile.cspec_exists
         library_release;
-        TerminalHandler.generic_cmd "#{Emeralds.opt["cc"]} #{Emeralds.opt["release_opt"]} #{Emeralds.opt["release_version"]} #{Emeralds.opt["release_flags"]} #{Emeralds.opt["test_warnings"]} -o #{Emeralds.opt["testoutput"]} #{Emeralds.opt["deps"]} #{Emeralds.opt["testinput"]} 2> /dev/null", display: true;
+        cc = Emfile.instance.compile_flags.cc;
+        opt = Emfile.instance.compile_flags.test.opt;
+        version = Emfile.instance.compile_flags.test.version;
+        flags = Emfile.instance.compile_flags.test.flags;
+        warnings = Emfile.instance.compile_flags.test.warnings;
+        deps = Emeralds.opt["test"]["deps"];
+        input = Emeralds.opt["test"]["input"];
+        output = Emeralds.opt["test"]["output"];
+        TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{input} 2> /dev/null", display: true;
         puts;
-        TerminalHandler.run Emeralds.opt["testoutput"], display: true;
-      elsif YamlReader.cspec_dep_does_not_exist
+        TerminalHandler.run output, display: true;
+      elsif Emfile.cspec_dep_does_not_exist
         puts "cSpec is not in the list of dependencies".colorize(:light_red);
         puts "#{Emeralds.arrow} Add the dependency like such:\ndev-dependencies:\n  cSpec: Oblivious-Oblivious/cSpec";
       else
