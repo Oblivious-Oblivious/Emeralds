@@ -70,7 +70,7 @@ class Emeralds::Emfile
       TerminalHandler.git_clone "https://github.com/#{value}", (File.join "libs", "#{key}");
       Dir.cd (File.join "libs", "#{key}");
       TerminalHandler.generic_cmd "em install";
-      TerminalHandler.generic_cmd "em build lib release";
+      TerminalHandler.generic_cmd "em build lib release 2> /dev/null";
       FileHandler.delete_excluded_paths ".", ["export", "libs"];
 
       # TODO - TerminalHanlder.rm Not working with dotfiles.
