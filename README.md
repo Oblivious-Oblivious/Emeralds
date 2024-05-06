@@ -40,4 +40,4 @@ shards install
 
 ## Contributors
 
-- [Oblivious](https://github.com/Oblivious-Oblivious) - creator and maintainer
+- [oblivious](https://github.com/Oblivious-Oblivious) - creator and maintainer

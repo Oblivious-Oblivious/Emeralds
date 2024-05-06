@@ -45,7 +45,12 @@ module Emeralds::TerminalHandler
     executable_path = File.join ".", executable;
     output = IO::Memory.new;
     Process.run executable_path, output: output;
-    puts output.to_s;
+
+    if output.to_s == ""
+      raise "";
+    else
+      puts output.to_s;
+    end
   rescue
     puts "Could not run: ./#{executable}".colorize(:light_red) if display;
   end
