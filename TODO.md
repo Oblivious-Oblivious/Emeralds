@@ -6,13 +6,16 @@
   🟥 Add incremental/individual compilation of files like make.
   🟥 Rework makefile to be simpler and to align with em commands.
   🟥 Add exceptions instead of conditional checks.
+  🟥 Add a logger mode where all commands results are explicitely displayed
 
 ## (✗) ver. 0.8.0
 -----------------
   🟩 Allow for custom cflags inside of emfile.
   🟥 Do not include `.o` files from dev-dependencies, only link normal deps (get from yaml list).
-  🟥 In wget_a_gplv3_license, read license field in emfile and wget accordingly.
+  🟩 In wget_a_gplv3_license, read license field in emfile and wget accordingly.
   🟩 Abstract compilation command with option selection in custom function.
+  🟥 Add an automation that converts *nix paths (./dir/file) to File.join calls by splitting on '/'.
+  🟥 Add a CONTRIBUTING.md, CHANGELOG.md
 
 ## (✓) ver. 0.7.0
 -----------------

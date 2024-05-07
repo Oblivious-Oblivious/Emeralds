@@ -2,7 +2,7 @@ module Emeralds
   def self.opt
     {
       "app" => {
-        "deps" => "",
+        "deps" => "#{FileHandler.find_with_pattern(File.join("libs", "**", "*.o")).join(' ')}",
         "input" => "#{FileHandler.find(File.join("src", "**", "*.c")).join(' ')}",
         "output" => "#{File.join("export", Emfile.instance.name)}",
       },

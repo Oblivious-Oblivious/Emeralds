@@ -214,9 +214,9 @@ class Emeralds::Init < Emeralds::Command
     puts "    #{Emeralds.arrow} #{ARGV[1]}.c";
 
     data = String.build do |data|
-      data << "#include <stdio.h>\n\n";
-
       data << "#include \"get_value/get_value.h\"\n\n";
+
+      data << "#include <stdio.h>\n\n";
 
       data << "int main(void) {\n";
       data << "  printf(\"%s\\n\", get_value());\n";
@@ -241,15 +241,12 @@ class Emeralds::Init < Emeralds::Command
     puts "    #{Emeralds.arrow} #{ARGV[1]}.spec.c";
 
     data = String.build do |data|
+      data << "#include \"../libs/cSpec/export/cSpec.h\"\n";
       data << "#include \"get_value/get_value.module.spec.h\"\n\n";
 
-      data << "spec_suite({\n";
-      data << "  T_get_value();\n";
-      data << "});\n\n";
+      data << "spec_suite({ T_get_value(); });\n\n";
 
-      data << "int main(void) {\n";
-      data << "  run_spec_suite(\"all\");\n";
-      data << "}\n";
+      data << "int main(void) { run_spec_suite(\"all\"); }\n";
     end
 
     File.write (File.join "spec", "#{ARGV[1]}.spec.c"), data;

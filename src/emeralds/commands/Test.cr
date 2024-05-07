@@ -7,7 +7,7 @@ class Emeralds::Test < Emeralds::Command
   def block
     -> {
       if Emfile.cspec_exists
-        build_lib_release;
+        build_lib_debug;
         build_test;
       elsif Emfile.cspec_dep_does_not_exist
         puts "cSpec is not in the list of dependencies".colorize(:light_red);

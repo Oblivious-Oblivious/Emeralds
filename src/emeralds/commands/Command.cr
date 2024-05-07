@@ -55,7 +55,7 @@ abstract class Emeralds::Command
   end
 
   private def move_objects_to_export
-    TerminalHandler.mv FileHandler.find_with_pattern(File.join(".", "**", "*.o")), "export";
+    TerminalHandler.mv FileHandler.find_with_pattern(File.join(".", "*.o")), "export";
   end
 
   private def build_app(compile_flags)
@@ -69,16 +69,14 @@ abstract class Emeralds::Command
     flags = compile_flags.flags;
     warnings = compile_flags.warnings;
     libs = compile_flags.libs;
+    deps = Emeralds.opt["app"]["deps"];
     input = Emeralds.opt["app"]["input"];
     output = Emeralds.opt["app"]["output"];
-    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{libs} -o #{output} #{input}", display: true;
+    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{libs} -o #{output} #{deps} #{input}", display: true;
   end
 
   private def build_lib(compile_flags)
     return if try_override_command;
-
-    rebuild_export;
-    move_headers_to_export;
 
     cc = Emfile.instance.compile_flags.cc;
     opt = compile_flags.opt;
@@ -88,6 +86,8 @@ abstract class Emeralds::Command
     libs = compile_flags.libs;
     input = Emeralds.opt["lib"]["input"];
     TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{libs} -c #{input}", display: true;
+    rebuild_export;
+    move_headers_to_export;
     move_objects_to_export;
   end
 
