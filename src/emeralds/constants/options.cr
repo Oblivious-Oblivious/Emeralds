@@ -12,7 +12,10 @@ module Emeralds
         "output" => "",
       },
       "test" => {
-        "deps" => "#{FileHandler.find_with_pattern(File.join("export", "**", "*.o")).join(' ')} #{FileHandler.find_with_pattern(File.join("libs", "**", "*.o")).join(' ')}",
+        "deps" => "#{FileHandler.find_multiple_patterns([
+          File.join("export", "**", "*.o"),
+          File.join("libs", "**", "*.o"),
+        ]).join(' ')}",
         "input" => "#{FileHandler.find(File.join("spec", "**", "*.spec.c")).join(' ')}",
         "output" => "#{File.join("spec", "spec_results")}",
       },
