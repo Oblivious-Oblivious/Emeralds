@@ -1,3 +1,7 @@
+# Changes for Emeralds 0.8.0 (May 05 2024)
+
+* Added a new `em license` command that fetches the license defined in the emfile.
+
 # Changes for Emeralds 0.7.0 (May 03 2024)
 
 * Fixed YamlReader case where key is not found

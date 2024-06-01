@@ -1,21 +1,32 @@
 ## (✗) ver. 1.0.0
 -----------------
+  🟥 Add a file watcher for a possible recompilation
   🟥 Make sure all libraries in -c compile to *.o.
   🟥 Maybe add custom errors on Emfile based on key missing.
   🟥 Revamp colors for text to be white bold and make sure error and success are colored properly.
   🟥 Add incremental/individual compilation of files like make.
   🟥 Rework makefile to be simpler and to align with em commands.
   🟥 Add exceptions instead of conditional checks.
-  🟥 Add a logger mode where all commands results are explicitely displayed
+  🟥 Add a logger mode where all commands results are explicitely displayed.
+
+## (✗) ver. 0.9.0
+-----------------
+  🟥 Maybe add an option for only installing missing dependencies.
+  🟥 Add a command option for libraries reinstall.
+  🟥 Add an automation that converts *nix paths (./dir/file) to File.join calls by splitting on '/'.
 
 ## (✗) ver. 0.8.0
 -----------------
   🟩 Allow for custom cflags inside of emfile.
-  🟥 Do not include `.o` files from dev-dependencies, only link normal deps (get from yaml list).
+  🟥 Do not include `.o` files from dev-dependencies, only link normal deps (get from json list).
   🟩 In wget_a_gplv3_license, read license field in emfile and wget accordingly.
   🟩 Abstract compilation command with option selection in custom function.
-  🟥 Add an automation that converts *nix paths (./dir/file) to File.join calls by splitting on '/'.
-  🟥 Add a CONTRIBUTING.md, CHANGELOG.md
+  🟩 Add a CONTRIBUTING.md, CHANGELOG.md.
+  🟥 Handle json load errors.
+    Failed to load or parse em.json: Unexpected token: } at line 21, column 5
+    parsing Emeralds::BuildConfig#warnings at line 20, column 7
+    parsing Emeralds::CompileFlags#debug at line 16, column 5
+    parsing Emeralds::Emfile#compile-flags at line 14, column 3
 
 ## (✓) ver. 0.7.0
 -----------------

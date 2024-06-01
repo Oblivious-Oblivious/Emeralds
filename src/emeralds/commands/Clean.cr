@@ -9,6 +9,8 @@ class Emeralds::Clean < Emeralds::Command
       TerminalHandler.rm Emeralds.opt["test"]["output"], display: true;
       TerminalHandler.rm "export", display: true;
       TerminalHandler.rm "*.dSYM";
+      TerminalHandler.rm "spec/*.dSYM";
+      TerminalHandler.rm "export/*.dSYM";
     };
   end
 end

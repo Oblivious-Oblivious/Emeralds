@@ -34,8 +34,7 @@ class Emeralds::Add < Emeralds::Command
     puts "  #{Emeralds.arrow} #{ARGV[1]}.module.spec.h"
 
     data = String.build do |data|
-      data << "#include \"../../libs/cSpec/export/cSpec.h\"\n\n";
-
+      data << "#include \"../../libs/cSpec/export/cSpec.h\"\n";
       data << "#include \"../../src/#{ARGV[1]}/#{ARGV[1]}.h\"\n\n";
 
       data << "module(T_#{ARGV[1]}, {\n";
