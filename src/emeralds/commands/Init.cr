@@ -35,19 +35,19 @@ class Emeralds::Init < Emeralds::Command
       data << "      \"opt\": \"-Og -g\",\n";
       data << "      \"version\": \"-std=c89\",\n";
       data << "      \"flags\": \"-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\",\n";
-      data << "      \"warnings\": \"-Wno-int-conversion -Wno-incompatible-pointer-types\"\n";
+      data << "      \"warnings\": \"\"\n";
       data << "    },\n";
       data << "    \"release\": {\n";
       data << "      \"opt\": \"-O2\",\n";
       data << "      \"version\": \"-std=c2x\",\n";
       data << "      \"flags\": \"\",\n";
-      data << "      \"warnings\": \"-Wno-int-conversion\"\n";
+      data << "      \"warnings\": \"\"\n";
       data << "    },\n";
       data << "    \"test\": {\n";
-      data << "      \"opt\": \"-O2\",\n";
-      data << "      \"version\": \"-std=c2x\",\n";
+      data << "      \"opt\": \"-Og -g\",\n";
+      data << "      \"version\": \"-std=c89\",\n";
       data << "      \"flags\": \"\",\n";
-      data << "      \"warnings\": \"-Wno-int-conversion -Wno-implicit-function-declaration -Wno-incompatible-pointer-types\"\n";
+      data << "      \"warnings\": \"\"\n";
       data << "    }\n";
       data << "  },\n\n";
 
