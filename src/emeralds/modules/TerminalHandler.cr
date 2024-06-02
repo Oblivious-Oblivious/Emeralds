@@ -44,16 +44,14 @@ module Emeralds::TerminalHandler
     puts "#{Emeralds.arrow} ./#{executable}" if display;
     executable_path = File.join ".", executable;
     output = IO::Memory.new;
-    status = Process.run executable_path, output: output;
+    error = IO::Memory.new;
+    status = Process.run executable_path, output: output, error: error;
 
-    if status.success?
-      puts output.to_s;
-    else
-      raise "Process failed with exit status: #{status.exit_status}";
-    end
+    puts output.to_s;
+    raise "Process failed with exit status: #{status.exit_status}" if !status.success?;
   rescue ex
-    puts "Could not run: ./#{executable}".colorize(:light_red) if display;
-    puts "Error: #{ex.message}".colorize(:light_red) if display;
+    puts error.to_s;
+    puts "#{ex.message}".colorize(:light_red) if display;
   end
 
   def self.wget(url, output, display = false)
