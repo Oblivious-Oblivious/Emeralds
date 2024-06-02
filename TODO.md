@@ -14,6 +14,7 @@
   🟥 Maybe add an option for only installing missing dependencies.
   🟥 Add a command option for libraries reinstall.
   🟥 Add an automation that converts *nix paths (./dir/file) to File.join calls by splitting on '/'.
+  🟥 Add translation for status codes to actual errors in em run (11 for segfault and so on)
 
 ## (✗) ver. 0.8.0
 -----------------
