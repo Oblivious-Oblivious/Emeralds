@@ -26,17 +26,10 @@ module Emeralds::FileHandler
     self.get_lines_of_code DEPSPATHS;
   end
 
-  # Search for a generic term (emulates linux find start_dir)
-  #
-  # return -> An array of all matches.
-  def self.find(start_dir)
-    Dir.glob(start_dir);
-  end
-
   # Search for all patterns in start_dir (command emulates linux find start_dir -name pattern)
   #
   # return -> An array of matches
-  def self.find_with_pattern(path)
+  def self.find(path)
     matches = [] of String;
 
     Dir.glob(path) do |file|
@@ -49,11 +42,11 @@ module Emeralds::FileHandler
   # Search for all patterns in the path using multiple search terms
   #
   # return -> An array of matches
-  def self.find_multiple_patterns(paths)
+  def self.find_multiple(paths)
     matches = [] of String;
 
     paths.each do |path|
-      matches += self.find_with_pattern(path);
+      matches += self.find(path);
     end
 
     matches.uniq! { |path| path.split('/').last };
