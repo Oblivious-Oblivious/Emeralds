@@ -2,11 +2,11 @@ module Emeralds
   def self.opt
     {
       "app" => {
-        "deps" => "#{FileHandler.find(File.join("libs", "**", "*.o")).join(' ')}",
-        "input" => "#{FileHandler.find_multiple([
-          File.join("src", "**", "*.c"),
-          File.join("src", "**", "*.a"),
+        "deps" => "#{FileHandler.find_multiple([
+          File.join("libs", "**", "*.o"),
+          File.join("libs", "**", "*.a"),
         ]).join(' ')}",
+        "input" => "#{FileHandler.find(File.join("src", "**", "*.c")).join(' ')}",
         "output" => "#{File.join("export", Emfile.instance.name)}",
       },
       "lib" => {

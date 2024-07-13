@@ -56,7 +56,7 @@ abstract class Emeralds::Command
 
   private def move_objects_to_export
     TerminalHandler.mv FileHandler.find(File.join(".", "*.o")), "export";
-    TerminalHandler.mv FileHandler.find(File.join(".", "*.a")), "export";
+    TerminalHandler.cp FileHandler.find(File.join(".", "**", "*.a")), "export";
   end
 
   private def build_app(compile_flags)
