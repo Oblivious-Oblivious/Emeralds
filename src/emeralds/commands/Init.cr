@@ -2,13 +2,13 @@ class Emeralds::Init < Emeralds::Command
   private def create_lib_directory
     if File.exists? ARGV[1]
       puts "An emerald with name: #{ARGV[1]} already exists".colorize(:light_red);
-      exit 1;
+      exit 0;
     elsif (validate_filename ARGV[1])
       puts "#{Emeralds.cog} Creating directory: #{ARGV[1].colorize(:light_green).mode(:bold)}";
       TerminalHandler.mkdir ARGV[1];
     else
       puts "Cannot create a new emerald with name: #{ARGV[1]}.".colorize(:light_red);
-      exit 1;
+      exit 0;
     end
   end
 

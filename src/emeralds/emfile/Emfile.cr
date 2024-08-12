@@ -38,7 +38,7 @@ class Emeralds::Emfile
       Emfile.from_json(File.read("em.json"));
     rescue err
       puts "Failed to load or parse em.json: #{err}".colorize(:light_red);
-      exit 1;
+      exit 0;
     end
   end
 
