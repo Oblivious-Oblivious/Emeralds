@@ -3,7 +3,7 @@ module Emeralds::Main
   private def self.ensure_em_json_or_init
     if !File.exists?("em.json") && ARGV.size > 0 && ARGV[0] != "init"
       puts "#{Emeralds.arrow} em.json not found. Please run emeralds init first.";
-      exit 1;
+      exit 0;
     else
       Help.new.run if ARGV.size < 1;
     end
