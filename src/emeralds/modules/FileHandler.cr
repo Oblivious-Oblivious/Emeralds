@@ -23,7 +23,10 @@ module Emeralds::FileHandler
   #
   # return -> The total number of files and lines of code of libraries
   def self.get_deps_lines_of_code
-    self.get_lines_of_code DEPSPATHS;
+    depspaths = Emeralds::Emfile.instance.dependencies.keys.map do |key|
+      Path.new(File.join "libs", key, "export", "**", "*.h");
+    end
+    self.get_lines_of_code depspaths;
   end
 
   # Search for all patterns in start_dir (command emulates linux find start_dir -name pattern)

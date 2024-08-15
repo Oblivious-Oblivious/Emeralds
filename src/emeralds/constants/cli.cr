@@ -28,9 +28,4 @@ module Emeralds
   ];
 
   PATHS = SRC_PATHS + SPEC_PATHS;
-
-  # Dependecy source file paths
-  DEPSPATHS = Emeralds::Emfile.instance.dependencies.keys.map do |key|
-    Path.new(File.join "libs", key, "export", "**", "*.h");
-  end
 end
