@@ -241,9 +241,9 @@ class Emeralds::Init < Emeralds::Command
       data << "#include \"../libs/cSpec/export/cSpec.h\"\n";
       data << "#include \"get_value/get_value.module.spec.h\"\n\n";
 
-      data << "spec_suite({ T_get_value(); });\n\n";
-
-      data << "int main(void) { run_spec_suite(\"all\"); }\n";
+      data << "int main(void) {\n";
+      data << "  cspec_run_suite(\"all\", { T_get_value(); });\n";
+      data << "}\n";
     end
 
     File.write (File.join "spec", "#{ARGV[1]}.spec.c"), data;
