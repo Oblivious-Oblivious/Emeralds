@@ -147,10 +147,10 @@ abstract class Emeralds::Command
     #   ["deps"] needs to be an app and lib value
     #   we should not rebuild export directory (maybe pass a flag)
     cc = Emfile.instance.compile_flags.cc;
-    opt = Emfile.instance.compile_flags.test.opt;
-    version = Emfile.instance.compile_flags.test.version;
-    flags = Emfile.instance.compile_flags.test.flags;
-    warnings = Emfile.instance.compile_flags.test.warnings;
+    opt = Emfile.instance.compile_flags.debug.opt;
+    version = Emfile.instance.compile_flags.debug.version;
+    flags = Emfile.instance.compile_flags.debug.flags;
+    warnings = Emfile.instance.compile_flags.debug.warnings;
     deps = Emeralds.opt["test"]["deps"];
     input = Emeralds.opt["test"]["input"];
     output = Emeralds.opt["test"]["output"];
