@@ -33,13 +33,13 @@ class Emeralds::Init < Emeralds::Command
       data << "    \"cc\": \"clang\",\n";
       data << "    \"debug\": {\n";
       data << "      \"opt\": \"-Og\",\n";
-      data << "      \"version\": \"-std=c99\",\n";
+      data << "      \"version\": \"-std=c89\",\n";
       data << "      \"flags\": \"-g -fsanitize=address\",\n";
       data << "      \"warnings\": \"-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic\"\n";
       data << "    },\n";
       data << "    \"release\": {\n";
       data << "      \"opt\": \"-O2\",\n";
-      data << "      \"version\": \"-std=c2x\",\n";
+      data << "      \"version\": \"-std=c89\",\n";
       data << "      \"flags\": \"\",\n";
       data << "      \"warnings\": \"\"\n";
       data << "    }\n";
