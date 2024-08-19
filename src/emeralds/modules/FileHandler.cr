@@ -11,8 +11,11 @@ module Emeralds::FileHandler
       num += 1;
       loc += File
         .read(file)
-        .split("\n")
-        .select { |line| line != "" }
+        .gsub(/\/\*.*?\*\//m, "")
+        .gsub(/\/\/.*/, "")
+        .lines
+        .map(&.strip)
+        .reject(&.empty?)
         .size;
     end
 
