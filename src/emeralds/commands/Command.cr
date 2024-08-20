@@ -148,7 +148,7 @@ abstract class Emeralds::Command
     #   we should not rebuild export directory (maybe pass a flag)
     cc = Emfile.instance.compile_flags.cc;
     opt = Emfile.instance.compile_flags.debug.opt;
-    version = "";
+    version = "-std=c2x";
     flags = Emfile.instance.compile_flags.debug.flags;
     warnings = Emfile.instance.compile_flags.debug.warnings;
     deps = Emeralds.opt["test"]["deps"];

@@ -9,7 +9,6 @@ class Emeralds::Test < Emeralds::Command
       if Emfile.cspec_exists
         TerminalHandler.rm Emeralds.opt["test"]["output"], display: true;
         TerminalHandler.rm "spec/*.dSYM";
-        build_lib_debug;
         build_test;
       elsif Emfile.cspec_dep_does_not_exist
         puts "cSpec is not in the list of dependencies".colorize(:light_red);
