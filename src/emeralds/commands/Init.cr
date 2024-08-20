@@ -108,6 +108,22 @@ class Emeralds::Init < Emeralds::Command
     File.write ".gitignore", data;
   end
 
+  private def create_clangd
+    puts "  #{Emeralds.arrow} .clangd";
+
+    data = String.build do |data|
+      data << "CompileFlags:\n";
+      data << "  Add:\n";
+      data << "    - \"-xc\"\n";
+      data << "    - \"-std=c2x\"\n\n";
+
+      data << "Diagnostics:\n";
+      data << "  Suppress: unused-includes\n";
+    end
+
+    File.write ".clangd", data;
+  end
+
   private def create_clang_format
     puts "  #{Emeralds.arrow} .clang-format";
 
@@ -266,6 +282,7 @@ class Emeralds::Init < Emeralds::Command
       initialize_git_directory;
       create_spec_files;
       create_source_files;
+      create_clangd;
       create_clang_format;
       write_gitignore_file;
       wget_license;
