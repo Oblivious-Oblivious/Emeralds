@@ -54,9 +54,10 @@ abstract class Emeralds::Command
     TerminalHandler.rm (File.join "export", "**", "*.c");
   end
 
-  private def move_objects_to_export
-    TerminalHandler.mv FileHandler.find(File.join(".", "*.o")), "export";
-    TerminalHandler.cp FileHandler.find(File.join(".", "**", "*.a")), "export";
+  private def remove_objects_and_move_static_libs_to_export
+    TerminalHandler.rm FileHandler.find(File.join(".", "*.o"));
+    TerminalHandler.mv FileHandler.find(File.join(".", "**", "*.a")), "export";
+    TerminalHandler.mv FileHandler.find(File.join(".", "**", "*.a.test")), "export";
   end
 
   private def build_app(compile_flags)
@@ -85,9 +86,12 @@ abstract class Emeralds::Command
     warnings = compile_flags.warnings;
     input = Emeralds.opt["lib"]["input"];
     TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -c #{input}", display: true;
+    TerminalHandler.generic_cmd "ar rcs #{Emeralds.opt["lib"]["output"]} *.o", display: true;
+    TerminalHandler.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} -c #{input}", display: true;
+    TerminalHandler.generic_cmd "ar rcs #{Emeralds.opt["lib"]["output"]}.test *.o", display: true;
     rebuild_export;
     move_headers_to_export;
-    move_objects_to_export;
+    remove_objects_and_move_static_libs_to_export;
   end
 
   def wget_license

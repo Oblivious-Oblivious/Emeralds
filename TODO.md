@@ -19,7 +19,10 @@
 ## (✗) ver. 0.8.0
 -----------------
   🟩 Allow for custom cflags inside of emfile.
-  🟥 Do not include `.o` files from dev-dependencies, only link normal deps (get from json list).
+  🟥 Make sure `em run` correctly outputs all results in stdout, stderr and stdin.
+     Otherwise just remove the command.
+  🟩 Do not include `.o` files from dev-dependencies, only link normal deps (get from json list).
+  🟩 Use `.a` static libraries one for specs and one for release.
   🟩 In wget_a_gplv3_license, read license field in emfile and wget accordingly.
   🟩 Abstract compilation command with option selection in custom function.
   🟩 Add a CONTRIBUTING.md, CHANGELOG.md.
