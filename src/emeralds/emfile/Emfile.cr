@@ -73,9 +73,8 @@ class Emeralds::Emfile
       TerminalHandler.generic_cmd "em build lib release 2> /dev/null";
       FileHandler.delete_excluded_paths ".", ["export", "libs"];
 
-      # TODO - TerminalHanlder.rm Not working with dotfiles.
-      `rm -rf libs/#{key}/.git*`;
-      `rm -rf libs/#{key}/.clang*`;
+      `rm -rf .git*`;
+      `rm -rf .clang*`;
       Dir.cd (File.join "..", "..");
     end
   end
