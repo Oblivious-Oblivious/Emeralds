@@ -6,7 +6,7 @@ class Emeralds::Run < Emeralds::Command
   # Count the number of lines of code
   def block
     -> {
-      TerminalHandler.run(Emeralds.opt["app"]["output"], display: true);
+      TerminalHandler.run(Emeralds.output_app, display: true);
     };
   end
 end

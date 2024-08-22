@@ -70,10 +70,11 @@ abstract class Emeralds::Command
     version = compile_flags.version;
     flags = compile_flags.flags;
     warnings = compile_flags.warnings;
-    deps = Emeralds.opt["app"]["deps"];
-    input = Emeralds.opt["app"]["input"];
-    output = Emeralds.opt["app"]["output"];
-    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{input}", display: true;
+    deps = Emeralds.deps_release;
+    sources = Emeralds.sources_app;
+    input = Emeralds.input_app;
+    output = Emeralds.output_app;
+    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{sources} #{input}", display: true;
   end
 
   private def build_lib(compile_flags)
@@ -84,11 +85,13 @@ abstract class Emeralds::Command
     version = compile_flags.version;
     flags = compile_flags.flags;
     warnings = compile_flags.warnings;
-    input = Emeralds.opt["lib"]["input"];
-    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -c #{input}", display: true;
-    TerminalHandler.generic_cmd "ar rcs #{Emeralds.opt["lib"]["output"]} *.o", display: true;
-    TerminalHandler.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} -c #{input}", display: true;
-    TerminalHandler.generic_cmd "ar rcs #{Emeralds.opt["lib"]["output"]}.test *.o", display: true;
+    deps = Emeralds.deps_release;
+    sources = Emeralds.sources_lib;
+    output = Emeralds.output_lib;
+    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -c #{deps} #{sources}", display: true;
+    TerminalHandler.generic_cmd "ar rcs #{output} *.o", display: true;
+    TerminalHandler.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} -c #{deps} #{sources}", display: true;
+    TerminalHandler.generic_cmd "ar rcs #{output}.test *.o", display: true;
     rebuild_export;
     move_headers_to_export;
     remove_objects_and_move_static_libs_to_export;
@@ -155,10 +158,11 @@ abstract class Emeralds::Command
     version = "-std=c2x";
     flags = Emfile.instance.compile_flags.debug.flags;
     warnings = Emfile.instance.compile_flags.debug.warnings;
-    deps = Emeralds.opt["test"]["deps"];
-    input = Emeralds.opt["test"]["input"];
-    output = Emeralds.opt["test"]["output"];
-    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{input}", display: true;
+    deps = Emeralds.deps_test;
+    sources = Emeralds.sources_lib;
+    input = Emeralds.input_test;
+    output = Emeralds.output_test;
+    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{sources} #{input}", display: true;
     puts;
     TerminalHandler.run output, display: true;
   end
