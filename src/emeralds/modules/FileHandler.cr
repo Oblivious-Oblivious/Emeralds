@@ -45,19 +45,6 @@ module Emeralds::FileHandler
     matches.uniq! { |path| path.split('/').last };
   end
 
-  # Search for all patterns in the path using multiple search terms
-  #
-  # return -> An array of matches
-  def self.find_multiple(paths)
-    matches = [] of String;
-
-    paths.each do |path|
-      matches += self.find(path);
-    end
-
-    matches.uniq! { |path| path.split('/').last };
-  end
-
   # Delete all paths in base_dir except the excluded array
   def self.delete_excluded_paths(base_dir, exclude_patterns)
     base_dir_path = Path[base_dir];
