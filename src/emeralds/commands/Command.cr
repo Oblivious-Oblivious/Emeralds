@@ -159,7 +159,7 @@ abstract class Emeralds::Command
     flags = Emfile.instance.compile_flags.debug.flags;
     warnings = Emfile.instance.compile_flags.debug.warnings;
     deps = Emeralds.deps_test;
-    sources = Emeralds.sources_lib;
+    sources = Emeralds.sources_test;
     input = Emeralds.input_test;
     output = Emeralds.output_test;
     TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{sources} #{input}", display: true;

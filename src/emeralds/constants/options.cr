@@ -7,6 +7,10 @@ module Emeralds
     "#{FileHandler.find(File.join("src", "*", "**", "*.c")).join(' ')}";
   end
 
+  def self.sources_test
+    "#{FileHandler.find(File.join("src", "*", "**", "*.c")).join(' ')} #{FileHandler.find(File.join("src", "*", "**", "*.a.test")).join(' ')}";
+  end
+
   def self.deps_release
     "#{FileHandler.find(File.join("libs", "*", "export", "*.a")).join(' ')}";
   end
