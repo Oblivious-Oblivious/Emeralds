@@ -22,16 +22,6 @@ module Emeralds::FileHandler
     [num, loc];
   end
 
-  # Read all dependency source files and count the lines of codes
-  #
-  # return -> The total number of files and lines of code of libraries
-  def self.get_deps_lines_of_code
-    depspaths = Emeralds::Emfile.instance.dependencies.keys.map do |key|
-      Path.new(File.join "libs", key, "export", "**", "*.h");
-    end
-    self.get_lines_of_code depspaths;
-  end
-
   # Search for all patterns in start_dir (command emulates linux find start_dir -name pattern)
   #
   # return -> An array of matches

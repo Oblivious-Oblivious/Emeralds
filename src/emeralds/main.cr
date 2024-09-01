@@ -73,15 +73,7 @@ module Emeralds::Main
     when "makefile"
       GenerateMakefile.new.run;
     when "loc"
-      if ARGV.size < 2
-        Loc.new.run;
-      elsif ARGV[1] == "deps"
-        LocDeps.new.run;
-      elsif ARGV[1] == "all"
-        LocAll.new.run;
-      else
-        Help.new.run;
-      end
+      Loc.new.run;
     when "help"
       Help.new.run;
     else
