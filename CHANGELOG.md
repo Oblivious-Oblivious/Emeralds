@@ -1,4 +1,4 @@
-# Changes for Emeralds 0.8.0 (May 05 2024)
+# Changes for Emeralds 0.8.0 (Sep 15 2024)
 
 * Added a new `em license` command that fetches the license defined in the emfile.
 * Removed `em run` command.
