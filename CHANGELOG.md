@@ -1,3 +1,7 @@
+# Changes for Emeralds 0.8.1 (Sep 16 2024)
+
+* Fixed a minor bug where the sources check on specs would not check for the input.
+
 # Changes for Emeralds 0.8.0 (Sep 15 2024)
 
 * Added a new `em license` command that fetches the license defined in the emfile.
