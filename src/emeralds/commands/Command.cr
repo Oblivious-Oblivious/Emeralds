@@ -124,6 +124,8 @@ abstract class Emeralds::Command
       TerminalHandler.wget "https://www.gnu.org/licenses/agpl-3.0.txt", "LICENSE";
     when "cc0-v1"
       TerminalHandler.wget "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt", "LICENSE";
+    when "cc0-v4"
+      TerminalHandler.wget "https://creativecommons.org/licenses/by/4.0/legalcode.txt", "LICENSE";
     else
       TerminalHandler.wget "https://mit-license.org/license.txt", "LICENSE";
     end
