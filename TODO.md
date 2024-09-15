@@ -14,22 +14,23 @@
   🟥 Add a command option for libraries reinstall.
   🟥 Add an automation that converts *nix paths (./dir/file) to File.join calls by splitting on '/'.
   🟥 Add translation for status codes to actual errors in em run (11 for segfault and so on)
+  🟥 Handle json load errors.
+    Failed to load or parse em.json: Unexpected token: } at line 21, column 5
+    parsing Emeralds::BuildConfig#warnings at line 20, column 7
+    parsing Emeralds::CompileFlags#debug at line 16, column 5
+    parsing Emeralds::Emfile#compile-flags at line 14, column 3
 
-## (✗) ver. 0.8.0
+## (✓) ver. 0.8.0
 -----------------
   🟩 Allow for custom cflags inside of emfile.
-  🟥 Make sure `em run` correctly outputs all results in stdout, stderr and stdin.
+  🟩 Make sure `em run` correctly outputs all results in stdout, stderr and stdin.
      Otherwise just remove the command.
   🟩 Do not include `.o` files from dev-dependencies, only link normal deps (get from json list).
   🟩 Use `.a` static libraries one for specs and one for release.
   🟩 In wget_a_gplv3_license, read license field in emfile and wget accordingly.
   🟩 Abstract compilation command with option selection in custom function.
   🟩 Add a CONTRIBUTING.md, CHANGELOG.md.
-  🟥 Handle json load errors.
-    Failed to load or parse em.json: Unexpected token: } at line 21, column 5
-    parsing Emeralds::BuildConfig#warnings at line 20, column 7
-    parsing Emeralds::CompileFlags#debug at line 16, column 5
-    parsing Emeralds::Emfile#compile-flags at line 14, column 3
+  🟩 Made build process more robust using different C versions and flags, and standardizing to json.
 
 ## (✓) ver. 0.7.0
 -----------------

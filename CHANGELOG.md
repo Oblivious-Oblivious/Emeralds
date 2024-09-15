@@ -1,6 +1,13 @@
 # Changes for Emeralds 0.8.0 (May 05 2024)
 
 * Added a new `em license` command that fetches the license defined in the emfile.
+* Removed `em run` command.
+* Simplified compilation by using `.a` static libraries instead of `.o` files.
+* Made build process more robust using different C versions and flags, and standardizing to json.
+  * Using different `.a` output libraries for specs (c2x) and release (c89).
+  * Require `.c` input for app and test, and ignore build for lib.
+  * Removed test flags, since by default we use the same as debug, but force `-std=c2x`.
+* General improvements and bugfixes to the codebase.
 
 # Changes for Emeralds 0.7.0 (May 03 2024)
 
