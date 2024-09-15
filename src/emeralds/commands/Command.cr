@@ -74,7 +74,11 @@ abstract class Emeralds::Command
     sources = Emeralds.sources_app;
     input = Emeralds.input_app;
     output = Emeralds.output_app;
-    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{sources} #{input}", display: true;
+    if sources.empty? && input.empty?
+      puts "No main file found".colorize(:light_red);
+    else
+      TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{sources} #{input}", display: true;
+    end
   end
 
   private def build_lib(compile_flags)
@@ -88,10 +92,12 @@ abstract class Emeralds::Command
     deps = Emeralds.deps_release;
     sources = Emeralds.sources_lib;
     output = Emeralds.output_lib;
-    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -c #{deps} #{sources}", display: true;
-    TerminalHandler.generic_cmd "ar rcs #{output} *.o", display: true;
-    TerminalHandler.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} -c #{deps} #{sources}", display: true;
-    TerminalHandler.generic_cmd "ar rcs #{output}.test *.o", display: true;
+    if !sources.empty?
+      TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -c #{deps} #{sources}", display: true;
+      TerminalHandler.generic_cmd "ar rcs #{output} *.o", display: true;
+      TerminalHandler.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} -c #{deps} #{sources}", display: true;
+      TerminalHandler.generic_cmd "ar rcs #{output}.test *.o", display: true;
+    end
     rebuild_export;
     move_headers_to_export;
     remove_objects_and_move_static_libs_to_export;
@@ -162,9 +168,13 @@ abstract class Emeralds::Command
     sources = Emeralds.sources_test;
     input = Emeralds.input_test;
     output = Emeralds.output_test;
-    TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{sources} #{input}", display: true;
-    puts;
-    TerminalHandler.run output, display: true;
+    if sources.empty?
+      puts "No main spec file found".colorize(:light_red);
+    else
+      TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{sources} #{input}", display: true;
+      puts;
+      TerminalHandler.run output, display: true;
+    end
   end
 
   # Main method that runs and times the command block.
