@@ -75,6 +75,7 @@ abstract class Emeralds::Command
     input = Emeralds.input_app;
     output = Emeralds.output_app;
     if sources.empty? && input.empty?
+      print "#{Emeralds.arrow} ";
       puts "No main file found".colorize(:light_red);
     else
       TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{sources} #{input}", display: true;
@@ -170,7 +171,8 @@ abstract class Emeralds::Command
     sources = Emeralds.sources_test;
     input = Emeralds.input_test;
     output = Emeralds.output_test;
-    if sources.empty?
+    if input.empty?
+      print "#{Emeralds.arrow} ";
       puts "No main spec file found".colorize(:light_red);
     else
       TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{sources} #{input}", display: true;
