@@ -21,12 +21,12 @@
 # THE SOFTWARE.
 
 require "json";
-require "colorize";
 require "file_utils";
 require "http/client";
 require "git-repository";
 
 require "./emeralds/extensions/Hash+sanitize";
+require "./emeralds/extensions/String+colorize";
 
 require "./emeralds/commands/Command";
 require "./emeralds/commands/Add";

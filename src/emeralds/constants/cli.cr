@@ -1,7 +1,7 @@
 # Defines constants such as version and CLI logger customizations
 module Emeralds
   def self.cog
-    "⚙".colorize(:light_green).mode(:dim).to_s;
+    "⚙".colorize(:green).mode(:dim).to_s;
   end
 
   def self.arrow
@@ -9,7 +9,7 @@ module Emeralds
   end
 
   def self.checkmark
-    "✔".colorize(:light_green).to_s;
+    "✔".colorize(:green).to_s;
   end
 
   def self.diamond

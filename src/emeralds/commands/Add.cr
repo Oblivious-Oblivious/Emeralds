@@ -64,7 +64,7 @@ class Emeralds::Add < Emeralds::Command
         TerminalHandler.mkdir (File.join "spec", "#{ARGV[1]}");
         write_spec_file;
       else
-        puts "Cannot create a pair with name: #{ARGV[1]}.".colorize(:light_red);
+        puts "Cannot create a pair with name: #{ARGV[1]}.".colorize(:red);
       end
     };
   end

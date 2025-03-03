@@ -3,7 +3,7 @@
   🟥 Add a file watcher for a possible recompilation
   🟩 Make sure all libraries in -c compile to *.o.
   🟥 Maybe add custom errors on Emfile based on key missing.
-  🟥 Revamp colors for text to be white bold and make sure error and success are colored properly.
+  🟩 Revamp colors for text to be white bold and make sure error and success are colored properly.
   🟥 Add incremental/individual compilation of files like make.
   🟥 Rework makefile to be simpler and to align with em commands.
   🟥 Add a logger mode where all commands results are explicitely displayed.

@@ -3,7 +3,7 @@ module Emeralds::TerminalHandler
     puts "#{Emeralds.arrow} #{cmd}" if display;
     `#{cmd}`;
   rescue
-    puts "#{cmd}: command not found".colorize(:light_red) if display;
+    puts "#{cmd}: command not found".colorize(:red) if display;
   end
 
   def self.rm(path, display = false)
@@ -12,7 +12,7 @@ module Emeralds::TerminalHandler
       FileUtils.rm_rf file_path;
     end
   rescue
-    puts "Could not remove #{path}".colorize(:light_red) if display;
+    puts "Could not remove #{path}".colorize(:red) if display;
   end
 
   def self.cp(src_dir, dest_dir, display = false)
@@ -21,14 +21,14 @@ module Emeralds::TerminalHandler
       FileUtils.cp_r file_path, dest_dir;
     end
   rescue
-    puts "Could not copy #{src_dir} to #{dest_dir}".colorize(:light_red) if display;
+    puts "Could not copy #{src_dir} to #{dest_dir}".colorize(:red) if display;
   end
 
   def self.mv(src_path, dest_path, display = false)
     puts "#{Emeralds.arrow} mv #{src_path.join ' '} #{dest_path}" if display;
     FileUtils.mv src_path, dest_path;
   rescue
-    puts "Could not move #{src_path} to #{dest_path}".colorize(:light_red) if display;
+    puts "Could not move #{src_path} to #{dest_path}".colorize(:red) if display;
   end
 
   def self.mkdir(path, display = false)
@@ -51,7 +51,7 @@ module Emeralds::TerminalHandler
     raise "Process failed with exit status: #{status.exit_status}" if !status.success?;
   rescue ex
     puts error.to_s;
-    puts "#{ex.message}".colorize(:light_red) if display;
+    puts "#{ex.message}".colorize(:red) if display;
   end
 
   def self.wget(url, output, display = false)
@@ -75,6 +75,6 @@ module Emeralds::TerminalHandler
     commit = client.commits(client.default_branch)[0].commit;
     client.fetch_commit commit, "#{repo_name}";
   rescue
-    puts "Could not clone #{repo_url} to #{repo_name}".colorize(:light_red);
+    puts "Could not clone #{repo_url} to #{repo_name}".colorize(:red);
   end
 end

@@ -7,7 +7,7 @@ class Emeralds::Version < Emeralds::Command
   def block
     -> {
       if Emfile.instance.name == ""
-        puts "Not a valid library (missing `em.json`)".colorize(:light_red);
+        puts "Not a valid library (missing `em.json`)".colorize(:red);
       else
         puts "#{Emeralds.arrow} #{Emfile.instance.name} v#{Emfile.instance.version}";
       end
