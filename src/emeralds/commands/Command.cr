@@ -94,10 +94,10 @@ abstract class Emeralds::Command
     sources = Emeralds.sources_lib;
     output = Emeralds.output_lib;
     if !sources.empty?
-      TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -c #{deps} #{sources}", display: true;
-      TerminalHandler.generic_cmd "ar rcs #{output} *.o", display: true;
-      TerminalHandler.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} -c #{deps} #{sources}", display: true;
-      TerminalHandler.generic_cmd "ar rcs #{output}.test *.o", display: true;
+      TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -c #{sources}", display: true;
+      TerminalHandler.generic_cmd "#{cc} -o #{output} -r *.o", display: true;
+      TerminalHandler.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} -c #{sources}", display: true;
+      TerminalHandler.generic_cmd "#{cc} -o #{output}.test -r *.o", display: true;
     end
     rebuild_export;
     move_headers_to_export;
