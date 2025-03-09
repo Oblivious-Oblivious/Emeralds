@@ -48,7 +48,7 @@ module Emeralds::TerminalHandler
     status = Process.run executable_path, output: output, error: error;
 
     puts output.to_s;
-    raise "Process failed with exit status: #{status.exit_status}" if !status.success?;
+    raise "Process failed with exit status: #{status.exit_code}" if !status.success?;
   rescue ex
     puts error.to_s;
     puts "#{ex.message}".colorize(:red) if display;
