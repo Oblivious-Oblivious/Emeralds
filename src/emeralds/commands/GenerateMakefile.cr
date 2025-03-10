@@ -6,7 +6,7 @@ class Emeralds::GenerateMakefile < Emeralds::Command
   # Generates a makefile for compiling apps without Emeralds
   def block
     -> {
-      puts "  #{Emeralds.arrow} Makefile";
+      puts "  #{ARROW} Makefile";
 
       data = String.build do |data|
       #   data << "NAME = #{Emeralds.opt["name"]}\n\n";

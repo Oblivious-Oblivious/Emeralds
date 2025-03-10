@@ -20,9 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require "json";
-require "file_utils";
-require "http/client";
 require "git-repository";
 
 require "./emeralds/extensions/Hash+sanitize";
@@ -49,15 +46,13 @@ require "./emeralds/commands/Test";
 require "./emeralds/commands/Version";
 
 require "./emeralds/constants/cli";
-require "./emeralds/constants/options";
 require "./emeralds/constants/version";
 
 require "./emeralds/emfile/BuildConfig";
 require "./emeralds/emfile/CompileFlags";
 require "./emeralds/emfile/Emfile";
 
-require "./emeralds/modules/FileHandler";
-require "./emeralds/modules/TerminalHandler";
+require "./emeralds/modules/Terminal";
 
 require "./emeralds/main";
 

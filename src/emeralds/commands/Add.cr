@@ -1,6 +1,6 @@
 class Emeralds::Add < Emeralds::Command
   private def write_c_file
-    puts "  #{Emeralds.arrow} #{ARGV[1]}.c";
+    puts "  #{ARROW} #{ARGV[1]}.c";
 
     data = String.build do |data|
       data << "#include \"#{ARGV[1]}.h\"\n\n";
@@ -12,7 +12,7 @@ class Emeralds::Add < Emeralds::Command
   end
 
   private def write_h_file
-    puts "  #{Emeralds.arrow} #{ARGV[1]}.h";
+    puts "  #{ARROW} #{ARGV[1]}.h";
 
     data = String.build do |data|
       data << "#ifndef __#{ARGV[1].gsub("-", "_").upcase}_H_\n";
@@ -31,7 +31,7 @@ class Emeralds::Add < Emeralds::Command
   end
 
   private def write_spec_file
-    puts "  #{Emeralds.arrow} #{ARGV[1]}.module.spec.h"
+    puts "  #{ARROW} #{ARGV[1]}.module.spec.h"
 
     data = String.build do |data|
       data << "#include \"../../libs/cSpec/export/cSpec.h\"\n";
@@ -57,11 +57,11 @@ class Emeralds::Add < Emeralds::Command
   def block
     -> {
       if validate_filename ARGV[1]
-        puts "#{Emeralds.arrow} #{ARGV[1]}";
-        TerminalHandler.mkdir (File.join "src", "#{ARGV[1]}");
+        puts "#{ARROW} #{ARGV[1]}";
+        Terminal.mkdir (File.join "src", "#{ARGV[1]}");
         write_c_file;
         write_h_file;
-        TerminalHandler.mkdir (File.join "spec", "#{ARGV[1]}");
+        Terminal.mkdir (File.join "spec", "#{ARGV[1]}");
         write_spec_file;
       else
         puts "Cannot create a pair with name: #{ARGV[1]}.".colorize(:red);

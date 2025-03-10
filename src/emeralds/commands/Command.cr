@@ -11,32 +11,13 @@ abstract class Emeralds::Command
   # return -> The code block
   abstract def block;
 
-  # A random banner for enclosing output more clearly
-  #
-  # return -> The actual banner string
-  private def banner
-    "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
-  end
-
-  # Counts the elapsed time between execution blocks
-  #
-  # return -> A detailed string explained the time taken
-  private def elapsed_time(elapsed)
-    "All done in #{elapsed
-      .total_seconds
-      .format(decimal_places: 3)
-    } seconds"
-      .colorize(:white)
-      .mode(:bold);
-  end
-
   # Tries to execute the override compilation directive if it exists
   #
   # returns -> true if the override was ran else false
   private def try_override_command
     override = Emfile.instance.build;
     if override.strip != ""
-      TerminalHandler.generic_cmd override, display: true;
+      Terminal.generic_cmd override, display: true;
       true;
     else
       false;
@@ -44,20 +25,34 @@ abstract class Emeralds::Command
   end
 
   private def rebuild_export
-    TerminalHandler.rm "export";
-    TerminalHandler.mkdir "export";
+    Terminal.rm "export";
+    Terminal.mkdir "export";
   end
 
   private def move_headers_to_export
-    TerminalHandler.cp (File.join "src", "*"), "export";
-    TerminalHandler.rm (File.join "export", "*.c");
-    TerminalHandler.rm (File.join "export", "**", "*.c");
+    Terminal.cp (File.join "src", "*"), "export";
+    Terminal.rm (File.join "export", "*.c");
+    Terminal.rm (File.join "export", "**", "*.c");
   end
 
   private def remove_objects_and_move_static_libs_to_export
-    TerminalHandler.rm FileHandler.find(File.join(".", "*.o"));
-    TerminalHandler.mv FileHandler.find(File.join(".", "**", "*.a")), "export";
-    TerminalHandler.mv FileHandler.find(File.join(".", "**", "*.a.test")), "export";
+    Terminal.rm Terminal.find(File.join(".", "*.o"));
+    Terminal.mv Terminal.find(File.join(".", "**", "*.a")), "export";
+    Terminal.mv Terminal.find(File.join(".", "**", "*.a.test")), "export";
+  end
+
+  # Delete all paths in base_dir except the excluded array
+  private def delete_excluded_paths(base_dir, exclude_patterns)
+    base_dir_path = Path[base_dir];
+    Dir.glob(base_dir_path.join("**", "{*,.*}")) do |path|
+      path = Path[path];
+      relative_path = path.relative_to(base_dir_path).to_s.lchop('/');
+      next if exclude_patterns.any? do |pattern|
+        pattern = pattern.lchop("./");
+        pattern == relative_path || relative_path.starts_with?("#{pattern}/");
+      end
+      FileUtils.rm_rf(path.to_s) unless File.directory?(path.to_s) && path == base_dir_path;
+    end
   end
 
   private def build_app(compile_flags)
@@ -65,20 +60,21 @@ abstract class Emeralds::Command
 
     rebuild_export;
 
-    cc = Emfile.instance.compile_flags.cc;
-    opt = compile_flags.opt;
-    version = compile_flags.version;
-    flags = compile_flags.flags;
-    warnings = compile_flags.warnings;
-    deps = Emeralds.deps_release;
-    sources = Emeralds.sources_app;
-    input = Emeralds.input_app;
-    output = Emeralds.output_app;
-    if sources.empty? && input.empty?
-      print "#{Emeralds.arrow} ";
+    if Terminal.sources_app.empty? && Terminal.input_app.empty?
+      print "#{ARROW} ";
       puts "No main file found".colorize(:red);
     else
-      TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{sources} #{input}", display: true;
+      Terminal.generic_cmd "\
+        #{Emfile.instance.compile_flags.cc} \
+        #{compile_flags.opt} \
+        #{compile_flags.version} \
+        #{compile_flags.flags} \
+        #{compile_flags.warnings} \
+        -o #{Terminal.output_app} \
+        #{Terminal.deps_release} \
+        #{Terminal.sources_app} \
+        #{Terminal.input_app} \
+      ", display: true;
     end
   end
 
@@ -90,45 +86,65 @@ abstract class Emeralds::Command
     version = compile_flags.version;
     flags = compile_flags.flags;
     warnings = compile_flags.warnings;
-    deps = Emeralds.deps_release;
-    sources = Emeralds.sources_lib;
-    output = Emeralds.output_lib;
+    deps = Terminal.deps_release;
+    sources = Terminal.sources_lib;
+    output = Terminal.output_lib;
     if !sources.empty?
-      TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -c #{sources}", display: true;
-      TerminalHandler.generic_cmd "#{cc} -o #{output} -r *.o", display: true;
-      TerminalHandler.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} -c #{sources}", display: true;
-      TerminalHandler.generic_cmd "#{cc} -o #{output}.test -r *.o", display: true;
+      Terminal.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -c #{sources}", display: true;
+      Terminal.generic_cmd "#{cc} -o #{output} -r *.o", display: true;
+      Terminal.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} -c #{sources}", display: true;
+      Terminal.generic_cmd "#{cc} -o #{output}.test -r *.o", display: true;
     end
     rebuild_export;
     move_headers_to_export;
     remove_objects_and_move_static_libs_to_export;
   end
 
+  # Install a list of dependencies and their own dependencies recursively
+  #
+  # deps -> The list of dependecies to install
+  def install_deps(deps)
+    deps.sanitize.each do |key, value|
+      Terminal.rm (File.join "libs", "#{key}");
+      puts " #{COG} Installing `#{key}`";
+
+      Terminal.git_clone "https://github.com/#{value}", (File.join "libs", "#{key}");
+      Dir.cd (File.join "libs", "#{key}");
+      Terminal.generic_cmd "em install";
+      Terminal.generic_cmd "em build lib release 2> /dev/null";
+      delete_excluded_paths ".", ["export", "libs"];
+
+      `rm -rf .git*`;
+      `rm -rf .clang*`;
+      Dir.cd (File.join "..", "..");
+    end
+  end
+
   def wget_license
-    puts "  #{Emeralds.arrow} LICENSE";
+    puts "  #{ARROW} LICENSE";
     case Emfile.instance.license
     when "mit"
-      TerminalHandler.wget "https://mit-license.org/license.txt", "LICENSE";
+      Terminal.wget "https://mit-license.org/license.txt", "LICENSE";
     when "gpl-v2"
-      TerminalHandler.wget "https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt", "LICENSE";
+      Terminal.wget "https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt", "LICENSE";
     when "apache-v2"
-      TerminalHandler.wget "https://www.apache.org/licenses/LICENSE-2.0.txt", "LICENSE";
+      Terminal.wget "https://www.apache.org/licenses/LICENSE-2.0.txt", "LICENSE";
     when "gpl-v3"
-      TerminalHandler.wget "https://www.gnu.org/licenses/gpl-3.0.txt", "LICENSE";
+      Terminal.wget "https://www.gnu.org/licenses/gpl-3.0.txt", "LICENSE";
     when "lgpl-v3"
-      TerminalHandler.wget "https://www.gnu.org/licenses/lgpl-3.0.txt", "LICENSE";
+      Terminal.wget "https://www.gnu.org/licenses/lgpl-3.0.txt", "LICENSE";
     when "mpl-v2"
-      TerminalHandler.wget "https://www.mozilla.org/media/MPL/2.0/index.f75d2927d3c1.txt", "LICENSE";
+      Terminal.wget "https://www.mozilla.org/media/MPL/2.0/index.f75d2927d3c1.txt", "LICENSE";
     when "epl-v2"
-      TerminalHandler.wget "https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.txt", "LICENSE";
+      Terminal.wget "https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.txt", "LICENSE";
     when "agpl-v3"
-      TerminalHandler.wget "https://www.gnu.org/licenses/agpl-3.0.txt", "LICENSE";
+      Terminal.wget "https://www.gnu.org/licenses/agpl-3.0.txt", "LICENSE";
     when "cc0-v1"
-      TerminalHandler.wget "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt", "LICENSE";
+      Terminal.wget "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt", "LICENSE";
     when "cc0-v4"
-      TerminalHandler.wget "https://creativecommons.org/licenses/by/4.0/legalcode.txt", "LICENSE";
+      Terminal.wget "https://creativecommons.org/licenses/by/4.0/legalcode.txt", "LICENSE";
     else
-      TerminalHandler.wget "https://mit-license.org/license.txt", "LICENSE";
+      Terminal.wget "https://mit-license.org/license.txt", "LICENSE";
     end
   end
 
@@ -142,53 +158,19 @@ abstract class Emeralds::Command
     !(windows_reserved.matches? input.strip);
   end
 
-  def build_app_debug
-    build_app Emfile.instance.compile_flags.debug;
-  end
-
-  def build_app_release
-    build_app Emfile.instance.compile_flags.release;
-  end
-
-  def build_lib_debug
-    build_lib Emfile.instance.compile_flags.debug;
-  end
-
-  def build_lib_release
-    build_lib Emfile.instance.compile_flags.release;
-  end
-
-  def build_test
-    # TODO - Remove duplication (2 problems)
-    #   ["deps"] needs to be an app and lib value
-    #   we should not rebuild export directory (maybe pass a flag)
-    cc = Emfile.instance.compile_flags.cc;
-    opt = Emfile.instance.compile_flags.debug.opt;
-    version = "-std=c2x";
-    flags = Emfile.instance.compile_flags.debug.flags;
-    warnings = Emfile.instance.compile_flags.debug.warnings;
-    deps = Emeralds.deps_test;
-    sources = Emeralds.sources_test;
-    input = Emeralds.input_test;
-    output = Emeralds.output_test;
-    if input.empty?
-      print "#{Emeralds.arrow} ";
-      puts "No main spec file found".colorize(:red);
-    else
-      TerminalHandler.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -o #{output} #{deps} #{sources} #{input}", display: true;
-      puts;
-      TerminalHandler.run output, display: true;
-    end
-  end
-
   # Main method that runs and times the command block.
   def run
     puts message.colorize(:white).mode(:bold);
-    puts banner;
+    puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
 
     elapsed = Time.measure { block.call; };
 
-    puts banner;
-    puts elapsed_time elapsed;
+    puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
+    puts "All done in #{elapsed
+      .total_seconds
+      .format(decimal_places: 3)
+    } seconds"
+      .colorize(:white)
+      .mode(:bold);
   end
 end

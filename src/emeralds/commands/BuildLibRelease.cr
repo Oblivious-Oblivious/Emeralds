@@ -7,7 +7,7 @@ class Emeralds::BuildLibRelease < Emeralds::Command
   # into shared libraries in release mode
   def block
     -> {
-      build_lib_release;
+      build_lib Emfile.instance.compile_flags.release;
     };
   end
 end

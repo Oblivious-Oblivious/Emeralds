@@ -6,11 +6,11 @@ class Emeralds::Clean < Emeralds::Command
   # Runs the clean script defined in the em.json file
   def block
     -> {
-      TerminalHandler.rm Emeralds.output_test, display: true;
-      TerminalHandler.rm "export", display: true;
-      TerminalHandler.rm "*.dSYM";
-      TerminalHandler.rm "spec/*.dSYM";
-      TerminalHandler.rm "export/*.dSYM";
+      Terminal.rm Terminal.output_test, display: true;
+      Terminal.rm "export", display: true;
+      Terminal.rm "*.dSYM";
+      Terminal.rm "spec/*.dSYM";
+      Terminal.rm "export/*.dSYM";
     };
   end
 end

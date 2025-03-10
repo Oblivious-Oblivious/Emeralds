@@ -7,7 +7,7 @@ class Emeralds::BuildLibDebug < Emeralds::Command
   # into shared libraries in debug mode
   def block
     -> {
-      build_lib_debug;
+      build_lib Emfile.instance.compile_flags.debug;
     };
   end
 end

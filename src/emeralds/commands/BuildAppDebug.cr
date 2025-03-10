@@ -7,7 +7,7 @@ class Emeralds::BuildAppDebug < Emeralds::Command
   # code as a binary executable in debug mode
   def block
     -> {
-      build_app_debug;
+      build_app Emfile.instance.compile_flags.debug;
     };
   end
 end

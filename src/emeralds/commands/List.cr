@@ -1,4 +1,11 @@
 class Emeralds::List < Emeralds::Command
+  # List a list of dependencies from the emfile.
+  private def list(deps)
+    deps.sanitize.each do |key, value|
+      puts "  #{COG} #{key}";
+    end
+  end
+
   def message
     "Emeralds - Em libraries used:";
   end
@@ -7,15 +14,15 @@ class Emeralds::List < Emeralds::Command
   def block
     -> {
       deps = Emfile.instance.dependencies;
-      Emfile.list deps;
+      list deps;
       dev_deps = Emfile.instance.dev_dependencies;
-      Emfile.list dev_deps;
+      list dev_deps;
 
       no_deps = deps.size + dev_deps.size;
       if no_deps == 1
-        puts "\n#{Emeralds.arrow} #{no_deps} dependency";
+        puts "\n#{ARROW} #{no_deps} dependency";
       else
-        puts "\n#{Emeralds.arrow} #{no_deps} dependencies";
+        puts "\n#{ARROW} #{no_deps} dependencies";
       end
     };
   end

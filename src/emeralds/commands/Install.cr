@@ -6,8 +6,8 @@ class Emeralds::Install < Emeralds::Command
   # Installs all missing dependencies for the em library
   def block
     -> {
-      TerminalHandler.mkdir "libs";
-      Emfile.install_deps Emfile.instance.dependencies;
+      Terminal.mkdir "libs";
+      install_deps Emfile.instance.dependencies;
     };
   end
 end

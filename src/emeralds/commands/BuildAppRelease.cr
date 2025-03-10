@@ -7,7 +7,7 @@ class Emeralds::BuildAppRelease < Emeralds::Command
   # code as a binary executable in release mode
   def block
     -> {
-      build_app_release;
+      build_app Emfile.instance.compile_flags.release;
     };
   end
 end
