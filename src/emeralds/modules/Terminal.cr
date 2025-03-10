@@ -1,5 +1,5 @@
 module Emeralds::Terminal
-  # TODO - Ideally replace all generic comamnds with cross-platform equivalents
+  # TODO - Ideally replace all generic commands (and backtic commands) with cross-platform equivalents.
   def self.generic_cmd(cmd, display = false)
     puts "#{ARROW} #{cmd}" if display;
     `#{cmd}`;
@@ -66,8 +66,7 @@ module Emeralds::Terminal
 
   def self.git_init(display = false)
     puts "#{ARROW} git init" if display;
-    # TODO - Check for cross platform capability
-    `git init`;
+    GitRepository::Commands.new.init;
   end
 
   def self.git_clone(repo_url, repo_name, display = false)

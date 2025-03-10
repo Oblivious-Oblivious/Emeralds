@@ -1,8 +1,5 @@
 class Emeralds::Test < Emeralds::Command
   private def build_test
-    # TODO - Remove duplication (2 problems)
-    #   ["deps"] needs to be an app and lib value
-    #   we should not rebuild export directory (maybe pass a flag)
     if Terminal.input_test.empty?
       print "#{ARROW} ";
       puts "No main spec file found".colorize(:red);
