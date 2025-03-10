@@ -24,11 +24,6 @@ abstract class Emeralds::Command
     end
   end
 
-  private def rebuild_export
-    Terminal.rm "export";
-    Terminal.mkdir "export";
-  end
-
   private def move_headers_to_export
     Terminal.cp (File.join "src", "*"), "export";
     Terminal.rm (File.join "export", "*.c");
@@ -58,7 +53,7 @@ abstract class Emeralds::Command
   private def build_app(compile_flags)
     return if try_override_command;
 
-    rebuild_export;
+    Terminal.mkdir "export";
 
     if Terminal.sources_app.empty? && Terminal.input_app.empty?
       print "#{ARROW} ";
@@ -95,7 +90,7 @@ abstract class Emeralds::Command
       Terminal.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} -c #{sources}", display: true;
       Terminal.generic_cmd "#{cc} -o #{output}.test -r *.o", display: true;
     end
-    rebuild_export;
+    Terminal.mkdir "export";
     move_headers_to_export;
     remove_objects_and_move_static_libs_to_export;
   end
