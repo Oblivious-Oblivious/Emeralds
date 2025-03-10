@@ -1,3 +1,13 @@
+# Changes for Emeralds 0.9.0 (Mar 10 2025)
+
+* Revamped colors (visually and in code).
+* Simplified lib building process
+  * Not using `ar` anymore, we create static libraries using cc with `-r` flag.
+  * Not including `.a` files when building other static libraries.
+* Upgraded to Crystal 1.15.0
+* Fixed bug where multiple build commands would clear the export directory.
+* QoL improvements in codebase.
+
 # Changes for Emeralds 0.8.1 (Sep 16 2024)
 
 * Fixed a minor bug where the sources check on specs would not check for the input.

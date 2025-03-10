@@ -9,21 +9,25 @@
 ------------------
   🟥 Maybe add an option for only installing missing dependencies.
   🟥 Add translation for status codes to actual errors in em run (11 for segfault and so on)
+  🟥 Remove all generic commands (and backtic commands) with cross-platform equivalents.
+  🟥 Add a command option for libraries reinstall.
+     When `em install` we only get missing ones.
+     When `em reinstall` we reinstall libraries.
+  🟥 Maybe add custom errors on Emfile based on key missing. (e.g. compile-flags missing).
 
-## (✗) ver. 0.9.0
+## (✓) ver. 0.9.0
 -----------------
   🟩 Make sure all libraries in -c compile to *.o.
   🟩 Revamp colors for text to be white bold and make sure error and success are colored properly.
   🟩 Refactor build script to work with compiler tools only instead of `ar`.
   🟩 Fixed warning when was trying to link .a files when building more static libraries.
-  🟩 Add a command option for libraries reinstall.
-  🟥 Add an automation that converts *nix paths (./dir/file) to File.join calls by splitting on '/'.
+  🟩 Fixed bug where I was rebuild export directory (only em clean can remove this).
+  🟩 Add an automation that converts *nix paths (./dir/file) to File.join calls by splitting on '/'.
   🟩 Handle json load errors.
     Failed to load or parse em.json: Unexpected token: } at line 21, column 5
     parsing Emeralds::BuildConfig#warnings at line 20, column 7
     parsing Emeralds::CompileFlags#debug at line 16, column 5
     parsing Emeralds::Emfile#compile-flags at line 14, column 3
-  🟥 Maybe add custom errors on Emfile based on key missing. (e.g. compile-flags missing).
 
 ## (✓) ver. 0.8.0
 -----------------
