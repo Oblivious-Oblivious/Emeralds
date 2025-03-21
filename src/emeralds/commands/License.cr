@@ -3,7 +3,6 @@ class Emeralds::License < Emeralds::Command
     "Emeralds - Downloading license...";
   end
 
-  # Get the em version from the yaml file
   def block
     -> {
       wget_license;

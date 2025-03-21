@@ -271,7 +271,6 @@ class Emeralds::Init < Emeralds::Command
     "Emeralds - Initializing a new project";
   end
 
-  # Initialize a new emfile with the name specified
   def block
     -> {
       create_lib_directory;

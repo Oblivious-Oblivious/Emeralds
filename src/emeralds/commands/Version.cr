@@ -3,7 +3,6 @@ class Emeralds::Version < Emeralds::Command
     "Emeralds - Version";
   end
 
-  # Get the em version from the yaml file
   def block
     -> {
       if Emfile.instance.name == ""

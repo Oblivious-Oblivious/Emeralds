@@ -7,6 +7,7 @@
 
 ## (✗) ver. 0.10.0
 ------------------
+  🟩 Remove all comments.
   🟥 Add translation for status codes to actual errors in em run (11 for segfault and so on)
   🟥 Remove all generic commands (and backtic commands) with cross-platform equivalents.
   🟩 Maybe add an option for only installing missing dependencies.

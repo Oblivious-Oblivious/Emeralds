@@ -11,9 +11,6 @@ abstract class Emeralds::Command
   # return -> The code block
   abstract def block;
 
-  # Tries to execute the override compilation directive if it exists
-  #
-  # returns -> true if the override was ran else false
   private def try_override_command
     override = Emfile.instance.build;
     if override.strip != ""
@@ -36,7 +33,6 @@ abstract class Emeralds::Command
     Terminal.mv Terminal.find(File.join(".", "**", "*.a.test")), "export";
   end
 
-  # Delete all paths in base_dir except the excluded array
   private def delete_excluded_paths(base_dir, exclude_patterns)
     base_dir_path = Path[base_dir];
     Dir.glob(base_dir_path.join("**", "{*,.*}")) do |path|
@@ -95,9 +91,6 @@ abstract class Emeralds::Command
     remove_objects_and_move_static_libs_to_export;
   end
 
-  # Install a list of dependencies and their own dependencies recursively
-  #
-  # deps -> The list of dependecies to install
   def install_deps(deps)
     deps.sanitize.each do |key, value|
       if !File.exists? (File.join "libs", "#{key}")
@@ -156,7 +149,6 @@ abstract class Emeralds::Command
     !(windows_reserved.matches? input.strip);
   end
 
-  # Main method that runs and times the command block.
   def run
     puts message.colorize(:white).mode(:bold);
     puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);

@@ -3,7 +3,6 @@ class Emeralds::GenerateMakefile < Emeralds::Command
     "Emeralds - Generating a makefile...";
   end
 
-  # Generates a makefile for compiling apps without Emeralds
   def block
     -> {
       puts "  #{ARROW} Makefile";

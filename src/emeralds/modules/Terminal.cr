@@ -78,9 +78,6 @@ module Emeralds::Terminal
     puts "Could not clone #{repo_url} to #{repo_name}".colorize(:red);
   end
 
-  # Search for all patterns in start_dir (command emulates linux find start_dir -name pattern)
-  #
-  # return -> An array of matches
   def self.find(path)
     matches = [] of String;
 

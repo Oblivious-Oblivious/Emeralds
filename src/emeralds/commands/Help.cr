@@ -3,7 +3,6 @@ class Emeralds::Help < Emeralds::Command
     "Emeralds - Help/Usage";
   end
 
-  # Prints the help text block and exits
   def block
     -> {
       puts "emeralds/em [<command>]\n\n";

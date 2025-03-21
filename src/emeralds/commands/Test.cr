@@ -24,7 +24,6 @@ class Emeralds::Test < Emeralds::Command
     "Emeralds - Running tests...";
   end
 
-  # Runs the test script defined in the em.yml file
   def block
     -> {
       if File.exists? File.join("libs", "cSpec", "export", "cSpec.h")

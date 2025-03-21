@@ -1,5 +1,4 @@
 class Emeralds::List < Emeralds::Command
-  # List a list of dependencies from the emfile.
   private def list(deps)
     deps.sanitize.each do |key, value|
       puts "  #{COG} #{key}";
@@ -10,7 +9,6 @@ class Emeralds::List < Emeralds::Command
     "Emeralds - Em libraries used:";
   end
 
-  # Get the list of dependencies from the yaml file in a vector
   def block
     -> {
       deps = Emfile.instance.dependencies;

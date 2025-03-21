@@ -1,5 +1,4 @@
 class Emeralds::Loc < Emeralds::Command
-  # Paths of source files (for counting lines) 
   SRC_PATHS = [
     Path.new(File.join "src", "**", "*.c"),
     Path.new(File.join "src", "**", "*.h"),
@@ -12,10 +11,6 @@ class Emeralds::Loc < Emeralds::Command
 
   PATHS = SRC_PATHS + SPEC_PATHS;
 
-  # Read all source files and count the lines of codes
-  #
-  # paths_array -> An array of paths for available for search
-  # return -> The total number of files and lines of code
   private def get_lines_of_code(paths_array = PATHS)
     num = 0;
     loc = 0;
@@ -39,7 +34,6 @@ class Emeralds::Loc < Emeralds::Command
     "Emeralds - Counting Lines of Code...";
   end
 
-  # Count the number of lines of code
   def block
     -> {
       src_data = get_lines_of_code(SRC_PATHS);

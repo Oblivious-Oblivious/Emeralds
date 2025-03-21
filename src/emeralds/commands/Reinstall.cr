@@ -3,7 +3,6 @@ class Emeralds::Reinstall < Emeralds::Command
     "Emeralds - Reinstalling dependencies...";
   end
 
-  # Installs all missing development dependencies for the em library
   def block
     -> {
       Terminal.rm "libs";

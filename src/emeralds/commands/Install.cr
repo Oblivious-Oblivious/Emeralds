@@ -3,7 +3,6 @@ class Emeralds::Install < Emeralds::Command
     "Emeralds - Resolving dependencies...";
   end
 
-  # Installs all missing dependencies for the em library
   def block
     -> {
       Terminal.mkdir "libs";

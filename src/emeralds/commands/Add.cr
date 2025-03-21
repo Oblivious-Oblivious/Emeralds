@@ -53,7 +53,6 @@ class Emeralds::Add < Emeralds::Command
     "Emeralds - Adding new .c/.h pair...";
   end
 
-  # Count the number of lines of code
   def block
     -> {
       if validate_filename ARGV[1]
