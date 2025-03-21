@@ -14,7 +14,7 @@
      Add a command option for libraries reinstall.
      When `em install` we only get missing ones.
      When `em reinstall` we reinstall libraries.
-  🟥 Maybe add custom errors on Emfile based on key missing. (e.g. compile-flags missing).
+  🟩 Fix errors/crashes on Emfile based on keys that might be missing. (e.g. compile-flags missing).
 
 ## (✓) ver. 0.9.0
 -----------------

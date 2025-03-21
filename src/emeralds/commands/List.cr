@@ -1,7 +1,9 @@
 class Emeralds::List < Emeralds::Command
   private def list(deps)
-    deps.sanitize.each do |key, value|
-      puts "  #{COG} #{key}";
+    if deps
+      deps.sanitize.each do |key, value|
+        puts "  #{COG} #{key}";
+      end
     end
   end
 
@@ -16,7 +18,7 @@ class Emeralds::List < Emeralds::Command
       dev_deps = Emfile.instance.dev_dependencies;
       list dev_deps;
 
-      no_deps = deps.size + dev_deps.size;
+      no_deps = (deps.try(&.size) || 0) + (dev_deps.try(&.size) || 0);
       if no_deps == 1
         puts "\n#{ARROW} #{no_deps} dependency";
       else

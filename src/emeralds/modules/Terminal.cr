@@ -117,7 +117,7 @@ module Emeralds::Terminal
   end
 
   def self.output_app
-    "#{File.join("export", Emfile.instance.name)}".rstrip;
+    "#{File.join("export", (Emfile.instance.name || ""))}".rstrip;
   end
 
   def self.output_lib

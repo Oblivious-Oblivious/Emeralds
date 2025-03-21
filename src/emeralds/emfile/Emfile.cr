@@ -1,33 +1,39 @@
 class Emeralds::Emfile
   include JSON::Serializable;
 
-  property name : String = "";
-  property version : String = "";
-  property dependencies : Hash(String, String) = {} of String => String;
+  property name : String? = nil;
+  property version : String? = nil;
+  property dependencies :  (Hash(String, String) | Nil) = nil;
 
   @[JSON::Field(key: "dev-dependencies")]
-  property dev_dependencies : Hash(String, String) = {} of String => String;
+  property dev_dependencies :  (Hash(String, String) | Nil) = nil;
 
-  property build : String = "";
+  property build : String? = nil;
 
   @[JSON::Field(key: "compile-flags")]
   property compile_flags : CompileFlags = CompileFlags.new;
 
-  property license : String = "";
+  property license : String? = nil;
 
   @@instance : Emfile?;
 
   private def initialize; end;
 
   def self.cspec_not_on_deps
-    Emfile.instance.dependencies["cSpec"];
+    deps = Emfile.instance.dependencies;
+    if deps
+      deps["cSpec"];
+    end
     false;
   rescue
     true;
   end
 
   def self.cspec_not_on_dev_deps
-    Emfile.instance.dev_dependencies["cSpec"];
+    depsdevs = Emfile.instance.dev_dependencies;
+    if depsdevs
+      depsdevs["cSpec"];
+    end
     false;
   rescue
     true;

@@ -13,7 +13,7 @@ abstract class Emeralds::Command
 
   private def try_override_command
     override = Emfile.instance.build;
-    if override.strip != ""
+    if (override || "").strip != ""
       Terminal.generic_cmd override, display: true;
       true;
     else
@@ -92,7 +92,7 @@ abstract class Emeralds::Command
   end
 
   def install_deps(deps)
-    deps.sanitize.each do |key, value|
+    (deps.try(&.sanitize) || {} of String => String).each do |key, value|
       if !File.exists? (File.join "libs", "#{key}")
         puts " #{COG} Installing `#{key}`";
 
