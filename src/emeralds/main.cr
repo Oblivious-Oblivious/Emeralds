@@ -54,6 +54,8 @@ module Emeralds::Main
       else
         Help.new.run;
       end
+    when "reinstall"
+      Reinstall.new.run;
     when "add"
       if ARGV.size == 1
         Help.new.run;

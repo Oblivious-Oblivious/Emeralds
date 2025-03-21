@@ -7,10 +7,10 @@
 
 ## (✗) ver. 0.10.0
 ------------------
-  🟥 Maybe add an option for only installing missing dependencies.
   🟥 Add translation for status codes to actual errors in em run (11 for segfault and so on)
   🟥 Remove all generic commands (and backtic commands) with cross-platform equivalents.
-  🟥 Add a command option for libraries reinstall.
+  🟩 Maybe add an option for only installing missing dependencies.
+     Add a command option for libraries reinstall.
      When `em install` we only get missing ones.
      When `em reinstall` we reinstall libraries.
   🟥 Maybe add custom errors on Emfile based on key missing. (e.g. compile-flags missing).

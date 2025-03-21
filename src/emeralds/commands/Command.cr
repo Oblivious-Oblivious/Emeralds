@@ -100,18 +100,21 @@ abstract class Emeralds::Command
   # deps -> The list of dependecies to install
   def install_deps(deps)
     deps.sanitize.each do |key, value|
-      Terminal.rm (File.join "libs", "#{key}");
-      puts " #{COG} Installing `#{key}`";
+      if !File.exists? (File.join "libs", "#{key}")
+        puts " #{COG} Installing `#{key}`";
 
-      Terminal.git_clone "https://github.com/#{value}", (File.join "libs", "#{key}");
-      Dir.cd (File.join "libs", "#{key}");
-      Terminal.generic_cmd "em install";
-      Terminal.generic_cmd "em build lib release 2> /dev/null";
-      delete_excluded_paths ".", ["export", "libs"];
+        Terminal.git_clone "https://github.com/#{value}", (File.join "libs", "#{key}");
+        Dir.cd (File.join "libs", "#{key}");
+        Terminal.generic_cmd "em install";
+        Terminal.generic_cmd "em build lib release 2> /dev/null";
+        delete_excluded_paths ".", ["export", "libs"];
 
-      `rm -rf .git*`;
-      `rm -rf .clang*`;
-      Dir.cd (File.join "..", "..");
+        `rm -rf .git*`;
+        `rm -rf .clang*`;
+        Dir.cd (File.join "..", "..");
+      else
+        puts " #{COG} `#{key}` already installed";
+      end
     end
   end
 

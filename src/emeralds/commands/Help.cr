@@ -15,6 +15,7 @@ class Emeralds::Help < Emeralds::Command
       puts "    help                                - Print this help message.\n";
       puts "    init [<name>]                       - Initialize a new library with an em.json file.\n";
       puts "    install [ | dev | all]              - Install dependencies recursively for each included library.\n";
+      puts "    reinstall                           - Reinstall dependencies recursively for each included library.\n";
       puts "    list                                - List dependencies in the em file.\n";
       puts "    makefile                            - Generate a makefile for independent compilation\n";
       puts "    loc                                 - Count the significant lines of code in the project\n";

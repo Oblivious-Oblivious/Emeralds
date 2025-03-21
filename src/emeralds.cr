@@ -41,6 +41,7 @@ require "./emeralds/commands/InstallDev";
 require "./emeralds/commands/License";
 require "./emeralds/commands/List";
 require "./emeralds/commands/Loc";
+require "./emeralds/commands/Reinstall";
 require "./emeralds/commands/Run";
 require "./emeralds/commands/Test";
 require "./emeralds/commands/Version";
