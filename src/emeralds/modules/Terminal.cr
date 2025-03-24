@@ -1,5 +1,4 @@
 module Emeralds::Terminal
-  # TODO - Ideally replace all generic commands (and backtic commands) with cross-platform equivalents.
   def self.generic_cmd(cmd, display = false)
     puts "#{ARROW} #{cmd}" if display;
     `#{cmd}`;
