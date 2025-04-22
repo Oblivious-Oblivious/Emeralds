@@ -4,12 +4,17 @@
   🟥 Add incremental/individual compilation of files like make.
   🟥 Rework makefile to be simpler and to align with em commands.
   🟥 Add a logger mode where all commands results are explicitely displayed.
+  🟥 Add translation for status codes to actual errors in em run (11 for segfault and so on)
+
+## (✗) ver. 0.11.0
+  🟥 Handle missing json values that are string interpolated (like compile-flag).
+     Potentially add default flags if missing.
 
 ## (✗) ver. 0.10.0
 ------------------
   🟩 Remove all comments.
-  🟥 Add translation for status codes to actual errors in em run (11 for segfault and so on)
   🟥 Remove all generic commands (and backtic commands) with cross-platform equivalents.
+  🟥 Add `em delete` command removing `src/<item>` and `spec/<item>`
   🟩 Maybe add an option for only installing missing dependencies.
      Add a command option for libraries reinstall.
      When `em install` we only get missing ones.
