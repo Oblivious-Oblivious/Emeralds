@@ -9,6 +9,9 @@
 ## (✗) ver. 0.11.0
   🟥 Handle missing json values that are string interpolated (like compile-flag).
      Potentially add default flags if missing.
+  🟥 Add windows/linux/macos versions of cc compiler commands.
+     There are cases where different sanitizers only work on linux.
+     Probably add extra options in the emfile.
 
 ## (✗) ver. 0.10.0
 ------------------
