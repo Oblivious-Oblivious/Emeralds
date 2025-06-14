@@ -18,17 +18,189 @@ shards install
 
 ## Usage
 
-`em help` # Prints the list of commands and how to use
+```
+em help
+```
 
-### Sample usage
-* `em init testapp`
-* `cd testapp`
-* `em list`
-* `em install all`
-* `em test`
-* `em build app release`
-* `em run`
-* `em clean`
+**Output:**
+
+```
+Emeralds - Help/Usage
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+emeralds/em [<command>]
+
+Commands:
+    add [<name>]                        - Add a new .c/.h file pair
+    build [app | lib] [debug | release] - Build the application in the `export` directory.
+    run                                 - Run the compiled application.
+    clean                               - Run the clean script
+    help                                - Print this help message.
+    init [<name>]                       - Initialize a new library with an em.json file.
+    install [ | dev | all]              - Install dependencies recursively for each included library.
+    reinstall                           - Reinstall dependencies recursively for each included library.
+    list                                - List dependencies in the em file.
+    makefile                            - Generate a makefile for independent compilation
+    loc                                 - Count the significant lines of code in the project
+    test                                - Run the script of tests.
+    version                             - Print the current version of the emerald.
+    license                             - Update the license notice based on the em.yml value.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+### Creating a new project
+
+To start a new project:
+
+```
+em init YourApp
+```
+
+**Output:**
+
+```
+Emeralds - Initializing a new project
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚙ Creating directory: YourApp
+⚙ Writing initial files:
+  ➔ em.json
+  ➔ .git
+  ➔ spec
+    ➔ get_value
+      ➔ get_value.module.spec.h
+    ➔ YourApp.spec.c
+  ➔ src
+    ➔ get_value
+      ➔ get_value.c
+      ➔ get_value.h
+    ➔ YourApp.c
+  ➔ .clangd
+  ➔ .clang-format
+  ➔ .gitignore
+  ➔ LICENSE
+  ➔ README.md
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+All done in 0.697 seconds
+```
+
+### Managing dependencies
+
+Navigate into your project and list dependencies:
+
+```
+cd YourApp
+em list
+```
+
+**Output:**
+
+```
+Emeralds - Em libraries used:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ⚙ cSpec
+
+➔ 1 dependency
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+All done in 0.001 seconds
+```
+
+Install dependencies:
+
+```
+em install all
+```
+
+**Output:**
+
+```
+Emeralds - Resolving all dependencies...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ ⚙ Installing `cSpec`
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+All done in 3.822 seconds
+```
+
+### Testing your application
+
+Run the test suite:
+
+```
+em test
+```
+
+**Output:**
+
+```
+Emeralds - Running tests...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+➔ rm -rf spec/spec_results
+➔ clang -Og -std=c2x -g -fsanitize=address -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic -o spec/spec_results  src/get_value/get_value.c spec/YourApp.spec.c
+
+➔ ./spec/spec_results
+/######## ########/
+/##### cSpec #####/
+/######## ########/
+
+Module `T_get_value`
+    `#get_value`
+        ✓ it returns `Hello, World!`
+
+● 1 tests
+✓ 1 passing
+✗ 0 failing
+- 0 skipped
+★ Finished in 0.00487 ms
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+All done in 4.039 seconds
+```
+
+### Building and running your application
+
+Build the application:
+
+```
+em build app release
+```
+
+**Output:**
+
+```
+Emeralds - Compiling as an app...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+➔ clang -O2 -std=c89   -o export/YourApp  src/get_value/get_value.c src/YourApp.c
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+All done in 0.424 seconds
+```
+
+Run the executable:
+
+```
+./export/YourApp
+```
+
+**Output:**
+
+```
+Hello, World!
+```
+
+### Cleaning the project
+
+Clean up build artifacts:
+
+```
+em clean
+```
+
+**Output:**
+
+```
+Emeralds - Cleaning the library files...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+➔ rm -rf spec/spec_results
+➔ rm -rf export
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+All done in 0.003 seconds
+```
 
 ## Contributing
 
