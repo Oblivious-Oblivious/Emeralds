@@ -9,7 +9,7 @@ A module/package manager for C applications.
 
 ## Installation
 
-Run the install script
+**Run the install script**
 
 ```
 shards install
@@ -21,8 +21,6 @@ shards install
 ```
 em help
 ```
-
-**Output:**
 
 ```
 Emeralds - Help/Usage
@@ -47,15 +45,11 @@ Commands:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-### Creating a new project
-
-To start a new project:
+**To start a new project:**
 
 ```
 em init YourApp
 ```
-
-**Output:**
 
 ```
 Emeralds - Initializing a new project
@@ -82,16 +76,12 @@ Emeralds - Initializing a new project
 All done in 0.697 seconds
 ```
 
-### Managing dependencies
-
-Navigate into your project and list dependencies:
+**Manage dependencies, navigate into your project and list dependencies:**
 
 ```
 cd YourApp
 em list
 ```
-
-**Output:**
 
 ```
 Emeralds - Em libraries used:
@@ -103,13 +93,11 @@ Emeralds - Em libraries used:
 All done in 0.001 seconds
 ```
 
-Install dependencies:
+**Install dependencies:**
 
 ```
 em install all
 ```
-
-**Output:**
 
 ```
 Emeralds - Resolving all dependencies...
@@ -119,15 +107,11 @@ Emeralds - Resolving all dependencies...
 All done in 3.822 seconds
 ```
 
-### Testing your application
-
-Run the test suite:
+**Testing your application and run the test suite:**
 
 ```
 em test
 ```
-
-**Output:**
 
 ```
 Emeralds - Running tests...
@@ -153,15 +137,11 @@ Module `T_get_value`
 All done in 4.039 seconds
 ```
 
-### Building and running your application
-
-Build the application:
+**Build your application:**
 
 ```
 em build app release
 ```
-
-**Output:**
 
 ```
 Emeralds - Compiling as an app...
@@ -171,27 +151,19 @@ Emeralds - Compiling as an app...
 All done in 0.424 seconds
 ```
 
-Run the executable:
+**Run the executable:**
 
 ```
 ./export/YourApp
-```
 
-**Output:**
-
-```
 Hello, World!
 ```
 
-### Cleaning the project
-
-Clean up build artifacts:
+**Clean up project build artifacts:**
 
 ```
 em clean
 ```
-
-**Output:**
 
 ```
 Emeralds - Cleaning the library files...
