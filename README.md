@@ -107,6 +107,62 @@ Emeralds - Resolving all dependencies...
 All done in 3.822 seconds
 ```
 
+**Edit configuration json file:**
+
+```
+cat em.json
+```
+
+```
+{
+  "name": "YourApp",
+
+  "version": "0.1.0",
+
+  "dependencies": {},
+
+  "dev-dependencies": {
+    "cSpec": "Oblivious-Oblivious/cSpec"
+  },
+
+  "build": "",
+
+  "compile-flags": {
+    "cc": "clang",
+    "debug": {
+      "opt": "-Og",
+      "version": "-std=c89",
+      "flags": "-g -fsanitize=address",
+      "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
+    },
+    "release": {
+      "opt": "-O2",
+      "version": "-std=c89",
+      "flags": "",
+      "warnings": ""
+    }
+  },
+
+  "license": "mit"
+}
+```
+
+- **name**: The name of your application or library.
+- **version**: The version number displayed with `em version`.
+- **dependencies**: A table of dependencies required for the project to run. The value grabs any Emeralds-compatible repository on GitHub (_user/repo_).
+- **dev-dependencies**: A table of development dependencies **not** linked with the release version.
+- **build**: A custom build scrip/command that overrides normal building and execution.
+- **compile-flags**: The set of compiler flags.
+  - **cc**: The C compiler to use (e.g., clang, gcc).
+  - **debug**: Debug build flags.
+  - **release**: Release build flags.
+    - **opt**: Optimization level (e.g., -Og, -O0).
+    - **version**: The C standard to use (e.g., -std=c89, -std=c11).
+    - **flags**: Additional compiler flags (e.g., -g -fsanitize=address).
+    - **warnings**: Warning flags to enable (e.g., -Wall -Wextra).
+- **license**: The project's license. This should be a valid SPDX license identifier.
+  - Available license types: `mit`, `gpl-v2`, `apache-v2`, `gpl-v3`, `lgpl-v3`, `mpl-v2`, `epl-v2`, `agpl-v3`, `cc0-v1`, `cc0-v4`
+
 **Testing your application and run the test suite:**
 
 ```
