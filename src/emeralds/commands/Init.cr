@@ -274,19 +274,19 @@ class Emeralds::Init < Emeralds::Command
   def block
     -> {
       create_lib_directory;
-      Dir.cd ARGV[1];
-      puts "#{COG} Writing initial files:";
+      Dir.cd ARGV[1] do
+        puts "#{COG} Writing initial files:";
 
-      write_em_file;
-      initialize_git_directory;
-      create_spec_files;
-      create_source_files;
-      create_clangd;
-      create_clang_format;
-      write_gitignore_file;
-      wget_license;
-      generate_readme;
-      Dir.cd "..";
+        write_em_file;
+        initialize_git_directory;
+        create_spec_files;
+        create_source_files;
+        create_clangd;
+        create_clang_format;
+        write_gitignore_file;
+        wget_license;
+        generate_readme;
+      end
     };
   end
 end

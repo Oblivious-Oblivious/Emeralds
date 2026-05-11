@@ -1,7 +1,7 @@
 module Emeralds::Terminal
   def self.generic_cmd(cmd, display = false)
     puts "#{ARROW} #{cmd}" if display;
-    `#{cmd}`;
+    `#{display ? cmd : "#{cmd} 2> /dev/null"}`;
   rescue
     puts "#{cmd}: command not found".colorize(:red) if display;
   end
@@ -105,6 +105,32 @@ module Emeralds::Terminal
 
   def self.deps_test
     "#{find(File.join("libs", "*", "export", "*.a.test")).join(' ')}".rstrip;
+  end
+
+  def self.deps_for_test
+    deps = [] of String;
+
+    Dir.glob(File.join("libs", "*", "export")) do |path|
+      test_libs = find(File.join(path, "*.a.test"));
+      release_libs = find(File.join(path, "*.a"));
+      deps.concat test_libs.empty? ? release_libs : test_libs;
+    end
+
+    deps.join(' ').rstrip;
+  end
+
+  def self.deps_includes
+    libs_path = ENV["EMERALDS_LIBS_PATH"]? || "libs";
+    paths = [] of String;
+
+    Dir.glob(File.join(libs_path, "*", "export")) do |path|
+      paths << path if File.directory? path;
+    end
+    Dir.glob(File.join(libs_path, "*", "export", "**")) do |path|
+      paths << path if File.directory? path;
+    end
+
+    paths.uniq.map { |path| "-I#{path}" }.join(' ').rstrip;
   end
 
   def self.input_app

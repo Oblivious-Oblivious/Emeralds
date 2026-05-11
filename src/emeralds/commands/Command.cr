@@ -1,6 +1,8 @@
 # An abstract class for creating command literals
 # implements a `message` and a `block` method
 abstract class Emeralds::Command
+  @displayed_deps = {} of String => Bool;
+
   # Contains the informational message for the user while performing an Emerald command
   #
   # return -> The string to display
@@ -11,10 +13,10 @@ abstract class Emeralds::Command
   # return -> The code block
   abstract def block;
 
-  private def try_override_command
+  private def try_override_command(display = true)
     override = Emfile.instance.build;
     if (override || "").strip != ""
-      Terminal.generic_cmd override, display: true;
+      Terminal.generic_cmd override, display: display;
       true;
     else
       false;
@@ -61,6 +63,7 @@ abstract class Emeralds::Command
         #{compile_flags.version} \
         #{compile_flags.flags} \
         #{compile_flags.warnings} \
+        #{Terminal.deps_includes} \
         -o #{Terminal.output_app} \
         #{Terminal.deps_release} \
         #{Terminal.sources_app} \
@@ -69,8 +72,8 @@ abstract class Emeralds::Command
     end
   end
 
-  private def build_lib(compile_flags)
-    return if try_override_command;
+  private def build_lib(compile_flags, display = true)
+    return if try_override_command display;
 
     cc = Emfile.instance.compile_flags.cc;
     opt = compile_flags.opt;
@@ -78,35 +81,44 @@ abstract class Emeralds::Command
     flags = compile_flags.flags;
     warnings = compile_flags.warnings;
     deps = Terminal.deps_release;
+    includes = Terminal.deps_includes;
     sources = Terminal.sources_lib;
     output = Terminal.output_lib;
     if !sources.empty?
-      Terminal.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} -c #{sources}", display: true;
-      Terminal.generic_cmd "#{cc} -o #{output} -r *.o", display: true;
-      Terminal.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} -c #{sources}", display: true;
-      Terminal.generic_cmd "#{cc} -o #{output}.test -r *.o", display: true;
+      Terminal.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{includes} -c #{sources}", display: display;
+      Terminal.generic_cmd "#{cc} -o #{output} -r *.o", display: display;
+      Terminal.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} #{includes} -c #{sources}", display: display;
+      Terminal.generic_cmd "#{cc} -o #{output}.test -r *.o", display: display;
     end
     Terminal.mkdir "export";
     move_headers_to_export;
     remove_objects_and_move_static_libs_to_export;
   end
 
-  def install_deps(deps)
+  def install_deps(deps, display = true)
     (deps.try(&.sanitize) || {} of String => String).each do |key, value|
       if !File.exists? (File.join "libs", "#{key}")
-        puts " #{COG} Installing `#{key}`";
+        puts " #{COG} Installing `#{key}`" if display && !@displayed_deps[key]?;
+        @displayed_deps[key] = true;
 
         Terminal.git_clone "https://github.com/#{value}", (File.join "libs", "#{key}");
-        Dir.cd (File.join "libs", "#{key}");
-        Terminal.generic_cmd "em install";
-        Terminal.generic_cmd "em build lib release 2> /dev/null";
-        delete_excluded_paths ".", ["export", "libs"];
 
+        emfile_path = File.join "libs", "#{key}", "em.json";
+        dep_emfile = Emfile.from_json File.read(emfile_path);
+        install_deps dep_emfile.dependencies;
+
+        Dir.cd (File.join "libs", "#{key}") do
+          FileUtils.ln_s File.join("..", "..", "libs"), "libs" unless File.exists? "libs";
+          Emfile.with_instance(dep_emfile) do
+            build_lib dep_emfile.compile_flags.release, display: false;
+          end
+          delete_excluded_paths ".", ["export", "libs"];
         `rm -rf .git*`;
         `rm -rf .clang*`;
-        Dir.cd (File.join "..", "..");
+        end
       else
-        puts " #{COG} `#{key}` already installed";
+        puts " #{COG} `#{key}` already installed" if display && !@displayed_deps[key]?;
+        @displayed_deps[key] = true;
       end
     end
   end
