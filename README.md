@@ -34,8 +34,8 @@ Commands:
     clean                               - Run the clean script
     help                                - Print this help message.
     init [<name>]                       - Initialize a new library with an em.json file.
-    install [ | dev | all]              - Install dependencies recursively for each included library.
-    reinstall                           - Reinstall dependencies recursively for each included library.
+    install [ | dev | all]              - Install dependencies into a flattened libs directory.
+    reinstall                           - Reinstall dependencies into a flattened libs directory.
     list                                - List dependencies in the em file.
     makefile                            - Generate a makefile for independent compilation
     loc                                 - Count the significant lines of code in the project

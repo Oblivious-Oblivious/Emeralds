@@ -47,4 +47,12 @@ class Emeralds::Emfile
       exit 0;
     end
   end
+
+  def self.with_instance(emfile)
+    previous = @@instance;
+    @@instance = emfile;
+    yield;
+  ensure
+    @@instance = previous;
+  end
 end

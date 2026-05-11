@@ -10,8 +10,9 @@ class Emeralds::Test < Emeralds::Command
         #{"-std=c2x"} \
         #{Emfile.instance.compile_flags.debug.flags} \
         #{Emfile.instance.compile_flags.debug.warnings} \
+        #{Terminal.deps_includes} \
         -o #{Terminal.output_test} \
-        #{Terminal.deps_test} \
+        #{Terminal.deps_for_test} \
         #{Terminal.sources_test} \
         #{Terminal.input_test} \
       ", display: true;
