@@ -104,6 +104,11 @@ abstract class Emeralds::Command
         Terminal.git_clone "https://github.com/#{value}", (File.join "libs", "#{key}");
 
         emfile_path = File.join "libs", "#{key}", "em.json";
+        unless File.exists? emfile_path
+          Terminal.rm (File.join "libs", "#{key}");
+          next;
+        end
+
         dep_emfile = Emfile.from_json File.read(emfile_path);
         install_deps dep_emfile.dependencies;
 
