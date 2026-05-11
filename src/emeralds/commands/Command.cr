@@ -31,8 +31,8 @@ abstract class Emeralds::Command
 
   private def remove_objects_and_move_static_libs_to_export
     Terminal.rm Terminal.find(File.join(".", "*.o"));
-    Terminal.mv Terminal.find(File.join(".", "**", "*.a")), "export";
-    Terminal.mv Terminal.find(File.join(".", "**", "*.a.test")), "export";
+    Terminal.mv Terminal.find(File.join(".", "*.a")), "export";
+    Terminal.mv Terminal.find(File.join(".", "*.a.test")), "export";
   end
 
   private def delete_excluded_paths(base_dir, exclude_patterns)
@@ -118,8 +118,8 @@ abstract class Emeralds::Command
             build_lib dep_emfile.compile_flags.release, display: false;
           end
           delete_excluded_paths ".", ["export", "libs"];
-        `rm -rf .git*`;
-        `rm -rf .clang*`;
+          `rm -rf .git*`;
+          `rm -rf .clang*`;
         end
       else
         puts " #{COG} `#{key}` already installed" if display && !@displayed_deps[key]?;
