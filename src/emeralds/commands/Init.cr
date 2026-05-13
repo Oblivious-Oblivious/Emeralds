@@ -20,7 +20,7 @@ class Emeralds::Init < Emeralds::Command
       data << "  \"name\": \"#{ARGV[1]}\",\n";
       data << "  \"version\": \"0.1.0\",\n";
       data << "  \"license\": \"mit\",\n";
-      data << "  \"build\": \"\",\n";
+      data << "  \"build-override\": \"\",\n";
       data << "  \"compile-flags\": {\n";
       data << "    \"cc\": \"clang\",\n";
       data << "    \"debug\": {\n";

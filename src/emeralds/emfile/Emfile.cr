@@ -8,7 +8,8 @@ class Emeralds::Emfile
   @[JSON::Field(key: "dev-dependencies")]
   property dev_dependencies :  (Hash(String, String) | Nil) = nil;
 
-  property build : String? = nil;
+  @[JSON::Field(key: "build-override")]
+  property build_override : String? = nil;
 
   @[JSON::Field(key: "compile-flags")]
   property compile_flags : CompileFlags = CompileFlags.new;
