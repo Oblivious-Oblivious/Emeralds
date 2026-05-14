@@ -70,9 +70,8 @@ module Emeralds::Terminal
 
   def self.git_clone(repo_url, repo_name, display = false)
     puts "#{ARROW} git clone #{repo_url} #{repo_name}" if display;
-    client = GitRepository::Generic.new repo_url;
-    commit = client.commits(client.default_branch)[0].commit;
-    client.fetch_commit commit, "#{repo_name}";
+    status = Process.run "git", ["clone", "--depth", "1", repo_url, repo_name], output: Process::Redirect::Close, error: Process::Redirect::Close;
+    raise "git clone failed" unless status.success?;
   rescue
     puts "Could not clone #{repo_url} to #{repo_name}".colorize(:red);
   end
