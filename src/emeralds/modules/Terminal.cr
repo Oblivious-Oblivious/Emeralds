@@ -120,13 +120,12 @@ module Emeralds::Terminal
   end
 
   def self.deps_includes
-    libs_path = ENV["EMERALDS_LIBS_PATH"]? || "libs";
     paths = [] of String;
 
-    Dir.glob(File.join(libs_path, "*", "export")) do |path|
+    Dir.glob(File.join("libs", "*", "export")) do |path|
       paths << path if File.directory? path;
     end
-    Dir.glob(File.join(libs_path, "*", "export", "**")) do |path|
+    Dir.glob(File.join("libs", "*", "export", "**")) do |path|
       paths << path if File.directory? path;
     end
 
