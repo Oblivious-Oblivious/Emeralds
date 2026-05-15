@@ -17,18 +17,11 @@ class Emeralds::Init < Emeralds::Command
 
     data = String.build do |data|
       data << "{\n";
-      data << "  \"name\": \"#{ARGV[1]}\",\n\n";
-
-      data << "  \"version\": \"0.1.0\",\n\n";
-
-      data << "  \"dependencies\": {},\n\n";
-
-      data << "  \"dev-dependencies\": {\n";
-      data << "    \"cSpec\": \"Oblivious-Oblivious/cSpec\"\n";
-      data << "  },\n\n";
-
-      data << "  \"build\": \"\",\n\n";
-
+      data << "  \"name\": \"#{ARGV[1]}\",\n";
+      data << "  \"version\": \"0.1.0\",\n";
+      data << "  \"license\": \"mit\",\n";
+      data << "  \"scripts\": {},\n";
+      data << "  \"build-override\": \"\",\n";
       data << "  \"compile-flags\": {\n";
       data << "    \"cc\": \"clang\",\n";
       data << "    \"debug\": {\n";
@@ -43,9 +36,11 @@ class Emeralds::Init < Emeralds::Command
       data << "      \"flags\": \"\",\n";
       data << "      \"warnings\": \"\"\n";
       data << "    }\n";
-      data << "  },\n\n";
-
-      data << "  \"license\": \"mit\"\n";
+      data << "  },\n";
+      data << "  \"dependencies\": {},\n";
+      data << "  \"dev-dependencies\": {\n";
+      data << "    \"cSpec\": \"Oblivious-Oblivious/cSpec\"\n";
+      data << "  }\n";
       data << "}\n";
     end
 

@@ -41,7 +41,7 @@ Commands:
     loc                                 - Count the significant lines of code in the project
     test                                - Run the script of tests.
     version                             - Print the current version of the emerald.
-    license                             - Update the license notice based on the em.yml value.
+    license                             - Update the license notice based on the em.json value.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -116,17 +116,10 @@ cat em.json
 ```
 {
   "name": "YourApp",
-
   "version": "0.1.0",
-
-  "dependencies": {},
-
-  "dev-dependencies": {
-    "cSpec": "Oblivious-Oblivious/cSpec"
-  },
-
-  "build": "",
-
+  "license": "mit",
+  "scripts": {},
+  "build-override": "",
   "compile-flags": {
     "cc": "clang",
     "debug": {
@@ -142,16 +135,19 @@ cat em.json
       "warnings": ""
     }
   },
-
-  "license": "mit"
+  "dependencies": {},
+  "dev-dependencies": {
+    "cSpec": "Oblivious-Oblivious/cSpec"
+  }
 }
 ```
 
 - **name**: The name of your application or library.
 - **version**: The version number displayed with `em version`.
-- **dependencies**: A table of dependencies required for the project to run. The value grabs any Emeralds-compatible repository on GitHub (_user/repo_).
-- **dev-dependencies**: A table of development dependencies **not** linked with the release version.
-- **build**: A custom build scrip/command that overrides normal building and execution.
+- **license**: The project's license. This should be a valid SPDX license identifier.
+  - Available license types: `mit`, `gpl-v2`, `apache-v2`, `gpl-v3`, `lgpl-v3`, `mpl-v2`, `epl-v2`, `agpl-v3`, `cc0-v1`, `cc0-v4`
+- **scripts**: Custom commands runnable with `em <script>`. Script names cannot use built-in command names or reserved `em.json` field names.
+- **build-override**: A custom build script/command that overrides normal building and execution.
 - **compile-flags**: The set of compiler flags.
   - **cc**: The C compiler to use (e.g., clang, gcc).
   - **debug**: Debug build flags.
@@ -160,8 +156,8 @@ cat em.json
     - **version**: The C standard to use (e.g., -std=c89, -std=c11).
     - **flags**: Additional compiler flags (e.g., -g -fsanitize=address).
     - **warnings**: Warning flags to enable (e.g., -Wall -Wextra).
-- **license**: The project's license. This should be a valid SPDX license identifier.
-  - Available license types: `mit`, `gpl-v2`, `apache-v2`, `gpl-v3`, `lgpl-v3`, `mpl-v2`, `epl-v2`, `agpl-v3`, `cc0-v1`, `cc0-v4`
+- **dependencies**: A table of dependencies required for the project to run. The value grabs any Emeralds-compatible repository on GitHub (_user/repo_).
+- **dev-dependencies**: A table of development dependencies **not** linked with the release version.
 
 **Testing your application and run the test suite:**
 

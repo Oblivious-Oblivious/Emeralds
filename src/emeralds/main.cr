@@ -1,4 +1,31 @@
 module Emeralds::Main
+  BUILT_IN_COMMANDS = [
+    "add",
+    "build",
+    "clean",
+    "help",
+    "init",
+    "install",
+    "license",
+    "list",
+    "loc",
+    "makefile",
+    "reinstall",
+    "run",
+    "test",
+    "version",
+  ];
+
+  RESERVED_SCRIPT_NAMES = BUILT_IN_COMMANDS + [
+    "build-override",
+    "compile-flags",
+    "dependencies",
+    "dev-dependencies",
+    "name",
+    "scripts",
+    "version",
+  ];
+
   private def self.ensure_em_json_or_init
     if ARGV.size > 0 && ARGV[0] != "init" && !File.exists?("em.json")
       puts "#{ARROW} em.json not found. Please run emeralds init first.";
@@ -8,10 +35,43 @@ module Emeralds::Main
     end
   end
 
-  def self.run
-    ensure_em_json_or_init;
+  private def self.invalid_command(action)
+    puts "#{ARROW} Invalid command: #{action}".colorize(:red);
+    puts "Run `em help` to see available commands.";
+    exit 0;
+  end
 
-    action = ARGV[0]
+  private def self.validate_script_names
+    scripts = Emfile.instance.scripts;
+    return unless scripts;
+
+    conflicts = scripts.keys.select { |name| RESERVED_SCRIPT_NAMES.includes? name };
+    return if conflicts.empty?;
+
+    puts "#{ARROW} Invalid script name#{conflicts.size == 1 ? "" : "s"}: #{conflicts.join(", ")}".colorize(:red);
+    puts "Scripts cannot use existing command or em.json field names.";
+    exit 0;
+  end
+
+  private def self.run_script(action)
+    scripts = Emfile.instance.scripts;
+    return false unless scripts;
+
+    script = scripts[action]?;
+    return false unless script;
+
+    script = script.strip;
+    if script.empty?
+      puts "#{ARROW} Script `#{action}` is empty.".colorize(:red);
+      exit 0;
+    end
+
+    puts "#{ARROW} #{script}";
+    system script;
+    true;
+  end
+
+  private def self.dispatch(action)
     case action
     when "init"
       if ARGV.size == 1
@@ -78,7 +138,15 @@ module Emeralds::Main
     when "help"
       Help.new.run;
     else
-      Help.new.run;
+      invalid_command action unless run_script(action);
     end
+  end
+
+  def self.run
+    ensure_em_json_or_init;
+    validate_script_names if ARGV[0] != "init";
+
+    action = ARGV[0];
+    dispatch action;
   end
 end
