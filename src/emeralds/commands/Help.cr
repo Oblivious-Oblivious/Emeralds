@@ -21,6 +21,13 @@ class Emeralds::Help < Emeralds::Command
       puts "    test                                - Run the script of tests.\n";
       puts "    version                             - Print the current version of the emerald.\n";
       puts "    license                             - Update the license notice based on the em.json value.\n";
+      scripts = Emfile.instance.scripts || {} of String => String;
+      unless scripts.empty?
+        puts "\nScripts:\n";
+        scripts.each do |name, command|
+          puts "    #{name.ljust(35)} - #{command}\n";
+        end
+      end
       puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
       exit 0;
     };

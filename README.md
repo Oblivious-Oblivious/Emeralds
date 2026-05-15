@@ -118,6 +118,7 @@ cat em.json
   "name": "YourApp",
   "version": "0.1.0",
   "license": "mit",
+  "scripts": {},
   "build-override": "",
   "compile-flags": {
     "cc": "clang",
@@ -132,11 +133,11 @@ cat em.json
       "version": "-std=c89",
       "flags": "",
       "warnings": ""
-    },
-    "dependencies": {},
-    "dev-dependencies": {
-      "cSpec": "Oblivious-Oblivious/cSpec"
     }
+  },
+  "dependencies": {},
+  "dev-dependencies": {
+    "cSpec": "Oblivious-Oblivious/cSpec"
   }
 }
 ```
@@ -145,6 +146,7 @@ cat em.json
 - **version**: The version number displayed with `em version`.
 - **license**: The project's license. This should be a valid SPDX license identifier.
   - Available license types: `mit`, `gpl-v2`, `apache-v2`, `gpl-v3`, `lgpl-v3`, `mpl-v2`, `epl-v2`, `agpl-v3`, `cc0-v1`, `cc0-v4`
+- **scripts**: Custom commands runnable with `em <script>`. Script names cannot use built-in command names or reserved `em.json` field names.
 - **build-override**: A custom build script/command that overrides normal building and execution.
 - **compile-flags**: The set of compiler flags.
   - **cc**: The C compiler to use (e.g., clang, gcc).
