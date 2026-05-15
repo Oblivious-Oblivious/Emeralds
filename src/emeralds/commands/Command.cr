@@ -14,8 +14,8 @@ abstract class Emeralds::Command
   abstract def block;
 
   private def try_override_command(display = true)
-    override = Emfile.instance.build_override;
-    if (override || "").strip != ""
+    override = (Emfile.instance.build_override || "").strip;
+    if override != ""
       Terminal.generic_cmd override, display: display;
       true;
     else
