@@ -96,12 +96,38 @@ abstract class Emeralds::Command
   end
 
   def install_deps(deps, display = true)
-    (deps.try(&.sanitize) || {} of String => String).each do |key, value|
-      if !File.exists? (File.join "libs", "#{key}")
+    deps = deps.try(&.sanitize) || {} of String => String;
+    pending_deps = {} of String => String;
+    clones = Channel(Nil).new;
+    clone_count = 0;
+
+    deps.each do |key, value|
+      dep_path = File.join "libs", "#{key}";
+      export_path = File.join dep_path, "export";
+
+      if File.exists? export_path
+        puts " #{COG} `#{key}` already installed" if display && !@displayed_deps[key]?;
+        @displayed_deps[key] = true;
+      else
         puts " #{COG} Installing `#{key}`" if display && !@displayed_deps[key]?;
         @displayed_deps[key] = true;
+        pending_deps[key] = value;
 
-        Terminal.git_clone "https://github.com/#{value}", (File.join "libs", "#{key}");
+        unless File.exists? dep_path
+          clone_count += 1;
+          spawn do
+            Terminal.git_clone "https://github.com/#{value}", dep_path;
+            clones.send nil;
+          end
+        end
+      end
+    end
+
+    clone_count.times { clones.receive; };
+
+    pending_deps.each do |key, value|
+      if File.exists? (File.join "libs", "#{key}")
+        next if File.exists? (File.join "libs", "#{key}", "export");
 
         emfile_path = File.join "libs", "#{key}", "em.json";
         unless File.exists? emfile_path
@@ -121,9 +147,6 @@ abstract class Emeralds::Command
           `rm -rf .git*`;
           `rm -rf .clang*`;
         end
-      else
-        puts " #{COG} `#{key}` already installed" if display && !@displayed_deps[key]?;
-        @displayed_deps[key] = true;
       end
     end
   end
