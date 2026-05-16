@@ -20,7 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require "git-repository";
+require "file_utils";
+require "http/client";
+require "json";
 
 require "./emeralds/extensions/Hash+sanitize";
 require "./emeralds/extensions/String+colorize";
