@@ -65,7 +65,10 @@ module Emeralds::Terminal
 
   def self.git_init(display = false)
     puts "#{ARROW} git init" if display;
-    GitRepository::Commands.new.init;
+    status = Process.run "git", ["init"], output: Process::Redirect::Close, error: Process::Redirect::Close;
+    raise "git init failed" unless status.success?;
+  rescue
+    puts "Could not initialize git repository".colorize(:red);
   end
 
   def self.git_clone(repo_url, repo_name, display = false)
