@@ -17,6 +17,7 @@ class Emeralds::Init < Emeralds::Command
 
     data = String.build do |data|
       data << "{\n";
+      data << "  \"$schema\": \"https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/0.10.0/BUG-01-remove-platform-specific-code/schema/em.schema.json\",\n";
       data << "  \"name\": \"#{ARGV[1]}\",\n";
       data << "  \"version\": \"0.1.0\",\n";
       data << "  \"license\": \"mit\",\n";
