@@ -42,6 +42,8 @@ module Emeralds::Main
   end
 
   private def self.validate_script_names
+    return unless File.exists?("em.json");
+
     scripts = Emfile.instance.scripts;
     return unless scripts;
 
