@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/0.10.0/BUG-01-remove-platform-specific-code/schema/em.schema.json",
   "title": "Emeralds em.json",
   "type": "object",
@@ -54,10 +54,10 @@
           "description": "The C compiler to use."
         },
         "debug": {
-          "$ref": "#/$defs/buildConfig"
+          "$ref": "#/definitions/buildConfig"
         },
         "release": {
-          "$ref": "#/$defs/buildConfig"
+          "$ref": "#/definitions/buildConfig"
         }
       }
     },
@@ -76,7 +76,7 @@
       }
     }
   },
-  "$defs": {
+  "definitions": {
     "buildConfig": {
       "type": "object",
       "description": "Compiler flags for one build mode.",
