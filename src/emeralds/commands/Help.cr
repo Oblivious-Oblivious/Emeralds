@@ -5,6 +5,7 @@ class Emeralds::Help < Emeralds::Command
 
   def block
     -> {
+      puts "Emeralds v#{Emeralds::VERSION}.\n\n";
       puts "emeralds/em [<command>]\n\n";
       puts "Commands:\n";
       puts "    add [<name>]                        - Add a new .c/.h file pair\n";
