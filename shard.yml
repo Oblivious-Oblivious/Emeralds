@@ -13,8 +13,4 @@ targets:
   emeralds:
     main: src/emeralds.cr
 
-dependencies:
-  git-repository:
-    github: place-labs/git-repository
-
 license: MIT
