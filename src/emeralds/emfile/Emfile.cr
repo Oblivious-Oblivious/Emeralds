@@ -15,7 +15,7 @@ class Emeralds::Emfile
   property compile_flags : CompileFlags = CompileFlags.new;
 
   property license : String? = nil;
-  property scripts : (Hash(String, String) | Nil) = nil;
+  property scripts : (Hash(String, String | Array(String)) | Nil) = nil;
 
   @@instance : Emfile?;
 

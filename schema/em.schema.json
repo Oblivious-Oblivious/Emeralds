@@ -37,7 +37,17 @@
       "type": "object",
       "description": "Custom commands runnable with em <script>.",
       "additionalProperties": {
-        "type": "string"
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        ]
       }
     },
     "build-override": {

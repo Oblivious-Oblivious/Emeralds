@@ -146,7 +146,7 @@ cat em.json
 - **version**: The version number displayed with `em version`.
 - **license**: The project's license. This should be a valid SPDX license identifier.
   - Available license types: `mit`, `gpl-v2`, `apache-v2`, `gpl-v3`, `lgpl-v3`, `mpl-v2`, `epl-v2`, `agpl-v3`, `cc0-v1`, `cc0-v4`
-- **scripts**: Custom commands runnable with `em <script>`. Script names cannot use built-in command names or reserved `em.json` field names.
+- **scripts**: Custom commands runnable with `em <script>`. Script names can override built-in commands. Values can be a string command or an array of command lines.
 - **build-override**: A custom build script/command that overrides normal building and execution.
 - **compile-flags**: The set of compiler flags.
   - **cc**: The C compiler to use (e.g., clang, gcc).
