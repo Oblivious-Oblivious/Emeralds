@@ -42,6 +42,8 @@ class Emeralds::Loc < Emeralds::Command
       loc = src_data[1] + spec_data[1];
       puts "  #{COG} Files: #{files.to_s.colorize(:white).mode(:bold)}";
       puts "  #{COG} Lines of code: #{loc.to_s.colorize(:white).mode(:bold)}";
+      return if loc == 0;
+
       puts "  #{COG} #{(src_data[1].to_f / loc * 100).round.to_i}% src code";
       puts "  #{COG} #{(spec_data[1].to_f / loc * 100).round.to_i}% spec code";
     };
