@@ -50,6 +50,27 @@
         ]
       }
     },
+    "locignore": {
+      "type": "object",
+      "description": "Extensions and directories ignored by em loc.",
+      "additionalProperties": false,
+      "properties": {
+        "extensions": {
+          "type": "array",
+          "description": "File extensions ignored by em loc. Values should match the extension map, such as .c or .h.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "directories": {
+          "type": "array",
+          "description": "Project-relative directories ignored by em loc.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "build-override": {
       "type": "string",
       "description": "A custom build command that overrides the normal Emeralds build."

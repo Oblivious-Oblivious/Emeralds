@@ -32,6 +32,7 @@ require "./emeralds/constants/version";
 
 require "./emeralds/emfile/BuildConfig";
 require "./emeralds/emfile/CompileFlags";
+require "./emeralds/emfile/LocIgnore";
 require "./emeralds/emfile/Emfile";
 
 require "./emeralds/modules/Terminal";

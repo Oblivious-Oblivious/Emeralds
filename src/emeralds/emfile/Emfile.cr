@@ -14,6 +14,8 @@ class Emeralds::Emfile
   property license : String? = nil;
   property scripts : (Hash(String, String | Array(String)) | Nil) = nil;
 
+  property locignore : LocIgnore = LocIgnore.new;
+
   @@instance : Emfile?;
 
   private def initialize; end;

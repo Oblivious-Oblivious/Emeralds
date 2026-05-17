@@ -118,6 +118,10 @@ cat em.json
   "name": "YourApp",
   "version": "0.1.0",
   "license": "mit",
+  "locignore": {
+    "extensions": [],
+    "directories": []
+  },
   "scripts": {},
   "compile-flags": {
     "cc": "clang",
@@ -146,6 +150,7 @@ cat em.json
 - **license**: The project's license. This should be a valid SPDX license identifier.
   - Available license types: `mit`, `gpl-v2`, `apache-v2`, `gpl-v3`, `lgpl-v3`, `mpl-v2`, `epl-v2`, `agpl-v3`, `cc0-v1`, `cc0-v4`
 - **scripts**: Custom commands runnable with `em <script>`. Script names can override built-in commands. Values can be a string command or an array of command lines.
+- **locignore**: Extensions and project-relative directories ignored by `em loc`.
 
 ```
 "scripts": {

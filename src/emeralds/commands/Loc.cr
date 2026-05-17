@@ -9,7 +9,20 @@ class Emeralds::Loc < Emeralds::Command
   end
 
   private def ignored_file?(file)
-    file.to_s == ".git" || file.to_s.starts_with? File.join(".git", "");
+    path = file.to_s;
+    locignore = Emfile.instance.locignore;
+    extension = File.extname(path);
+    extensions = locignore.extensions || [] of String;
+    directories = locignore.directories || [] of String;
+    return true if extensions.includes? extension;
+    return true if ignored_directory? path, ".git";
+
+    directories.any? { |directory| ignored_directory? path, directory };
+  end
+
+  private def ignored_directory?(path, directory)
+    directory = directory.chomp("/");
+    path == directory || path.starts_with? File.join(directory, "");
   end
 
   private def count_file(file)
@@ -99,10 +112,10 @@ class Emeralds::Loc < Emeralds::Command
 
       puts separator;
       puts sum_row(total);
-      puts separator;
       return if total[1] == 0;
 
       if src_code.to_f / total[1] * 100 && spec_code.to_f / total[1] * 100 > 0
+        puts separator;
         puts " #{COG} #{(src_code.to_f / total[1] * 100).round.to_i}% src code";
         puts " #{COG} #{(spec_code.to_f / total[1] * 100).round.to_i}% spec code";
       end

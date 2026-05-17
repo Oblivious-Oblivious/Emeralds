@@ -21,6 +21,10 @@ class Emeralds::Init < Emeralds::Command
       data << "  \"name\": \"#{ARGV[1]}\",\n";
       data << "  \"version\": \"0.1.0\",\n";
       data << "  \"license\": \"mit\",\n";
+      data << "  \"locignore\": {\n";
+      data << "    \"extensions\": [],\n";
+      data << "    \"directories\": []\n";
+      data << "  },\n";
       data << "  \"scripts\": {},\n";
       data << "  \"compile-flags\": {\n";
       data << "    \"cc\": \"clang\",\n";
