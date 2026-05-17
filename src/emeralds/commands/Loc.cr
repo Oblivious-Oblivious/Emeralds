@@ -1,25 +1,21 @@
 class Emeralds::Loc < Emeralds::Command
-  SRC_PATHS = [
-    Path.new(File.join "src", "**", "*"),
-  ];
-
-  SPEC_PATHS = [
-    Path.new(File.join "spec", "**", "*"),
-  ];
-
-  PATHS = SRC_PATHS + SPEC_PATHS;
-
   private def language_for(file)
     extension = File.extname(file);
     EXTENSIONS[extension]? || EXTENSIONS[extension.downcase]?;
   end
 
-  private def get_lines_of_code(paths_array = PATHS)
+  private def spec_file?(file)
+    file.to_s.starts_with? File.join("spec", "");
+  end
+
+  private def get_lines_of_code
     num = 0;
     loc = 0;
+    spec_loc = 0;
     languages = Hash(String, Int32).new(0);
 
-    Dir.glob paths_array do |file|
+    paths = Path.new(File.join "**", "*");
+    Dir.glob paths do |file|
       next unless File.file? file;
 
       language = language_for file;
@@ -36,10 +32,11 @@ class Emeralds::Loc < Emeralds::Command
 
       num += 1;
       loc += file_loc;
+      spec_loc += file_loc if spec_file? file;
       languages[language] += file_loc;
     end
 
-    {num, loc, languages};
+    {num, loc, loc - spec_loc, spec_loc, languages};
   end
 
   def message
@@ -48,20 +45,18 @@ class Emeralds::Loc < Emeralds::Command
 
   def block
     -> {
-      src_data = get_lines_of_code(SRC_PATHS);
-      spec_data = get_lines_of_code(SPEC_PATHS);
-      files = src_data[0] + spec_data[0];
-      loc = src_data[1] + spec_data[1];
+      files, loc, src_loc, spec_loc, languages = get_lines_of_code;
+
       puts "  #{COG} Files: #{files.to_s.colorize(:white).mode(:bold)}";
       puts "  #{COG} Lines of code: #{loc.to_s.colorize(:white).mode(:bold)}";
       return if loc == 0;
 
-      puts "  #{COG} #{(src_data[1].to_f / loc * 100).round.to_i}% src code";
-      puts "  #{COG} #{(spec_data[1].to_f / loc * 100).round.to_i}% spec code";
+      if src_loc.to_f / loc * 100 && spec_loc.to_f / loc * 100 > 0
+        puts "  #{COG} #{(src_loc.to_f / loc * 100).round.to_i}% src code";
+        puts "  #{COG} #{(spec_loc.to_f / loc * 100).round.to_i}% spec code";
+      end
 
-      src_data[2].merge(spec_data[2]) { |_, src_loc, spec_loc|
-        src_loc + spec_loc;
-      }.to_a.sort_by { |lang, lines|
+      languages.to_a.sort_by { |lang, lines|
         {-lines, lang};
       }.each { |lang, lines|
         puts "  #{COG} #{lang}: #{lines.colorize(:white).mode(:bold)}";
