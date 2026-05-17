@@ -10,26 +10,12 @@ module Emeralds::Main
 
   private def self.validated_script(action)
     scripts = Emfile.instance.scripts;
-    if scripts.nil?
-      puts "#{ARROW} No scripts found.".colorize(:red);
-      exit 1;
-    end
+    return nil if scripts.nil?
 
     script = scripts[action]?;
-    if script.nil?
-      puts "#{ARROW} Script `#{action}` not found.".colorize(:red);
-      puts "Run `em help` to see available scripts.";
-      exit 1;
-    end
+    return nil if script.nil?
 
-    script = script.is_a?(Array) ? script.join("\n") : script;
-    script = script.strip;
-    if script.empty?
-      puts "#{ARROW} Script `#{action}` is empty.".colorize(:red);
-      exit 1;
-    end
-
-    script;
+    script.is_a?(Array) ? script.join("\n") : script;
   end
 
   private def self.dispatch(action)
