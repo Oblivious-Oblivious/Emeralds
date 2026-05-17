@@ -27,6 +27,7 @@ require "./emeralds/commands/Test";
 require "./emeralds/commands/Version";
 
 require "./emeralds/constants/cli";
+require "./emeralds/constants/languages";
 require "./emeralds/constants/version";
 
 require "./emeralds/emfile/BuildConfig";
