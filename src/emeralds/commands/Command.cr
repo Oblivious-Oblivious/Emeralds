@@ -13,16 +13,6 @@ abstract class Emeralds::Command
   # return -> The code block
   abstract def block;
 
-  private def try_override_command(display = true)
-    override = (Emfile.instance.build_override || "").strip;
-    if override != ""
-      Terminal.generic_cmd override, display: display;
-      true;
-    else
-      false;
-    end
-  end
-
   private def move_headers_to_export
     Terminal.cp (File.join "src", "*"), "export";
     Terminal.rm (File.join "export", "*.c");
@@ -49,8 +39,6 @@ abstract class Emeralds::Command
   end
 
   private def build_app(compile_flags)
-    return if try_override_command;
-
     Terminal.mkdir "export";
 
     if Terminal.sources_app.empty? && Terminal.input_app.empty?
@@ -73,8 +61,6 @@ abstract class Emeralds::Command
   end
 
   private def build_lib(compile_flags, display = true)
-    return if try_override_command display;
-
     cc = Emfile.instance.compile_flags.cc;
     opt = compile_flags.opt;
     version = compile_flags.version;
