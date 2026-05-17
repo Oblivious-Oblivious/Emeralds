@@ -13,6 +13,10 @@ abstract class Emeralds::Command
   # return -> The code block
   abstract def block;
 
+  private def separator
+    "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
+  end
+
   private def move_headers_to_export
     Terminal.cp (File.join "src", "*"), "export";
     Terminal.rm (File.join "export", "*.c");
@@ -177,11 +181,11 @@ abstract class Emeralds::Command
 
   def run
     puts message.colorize(:white).mode(:bold);
-    puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
+    puts separator;
 
     elapsed = Time.measure { block.call; };
 
-    puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
+    puts separator;
     puts "All done in #{elapsed
       .total_seconds
       .format(decimal_places: 3)

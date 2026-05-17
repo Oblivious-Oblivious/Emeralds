@@ -37,7 +37,7 @@ class Emeralds::Help < Emeralds::Command
           end
         end
       end
-      puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
+      puts separator;
       exit 0;
     };
   end

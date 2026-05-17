@@ -8,35 +8,76 @@ class Emeralds::Loc < Emeralds::Command
     file.to_s.starts_with? File.join("spec", "");
   end
 
-  private def get_lines_of_code
-    num = 0;
-    loc = 0;
-    spec_loc = 0;
-    languages = Hash(String, Int32).new(0);
+  private def ignored_file?(file)
+    file.to_s == ".git" || file.to_s.starts_with? File.join(".git", "");
+  end
 
-    paths = Path.new(File.join "**", "*");
+  private def count_file(file)
+    File
+      .read(file)
+      .gsub(/\/\*.*?\*\//m, "")
+      .gsub(/\/\/.*/, "")
+      .lines
+      .map(&.strip)
+      .reject(&.empty?)
+      .size;
+  end
+
+  private def get_lines_of_code
+    total = [0, 0];
+    src_code = 0;
+    spec_code = 0;
+    languages = Hash(String, Array(Int32)).new { |hash, key|
+      hash[key] = [0, 0];
+    };
+
+    paths = [
+      Path.new(File.join "**", "*"),
+      Path.new(".*"),
+      Path.new(File.join ".*", "**", "*"),
+    ];
     Dir.glob paths do |file|
+      next if ignored_file? file;
       next unless File.file? file;
 
       language = language_for file;
-      next if language.nil?
+      next if language.nil?;
 
-      file_loc = File
-        .read(file)
-        .gsub(/\/\*.*?\*\//m, "")
-        .gsub(/\/\/.*/, "")
-        .lines
-        .map(&.strip)
-        .reject(&.empty?)
-        .size;
+      code = count_file(file);
+      data = languages[language];
 
-      num += 1;
-      loc += file_loc;
-      spec_loc += file_loc if spec_file? file;
-      languages[language] += file_loc;
+      data[0] += 1;
+      data[1] += code;
+
+      total[0] += 1;
+      total[1] += code;
+
+      if spec_file? file
+        spec_code += code;
+      else
+        src_code += code;
+      end
     end
 
-    {num, loc, loc - spec_loc, spec_loc, languages};
+    {total, src_code, spec_code, languages};
+  end
+
+  private def table_row(language, data)
+    files = data[0].to_s.rjust(9).colorize(:white).mode(:bold);
+    code = data[1].to_s.rjust(10).colorize(:white).mode(:bold);
+    " #{COG} %-32s %s %s" % [language, files, code];
+  end
+
+  private def sum_row(data)
+    table_row "SUM:", data;
+  end
+
+  private def table_header
+    "%-35s %9s %10s" % ["Language", "files", "code"];
+  end
+
+  private def separator
+    "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
   end
 
   def message
@@ -45,22 +86,26 @@ class Emeralds::Loc < Emeralds::Command
 
   def block
     -> {
-      files, loc, src_loc, spec_loc, languages = get_lines_of_code;
+      total, src_code, spec_code, languages = get_lines_of_code;
 
-      puts "  #{COG} Files: #{files.to_s.colorize(:white).mode(:bold)}";
-      puts "  #{COG} Lines of code: #{loc.to_s.colorize(:white).mode(:bold)}";
-      return if loc == 0;
+      puts table_header;
+      puts separator;
 
-      if src_loc.to_f / loc * 100 && spec_loc.to_f / loc * 100 > 0
-        puts "  #{COG} #{(src_loc.to_f / loc * 100).round.to_i}% src code";
-        puts "  #{COG} #{(spec_loc.to_f / loc * 100).round.to_i}% spec code";
-      end
-
-      languages.to_a.sort_by { |lang, lines|
-        {-lines, lang};
-      }.each { |lang, lines|
-        puts "  #{COG} #{lang}: #{lines.colorize(:white).mode(:bold)}";
+      languages.to_a.sort_by { |lang, data|
+        {-data[1], lang};
+      }.each { |lang, data|
+        puts table_row(lang, data);
       };
+
+      puts separator;
+      puts sum_row(total);
+      puts separator;
+      return if total[1] == 0;
+
+      if src_code.to_f / total[1] * 100 && spec_code.to_f / total[1] * 100 > 0
+        puts " #{COG} #{(src_code.to_f / total[1] * 100).round.to_i}% src code";
+        puts " #{COG} #{(spec_code.to_f / total[1] * 100).round.to_i}% spec code";
+      end
     };
   end
 end
