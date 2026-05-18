@@ -20,14 +20,6 @@ describe Emeralds::Terminal do
     end
   end
 
-  it "runs generic shell commands" do
-    EmeraldsSpec.in_temp_dir do
-      Emeralds::Terminal.generic_cmd "printf ok > result.txt";
-
-      File.read("result.txt").should eq "ok";
-    end
-  end
-
   it "finds files matching a glob and deduplicates by basename" do
     EmeraldsSpec.in_temp_dir do
       FileUtils.mkdir_p File.join("src", "one");

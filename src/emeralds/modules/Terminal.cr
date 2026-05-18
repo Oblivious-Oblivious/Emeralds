@@ -1,7 +1,8 @@
 module Emeralds::Terminal
   def self.generic_cmd(cmd, display = false)
     puts "#{ARROW} #{cmd}" if display;
-    `#{display ? cmd : "#{cmd} 2> /dev/null"}`;
+    error = display ? Process::Redirect::Inherit : Process::Redirect::Close;
+    Process.run cmd, shell: true, output: Process::Redirect::Inherit, error: error;
   rescue
     puts "#{cmd}: command not found".colorize(:red) if display;
   end

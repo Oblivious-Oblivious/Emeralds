@@ -97,8 +97,7 @@ module Emeralds::Main
     action = ARGV[0];
     if action != "init"
       if script = validated_script(action)
-        puts "#{ARROW} #{script}";
-        system script;
+        Terminal.generic_cmd script, display: true;
       else
         dispatch action;
       end

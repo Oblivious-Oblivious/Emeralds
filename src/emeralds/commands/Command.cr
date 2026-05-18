@@ -134,8 +134,8 @@ abstract class Emeralds::Command
             build_lib dep_emfile.compile_flags.release, display: false;
           end
           delete_excluded_paths ".", ["export", "libs"];
-          `rm -rf .git*`;
-          `rm -rf .clang*`;
+          Terminal.rm ".git*";
+          Terminal.rm ".clang*";
         end
       end
     end
