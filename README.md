@@ -124,21 +124,6 @@ cat em.json
   },
   "scripts": {},
   "compile-flags": {
-    "linux": {
-      "cc": "gcc",
-      "debug": {
-        "opt": "-Og",
-        "version": "-std=c89",
-        "flags": "-g",
-        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
-      },
-      "release": {
-        "opt": "-O3",
-        "version": "",
-        "flags": "",
-        "warnings": ""
-      }
-    },
     "darwin": {
       "cc": "clang",
       "debug": {
@@ -154,17 +139,32 @@ cat em.json
         "warnings": ""
       }
     },
-    "win32": {
-      "cc": "cl",
+    "linux": {
+      "cc": "gcc",
       "debug": {
-        "opt": "/O2",
-        "version": "/std:c89",
-        "flags": "/analyze",
-        "warnings": "/Wall /Wextra /Wpedantic"
+        "opt": "-Og",
+        "version": "-std=c89",
+        "flags": "-g",
+        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
       },
       "release": {
-        "opt": "/O2",
-        "version": "/std:c89",
+        "opt": "-O3",
+        "version": "",
+        "flags": "",
+        "warnings": ""
+      }
+    },
+    "win32": {
+      "cc": "gcc",
+      "debug": {
+        "opt": "-O2",
+        "version": "-std=c89",
+        "flags": "-g",
+        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
+      },
+      "release": {
+        "opt": "-O2",
+        "version": "-std=c89",
         "flags": "",
         "warnings": ""
       }
