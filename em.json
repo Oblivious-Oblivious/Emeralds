@@ -1,18 +1,22 @@
 {
   "scripts": {
     "build": [
-      "shards build --release --no-debug",
-      "cp bin/emeralds bin/em"
+      "shards build --release --no-debug"
     ],
     "debug": [
-      "shards build",
-      "cp bin/emeralds bin/em"
+      "shards build"
     ],
     "all": [
       "rm -rf bin",
       "em build",
-      "#chown -R $(whoami) /usr/local/bin",
-      "cp bin/em bin/emeralds /usr/local/bin/"
+      "cp bin/emeralds bin/em",
+      "cp bin/emeralds bin/em /usr/local/bin/"
+    ],
+    "all-win32": [
+      "if exist bin rmdir /s /q bin",
+      "em build",
+      "copy /Y bin\\emeralds.exe bin\\em.exe",
+      "copy /Y bin\\em.exe bin\\emeralds.exe C:\\msys64\\ucrt64\\bin\\"
     ],
     "test": "crystal spec ./spec/emeralds.spec.cr",
     "spec": "em test",
