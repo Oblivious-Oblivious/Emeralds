@@ -83,11 +83,11 @@ module Emeralds::Terminal
   def self.find(path)
     matches = [] of String;
 
-    Dir.glob(path) do |file|
+    Dir.glob(path.gsub('\\', '/')) do |file|
       matches << file if File.file? file
     end
 
-    matches.uniq! { |path| path.split('/').last };
+    matches.uniq! { |path| File.basename path };
   end
 
   def self.sources_app
@@ -144,7 +144,7 @@ module Emeralds::Terminal
   end
 
   def self.output_app
-    "#{File.join("export", (Emfile.instance.name || ""))}".rstrip;
+      "#{File.join("export", (Emfile.instance.name || ""))}".rstrip;
   end
 
   def self.output_lib
