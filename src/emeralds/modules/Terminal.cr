@@ -8,7 +8,7 @@ module Emeralds::Terminal
   end
 
   def self.rm(path, display = false)
-    puts "#{ARROW} rm -rf #{path}" if display;
+    puts "#{ARROW} remove #{path}" if display;
     Dir.glob path do |file_path|
       FileUtils.rm_rf file_path;
     end
@@ -17,7 +17,7 @@ module Emeralds::Terminal
   end
 
   def self.cp(src_dir, dest_dir, display = false)
-    puts "#{ARROW} cp -r #{src_dir} #{dest_dir}" if display;
+    puts "#{ARROW} copy #{src_dir} to #{dest_dir}" if display;
     Dir.glob src_dir do |file_path|
       FileUtils.cp_r file_path, dest_dir;
     end
@@ -26,7 +26,7 @@ module Emeralds::Terminal
   end
 
   def self.mv(src_path, dest_path, display = false)
-    puts "#{ARROW} mv #{src_path.join ' '} #{dest_path}" if display;
+    puts "#{ARROW} move #{src_path.join ' '} to #{dest_path}" if display;
     FileUtils.mv src_path, dest_path;
   rescue
     puts "Could not move #{src_path} to #{dest_path}".colorize(:red) if display;
@@ -34,7 +34,7 @@ module Emeralds::Terminal
 
   def self.mkdir(path, display = false)
     unless Dir.exists? path
-      puts "#{ARROW} mkdir #{path}" if display;
+      puts "#{ARROW} create directory #{path}" if display;
     end
     FileUtils.mkdir_p path;
   rescue
@@ -42,7 +42,7 @@ module Emeralds::Terminal
   end
 
   def self.run(executable, display = false)
-    puts "#{ARROW} ./#{executable}" if display;
+    puts "#{ARROW} run #{executable}" if display;
     executable_path = File.join ".", executable;
     output = IO::Memory.new;
     error = IO::Memory.new;
@@ -56,7 +56,7 @@ module Emeralds::Terminal
   end
 
   def self.wget(url, output, display = false)
-    puts "#{ARROW} wget -O #{output} #{url}" if display;
+    puts "#{ARROW} download #{url} #{output}" if display;
     HTTP::Client.get url do |response|
       File.open output, "w" do |file|
         IO.copy response.body_io, file;
