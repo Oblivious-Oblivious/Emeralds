@@ -15,7 +15,7 @@ module Emeralds::Main
     script = scripts[action]?;
     return nil if script.nil?
 
-    script.is_a?(Array) ? script.join("\n") : script;
+    script;
   end
 
   private def self.dispatch(action)
@@ -97,7 +97,13 @@ module Emeralds::Main
     action = ARGV[0];
     if action != "init"
       if script = validated_script(action)
-        Terminal.generic_cmd script, display: true;
+        if script.is_a? Array
+          script.each { |cmd|
+            Terminal.generic_cmd cmd, display: true;
+          };
+        else
+          Terminal.generic_cmd script, display: true;
+        end
       else
         dispatch action;
       end
