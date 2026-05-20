@@ -16,7 +16,8 @@
       "cmd.exe /c if exist bin rmdir /s /q bin",
       "em build",
       "cmd.exe /c copy /Y bin\\emeralds.exe bin\\em.exe",
-      "cmd.exe /c copy /Y bin\\em.exe bin\\emeralds.exe C:\\msys64\\ucrt64\\bin\\"
+      "cmd.exe /c copy /Y bin\\em.exe C:\\msys64\\ucrt64\\bin\\",
+      "cmd.exe /c copy /Y bin\\emeralds.exe C:\\msys64\\ucrt64\\bin\\"
     ],
     "test": "crystal spec ./spec/emeralds.spec.cr",
     "spec": "em test",
