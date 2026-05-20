@@ -28,10 +28,12 @@ require "./emeralds/commands/Version";
 
 require "./emeralds/constants/cli";
 require "./emeralds/constants/languages";
+require "./emeralds/constants/operating_systems";
 require "./emeralds/constants/version";
 
 require "./emeralds/emfile/BuildConfig";
 require "./emeralds/emfile/CompileFlags";
+require "./emeralds/emfile/PlatformConfig";
 require "./emeralds/emfile/LocIgnore";
 require "./emeralds/emfile/Emfile";
 

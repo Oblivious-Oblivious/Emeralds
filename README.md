@@ -124,18 +124,50 @@ cat em.json
   },
   "scripts": {},
   "compile-flags": {
-    "cc": "clang",
-    "debug": {
-      "opt": "-Og",
-      "version": "-std=c89",
-      "flags": "-g -fsanitize=address",
-      "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
+    "linux": {
+      "cc": "gcc",
+      "debug": {
+        "opt": "-Og",
+        "version": "-std=c89",
+        "flags": "-g",
+        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
+      },
+      "release": {
+        "opt": "-O3",
+        "version": "",
+        "flags": "",
+        "warnings": ""
+      }
     },
-    "release": {
-      "opt": "-O2",
-      "version": "-std=c89",
-      "flags": "",
-      "warnings": ""
+    "darwin": {
+      "cc": "clang",
+      "debug": {
+        "opt": "-O2",
+        "version": "-std=c89",
+        "flags": "-g -fsanitize=address",
+        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
+      },
+      "release": {
+        "opt": "-O2",
+        "version": "-std=c89",
+        "flags": "",
+        "warnings": ""
+      }
+    },
+    "win32": {
+      "cc": "cl",
+      "debug": {
+        "opt": "/O2",
+        "version": "/std:c89",
+        "flags": "/analyze",
+        "warnings": "/Wall /Wextra /Wpedantic"
+      },
+      "release": {
+        "opt": "/O2",
+        "version": "/std:c89",
+        "flags": "",
+        "warnings": ""
+      }
     }
   },
   "dependencies": {},
@@ -162,9 +194,10 @@ cat em.json
 ```
 
 - **compile-flags**: The set of compiler flags.
-  - **cc**: The C compiler to use (e.g., clang, gcc).
-  - **debug**: Debug build flags.
-  - **release**: Release build flags.
+  - Platform keys can use Crystal-supported operating system flags (e.g., `win32`, `linux`, `darwin`, `unix`).
+  - **cc**: The C compiler to use for that platform.
+  - **debug**: Debug build flags for that platform.
+  - **release**: Release build flags for that platform.
     - **opt**: Optimization level (e.g., -Og, -O0).
     - **version**: The C standard to use (e.g., -std=c89, -std=c11).
     - **flags**: Additional compiler flags (e.g., -g -fsanitize=address).

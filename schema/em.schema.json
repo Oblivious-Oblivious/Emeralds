@@ -77,18 +77,35 @@
     },
     "compile-flags": {
       "type": "object",
-      "description": "Compiler configuration for debug and release builds.",
+      "description": "Compiler configuration by operating system.",
       "additionalProperties": false,
       "properties": {
-        "cc": {
-          "type": "string",
-          "description": "The C compiler to use."
+        "win32": {
+          "$ref": "#/definitions/platformCompileFlags"
         },
-        "debug": {
-          "$ref": "#/definitions/buildConfig"
+        "linux": {
+          "$ref": "#/definitions/platformCompileFlags"
         },
-        "release": {
-          "$ref": "#/definitions/buildConfig"
+        "darwin": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "android": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "freebsd": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "openbsd": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "netbsd": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "dragonfly": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "unix": {
+          "$ref": "#/definitions/platformCompileFlags"
         }
       }
     },
@@ -108,6 +125,23 @@
     }
   },
   "definitions": {
+    "platformCompileFlags": {
+      "type": "object",
+      "description": "Compiler configuration for one operating system.",
+      "additionalProperties": false,
+      "properties": {
+        "cc": {
+          "type": "string",
+          "description": "The C compiler to use."
+        },
+        "debug": {
+          "$ref": "#/definitions/buildConfig"
+        },
+        "release": {
+          "$ref": "#/definitions/buildConfig"
+        }
+      }
+    },
     "buildConfig": {
       "type": "object",
       "description": "Compiler flags for one build mode.",
