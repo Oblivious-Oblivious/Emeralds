@@ -164,7 +164,7 @@ cat em.json
 ```
 {
   "name": "YourApp",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "license": "mit",
   "locignore": {
     "extensions": [],

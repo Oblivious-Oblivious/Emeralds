@@ -19,7 +19,7 @@ class Emeralds::Init < Emeralds::Command
       data << "{\n";
       data << "  \"$schema\": \"https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/master/schema/em.schema.json\",\n";
       data << "  \"name\": \"#{ARGV[1]}\",\n";
-      data << "  \"version\": \"0.1.0\",\n";
+      data << "  \"version\": \"0.0.1\",\n";
       data << "  \"license\": \"mit\",\n";
       data << "  \"locignore\": {\n";
       data << "    \"extensions\": [],\n";
