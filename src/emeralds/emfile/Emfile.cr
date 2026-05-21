@@ -1,6 +1,7 @@
 class Emeralds::Emfile
   include JSON::Serializable;
 
+  property author : String? = nil;
   property name : String? = nil;
   property version : String? = nil;
   property dependencies :  (Hash(String, String) | Nil) = nil;

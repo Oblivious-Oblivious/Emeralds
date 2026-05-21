@@ -9,6 +9,10 @@
       "type": "string",
       "description": "The JSON schema used by editors for em.json autocomplete and validation."
     },
+    "author": {
+      "type": "string",
+      "description": "The author/creator of the project."
+    },
     "name": {
       "type": "string",
       "description": "The name of the Emeralds application or library."
