@@ -30,6 +30,22 @@ class Emeralds::Add < Emeralds::Command
     File.write (File.join "src", "#{ARGV[1]}", "#{ARGV[1]}.h"), data;
   end
 
+  private def update_spec_main
+    name = Emfile.instance.name;
+    return unless name;
+
+    spec_main = File.join "spec", "#{name}.spec.c";
+    return unless File.exists? spec_main;
+
+    puts "  #{ARROW} #{name}.spec.c";
+
+    content = File.read spec_main;
+    content = content.sub(/((?:#include "[^\n]*\n)+)/, "\\1#include \"#{ARGV[1]}/#{ARGV[1]}.module.spec.h\"\n");
+    content = content.sub(/(\s*)\}\);/) { "#{$~[1]}T_#{ARGV[1]}();#{$~[1]}});" };
+
+    File.write spec_main, content;
+  end
+
   private def write_spec_file
     puts "  #{ARROW} #{ARGV[1]}.module.spec.h"
 
@@ -62,6 +78,7 @@ class Emeralds::Add < Emeralds::Command
         write_h_file;
         Terminal.mkdir (File.join "spec", "#{ARGV[1]}");
         write_spec_file;
+        update_spec_main;
       else
         puts "Cannot create a pair with name: #{ARGV[1]}.".colorize(:red);
       end

@@ -82,6 +82,26 @@ Emeralds - Initializing a new project
 All done in 0.697 seconds
 ```
 
+**Add a new module, a `.c`/`.h` pair plus its test spec:**
+
+```
+em add one
+```
+
+```
+Emeralds - Adding new .c/.h pair...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+➔ one
+  ➔ one.c
+  ➔ one.h
+  ➔ one.module.spec.h
+  ➔ YourApp.spec.c
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+All done in 0.001 seconds
+```
+
+This creates `src/one/one.c`, `src/one/one.h`, and `spec/one/one.module.spec.h`, then wires the module into `spec/YourApp.spec.c` by adding its `#include` and a `T_one();` call to `cspec_run_suite`.
+
 **Manage dependencies, navigate into your project and list dependencies:**
 
 ```
