@@ -35,6 +35,7 @@ emeralds/em [<command>]
 
 Commands:
     add [<name>]                        - Add a new .c/.h file pair
+    remove [<name>]                     - Remove a .c/.h file pair
     build [app | lib] [debug | release] - Build the application in the `export` directory.
     run                                 - Run the compiled application.
     clean                               - Run the clean script
@@ -101,6 +102,26 @@ All done in 0.001 seconds
 ```
 
 This creates `src/one/one.c`, `src/one/one.h`, and `spec/one/one.module.spec.h`, then wires the module into `spec/YourApp.spec.c` by adding its `#include` and a `T_one();` call to `cspec_run_suite`.
+
+**Remove a module, deleting its source, header, and spec:**
+
+```
+em remove one
+```
+
+```
+Emeralds - Removing .c/.h pair...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+➔ one
+  ➔ one.c
+  ➔ one.h
+  ➔ one.module.spec.h
+  ➔ YourApp.spec.c
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+All done in 0.001 seconds
+```
+
+This deletes `src/one/` and `spec/one/`, then strips the module's `#include` and `T_one();` call from `spec/YourApp.spec.c`.
 
 **Manage dependencies, navigate into your project and list dependencies:**
 

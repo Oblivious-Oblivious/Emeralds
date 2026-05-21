@@ -9,6 +9,7 @@ class Emeralds::Help < Emeralds::Command
       puts "emeralds/em [<command>]\n\n";
       puts "Commands:\n";
       puts "    add [<name>]                        - Add a new .c/.h file pair\n";
+      puts "    remove [<name>]                     - Remove a .c/.h file pair\n";
       puts "    build [app | lib] [debug | release] - Build the application in the `export` directory.\n";
       puts "    run                                 - Run the compiled application.\n";
       puts "    clean                               - Run the clean script\n";

@@ -68,6 +68,12 @@ module Emeralds::Main
       else
         Add.new.run;
       end
+    when "remove"
+      if ARGV.size == 1
+        Help.new.run;
+      else
+        Remove.new.run;
+      end
     when "run"
       Run.new.run;
     when "test"
