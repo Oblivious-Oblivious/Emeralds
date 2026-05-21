@@ -33,7 +33,7 @@ abstract class Emeralds::Command
     base_dir_path = Path[base_dir];
     Dir.glob(base_dir_path.join("**", "{*,.*}")) do |path|
       path = Path[path];
-      relative_path = path.relative_to(base_dir_path).to_s.lchop('/');
+      relative_path = path.relative_to(base_dir_path).to_posix.to_s.lchop('/');
       next if exclude_patterns.any? do |pattern|
         pattern = pattern.lchop("./");
         pattern == relative_path || relative_path.starts_with?("#{pattern}/");

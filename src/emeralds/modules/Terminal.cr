@@ -9,7 +9,8 @@ module Emeralds::Terminal
 
   def self.rm(path, display = false)
     puts "#{ARROW} remove #{path}" if display;
-    Dir.glob path do |file_path|
+    pattern = path.is_a?(String) ? path.gsub('\\', '/') : path.map(&.gsub('\\', '/'));
+    Dir.glob pattern do |file_path|
       FileUtils.rm_rf file_path;
     end
   rescue
@@ -18,7 +19,7 @@ module Emeralds::Terminal
 
   def self.cp(src_dir, dest_dir, display = false)
     puts "#{ARROW} copy #{src_dir} to #{dest_dir}" if display;
-    Dir.glob src_dir do |file_path|
+    Dir.glob src_dir.gsub('\\', '/') do |file_path|
       FileUtils.cp_r file_path, dest_dir;
     end
   rescue
@@ -113,7 +114,7 @@ module Emeralds::Terminal
   def self.deps_for_test
     deps = [] of String;
 
-    Dir.glob(File.join("libs", "*", "export")) do |path|
+    Dir.glob(File.join("libs", "*", "export").gsub('\\', '/')) do |path|
       test_libs = find(File.join(path, "*.a.test"));
       release_libs = find(File.join(path, "*.a"));
       deps.concat test_libs.empty? ? release_libs : test_libs;
@@ -125,10 +126,10 @@ module Emeralds::Terminal
   def self.deps_includes
     paths = [] of String;
 
-    Dir.glob(File.join("libs", "*", "export")) do |path|
+    Dir.glob(File.join("libs", "*", "export").gsub('\\', '/')) do |path|
       paths << path if File.directory? path;
     end
-    Dir.glob(File.join("libs", "*", "export", "**")) do |path|
+    Dir.glob(File.join("libs", "*", "export", "**").gsub('\\', '/')) do |path|
       paths << path if File.directory? path;
     end
 
