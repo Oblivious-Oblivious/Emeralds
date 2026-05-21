@@ -287,7 +287,7 @@ class Emeralds::Init < Emeralds::Command
       data << "#include \"get_value/get_value.module.spec.h\"\n\n";
 
       data << "int main(void) {\n";
-      data << "  cspec_run_suite(\"all\", { T_get_value(); });\n";
+      data << "  cspec_run_suite(\"all\", {});\n";
       data << "}\n";
     end
 
