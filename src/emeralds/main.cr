@@ -62,6 +62,12 @@ module Emeralds::Main
       end
     when "reinstall"
       Reinstall.new.run;
+    when "uninstall"
+      if ARGV.size == 1
+        Help.new.run;
+      else
+        Uninstall.new.run;
+      end
     when "add"
       if ARGV.size == 1
         Help.new.run;

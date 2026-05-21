@@ -43,6 +43,7 @@ Commands:
     init [<name>]                       - Initialize a new library with an em.json file.
     install [ | dev | all]              - Install dependencies into a flattened libs directory.
     reinstall                           - Reinstall dependencies into a flattened libs directory.
+    uninstall [<name>]                  - Remove a dependency from em.json and libs.
     list                                - List dependencies and project modules.
     makefile                            - Generate a makefile for independent compilation
     loc                                 - Count the significant lines of code in the project
@@ -159,6 +160,22 @@ Emeralds - Resolving all dependencies...
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 All done in 3.822 seconds
 ```
+
+**Uninstall a dependency:**
+
+```
+em uninstall cSpec
+```
+
+```
+Emeralds - Uninstalling dependency...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ⚙ Removed `cSpec` from em.json
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+All done in 0.001 seconds
+```
+
+This removes the named entry from both `dependencies` and `dev-dependencies` in `em.json` and deletes the corresponding `libs/<name>` directory.
 
 **Edit configuration json file:**
 
