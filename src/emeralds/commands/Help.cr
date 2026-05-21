@@ -17,7 +17,7 @@ class Emeralds::Help < Emeralds::Command
       puts "    init [<name>]                       - Initialize a new library with an em.json file.\n";
       puts "    install [ | dev | all]              - Install dependencies into a flattened libs directory.\n";
       puts "    reinstall                           - Reinstall dependencies into a flattened libs directory.\n";
-      puts "    list                                - List dependencies in the em file.\n";
+      puts "    list                                - List dependencies and project modules.\n";
       puts "    makefile                            - Generate a makefile for independent compilation\n";
       puts "    loc                                 - Count the significant lines of code in the project\n";
       puts "    lint                                - Lint all project sources with clang-format.\n";

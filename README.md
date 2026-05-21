@@ -43,7 +43,7 @@ Commands:
     init [<name>]                       - Initialize a new library with an em.json file.
     install [ | dev | all]              - Install dependencies into a flattened libs directory.
     reinstall                           - Reinstall dependencies into a flattened libs directory.
-    list                                - List dependencies in the em file.
+    list                                - List dependencies and project modules.
     makefile                            - Generate a makefile for independent compilation
     loc                                 - Count the significant lines of code in the project
     lint                                - Lint all project sources with clang-format.
@@ -134,9 +134,14 @@ em list
 ```
 Emeralds - Em libraries used:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Dependencies:
   ⚙ cSpec
 
+Modules:
+  ⚙ get_value
+
 ➔ 1 dependency
+➔ 1 module
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 All done in 0.001 seconds
 ```
