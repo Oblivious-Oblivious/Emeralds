@@ -12,8 +12,14 @@ A module/package manager for C applications.
 **Run the install script**
 
 ```
-shards install
-./install
+chmod 755 install.sh
+./install.sh
+```
+
+**On windows**
+
+```
+.\install-win32.bat
 ```
 
 ## Usage
