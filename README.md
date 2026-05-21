@@ -118,21 +118,56 @@ cat em.json
   "name": "YourApp",
   "version": "0.1.0",
   "license": "mit",
+  "locignore": {
+    "extensions": [],
+    "directories": []
+  },
   "scripts": {},
-  "build-override": "",
   "compile-flags": {
-    "cc": "clang",
-    "debug": {
-      "opt": "-Og",
-      "version": "-std=c89",
-      "flags": "-g -fsanitize=address",
-      "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
+    "darwin": {
+      "cc": "clang",
+      "debug": {
+        "opt": "-O2",
+        "version": "-std=c89",
+        "flags": "-g -fsanitize=address",
+        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
+      },
+      "release": {
+        "opt": "-O2",
+        "version": "-std=c89",
+        "flags": "",
+        "warnings": ""
+      }
     },
-    "release": {
-      "opt": "-O2",
-      "version": "-std=c89",
-      "flags": "",
-      "warnings": ""
+    "linux": {
+      "cc": "gcc",
+      "debug": {
+        "opt": "-Og",
+        "version": "-std=c89",
+        "flags": "-g",
+        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
+      },
+      "release": {
+        "opt": "-O3",
+        "version": "",
+        "flags": "",
+        "warnings": ""
+      }
+    },
+    "win32": {
+      "cc": "gcc",
+      "debug": {
+        "opt": "-O2",
+        "version": "-std=c89",
+        "flags": "-g",
+        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
+      },
+      "release": {
+        "opt": "-O2",
+        "version": "-std=c89",
+        "flags": "",
+        "warnings": ""
+      }
     }
   },
   "dependencies": {},
@@ -146,12 +181,23 @@ cat em.json
 - **version**: The version number displayed with `em version`.
 - **license**: The project's license. This should be a valid SPDX license identifier.
   - Available license types: `mit`, `gpl-v2`, `apache-v2`, `gpl-v3`, `lgpl-v3`, `mpl-v2`, `epl-v2`, `agpl-v3`, `cc0-v1`, `cc0-v4`
-- **scripts**: Custom commands runnable with `em <script>`. Script names cannot use built-in command names or reserved `em.json` field names.
-- **build-override**: A custom build script/command that overrides normal building and execution.
+- **scripts**: Custom commands runnable with `em <script>`. Script names can override built-in commands. Values can be a string command or an array of command lines.
+- **locignore**: Extensions and project-relative directories ignored by `em loc`.
+
+```
+"scripts": {
+  "build": [
+    "mkdir -p export",
+    "clang -O2 -o export/YourApp src/YourApp.c"
+  ]
+}
+```
+
 - **compile-flags**: The set of compiler flags.
-  - **cc**: The C compiler to use (e.g., clang, gcc).
-  - **debug**: Debug build flags.
-  - **release**: Release build flags.
+  - Platform keys can use Crystal-supported operating system flags (e.g., `win32`, `linux`, `darwin`, `unix`).
+  - **cc**: The C compiler to use for that platform.
+  - **debug**: Debug build flags for that platform.
+  - **release**: Release build flags for that platform.
     - **opt**: Optimization level (e.g., -Og, -O0).
     - **version**: The C standard to use (e.g., -std=c89, -std=c11).
     - **flags**: Additional compiler flags (e.g., -g -fsanitize=address).

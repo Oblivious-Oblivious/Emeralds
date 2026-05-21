@@ -23,15 +23,21 @@ class Emeralds::Help < Emeralds::Command
       puts "    version                             - Print the current version of the emerald.\n";
       puts "    license                             - Update the license notice based on the em.json value.\n";
       if File.exists?("em.json")
-        scripts = Emfile.instance.scripts || {} of String => String;
-        unless scripts.empty?
+        scripts = Emfile.instance.scripts;
+        if scripts && !scripts.empty?
           puts "\nScripts:\n";
           scripts.each do |name, command|
-            puts "    #{name.ljust(35)} - #{command}\n";
+            [command].flatten.each_with_index do |line, index|
+              if index == 0
+                puts "    #{name.ljust(35)} - #{line}\n";
+              else
+                puts "    #{"".ljust(35)}   #{line}\n";
+              end
+            end
           end
         end
       end
-      puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
+      puts separator;
       exit 0;
     };
   end

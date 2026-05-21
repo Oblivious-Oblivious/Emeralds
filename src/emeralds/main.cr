@@ -1,31 +1,4 @@
 module Emeralds::Main
-  BUILT_IN_COMMANDS = [
-    "add",
-    "build",
-    "clean",
-    "help",
-    "init",
-    "install",
-    "license",
-    "list",
-    "loc",
-    "makefile",
-    "reinstall",
-    "run",
-    "test",
-    "version",
-  ];
-
-  RESERVED_SCRIPT_NAMES = BUILT_IN_COMMANDS + [
-    "build-override",
-    "compile-flags",
-    "dependencies",
-    "dev-dependencies",
-    "name",
-    "scripts",
-    "version",
-  ];
-
   private def self.ensure_em_json_or_init
     if ARGV.size > 0 && ARGV[0] != "init" && !File.exists?("em.json")
       puts "#{ARROW} em.json not found. Please run emeralds init first.";
@@ -35,42 +8,14 @@ module Emeralds::Main
     end
   end
 
-  private def self.invalid_command(action)
-    puts "#{ARROW} Invalid command: #{action}".colorize(:red);
-    puts "Run `em help` to see available commands.";
-    exit 0;
-  end
-
-  private def self.validate_script_names
-    return unless File.exists?("em.json");
-
+  private def self.validated_script(action)
     scripts = Emfile.instance.scripts;
-    return unless scripts;
-
-    conflicts = scripts.keys.select { |name| RESERVED_SCRIPT_NAMES.includes? name };
-    return if conflicts.empty?;
-
-    puts "#{ARROW} Invalid script name#{conflicts.size == 1 ? "" : "s"}: #{conflicts.join(", ")}".colorize(:red);
-    puts "Scripts cannot use existing command or em.json field names.";
-    exit 0;
-  end
-
-  private def self.run_script(action)
-    scripts = Emfile.instance.scripts;
-    return false unless scripts;
+    return nil if scripts.nil?
 
     script = scripts[action]?;
-    return false unless script;
+    return nil if script.nil?
 
-    script = script.strip;
-    if script.empty?
-      puts "#{ARROW} Script `#{action}` is empty.".colorize(:red);
-      exit 0;
-    end
-
-    puts "#{ARROW} #{script}";
-    system script;
-    true;
+    script;
   end
 
   private def self.dispatch(action)
@@ -140,15 +85,30 @@ module Emeralds::Main
     when "help"
       Help.new.run;
     else
-      invalid_command action unless run_script(action);
+      puts "#{ARROW} Invalid command: #{action}".colorize(:red);
+      puts "Run `em help` to see available commands.";
+      exit 0;
     end
   end
 
   def self.run
     ensure_em_json_or_init;
-    validate_script_names if ARGV[0] != "init";
 
     action = ARGV[0];
-    dispatch action;
+    if action != "init"
+      if script = validated_script(action)
+        if script.is_a? Array
+          script.each { |cmd|
+            Terminal.generic_cmd cmd, display: true;
+          };
+        else
+          Terminal.generic_cmd script, display: true;
+        end
+      else
+        dispatch action;
+      end
+    else
+      dispatch "init";
+    end
   end
 end

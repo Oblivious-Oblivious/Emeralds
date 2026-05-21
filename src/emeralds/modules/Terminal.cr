@@ -1,14 +1,16 @@
 module Emeralds::Terminal
   def self.generic_cmd(cmd, display = false)
     puts "#{ARROW} #{cmd}" if display;
-    `#{display ? cmd : "#{cmd} 2> /dev/null"}`;
+    error = display ? Process::Redirect::Inherit : Process::Redirect::Close;
+    Process.run cmd, shell: true, output: Process::Redirect::Inherit, error: error;
   rescue
     puts "#{cmd}: command not found".colorize(:red) if display;
   end
 
   def self.rm(path, display = false)
-    puts "#{ARROW} rm -rf #{path}" if display;
-    Dir.glob path do |file_path|
+    puts "#{ARROW} remove #{path}" if display;
+    pattern = path.is_a?(String) ? path.gsub('\\', '/') : path.map(&.gsub('\\', '/'));
+    Dir.glob pattern do |file_path|
       FileUtils.rm_rf file_path;
     end
   rescue
@@ -16,8 +18,8 @@ module Emeralds::Terminal
   end
 
   def self.cp(src_dir, dest_dir, display = false)
-    puts "#{ARROW} cp -r #{src_dir} #{dest_dir}" if display;
-    Dir.glob src_dir do |file_path|
+    puts "#{ARROW} copy #{src_dir} to #{dest_dir}" if display;
+    Dir.glob src_dir.gsub('\\', '/') do |file_path|
       FileUtils.cp_r file_path, dest_dir;
     end
   rescue
@@ -25,7 +27,7 @@ module Emeralds::Terminal
   end
 
   def self.mv(src_path, dest_path, display = false)
-    puts "#{ARROW} mv #{src_path.join ' '} #{dest_path}" if display;
+    puts "#{ARROW} move #{src_path.join ' '} to #{dest_path}" if display;
     FileUtils.mv src_path, dest_path;
   rescue
     puts "Could not move #{src_path} to #{dest_path}".colorize(:red) if display;
@@ -33,7 +35,7 @@ module Emeralds::Terminal
 
   def self.mkdir(path, display = false)
     unless Dir.exists? path
-      puts "#{ARROW} mkdir #{path}" if display;
+      puts "#{ARROW} create directory #{path}" if display;
     end
     FileUtils.mkdir_p path;
   rescue
@@ -41,7 +43,7 @@ module Emeralds::Terminal
   end
 
   def self.run(executable, display = false)
-    puts "#{ARROW} ./#{executable}" if display;
+    puts "#{ARROW} run #{executable}" if display;
     executable_path = File.join ".", executable;
     output = IO::Memory.new;
     error = IO::Memory.new;
@@ -55,7 +57,7 @@ module Emeralds::Terminal
   end
 
   def self.wget(url, output, display = false)
-    puts "#{ARROW} wget -O #{output} #{url}" if display;
+    puts "#{ARROW} download #{url} #{output}" if display;
     HTTP::Client.get url do |response|
       File.open output, "w" do |file|
         IO.copy response.body_io, file;
@@ -82,11 +84,11 @@ module Emeralds::Terminal
   def self.find(path)
     matches = [] of String;
 
-    Dir.glob(path) do |file|
+    Dir.glob(path.gsub('\\', '/')) do |file|
       matches << file if File.file? file
     end
 
-    matches.uniq! { |path| path.split('/').last };
+    matches.uniq! { |path| File.basename path };
   end
 
   def self.sources_app
@@ -112,7 +114,7 @@ module Emeralds::Terminal
   def self.deps_for_test
     deps = [] of String;
 
-    Dir.glob(File.join("libs", "*", "export")) do |path|
+    Dir.glob(File.join("libs", "*", "export").gsub('\\', '/')) do |path|
       test_libs = find(File.join(path, "*.a.test"));
       release_libs = find(File.join(path, "*.a"));
       deps.concat test_libs.empty? ? release_libs : test_libs;
@@ -124,10 +126,10 @@ module Emeralds::Terminal
   def self.deps_includes
     paths = [] of String;
 
-    Dir.glob(File.join("libs", "*", "export")) do |path|
+    Dir.glob(File.join("libs", "*", "export").gsub('\\', '/')) do |path|
       paths << path if File.directory? path;
     end
-    Dir.glob(File.join("libs", "*", "export", "**")) do |path|
+    Dir.glob(File.join("libs", "*", "export", "**").gsub('\\', '/')) do |path|
       paths << path if File.directory? path;
     end
 
@@ -143,7 +145,7 @@ module Emeralds::Terminal
   end
 
   def self.output_app
-    "#{File.join("export", (Emfile.instance.name || ""))}".rstrip;
+      "#{File.join("export", (Emfile.instance.name || ""))}".rstrip;
   end
 
   def self.output_lib

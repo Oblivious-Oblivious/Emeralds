@@ -13,14 +13,8 @@ abstract class Emeralds::Command
   # return -> The code block
   abstract def block;
 
-  private def try_override_command(display = true)
-    override = (Emfile.instance.build_override || "").strip;
-    if override != ""
-      Terminal.generic_cmd override, display: display;
-      true;
-    else
-      false;
-    end
+  private def separator
+    "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
   end
 
   private def move_headers_to_export
@@ -39,7 +33,7 @@ abstract class Emeralds::Command
     base_dir_path = Path[base_dir];
     Dir.glob(base_dir_path.join("**", "{*,.*}")) do |path|
       path = Path[path];
-      relative_path = path.relative_to(base_dir_path).to_s.lchop('/');
+      relative_path = path.relative_to(base_dir_path).to_posix.to_s.lchop('/');
       next if exclude_patterns.any? do |pattern|
         pattern = pattern.lchop("./");
         pattern == relative_path || relative_path.starts_with?("#{pattern}/");
@@ -49,8 +43,6 @@ abstract class Emeralds::Command
   end
 
   private def build_app(compile_flags)
-    return if try_override_command;
-
     Terminal.mkdir "export";
 
     if Terminal.sources_app.empty? && Terminal.input_app.empty?
@@ -73,8 +65,6 @@ abstract class Emeralds::Command
   end
 
   private def build_lib(compile_flags, display = true)
-    return if try_override_command display;
-
     cc = Emfile.instance.compile_flags.cc;
     opt = compile_flags.opt;
     version = compile_flags.version;
@@ -144,8 +134,8 @@ abstract class Emeralds::Command
             build_lib dep_emfile.compile_flags.release, display: false;
           end
           delete_excluded_paths ".", ["export", "libs"];
-          `rm -rf .git*`;
-          `rm -rf .clang*`;
+          Terminal.rm ".git*";
+          Terminal.rm ".clang*";
         end
       end
     end
@@ -191,11 +181,11 @@ abstract class Emeralds::Command
 
   def run
     puts message.colorize(:white).mode(:bold);
-    puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
+    puts separator;
 
     elapsed = Time.measure { block.call; };
 
-    puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
+    puts separator;
     puts "All done in #{elapsed
       .total_seconds
       .format(decimal_places: 3)

@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "build": [
+      "shards build --release --no-debug"
+    ],
+    "debug": [
+      "shards build"
+    ],
+    "all": [
+      "rm -rf bin",
+      "em build",
+      "cp bin/emeralds bin/em",
+      "cp bin/emeralds bin/em /usr/local/bin/"
+    ],
+    "test": "crystal spec ./spec/emeralds.spec.cr",
+    "spec": "em test",
+    "document": "rm -rf ./docs && crystal docs src/*.cr",
+    "clean": "rm -rf bin"
+  }
+}

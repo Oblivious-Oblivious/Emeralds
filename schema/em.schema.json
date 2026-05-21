@@ -1,0 +1,173 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/master/schema/em.schema.json",
+  "title": "Emeralds em.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "The JSON schema used by editors for em.json autocomplete and validation."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the Emeralds application or library."
+    },
+    "version": {
+      "type": "string",
+      "description": "The project version displayed by em version."
+    },
+    "license": {
+      "type": "string",
+      "description": "The project license.",
+      "enum": [
+        "mit",
+        "gpl-v2",
+        "apache-v2",
+        "gpl-v3",
+        "lgpl-v3",
+        "mpl-v2",
+        "epl-v2",
+        "agpl-v3",
+        "cc0-v1",
+        "cc0-v4"
+      ]
+    },
+    "scripts": {
+      "type": "object",
+      "description": "Custom commands runnable with em <script>.",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "locignore": {
+      "type": "object",
+      "description": "Extensions and directories ignored by em loc.",
+      "additionalProperties": false,
+      "properties": {
+        "extensions": {
+          "type": "array",
+          "description": "File extensions ignored by em loc. Values should match the extension map, such as .c or .h.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "directories": {
+          "type": "array",
+          "description": "Project-relative directories ignored by em loc.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "build-override": {
+      "type": "string",
+      "description": "A custom build command that overrides the normal Emeralds build."
+    },
+    "compile-flags": {
+      "type": "object",
+      "description": "Compiler configuration by operating system.",
+      "additionalProperties": false,
+      "properties": {
+        "win32": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "linux": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "darwin": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "android": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "freebsd": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "openbsd": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "netbsd": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "dragonfly": {
+          "$ref": "#/definitions/platformCompileFlags"
+        },
+        "unix": {
+          "$ref": "#/definitions/platformCompileFlags"
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "description": "Runtime dependencies as GitHub user/repo values.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "dev-dependencies": {
+      "type": "object",
+      "description": "Development dependencies as GitHub user/repo values.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "definitions": {
+    "platformCompileFlags": {
+      "type": "object",
+      "description": "Compiler configuration for one operating system.",
+      "additionalProperties": false,
+      "properties": {
+        "cc": {
+          "type": "string",
+          "description": "The C compiler to use."
+        },
+        "debug": {
+          "$ref": "#/definitions/buildConfig"
+        },
+        "release": {
+          "$ref": "#/definitions/buildConfig"
+        }
+      }
+    },
+    "buildConfig": {
+      "type": "object",
+      "description": "Compiler flags for one build mode.",
+      "additionalProperties": false,
+      "properties": {
+        "opt": {
+          "type": "string",
+          "description": "Optimization flag."
+        },
+        "version": {
+          "type": "string",
+          "description": "C standard flag."
+        },
+        "flags": {
+          "type": "string",
+          "description": "Additional compiler flags."
+        },
+        "warnings": {
+          "type": "string",
+          "description": "Warning flags."
+        },
+        "libs": {
+          "type": "string",
+          "description": "Additional linked libraries."
+        }
+      }
+    }
+  }
+}
