@@ -23,7 +23,11 @@ class Emeralds::Init < Emeralds::Command
       data << "  \"license\": \"mit\",\n";
       data << "  \"locignore\": {\n";
       data << "    \"extensions\": [],\n";
-      data << "    \"directories\": []\n";
+      data << "    \"directories\": [\"libs\"]\n";
+      data << "  },\n";
+      data << "  \"lintignore\": {\n";
+      data << "    \"extensions\": [],\n";
+      data << "    \"directories\": [\"libs\"]\n";
       data << "  },\n";
       data << "  \"scripts\": {},\n";
       data << "  \"compile-flags\": {\n";

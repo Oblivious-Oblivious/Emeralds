@@ -71,6 +71,27 @@
         }
       }
     },
+    "lintignore": {
+      "type": "object",
+      "description": "Extensions and directories ignored by em format.",
+      "additionalProperties": false,
+      "properties": {
+        "extensions": {
+          "type": "array",
+          "description": "File extensions ignored by em format, such as .c or .h.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "directories": {
+          "type": "array",
+          "description": "Project-relative directories ignored by em format.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "compile-flags": {
       "type": "object",
       "description": "Compiler configuration by operating system.",

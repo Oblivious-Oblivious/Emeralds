@@ -78,6 +78,8 @@ module Emeralds::Main
       Run.new.run;
     when "test"
       Test.new.run;
+    when "lint"
+      Lint.new.run;
     when "version"
       Version.new.run;
     when "license"

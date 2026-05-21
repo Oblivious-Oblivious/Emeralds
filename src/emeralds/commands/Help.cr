@@ -20,6 +20,7 @@ class Emeralds::Help < Emeralds::Command
       puts "    list                                - List dependencies in the em file.\n";
       puts "    makefile                            - Generate a makefile for independent compilation\n";
       puts "    loc                                 - Count the significant lines of code in the project\n";
+      puts "    lint                                - Lint all project sources with clang-format.\n";
       puts "    test                                - Run the script of tests.\n";
       puts "    version                             - Print the current version of the emerald.\n";
       puts "    license                             - Update the license notice based on the em.json value.\n";
