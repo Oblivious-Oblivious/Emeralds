@@ -71,10 +71,6 @@
         }
       }
     },
-    "build-override": {
-      "type": "string",
-      "description": "A custom build command that overrides the normal Emeralds build."
-    },
     "compile-flags": {
       "type": "object",
       "description": "Compiler configuration by operating system.",
