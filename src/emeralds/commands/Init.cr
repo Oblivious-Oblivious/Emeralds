@@ -18,12 +18,17 @@ class Emeralds::Init < Emeralds::Command
     data = String.build do |data|
       data << "{\n";
       data << "  \"$schema\": \"https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/master/schema/em.schema.json\",\n";
+      data << "  \"author\": \"\",\n";
       data << "  \"name\": \"#{ARGV[1]}\",\n";
-      data << "  \"version\": \"0.1.0\",\n";
+      data << "  \"version\": \"0.0.1\",\n";
       data << "  \"license\": \"mit\",\n";
       data << "  \"locignore\": {\n";
       data << "    \"extensions\": [],\n";
-      data << "    \"directories\": []\n";
+      data << "    \"directories\": [\"libs\"]\n";
+      data << "  },\n";
+      data << "  \"lintignore\": {\n";
+      data << "    \"extensions\": [],\n";
+      data << "    \"directories\": [\"libs\"]\n";
       data << "  },\n";
       data << "  \"scripts\": {},\n";
       data << "  \"compile-flags\": {\n";
@@ -283,7 +288,7 @@ class Emeralds::Init < Emeralds::Command
       data << "#include \"get_value/get_value.module.spec.h\"\n\n";
 
       data << "int main(void) {\n";
-      data << "  cspec_run_suite(\"all\", { T_get_value(); });\n";
+      data << "  cspec_run_suite(\"all\", {});\n";
       data << "}\n";
     end
 

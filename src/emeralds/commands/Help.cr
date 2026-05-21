@@ -9,6 +9,7 @@ class Emeralds::Help < Emeralds::Command
       puts "emeralds/em [<command>]\n\n";
       puts "Commands:\n";
       puts "    add [<name>]                        - Add a new .c/.h file pair\n";
+      puts "    remove [<name>]                     - Remove a .c/.h file pair\n";
       puts "    build [app | lib] [debug | release] - Build the application in the `export` directory.\n";
       puts "    run                                 - Run the compiled application.\n";
       puts "    clean                               - Run the clean script\n";
@@ -16,9 +17,10 @@ class Emeralds::Help < Emeralds::Command
       puts "    init [<name>]                       - Initialize a new library with an em.json file.\n";
       puts "    install [ | dev | all]              - Install dependencies into a flattened libs directory.\n";
       puts "    reinstall                           - Reinstall dependencies into a flattened libs directory.\n";
-      puts "    list                                - List dependencies in the em file.\n";
+      puts "    list                                - List dependencies and project modules.\n";
       puts "    makefile                            - Generate a makefile for independent compilation\n";
       puts "    loc                                 - Count the significant lines of code in the project\n";
+      puts "    lint                                - Lint all project sources with clang-format.\n";
       puts "    test                                - Run the script of tests.\n";
       puts "    version                             - Print the current version of the emerald.\n";
       puts "    license                             - Update the license notice based on the em.json value.\n";

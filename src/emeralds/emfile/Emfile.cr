@@ -1,6 +1,7 @@
 class Emeralds::Emfile
   include JSON::Serializable;
 
+  property author : String? = nil;
   property name : String? = nil;
   property version : String? = nil;
   property dependencies :  (Hash(String, String) | Nil) = nil;
@@ -14,7 +15,8 @@ class Emeralds::Emfile
   property license : String? = nil;
   property scripts : (Hash(String, String | Array(String)) | Nil) = nil;
 
-  property locignore : LocIgnore = LocIgnore.new;
+  property locignore : Ignore = Ignore.new;
+  property lintignore : Ignore = Ignore.new;
 
   @@instance : Emfile?;
 

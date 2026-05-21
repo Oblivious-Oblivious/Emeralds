@@ -1,4 +1,4 @@
-class Emeralds::LocIgnore
+class Emeralds::Ignore
   include JSON::Serializable;
 
   property extensions : Array(String)? = [] of String;
