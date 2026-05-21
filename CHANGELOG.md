@@ -1,3 +1,16 @@
+# Changes for Emeralds 0.10.0 (May 21 2026)
+
+* Added Windows support: installer, cross-platform paths, globs, and compiler defaults.
+* Replaced shell backticks and `system` calls with `Process` for safer cross-platform execution.
+* Expanded `em loc` with GitHub Linguist language support, modified output to look like `cloc`.
+* Added a `locignore` option.
+* Added `em reinstall` and restored `em run`.
+* Added custom script executor; scripts in `em.json` can fully override default build commands.
+  * Multiline scripts run line by line; missing scripts fall back to defaults instead of aborting.
+* Added `em.json` JSON schema and nil coalescing for optional keys; fixed crash when `em.json` is missing.
+* Dependency installation performance is 3.5x faster by parallelizing git clones and flattening dependency linking.
+* Removed deprecated audit command and unnecessary dependencies.
+
 # Changes for Emeralds 0.9.0 (Mar 10 2025)
 
 * Revamped colors (visually and in code).
