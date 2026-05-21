@@ -43,7 +43,7 @@ module Emeralds::Terminal
   end
 
   def self.run(executable, display = false)
-    puts "#{ARROW} run #{executable}" if display;
+    puts "#{ARROW} run #{executable}\n\n" if display;
     executable_path = File.join ".", executable;
     output = IO::Memory.new;
     error = IO::Memory.new;
