@@ -256,9 +256,6 @@ cat em.json
 - **license**: The project's license. This should be a valid SPDX license identifier.
   - Available license types: `mit`, `gpl-v2`, `apache-v2`, `gpl-v3`, `lgpl-v3`, `mpl-v2`, `epl-v2`, `agpl-v3`, `cc0-v1`, `cc0-v4`
 - **scripts**: Custom commands runnable with `em <script>`. Script names can override built-in commands. Values can be a string command or an array of command lines.
-- **locignore**: Extensions and project-relative directories ignored by `em loc`.
-- **lintignore**: Extensions and project-relative directories ignored by `em lint`.
-
 ```
 "scripts": {
   "build": [
@@ -267,7 +264,8 @@ cat em.json
   ]
 }
 ```
-
+- **locignore**: Extensions and project-relative directories ignored by `em loc`.
+- **lintignore**: Extensions and project-relative directories ignored by `em lint`.
 - **compile-flags**: The set of compiler flags.
   - Platform keys can use Crystal-supported operating system flags (e.g., `win32`, `linux`, `darwin`, `unix`).
   - **cc**: The C compiler to use for that platform.
@@ -277,6 +275,7 @@ cat em.json
     - **version**: The C standard to use (e.g., -std=c89, -std=c11).
     - **flags**: Additional compiler flags (e.g., -g -fsanitize=address).
     - **warnings**: Warning flags to enable (e.g., -Wall -Wextra).
+    - **libs** Additional linked static or shared libraries.
 - **dependencies**: A table of dependencies required for the project to run. The value grabs any Emeralds-compatible repository on GitHub (_user/repo_).
 - **dev-dependencies**: A table of development dependencies **not** linked with the release version.
 
