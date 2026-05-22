@@ -284,8 +284,7 @@ class Emeralds::Init < Emeralds::Command
     puts "    #{ARROW} #{ARGV[1]}.spec.c";
 
     data = String.build do |data|
-      data << "#include \"../libs/cSpec/export/cSpec.h\"\n";
-      data << "#include \"get_value/get_value.module.spec.h\"\n\n";
+      data << "#include \"../libs/cSpec/export/cSpec.h\"\n\n";
 
       data << "int main(void) {\n";
       data << "  cspec_run_suite(\"all\", {});\n";
