@@ -1,6 +1,11 @@
 class Emeralds::Add < Emeralds::Command
+  @silent = false;
+
+  def initialize(@silent = false)
+  end
+
   private def write_c_file
-    puts "  #{ARROW} #{ARGV[1]}.c";
+    puts "  #{ARROW} #{ARGV[1]}.c" unless @silent;
 
     data = String.build do |data|
       data << "#include \"#{ARGV[1]}.h\"\n\n";
@@ -12,7 +17,7 @@ class Emeralds::Add < Emeralds::Command
   end
 
   private def write_h_file
-    puts "  #{ARROW} #{ARGV[1]}.h";
+    puts "  #{ARROW} #{ARGV[1]}.h" unless @silent;
 
     data = String.build do |data|
       data << "#ifndef __#{ARGV[1].gsub("-", "_").upcase}_H_\n";
@@ -37,7 +42,7 @@ class Emeralds::Add < Emeralds::Command
     spec_main = File.join "spec", "#{name}.spec.c";
     return unless File.exists? spec_main;
 
-    puts "  #{ARROW} #{name}.spec.c";
+    puts "  #{ARROW} #{name}.spec.c" unless @silent;
 
     content = File.read spec_main;
     content = content.sub(/((?:#include "[^\n]*\n)+)/, "\\1#include \"#{ARGV[1]}/#{ARGV[1]}.module.spec.h\"\n");
@@ -47,7 +52,7 @@ class Emeralds::Add < Emeralds::Command
   end
 
   private def write_spec_file
-    puts "  #{ARROW} #{ARGV[1]}.module.spec.h"
+    puts "  #{ARROW} #{ARGV[1]}.module.spec.h" unless @silent;
 
     data = String.build do |data|
       data << "#include \"../../libs/cSpec/export/cSpec.h\"\n";
@@ -72,7 +77,7 @@ class Emeralds::Add < Emeralds::Command
   def block
     -> {
       if validate_filename ARGV[1]
-        puts "#{ARROW} #{ARGV[1]}";
+        puts "#{ARROW} #{ARGV[1]}" unless @silent;
         Terminal.mkdir (File.join "src", "#{ARGV[1]}");
         write_c_file;
         write_h_file;

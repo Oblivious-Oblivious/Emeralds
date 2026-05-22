@@ -42,7 +42,7 @@ abstract class Emeralds::Command
     end
   end
 
-  private def build_app(compile_flags)
+  def build_app(compile_flags)
     Terminal.mkdir "export";
 
     if Terminal.sources_app.empty? && Terminal.input_app.empty?
@@ -64,7 +64,7 @@ abstract class Emeralds::Command
     end
   end
 
-  private def build_lib(compile_flags, display = true)
+  def build_lib(compile_flags, display = true)
     cc = Emfile.instance.compile_flags.cc;
     opt = compile_flags.opt;
     version = compile_flags.version;

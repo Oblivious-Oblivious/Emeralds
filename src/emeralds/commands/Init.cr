@@ -277,7 +277,10 @@ class Emeralds::Init < Emeralds::Command
     puts "      #{ARROW} get_value.c";
     puts "      #{ARROW} get_value.h";
     create_src_main;
-    Terminal.generic_cmd "em add get_value";
+    old = ARGV[1];
+    ARGV[1] = "get_value";
+    Add.new(silent: true).block.call;
+    ARGV[1] = old;
   end
 
   private def create_spec_main
