@@ -135,6 +135,9 @@ class Emeralds::Init < Emeralds::Command
       data << "Mkfile.old\n";
       data << "dkms.conf\n\n";
 
+      data << "# MacOS\n";
+      data << ".DS_Store\n\n";
+
       data << "libs/\n";
     end
 
