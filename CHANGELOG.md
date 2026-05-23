@@ -1,5 +1,3 @@
-# Changes for Emeralds 0.10.2 (May 24 2026)
-
 # Changes for Emeralds 0.10.0 (May 21 2026)
 
 * Added Windows support: installer, cross-platform paths, globs, and compiler defaults.

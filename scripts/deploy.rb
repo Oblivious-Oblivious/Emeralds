@@ -60,7 +60,7 @@ puts "deploy: verifying build";
 cmd("shards", "build", "--release", "--no-debug");
 branch = cmd!("git", "rev-parse", "--abbrev-ref", "HEAD").strip;
 puts "deploy: committing version bump";
-cmd("git", "add", "shard.yml", "src/emeralds/constants/version.cr", "CHANGELOG.md", "README.md", "get.sh");
+cmd("git", "add", "shard.yml", "src/emeralds/constants/version.cr", "README.md", "get.sh");
 cmd!("git", "commit", "-m", "[master] - new version.");
 
 puts "deploy: tagging #{tag}";
