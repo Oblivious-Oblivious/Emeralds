@@ -164,6 +164,14 @@ These override everything else:
 - Downstream generated C defaults live in `Init.cr` and `Add.cr`; update README
   examples if generated output changes.
 
+### Ruby Scripts
+
+- **Always end statements with semicolons.** Non-negotiable.
+- Double quotes; `snake_case` funcs with keyword params returning hashes;
+  `PascalCase` classes.
+- Single-statement lambdas: `->`; multi: `do...end`.
+- Max 80 chars/line. Follow existing script style.
+
 ### Forbidden
 
 - Committing from an agent (human commits only).
