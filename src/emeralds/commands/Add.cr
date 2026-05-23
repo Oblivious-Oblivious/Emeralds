@@ -15,8 +15,8 @@ class Emeralds::Add < Emeralds::Command
     puts "  #{ARROW} #{@name}.h" unless @silent;
 
     data = String.build do |data|
-      data << "#ifndef __#{@func_name.gsub("-", "_").upcase}_H_\n";
-      data << "#define __#{@func_name.gsub("-", "_").upcase}_H_\n\n";
+      data << "#ifndef __#{@func_name.upcase}_H_\n";
+      data << "#define __#{@func_name.upcase}_H_\n\n";
 
       data << "/**\n";
       data << " * @brief\n";

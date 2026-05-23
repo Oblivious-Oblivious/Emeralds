@@ -26,7 +26,7 @@ abstract class Emeralds::Command
       end
     end
     @name = stripped.gsub(/\s+/, "-");
-    @func_name = stripped.gsub(/\s+/, "_");
+    @func_name = stripped.gsub(/[\s-]+/, "_");
   end
 
   # Contains the informational message for the user while performing an Emerald command
