@@ -1,4 +1,8 @@
 class Emeralds::Add < Emeralds::Command
+  private def app_name_upcase
+    (Emfile.instance.name || "").gsub(/[\s-]+/, "_").upcase;
+  end
+
   private def write_c_file
     puts "  #{ARROW} #{@name}.c" unless @silent;
 
@@ -15,8 +19,8 @@ class Emeralds::Add < Emeralds::Command
     puts "  #{ARROW} #{@name}.h" unless @silent;
 
     data = String.build do |data|
-      data << "#ifndef __#{@func_name.upcase}_H_\n";
-      data << "#define __#{@func_name.upcase}_H_\n\n";
+      data << "#ifndef __#{app_name_upcase}_#{@func_name.upcase}_H_\n";
+      data << "#define __#{app_name_upcase}_#{@func_name.upcase}_H_\n\n";
 
       data << "/**\n";
       data << " * @brief\n";
@@ -50,6 +54,9 @@ class Emeralds::Add < Emeralds::Command
     puts "  #{ARROW} #{@name}.module.spec.h" unless @silent;
 
     data = String.build do |data|
+      data << "#ifndef __#{app_name_upcase}_#{@func_name.upcase}_MODULE_SPEC_H_\n";
+      data << "#define __#{app_name_upcase}_#{@func_name.upcase}_MODULE_SPEC_H_\n\n";
+
       data << "#include \"../../libs/cSpec/export/cSpec.h\"\n";
       data << "#include \"../../src/#{@name}/#{@name}.h\"\n\n";
 
@@ -59,7 +66,9 @@ class Emeralds::Add < Emeralds::Command
       data << "      assert_that_charptr(#{@func_name}() equals to \"Hello, World!\");\n";
       data << "    });\n";
       data << "  });\n";
-      data << "})\n";
+      data << "})\n\n";
+
+      data << "#endif\n";
     end
 
     File.write (File.join "spec", "#{@name}", "#{@name}.module.spec.h"), data;
