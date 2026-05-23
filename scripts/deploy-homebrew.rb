@@ -36,23 +36,30 @@ die("dirty tree") unless cmd!("git", "diff", "--quiet") && cmd!("git", "diff", "
 die("tag exists") if system("git", "rev-parse", tag, out: File::NULL, err: File::NULL);
 die("tag on origin") unless `git ls-remote --tags origin refs/tags/#{tag}`.strip.empty?;
 
+puts "deploy-homebrew: bumping to #{version}";
 File.write("shard.yml", File.read("shard.yml").sub(/^version: .+/, "version: #{version}"));
 File.write("src/emeralds/constants/version.cr", File.read("src/emeralds/constants/version.cr").sub(/VERSION = "[^"]+"/, "VERSION = \"#{version}\""));
 unless File.read("CHANGELOG.md").include?("#{header} ")
   File.write("CHANGELOG.md", "#{header} (#{Time.now.strftime("%b %d %Y")})\n\n#{File.read("CHANGELOG.md")}");
 end
 
+puts "deploy-homebrew: verifying build";
 # cmd("shards", "install");
 cmd("shards", "build", "--release", "--no-debug");
 branch = cmd!("git", "rev-parse", "--abbrev-ref", "HEAD").strip;
+puts "deploy-homebrew: committing version bump";
 cmd("git", "add", "shard.yml", "src/emeralds/constants/version.cr");
 cmd!("git", "commit", "-m", "[master] - new version.");
 
+puts "deploy-homebrew: tagging #{tag}";
 cmd!("git", "tag", "-a", tag, "-m", "[master] - new version.");
+puts "deploy-homebrew: pushing #{branch} and #{tag}";
 cmd!("git", "push", "origin", branch);
 cmd!("git", "push", "origin", tag);
 
+puts "deploy-homebrew: fetching tarball checksum";
 sha256 = Digest::SHA256.hexdigest(URI.open(url).read);
+puts "deploy-homebrew: updating formula at #{FORMULA}";
 File.write(FORMULA, <<~RUBY);
   class Emeralds < Formula
     desc "A package manager for C"
@@ -78,3 +85,5 @@ RUBY
 cmd("git", "add", "emeralds.rb", chdir: TAP);
 cmd!("git", "commit", "-m", "[master] - updated emeralds to #{version}", chdir: TAP);
 cmd!("git", "push", "-u", "origin", "HEAD", chdir: TAP);
+
+puts "deploy-homebrew: done (#{tag}, sha256 #{sha256})";
