@@ -7,16 +7,43 @@
 
 A module/package manager for C applications.
 
-## Installation
+## Releases
 
-**Run the install script**
+### Homebrew
 
+```bash
+brew install Oblivious-Oblivious/tap/emeralds
 ```
+
+### One-line install
+
+Requires [Crystal](https://crystal-lang.org/) and Shards.
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/v0.10.1/get.sh | sh
+```
+
+### From source
+
+Requires [Crystal](https://crystal-lang.org/) and Shards. Clone the repo first.
+
+**Install script**
+
+```bash
 chmod 755 install.sh
 ./install.sh
 ```
 
-**On windows**
+**Manual build**
+
+```bash
+shards install
+shards build --release --no-debug
+cp bin/emeralds bin/em
+sudo cp bin/em bin/emeralds /usr/local/bin/
+```
+
+**On Windows**
 
 ```
 .\install-win32.bat

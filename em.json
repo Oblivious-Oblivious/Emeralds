@@ -16,6 +16,6 @@
     "spec": "em test",
     "document": "rm -rf ./docs && crystal docs src/*.cr",
     "clean": "rm -rf bin",
-    "deploy:homebrew": "ruby ./scripts/deploy-homebrew.rb"
+    "deploy": "./scripts/deploy.rb"
   }
 }
