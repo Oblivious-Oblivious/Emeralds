@@ -2,7 +2,7 @@
 
 require "digest";
 require "fileutils";
-require "net/http";
+require "open-uri";
 require "open3";
 require "uri";
 
@@ -84,9 +84,11 @@ puts "deploy-homebrew: creating GitHub release";
 run!("gh", "release", "create", tag, "--repo", REPO, "--title", "Emeralds #{tag}", "--notes", notes);
 
 puts "deploy-homebrew: fetching tarball checksum";
-response = Net::HTTP.get_response(URI(url));
-die("failed to fetch #{url}: #{response.code}") unless response.is_a?(Net::HTTPSuccess);
-sha256 = Digest::SHA256.hexdigest(response.body);
+begin
+  sha256 = Digest::SHA256.hexdigest(URI.open(url).read);
+rescue OpenURI::HTTPError => e
+  die("failed to fetch #{url}: #{e.io.status[0]}");
+end
 die("failed to compute sha256 for #{url}") if sha256.empty?;
 
 puts "deploy-homebrew: updating formula at #{FORMULA}";
