@@ -60,8 +60,8 @@ run("shards", "build", "--release", "--no-debug");
 
 branch = run!("git", "rev-parse", "--abbrev-ref", "HEAD").strip;
 puts "deploy-homebrew: committing version bump";
-run("git", "add", "shard.yml", "src/emeralds/constants/version.cr", "CHANGELOG.md");
-run!("git", "commit", "-m", "[master] - new version. #{tag}");
+run("git", "add", "shard.yml", "src/emeralds/constants/version.cr");
+run!("git", "commit", "-m", "[master] - new version.");
 
 notes = [];
 found = false;
@@ -75,7 +75,7 @@ notes = notes.join.strip;
 notes = "Release #{tag}." if notes.empty?;
 
 puts "deploy-homebrew: tagging #{tag}";
-run!("git", "tag", "-a", tag, "-m", "[master] - new version. #{tag}");
+run!("git", "tag", "-a", tag, "-m", "[master] - new version.");
 puts "deploy-homebrew: pushing #{branch} and #{tag}";
 run!("git", "push", "origin", branch);
 run!("git", "push", "origin", tag);
