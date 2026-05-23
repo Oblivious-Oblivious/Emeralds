@@ -15,6 +15,7 @@
     "test": "crystal spec ./spec/emeralds.spec.cr",
     "spec": "em test",
     "document": "rm -rf ./docs && crystal docs src/*.cr",
-    "clean": "rm -rf bin"
+    "clean": "rm -rf bin",
+    "deploy:homebrew": "ruby ./scripts/deploy-homebrew.rb"
   }
 }
