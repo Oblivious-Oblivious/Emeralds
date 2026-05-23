@@ -111,12 +111,13 @@ module Emeralds::Main
     action = ARGV[0];
     if action != "init"
       if script = validated_script(action)
+        script_args = ARGV[1..].join(" ");
         if script.is_a? Array
           script.each { |cmd|
-            Terminal.generic_cmd cmd, display: true;
+            Terminal.generic_cmd "#{cmd} #{script_args}".strip, display: true;
           };
         else
-          Terminal.generic_cmd script, display: true;
+          Terminal.generic_cmd "#{script} #{script_args}".strip, display: true;
         end
       else
         dispatch action;
