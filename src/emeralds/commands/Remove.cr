@@ -9,8 +9,8 @@ class Emeralds::Remove < Emeralds::Command
     puts "  #{ARROW} #{name}.spec.c";
 
     content = File.read spec_main;
-    content = content.sub("#include \"#{ARGV[1]}/#{ARGV[1]}.module.spec.h\"\n", "");
-    content = content.sub(/\s*T_#{Regex.escape(ARGV[1])}\(\);/, "");
+    content = content.sub("#include \"#{@name}/#{@name}.module.spec.h\"\n", "");
+    content = content.sub(/\s*T_#{Regex.escape(@func_name)}\(\);/, "");
 
     File.write spec_main, content;
   end
@@ -21,17 +21,13 @@ class Emeralds::Remove < Emeralds::Command
 
   def block
     -> {
-      if validate_filename ARGV[1]
-        puts "#{ARROW} #{ARGV[1].colorize(:red)}";
-        puts "  #{ARROW} #{ARGV[1]}.c";
-        puts "  #{ARROW} #{ARGV[1]}.h";
-        Terminal.rm File.join("src", "#{ARGV[1]}");
-        puts "  #{ARROW} #{ARGV[1]}.module.spec.h";
-        Terminal.rm File.join("spec", "#{ARGV[1]}");
-        update_spec_main;
-      else
-        puts "Cannot remove a pair with name: #{ARGV[1]}.".colorize(:red);
-      end
+      puts "#{ARROW} #{@name.colorize(:red)}";
+      puts "  #{ARROW} #{@name}.c";
+      puts "  #{ARROW} #{@name}.h";
+      Terminal.rm File.join("src", "#{@name}");
+      puts "  #{ARROW} #{@name}.module.spec.h";
+      Terminal.rm File.join("spec", "#{@name}");
+      update_spec_main;
     };
   end
 end

@@ -24,7 +24,7 @@ module Emeralds::Main
       if ARGV.size == 1
         Help.new.run;
       else
-        Init.new.run;
+        Init.new(name: ARGV[1]).run;
       end
     when "list"
       List.new.run;
@@ -66,19 +66,19 @@ module Emeralds::Main
       if ARGV.size == 1
         Help.new.run;
       else
-        Uninstall.new.run;
+        Uninstall.new(name: ARGV[1]).run;
       end
     when "add"
       if ARGV.size == 1
         Help.new.run;
       else
-        Add.new.run;
+        Add.new(name: ARGV[1]).run;
       end
     when "remove"
       if ARGV.size == 1
         Help.new.run;
       else
-        Remove.new.run;
+        Remove.new(name: ARGV[1]).run;
       end
     when "run"
       Run.new.run;

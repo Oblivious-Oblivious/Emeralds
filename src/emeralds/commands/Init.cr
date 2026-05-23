@@ -1,14 +1,11 @@
 class Emeralds::Init < Emeralds::Command
   private def create_lib_directory
-    if File.exists? ARGV[1]
-      puts "An emerald with name: #{ARGV[1]} already exists".colorize(:red);
+    if File.exists? @name
+      puts "An emerald with name: #{@name} already exists".colorize(:red);
       exit 0;
-    elsif (validate_filename ARGV[1])
-      puts "#{COG} Creating directory: #{ARGV[1].colorize(:green).mode(:bold)}";
-      Terminal.mkdir ARGV[1];
     else
-      puts "Cannot create a new emerald with name: #{ARGV[1]}.".colorize(:red);
-      exit 0;
+      puts "#{COG} Creating directory: #{@name.colorize(:green).mode(:bold)}";
+      Terminal.mkdir @name;
     end
   end
 
@@ -19,7 +16,7 @@ class Emeralds::Init < Emeralds::Command
       data << "{\n";
       data << "  \"$schema\": \"https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/master/schema/em.schema.json\",\n";
       data << "  \"author\": \"\",\n";
-      data << "  \"name\": \"#{ARGV[1]}\",\n";
+      data << "  \"name\": \"#{@name}\",\n";
       data << "  \"version\": \"0.0.1\",\n";
       data << "  \"license\": \"mit\",\n";
       data << "  \"locignore\": {\n";
@@ -220,7 +217,7 @@ class Emeralds::Init < Emeralds::Command
     puts "  #{ARROW} README.md";
 
     data = String.build do |data|
-      data << "# #{ARGV[1]}\n\n";
+      data << "# #{@name}\n\n";
 
       data << "TODO: Write a description here\n\n";
 
@@ -238,7 +235,7 @@ class Emeralds::Init < Emeralds::Command
 
       data << "## Contributing\n\n";
 
-      data << "1. Fork it (<https://github.com/your-github-user/#{ARGV[1]}/fork>)\n";
+      data << "1. Fork it (<https://github.com/your-github-user/#{@name}/fork>)\n";
       data << "2. Create your feature branch (`git checkout -b my-new-feature`)\n";
       data << "3. Commit your changes (`git commit -am 'Add some feature'`)\n";
       data << "4. Push to the branch (`git push origin my-new-feature`)\n";
@@ -254,7 +251,7 @@ class Emeralds::Init < Emeralds::Command
   end
 
   private def create_src_main
-    puts "    #{ARROW} #{ARGV[1]}.c";
+    puts "    #{ARROW} #{@name}.c";
 
     data = String.build do |data|
       data << "#include \"get_value/get_value.h\"\n\n";
@@ -267,7 +264,7 @@ class Emeralds::Init < Emeralds::Command
       data << "}\n";
     end
 
-    File.write (File.join "src", "#{ARGV[1]}.c"), data;
+    File.write (File.join "src", "#{@name}.c"), data;
   end
 
   private def create_source_files
@@ -277,14 +274,11 @@ class Emeralds::Init < Emeralds::Command
     puts "      #{ARROW} get_value.c";
     puts "      #{ARROW} get_value.h";
     create_src_main;
-    old = ARGV[1];
-    ARGV[1] = "get_value";
-    Add.new(silent: true).block.call;
-    ARGV[1] = old;
+    Add.new(name: "get_value", silent: true).block.call;
   end
 
   private def create_spec_main
-    puts "    #{ARROW} #{ARGV[1]}.spec.c";
+    puts "    #{ARROW} #{@name}.spec.c";
 
     data = String.build do |data|
       data << "#include \"../libs/cSpec/export/cSpec.h\"\n\n";
@@ -294,7 +288,7 @@ class Emeralds::Init < Emeralds::Command
       data << "}\n";
     end
 
-    File.write (File.join "spec", "#{ARGV[1]}.spec.c"), data;
+    File.write (File.join "spec", "#{@name}.spec.c"), data;
   end
 
   private def create_spec_files
@@ -312,7 +306,7 @@ class Emeralds::Init < Emeralds::Command
   def block
     -> {
       create_lib_directory;
-      Dir.cd ARGV[1] do
+      Dir.cd @name do
         puts "#{COG} Writing initial files:";
 
         write_em_file;
