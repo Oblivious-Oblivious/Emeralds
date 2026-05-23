@@ -9,7 +9,7 @@ require "uri";
 ROOT = File.expand_path("..", __dir__);
 REPO = "Oblivious-Oblivious/Emeralds";
 TAP = ENV.fetch("HOMEBREW_TAP_DIR", File.expand_path("~/work/homebrew-tap"));
-FORMULA = File.join(TAP, "Formula", "emeralds.rb");
+FORMULA = File.join(TAP, "emeralds.rb");
 
 def die(msg)
   warn "deploy-homebrew: #{msg}";
@@ -55,7 +55,7 @@ end
 die("failed to update version.cr") unless File.read("src/emeralds/constants/version.cr")[/VERSION = "([^"]+)"/, 1] == version;
 
 puts "deploy-homebrew: verifying build";
-run("shards", "install");
+# run("shards", "install");
 run("shards", "build", "--release", "--no-debug");
 
 branch = run!("git", "rev-parse", "--abbrev-ref", "HEAD").strip;
@@ -116,7 +116,7 @@ File.write(FORMULA, <<~RUBY);
 RUBY
 
 Dir.chdir(TAP) do
-  run("git", "add", "Formula/emeralds.rb");
+  run("git", "add", "emeralds.rb");
   die("no formula changes to commit in #{TAP}") if ok?("git", "diff", "--cached", "--quiet");
   run!("git", "commit", "-m", "[master] - updated emeralds to #{version}");
   run!("git", "push", "-u", "origin", "HEAD");
