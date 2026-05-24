@@ -213,6 +213,7 @@ cat em.json
 
 ```
 {
+  "author": "YourName",
   "name": "YourApp",
   "version": "0.0.1",
   "license": "mit",
@@ -279,6 +280,7 @@ cat em.json
 }
 ```
 
+- **author**: The name of the author/creator of the project.
 - **name**: The name of your application or library.
 - **version**: The version number displayed with `em version`.
 - **license**: The project's license. This should be a valid SPDX license identifier.
