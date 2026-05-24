@@ -308,6 +308,147 @@ class Emeralds::Init < Emeralds::Command
     create_spec_main;
   end
 
+  private def write_agents_file
+    puts "  #{ARROW} AGENTS.md";
+
+    data = String.build do |data|
+      data << "# AGENTS.md\n\n";
+
+      data << "Behavioral guidelines to reduce common LLM coding mistakes. Merge with\n";
+      data << "project-specific instructions as needed.\n\n";
+
+      data << "**Tradeoff:** These guidelines bias toward caution over speed. For trivial\n";
+      data << "tasks, use judgment.\n\n";
+
+      data << "## 1. Think Before Coding\n\n";
+
+      data << "**Don't assume. Don't hide confusion. Surface tradeoffs.**\n\n";
+
+      data << "Before implementing:\n\n";
+
+      data << "- State your assumptions explicitly. If uncertain, ask.\n";
+      data << "- If multiple interpretations exist, present them - don't pick silently.\n";
+      data << "- If a simpler approach exists, say so. Push back when warranted.\n";
+      data << "- If something is unclear, stop. Name what's confusing. Ask.\n\n";
+
+      data << "## 2. Simplicity First\n\n";
+
+      data << "**Minimum code that solves the problem. Nothing speculative.**\n\n";
+
+      data << "- No features beyond what was asked.\n";
+      data << "- No abstractions for single-use code.\n";
+      data << "- No \"flexibility\" or \"configurability\" that wasn't requested.\n";
+      data << "- No error handling for impossible scenarios.\n";
+      data << "- If you write 200 lines and it could be 50, rewrite it.\n";
+      data << "- If you write 20 lines and it be 5, rewrite it.\n\n";
+
+      data << "Ask yourself: \"Would a senior engineer say this is overcomplicated?\" If yes,\n";
+      data << "simplify.\n\n";
+
+      data << "## 3. Surgical Changes\n\n";
+
+      data << "**Touch only what you must. Clean up only your own mess.**\n\n";
+
+      data << "When editing existing code:\n\n";
+
+      data << "- Don't \"improve\" adjacent code, comments, or formatting.\n";
+      data << "- Don't refactor things that aren't broken.\n";
+      data << "- Match existing style, even if you'd do it differently.\n";
+      data << "- If you notice unrelated dead code, mention it - don't delete it.\n\n";
+
+      data << "When your changes create orphans:\n\n";
+
+      data << "- Remove imports/variables/functions that YOUR changes made unused.\n";
+      data << "- Don't remove pre-existing dead code unless asked.\n\n";
+
+      data << "The test: Every changed line should trace directly to the user's request.\n\n";
+
+      data << "## 4. Goal-Driven Execution\n\n";
+
+      data << "**Define success criteria. Loop until verified.**\n\n";
+
+      data << "Transform tasks into verifiable goals:\n\n";
+
+      data << "- \"Add validation\" → \"Write tests for invalid inputs, then make them pass\"\n";
+      data << "- \"Fix the bug\" → \"Write a test that reproduces it, then make it pass\"\n";
+      data << "- \"Refactor X\" → \"Ensure tests pass before and after\"\n\n";
+
+      data << "For multi-step tasks, state a brief plan:\n\n";
+
+      data << "```\n";
+      data << "1. [Step] → verify: [check]\n";
+      data << "2. [Step] → verify: [check]\n";
+      data << "3. [Step] → verify: [check]\n";
+      data << "```\n\n";
+
+      data << "Strong success criteria let you loop independently. Weak criteria (\"make it\n";
+      data << "work\") require constant clarification.\n\n";
+
+      data << "---\n\n";
+
+      data << "**These guidelines are working if:** fewer unnecessary changes in diffs, fewer\n";
+      data << "rewrites due to overcomplication, and clarifying questions come before\n";
+      data << "implementation rather than after mistakes.\n\n";
+
+      data << "## 5. Project Context\n\n";
+
+      data << "### Stack\n\n";
+
+      data << "- C project managed by Emeralds (`em` CLI).\n";
+      data << "- Compiler config comes from `em.json`.\n\n";
+
+      data << "### Commands\n\n";
+
+      data << "- `em help` - get information about all commands. use this to navigate.\n\n";
+
+      data << "- Examples:\n";
+      data << "  - `em build [app | lib] [debug | release]` — build the project.\n";
+      data << "  - `em test` — run tests.\n";
+      data << "  - `em install` — fetch dependencies into `libs/`.\n";
+      data << "  - `em add <name>` — scaffold a new module (source + header).\n\n";
+
+      data << "### Layout\n\n";
+
+      data << "- `src/` — source modules (`.c` and `.h` files).\n";
+      data << "- `spec/` — cSpec test files.\n";
+      data << "- `libs/` — installed dependencies (gitignored).\n";
+      data << "- `export/` — dependency public headers.\n";
+      data << "- `em.json` — project configuration (single source of truth).\n\n";
+
+      data << "### Config Format\n\n";
+
+      data << "- Compile flags per platform: `compile-flags.darwin` / `linux` / `win32`.\n";
+      data << "- Each platform has `debug` and `release` profiles.\n";
+      data << "- Production dependencies: `dependencies`.\n";
+      data << "- Development dependencies: `dev-dependencies`.\n\n";
+
+      data << "### Testing\n\n";
+
+      data << "- Framework: cSpec.\n";
+      data << "- Spec files live in `spec/`.\n";
+      data << "- Include path: `libs/cSpec/export/cSpec.h`.\n";
+      data << "- Suite runner pattern: `cspec_run_suite(...)`.\n\n";
+
+      data << "### Code Style\n\n";
+
+      data << "- `.clang-format` is authoritative. Don't override it.\n";
+      data << "- `.clangd` provides editor intelligence.\n";
+    end
+
+    File.write "AGENTS.md", data;
+  end
+
+  private def create_agents_symlinks
+    puts "  #{ARROW} CLAUDE.md -> AGENTS.md";
+    File.symlink "AGENTS.md", "CLAUDE.md";
+
+    puts "  #{ARROW} .cursorrules -> AGENTS.md";
+    File.symlink "AGENTS.md", ".cursorrules";
+
+    puts "  #{ARROW} GEMINI.md -> AGENTS.md";
+    File.symlink "AGENTS.md", "GEMINI.md";
+  end
+
   def message
     "Emeralds - Initializing a new project";
   end
@@ -327,6 +468,8 @@ class Emeralds::Init < Emeralds::Command
         write_gitignore_file;
         wget_license;
         generate_readme;
+        write_agents_file;
+        create_agents_symlinks;
       end
     };
   end
