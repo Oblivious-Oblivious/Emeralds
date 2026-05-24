@@ -111,6 +111,7 @@ File.write(
     "depends" => ["crystal", "git"],
     "install" => {
       "script" => [
+        "Set-Location $dir",
         "shards install",
         "shards build --release --no-debug",
         "Copy-Item bin\\emeralds.exe emeralds.exe",
