@@ -120,6 +120,7 @@ File.write(
         "shards build --release --no-debug",
         "Copy-Item bin\\emeralds.exe emeralds.exe",
         "Copy-Item bin\\emeralds.exe em.exe",
+        "Copy-Item (Join-Path (& scoop prefix crystal) '*.dll') .",
       ],
     },
     "bin" => ["emeralds.exe", "em.exe"],
