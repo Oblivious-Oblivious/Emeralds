@@ -109,7 +109,7 @@ File.write(
     "url" => zip_url,
     "hash" => zip_sha256,
     "depends" => ["crystal", "git"],
-    "install" => {
+    "installer" => {
       "script" => [
         "Set-Location $dir",
         "shards install",
