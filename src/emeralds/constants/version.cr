@@ -1,3 +1,3 @@
 module Emeralds
-  VERSION = "0.10.18";
+  VERSION = "0.10.19";
 end
