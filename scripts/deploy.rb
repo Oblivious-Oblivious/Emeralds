@@ -108,7 +108,6 @@ File.write(
     "license" => "MIT",
     "url" => zip_url,
     "hash" => zip_sha256,
-    "extract_dir" => "#{tag}",
     "depends" => ["crystal", "git"],
     "installer" => {
       "script" => [
