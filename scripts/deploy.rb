@@ -108,7 +108,11 @@ File.write(
     "license" => "MIT",
     "url" => zip_url,
     "hash" => zip_sha256,
-    "depends" => ["git", "vs_2022_cpp_build_tools", "crystal"],
+    "depends" => [
+      "git",
+      "https://raw.githubusercontent.com/neatorobito/scoop-crystal/main/bucket/vs_2022_cpp_build_tools.json",
+      "crystal",
+    ],
     "installer" => {
       "script" => [
         "Set-Location (Join-Path $dir 'Emeralds-#{version}')",
