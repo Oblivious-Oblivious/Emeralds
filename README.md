@@ -23,6 +23,14 @@ Requires [Crystal](https://crystal-lang.org/) and Shards.
 curl -fsSL https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/v0.10.2/get.sh | sh
 ```
 
+### Windows with scoop
+
+Requires [Scoop](https://scoop.sh/).
+
+```powershell
+scoop install https://raw.githubusercontent.com/Oblivious-Oblivious/homebrew-tap/master/emeralds.json
+```
+
 ### From source
 
 Requires [Crystal](https://crystal-lang.org/) and Shards. Clone the repo first.
@@ -32,15 +40,6 @@ Requires [Crystal](https://crystal-lang.org/) and Shards. Clone the repo first.
 ```bash
 chmod 755 install.sh
 ./install.sh
-```
-
-**Manual build**
-
-```bash
-shards install
-shards build --release --no-debug
-cp bin/emeralds bin/em
-sudo cp bin/em bin/emeralds /usr/local/bin/
 ```
 
 **On Windows**

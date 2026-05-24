@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require "digest";
+require "json";
 require "open-uri";
 require "open3";
 
@@ -8,6 +9,7 @@ ROOT = File.expand_path("..", __dir__);
 REPO = "Oblivious-Oblivious/Emeralds";
 TAP = File.expand_path(ENV.fetch("HOMEBREW_TAP_DIR", "~/work/homebrew-tap"));
 FORMULA = File.join(TAP, "emeralds.rb");
+MANIFEST = File.join(TAP, "emeralds.json");
 GET_SH = File.join(ROOT, "get.sh");
 README = File.join(ROOT, "README.md");
 GET_SH_URL = "https://raw.githubusercontent.com/#{REPO}";
@@ -32,6 +34,7 @@ die("bad version") unless version.match?(/\A\d+\.\d+\.\d+\z/);
 
 tag = "v#{version}";
 url = "https://github.com/#{REPO}/archive/refs/tags/#{tag}.tar.gz";
+zip_url = "https://github.com/#{REPO}/archive/refs/tags/#{tag}.zip";
 header = "# Changes for Emeralds #{version}";
 get_sh_url = "#{GET_SH_URL}/#{tag}/get.sh";
 
@@ -71,7 +74,9 @@ cmd!("git", "push", "origin", tag);
 
 puts "deploy: fetching tarball checksum";
 sha256 = Digest::SHA256.hexdigest(URI.open(url).read);
-puts "deploy: updating formula at #{FORMULA}";
+zip_sha256 = Digest::SHA256.hexdigest(URI.open(zip_url).read);
+
+puts "deploy: updating tap at #{TAP}";
 File.write(FORMULA, <<~RUBY);
   class Emeralds < Formula
     desc "A package manager for C"
@@ -94,8 +99,30 @@ File.write(FORMULA, <<~RUBY);
   end
 RUBY
 
-cmd("git", "add", "emeralds.rb", chdir: TAP);
+File.write(
+  MANIFEST,
+  JSON.pretty_generate(
+    "version" => version,
+    "description" => "A package manager for C",
+    "homepage" => "https://github.com/#{REPO}",
+    "license" => "MIT",
+    "url" => zip_url,
+    "hash" => zip_sha256,
+    "extract_dir" => "Emeralds-#{version}",
+    "depends" => ["crystal", "git"],
+    "install" => {
+      "script" => [
+        "shards install",
+        "shards build --release --no-debug",
+        "Copy-Item -Path 'bin\\emeralds.exe' -Destination 'bin\\em.exe' -Force",
+      ],
+    },
+    "bin" => ["bin\\emeralds.exe", "bin\\em.exe"],
+  ) + "\n"
+);
+
+cmd("git", "add", "emeralds.rb", "emeralds.json", chdir: TAP);
 cmd!("git", "commit", "-m", "[master] - updated emeralds to #{version}", chdir: TAP);
 cmd!("git", "push", "-u", "origin", "HEAD", chdir: TAP);
 
-puts "deploy: done (#{tag}, sha256 #{sha256})";
+puts "deploy: done (#{tag})";
