@@ -2,7 +2,7 @@
 set -e
 
 REPO="Oblivious-Oblivious/Emeralds"
-VERSION="0.10.2"
+VERSION="0.10.3"
 URL="https://github.com/${REPO}/archive/refs/tags/v${VERSION}.tar.gz"
 
 command -v crystal >/dev/null 2>&1 || {

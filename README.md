@@ -20,7 +20,7 @@ brew install Oblivious-Oblivious/tap/emeralds
 Requires [Crystal](https://crystal-lang.org/) and Shards.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/v0.10.2/get.sh | sh
+curl -fsSL https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/v0.10.3/get.sh | sh
 ```
 
 ### Windows with scoop
