@@ -113,10 +113,11 @@ File.write(
       "script" => [
         "shards install",
         "shards build --release --no-debug",
-        "Copy-Item -Path 'bin\\emeralds.exe' -Destination 'bin\\em.exe' -Force",
+        "Copy-Item bin\\emeralds.exe emeralds.exe",
+        "Copy-Item bin\\emeralds.exe em.exe",
       ],
     },
-    "bin" => ["bin\\emeralds.exe", "bin\\em.exe"],
+    "bin" => ["emeralds.exe", "em.exe"],
   ) + "\n"
 );
 
