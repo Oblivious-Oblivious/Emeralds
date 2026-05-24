@@ -4,17 +4,21 @@ class Emeralds::Test < Emeralds::Command
       print "#{ARROW} ";
       puts "No main spec file found".colorize(:red);
     else
+      driver = msvc? ? "#{Emfile.instance.compile_flags.cc} /nologo" : Emfile.instance.compile_flags.cc.to_s;
+      std_flag = msvc? ? "/std:clatest" : "-std=c2x";
+      out_flag = msvc? ? "/Fe:#{Terminal.output_test}" : "-o #{Terminal.output_test}";
       Terminal.generic_cmd "\
-        #{Emfile.instance.compile_flags.cc} \
+        #{driver} \
         #{Emfile.instance.compile_flags.debug.opt} \
-        #{"-std=c2x"} \
+        #{std_flag} \
         #{Emfile.instance.compile_flags.debug.flags} \
         #{Emfile.instance.compile_flags.debug.warnings} \
         #{Terminal.deps_includes} \
-        -o #{Terminal.output_test} \
+        #{out_flag} \
         #{Terminal.deps_for_test} \
         #{Terminal.sources_test} \
         #{Terminal.input_test} \
+        #{Emfile.instance.compile_flags.debug.libs} \
       ", display: true;
       puts;
       Terminal.run Terminal.output_test, display: true;

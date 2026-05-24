@@ -43,6 +43,10 @@ abstract class Emeralds::Command
     "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
   end
 
+  private def msvc?
+    (Emfile.instance.compile_flags.cc || "").matches?(/\Acl(\.exe)?\z/i);
+  end
+
   private def move_headers_to_export
     Terminal.cp (File.join "src", "*"), "export";
     Terminal.rm (File.join "export", "*.c");
@@ -51,6 +55,7 @@ abstract class Emeralds::Command
 
   private def remove_objects_and_move_static_libs_to_export
     Terminal.rm Terminal.find(File.join(".", "*.o"));
+    Terminal.rm Terminal.find(File.join(".", "*.obj"));
     Terminal.mv Terminal.find(File.join(".", "*.a")), "export";
     Terminal.mv Terminal.find(File.join(".", "*.a.test")), "export";
   end
@@ -75,17 +80,20 @@ abstract class Emeralds::Command
       print "#{ARROW} ";
       puts "No main file found".colorize(:red);
     else
+      driver = msvc? ? "#{Emfile.instance.compile_flags.cc} /nologo" : Emfile.instance.compile_flags.cc.to_s;
+      out_flag = msvc? ? "/Fe:#{Terminal.output_app}" : "-o #{Terminal.output_app}";
       Terminal.generic_cmd "\
-        #{Emfile.instance.compile_flags.cc} \
+        #{driver} \
         #{compile_flags.opt} \
         #{compile_flags.version} \
         #{compile_flags.flags} \
         #{compile_flags.warnings} \
         #{Terminal.deps_includes} \
-        -o #{Terminal.output_app} \
+        #{out_flag} \
         #{Terminal.deps_release} \
         #{Terminal.sources_app} \
         #{Terminal.input_app} \
+        #{compile_flags.libs} \
       ", display: true;
     end
   end
@@ -101,10 +109,17 @@ abstract class Emeralds::Command
     sources = Terminal.sources_lib;
     output = Terminal.output_lib;
     if !sources.empty?
-      Terminal.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{includes} -c #{sources}", display: display;
-      Terminal.generic_cmd "#{cc} -o #{output} -r *.o", display: display;
-      Terminal.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} #{includes} -c #{sources}", display: display;
-      Terminal.generic_cmd "#{cc} -o #{output}.test -r *.o", display: display;
+      if msvc?
+        Terminal.generic_cmd "#{cc} /nologo #{opt} #{version} #{flags} #{warnings} #{includes} /c #{sources}", display: display;
+        Terminal.generic_cmd "lib /nologo /OUT:#{output} *.obj", display: display;
+        Terminal.generic_cmd "#{cc} /nologo #{opt} /std:clatest #{flags} #{warnings} #{includes} /c #{sources}", display: display;
+        Terminal.generic_cmd "lib /nologo /OUT:#{output}.test *.obj", display: display;
+      else
+        Terminal.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{includes} -c #{sources}", display: display;
+        Terminal.generic_cmd "#{cc} -o #{output} -r *.o", display: display;
+        Terminal.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} #{includes} -c #{sources}", display: display;
+        Terminal.generic_cmd "#{cc} -o #{output}.test -r *.o", display: display;
+      end
     end
     Terminal.mkdir "export";
     move_headers_to_export;

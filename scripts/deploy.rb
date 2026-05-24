@@ -108,7 +108,7 @@ File.write(
     "license" => "MIT",
     "url" => zip_url,
     "hash" => zip_sha256,
-    "depends" => ["crystal", "git"],
+    "depends" => ["git", "vs_2022_cpp_build_tools", "crystal"],
     "installer" => {
       "script" => [
         "Set-Location (Join-Path $dir 'Emeralds-#{version}')",
