@@ -10,7 +10,7 @@ REPO = "Oblivious-Oblivious/Emeralds";
 TAP = File.expand_path(ENV.fetch("HOMEBREW_TAP_DIR", "~/work/homebrew-tap"));
 FORMULA = File.join(TAP, "emeralds.rb");
 MANIFEST = File.join(TAP, "emeralds.json");
-GET_SH = File.join(ROOT, "get.sh");
+GET_SH = File.join(ROOT, "scripts", "get.sh");
 README = File.join(ROOT, "README.md");
 GET_SH_URL = "https://raw.githubusercontent.com/#{REPO}";
 
@@ -36,7 +36,7 @@ tag = "v#{version}";
 url = "https://github.com/#{REPO}/archive/refs/tags/#{tag}.tar.gz";
 zip_url = "https://github.com/#{REPO}/archive/refs/tags/#{tag}.zip";
 header = "# Changes for Emeralds #{version}";
-get_sh_url = "#{GET_SH_URL}/#{tag}/get.sh";
+get_sh_url = "#{GET_SH_URL}/#{tag}/scripts/get.sh";
 
 Dir.chdir(ROOT);
 die("dirty tree") unless cmd!("git", "diff", "--quiet") && cmd!("git", "diff", "--cached", "--quiet");
@@ -54,7 +54,7 @@ File.write(GET_SH, File.read(GET_SH).sub(/^VERSION=".*"/, "VERSION=\"#{version}\
 File.write(
   README,
   File.read(README).sub(
-    %r{https://raw\.githubusercontent\.com/Oblivious-Oblivious/Emeralds/(?:master|v[\d.]+)/get\.sh},
+    %r{https://raw\.githubusercontent\.com/Oblivious-Oblivious/Emeralds/(?:master|v[\d.]+)/(?:scripts/)?get\.sh},
     get_sh_url
   )
 );
@@ -63,7 +63,7 @@ puts "deploy: verifying build";
 cmd("shards", "build", "--release", "--no-debug");
 branch = cmd!("git", "rev-parse", "--abbrev-ref", "HEAD").strip;
 puts "deploy: committing version bump";
-cmd("git", "add", "shard.yml", "src/emeralds/constants/version.cr", "README.md", "get.sh");
+cmd("git", "add", "shard.yml", "src/emeralds/constants/version.cr", "README.md", "scripts/get.sh");
 cmd!("git", "commit", "-m", "[master] - new version.");
 
 puts "deploy: tagging #{tag}";

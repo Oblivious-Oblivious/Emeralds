@@ -41,3 +41,4 @@ shards build --release --no-debug
 cp bin/emeralds bin/em
 cp bin/em bin/emeralds /usr/local/bin/
 echo "installed em and emeralds to /usr/local/bin"
+echo "run with 'em help' or 'emeralds help'"
