@@ -112,10 +112,14 @@ File.write(
       "git",
       "mingw",
     ],
+    "env_add_path" => [
+      "crystal\\bin",
+    ],
     "installer" => {
       "script" => [
         "$crystalDir = Join-Path $persist_dir 'crystal'",
-        "if (-not (Test-Path (Join-Path $crystalDir 'crystal.exe'))) {",
+        "if (-not (Test-Path (Join-Path $crystalDir 'bin\\crystal.exe'))) {",
+        "  New-Item -ItemType Directory -Force -Path $crystalDir | Out-Null",
         "  $gnuUrl = 'https://github.com/crystal-lang/crystal/releases/download/1.20.2/crystal-1.20.2-windows-x86_64-gnu-unsupported.zip'",
         "  $gnuHash = 'ad069cb1f73db7180c913b5ce0e21ee75ddebbca9c76582f0f7f9a4958014bfc'",
         "  $tmp = Join-Path $env:TEMP 'crystal-gnu.zip'",
@@ -125,17 +129,18 @@ File.write(
         "  Expand-Archive $tmp -DestinationPath $crystalDir -Force",
         "  Remove-Item $tmp",
         "}",
-        "$env:PATH = \"$crystalDir;$crystalDir\\shards;$env:PATH\"",
+        "$env:PATH = \"$crystalDir\\bin;$env:PATH\"",
         "Set-Location (Join-Path $dir 'Emeralds-#{version}')",
         "shards install",
         "shards build --release --no-debug",
         "Copy-Item bin\\emeralds.exe emeralds.exe",
         "Copy-Item bin\\emeralds.exe em.exe",
-        "Copy-Item (Join-Path (& scoop prefix mingw) 'bin\\*.dll') .",
       ],
     },
     "bin" => ["emeralds.exe", "em.exe"],
-    "persist" => "crystal",
+    "persist" => [
+      "crystal",
+    ],
   ) + "\n"
 );
 
