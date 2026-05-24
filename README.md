@@ -17,15 +17,11 @@ brew install Oblivious-Oblivious/tap/emeralds
 
 ### One-line install
 
-Requires [Crystal](https://crystal-lang.org/) and Shards.
-
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/v0.10.3/get.sh | sh
 ```
 
-### Windows with scoop
-
-Requires [Scoop](https://scoop.sh/).
+### Windows with [scoop.sh](https://scoop.sh/).
 
 ```powershell
 scoop install https://raw.githubusercontent.com/Oblivious-Oblivious/homebrew-tap/master/emeralds.json

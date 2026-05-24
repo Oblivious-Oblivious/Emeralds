@@ -5,13 +5,23 @@ REPO="Oblivious-Oblivious/Emeralds"
 VERSION="0.10.3"
 URL="https://github.com/${REPO}/archive/refs/tags/v${VERSION}.tar.gz"
 
-command -v crystal >/dev/null 2>&1 || {
-  echo "crystal is required: https://crystal-lang.org/install/"
-  exit 1
+install_crystal() {
+  command -v crystal >/dev/null 2>&1 && return 0
+
+  echo "get.sh: installing crystal"
+  if command -v brew >/dev/null 2>&1; then
+    brew install crystal
+  elif [ "$(id -u)" -eq 0 ]; then
+    curl -fsSL https://crystal-lang.org/install.sh | bash
+  else
+    curl -fsSL https://crystal-lang.org/install.sh | sudo bash
+  fi
 }
 
-command -v shards >/dev/null 2>&1 || {
-  echo "shards is required (install with crystal)"
+install_crystal
+
+command -v git >/dev/null 2>&1 || {
+  echo "git is required"
   exit 1
 }
 
