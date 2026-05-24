@@ -56,8 +56,11 @@ abstract class Emeralds::Command
   private def remove_objects_and_move_static_libs_to_export
     Terminal.rm Terminal.find(File.join(".", "*.o"));
     Terminal.rm Terminal.find(File.join(".", "*.obj"));
+    Terminal.rm Terminal.find(File.join(".", "*.pdb"));
     Terminal.mv Terminal.find(File.join(".", "*.a")), "export";
     Terminal.mv Terminal.find(File.join(".", "*.a.test")), "export";
+    Terminal.mv Terminal.find(File.join(".", "*.lib")).reject { |p| p.ends_with?(".test.lib") }, "export";
+    Terminal.mv Terminal.find(File.join(".", "*.test.lib")), "export";
   end
 
   private def delete_excluded_paths(base_dir, exclude_patterns)
@@ -95,6 +98,10 @@ abstract class Emeralds::Command
         #{Terminal.input_app} \
         #{compile_flags.libs} \
       ", display: true;
+      if msvc?
+        Terminal.rm Terminal.find(File.join(".", "*.obj"));
+        Terminal.rm Terminal.find(File.join(".", "*.pdb"));
+      end
     end
   end
 
@@ -107,18 +114,19 @@ abstract class Emeralds::Command
     deps = Terminal.deps_release;
     includes = Terminal.deps_includes;
     sources = Terminal.sources_lib;
-    output = Terminal.output_lib;
+    release_out = msvc? ? "#{Emfile.instance.name}.lib" : Terminal.output_lib;
+    test_out = msvc? ? "#{Emfile.instance.name}.test.lib" : "#{Terminal.output_lib}.test";
     if !sources.empty?
       if msvc?
         Terminal.generic_cmd "#{cc} /nologo #{opt} #{version} #{flags} #{warnings} #{includes} /c #{sources}", display: display;
-        Terminal.generic_cmd "lib /nologo /OUT:#{output} *.obj", display: display;
+        Terminal.generic_cmd "lib /nologo /OUT:#{release_out} *.obj", display: display;
         Terminal.generic_cmd "#{cc} /nologo #{opt} /std:clatest #{flags} #{warnings} #{includes} /c #{sources}", display: display;
-        Terminal.generic_cmd "lib /nologo /OUT:#{output}.test *.obj", display: display;
+        Terminal.generic_cmd "lib /nologo /OUT:#{test_out} *.obj", display: display;
       else
         Terminal.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{includes} -c #{sources}", display: display;
-        Terminal.generic_cmd "#{cc} -o #{output} -r *.o", display: display;
+        Terminal.generic_cmd "#{cc} -o #{release_out} -r *.o", display: display;
         Terminal.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} #{includes} -c #{sources}", display: display;
-        Terminal.generic_cmd "#{cc} -o #{output}.test -r *.o", display: display;
+        Terminal.generic_cmd "#{cc} -o #{test_out} -r *.o", display: display;
       end
     end
     Terminal.mkdir "export";

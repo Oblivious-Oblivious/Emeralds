@@ -6,7 +6,8 @@ class Emeralds::Test < Emeralds::Command
     else
       driver = msvc? ? "#{Emfile.instance.compile_flags.cc} /nologo" : Emfile.instance.compile_flags.cc.to_s;
       std_flag = msvc? ? "/std:clatest" : "-std=c2x";
-      out_flag = msvc? ? "/Fe:#{Terminal.output_test}" : "-o #{Terminal.output_test}";
+      out_target = msvc? ? "#{Terminal.output_test}.exe" : Terminal.output_test;
+      out_flag = msvc? ? "/Fe:#{out_target}" : "-o #{out_target}";
       Terminal.generic_cmd "\
         #{driver} \
         #{Emfile.instance.compile_flags.debug.opt} \
@@ -20,8 +21,12 @@ class Emeralds::Test < Emeralds::Command
         #{Terminal.input_test} \
         #{Emfile.instance.compile_flags.debug.libs} \
       ", display: true;
+      if msvc?
+        Terminal.rm Terminal.find(File.join(".", "*.obj"));
+        Terminal.rm Terminal.find(File.join(".", "*.pdb"));
+      end
       puts;
-      Terminal.run Terminal.output_test, display: true;
+      Terminal.run out_target, display: true;
     end
   end
 
@@ -33,6 +38,7 @@ class Emeralds::Test < Emeralds::Command
     -> {
       if File.exists? File.join("libs", "cSpec", "export", "cSpec.h")
         Terminal.rm Terminal.output_test, display: true;
+        Terminal.rm "#{Terminal.output_test}.exe", display: true;
         Terminal.rm "spec/*.dSYM";
         build_test;
       elsif Emfile.cspec_not_on_deps && Emfile.cspec_not_on_dev_deps

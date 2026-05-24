@@ -92,7 +92,10 @@ module Emeralds::Terminal
   end
 
   def self.sources_app
-    "#{find(File.join("src", "*", "**", "*.c")).join(' ')} #{find(File.join("src", "*", "**", "*.a")).join(' ')}".rstrip;
+    c_files = find(File.join("src", "*", "**", "*.c"));
+    unix_libs = find(File.join("src", "*", "**", "*.a"));
+    msvc_libs = find(File.join("src", "*", "**", "*.lib")).reject { |p| p.ends_with?(".test.lib") };
+    (c_files + unix_libs + msvc_libs).join(' ').rstrip;
   end
 
   def self.sources_lib
@@ -100,23 +103,30 @@ module Emeralds::Terminal
   end
 
   def self.sources_test
-    "#{find(File.join("src", "*", "**", "*.c")).join(' ')} #{find(File.join("src", "*", "**", "*.a.test")).join(' ')}".rstrip;
+    c_files = find(File.join("src", "*", "**", "*.c"));
+    unix_libs = find(File.join("src", "*", "**", "*.a.test"));
+    msvc_libs = find(File.join("src", "*", "**", "*.test.lib"));
+    (c_files + unix_libs + msvc_libs).join(' ').rstrip;
   end
 
   def self.deps_release
-    "#{find(File.join("libs", "*", "export", "*.a")).join(' ')}".rstrip;
+    unix_libs = find(File.join("libs", "*", "export", "*.a"));
+    msvc_libs = find(File.join("libs", "*", "export", "*.lib")).reject { |p| p.ends_with?(".test.lib") };
+    (unix_libs + msvc_libs).join(' ').rstrip;
   end
 
   def self.deps_test
-    "#{find(File.join("libs", "*", "export", "*.a.test")).join(' ')}".rstrip;
+    unix_libs = find(File.join("libs", "*", "export", "*.a.test"));
+    msvc_libs = find(File.join("libs", "*", "export", "*.test.lib"));
+    (unix_libs + msvc_libs).join(' ').rstrip;
   end
 
   def self.deps_for_test
     deps = [] of String;
 
     Dir.glob(File.join("libs", "*", "export").gsub('\\', '/')) do |path|
-      test_libs = find(File.join(path, "*.a.test"));
-      release_libs = find(File.join(path, "*.a"));
+      test_libs = find(File.join(path, "*.a.test")) + find(File.join(path, "*.test.lib"));
+      release_libs = find(File.join(path, "*.a")) + find(File.join(path, "*.lib")).reject { |p| p.ends_with?(".test.lib") };
       deps.concat test_libs.empty? ? release_libs : test_libs;
     end
 
