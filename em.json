@@ -1,16 +1,19 @@
 {
   "scripts": {
-    "build": [
-      "shards build --release --no-debug"
-    ],
-    "debug": [
-      "shards build"
-    ],
+    "build": ["shards build --release --no-debug"],
+    "debug": ["shards build"],
     "all": [
       "rm -rf bin",
       "em build",
       "cp bin/emeralds bin/em",
       "cp bin/emeralds bin/em /usr/local/bin/"
+    ],
+    "all-windows": [
+      "if exist bin rmdir /s /q bin",
+      "shards.exe build --release --no-debug",
+      "copy /Y bin\\emeralds.exe bin\\em.exe",
+      "copy /Y bin\\em.exe C:\\msys64\\ucrt64\\bin\\",
+      "copy /Y bin\\emeralds.exe C:\\msys64\\ucrt64\\bin\\"
     ],
     "test": "crystal spec ./spec/emeralds.spec.cr",
     "spec": "em test",
