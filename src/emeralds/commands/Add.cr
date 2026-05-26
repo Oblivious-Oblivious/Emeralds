@@ -34,6 +34,23 @@ class Emeralds::Add < Emeralds::Command
     File.write (File.join "src", "#{@name}", "#{@name}.h"), data;
   end
 
+  private def update_app_header
+    name = Emfile.instance.name;
+    return unless name;
+
+    app_header = File.join "src", "#{name}.h";
+    return unless File.exists? app_header;
+
+    puts "  #{ARROW} #{name}.h" unless @silent;
+
+    include_line = "#include \"#{@name}/#{@name}.h\"\n";
+    content = File.read app_header;
+    return if content.includes? include_line;
+
+    content = content.sub(/\n#endif\n\z/, "#{include_line}\n#endif\n");
+    File.write app_header, content;
+  end
+
   private def update_spec_main
     name = Emfile.instance.name;
     return unless name;
@@ -84,6 +101,7 @@ class Emeralds::Add < Emeralds::Command
       Terminal.mkdir (File.join "src", "#{@name}");
       write_c_file;
       write_h_file;
+      update_app_header;
       Terminal.mkdir (File.join "spec", "#{@name}");
       write_spec_file;
       update_spec_main;
