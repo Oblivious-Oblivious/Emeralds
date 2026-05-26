@@ -1,9 +1,7 @@
 # Emeralds
 
 [![Built with Crystal](https://img.shields.io/badge/built%20with-crystal-000000.svg?)](https://crystal-lang.org/)
-[![GPLv3 License](https://img.shields.io/badge/license-GPL%20v3-yellow.svg)](./LICENSE)
-
-[![CI](https://github.com/Oblivious-Oblivious/Emeralds/workflows/CI/badge.svg)](https://github.com/Oblivious-Oblivious/Emeralds/actions?query=workflow%3ACI)
+[![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg)](./LICENSE)
 
 A module/package manager for C applications.
 
@@ -31,7 +29,7 @@ scoop install https://raw.githubusercontent.com/Oblivious-Oblivious/homebrew-tap
 
 Requires [Crystal](https://crystal-lang.org/) and Shards. Clone the repo first.
 
-***nix**
+**\*nix**
 
 ```sh
 rm -rf bin
@@ -286,6 +284,7 @@ cat em.json
 - **license**: The project's license. This should be a valid SPDX license identifier.
   - Available license types: `mit`, `gpl-v2`, `apache-v2`, `gpl-v3`, `lgpl-v3`, `mpl-v2`, `epl-v2`, `agpl-v3`, `cc0-v1`, `cc0-v4`
 - **scripts**: Custom commands runnable with `em <script>`. Script names can override built-in commands. Values can be a string command or an array of command lines.
+
 ```
 "scripts": {
   "build": [
@@ -294,6 +293,7 @@ cat em.json
   ]
 }
 ```
+
 - **locignore**: Extensions and project-relative directories ignored by `em loc`.
 - **lintignore**: Extensions and project-relative directories ignored by `em lint`.
 - **compile-flags**: The set of compiler flags.
