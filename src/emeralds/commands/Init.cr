@@ -228,6 +228,8 @@ class Emeralds::Init < Emeralds::Command
     data = String.build do |data|
       data << "# #{@name}\n\n";
 
+      data << "[![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg)](./LICENSE)\n\n";
+
       data << "TODO: Write a description here\n\n";
 
       data << "# Installation\n\n";
