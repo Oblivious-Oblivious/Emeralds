@@ -38,7 +38,7 @@ class Emeralds::Test < Emeralds::Command
     -> {
       if File.exists? File.join("libs", "cSpec", "export", "cSpec.h")
         Terminal.rm Terminal.output_test, display: true;
-        Terminal.rm "#{Terminal.output_test}.exe", display: true;
+        Terminal.rm "#{Terminal.output_test}.exe", display: false;
         Terminal.rm "spec/*.dSYM";
         build_test;
       elsif Emfile.cspec_not_on_deps && Emfile.cspec_not_on_dev_deps
