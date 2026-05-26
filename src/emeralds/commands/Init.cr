@@ -259,11 +259,30 @@ class Emeralds::Init < Emeralds::Command
     File.write "README.md", data;
   end
 
+  private def app_name_upcase
+    @name.gsub(/[\s-]+/, "_").upcase;
+  end
+
+  private def create_src_header
+    puts "    #{ARROW} #{@name}.h";
+
+    data = String.build do |data|
+      data << "#ifndef __#{app_name_upcase}_H_\n";
+      data << "#define __#{app_name_upcase}_H_\n\n";
+
+      data << "#include \"get_value/get_value.h\"\n\n";
+
+      data << "#endif\n";
+    end
+
+    File.write (File.join "src", "#{@name}.h"), data;
+  end
+
   private def create_src_main
     puts "    #{ARROW} #{@name}.c";
 
     data = String.build do |data|
-      data << "#include \"get_value/get_value.h\"\n\n";
+      data << "#include \"#{@name}.h\"\n\n";
 
       data << "#include <stdio.h>\n\n";
 
@@ -282,6 +301,7 @@ class Emeralds::Init < Emeralds::Command
     puts "    #{ARROW} get_value";
     puts "      #{ARROW} get_value.c";
     puts "      #{ARROW} get_value.h";
+    create_src_header;
     create_src_main;
     Add.new(name: "get_value", silent: true).block.call;
   end
