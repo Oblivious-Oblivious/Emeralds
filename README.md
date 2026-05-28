@@ -101,14 +101,19 @@ Emeralds - Initializing a new project
     ➔ get_value
       ➔ get_value.c
       ➔ get_value.h
+    ➔ YourApp.h
     ➔ YourApp.c
   ➔ .clangd
   ➔ .clang-format
   ➔ .gitignore
   ➔ LICENSE
   ➔ README.md
+  ➔ AGENTS.md
+  ➔ CLAUDE.md -> AGENTS.md
+  ➔ .cursorrules -> AGENTS.md
+  ➔ GEMINI.md -> AGENTS.md
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-All done in 0.697 seconds
+All done in 0.761 seconds
 ```
 
 **Add a new module, a `.c`/`.h` pair plus its test spec:**
@@ -122,7 +127,8 @@ Emeralds - Adding new .c/.h pair...
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ➔ one
   ➔ one.c
-  ➔ one.h
+  ➔ one/one.h
+  ➔ YourApp.h
   ➔ one.module.spec.h
   ➔ YourApp.spec.c
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -142,7 +148,8 @@ Emeralds - Removing .c/.h pair...
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ➔ one
   ➔ one.c
-  ➔ one.h
+  ➔ one/one.h
+  ➔ YourApp.h
   ➔ one.module.spec.h
   ➔ YourApp.spec.c
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -193,7 +200,7 @@ All done in 3.822 seconds
 em install git https://github.com/Oblivious-Oblivious/cSpec
 ```
 
-This appends `"https://github.com/Oblivious-Oblivious/cSpec": "latest"` to em.json. You can pin versions by changing the value from `latest` to a release tag (such as `0.1.0`).
+This appends `"https://github.com/Oblivious-Oblivious/cSpec": "latest"` to `em.json`. You can pin versions by changing the value from `latest` to a release tag (such as `0.1.0`).
 
 **Uninstall a dependency:**
 
@@ -219,17 +226,18 @@ cat em.json
 
 ```
 {
-  "author": "YourName",
+  "$schema": "https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/master/schema/em.schema.json",
+  "author": "",
   "name": "YourApp",
   "version": "0.0.1",
   "license": "mit",
   "locignore": {
     "extensions": [],
-    "directories": []
+    "directories": ["libs"]
   },
   "lintignore": {
     "extensions": [],
-    "directories": []
+    "directories": ["libs"]
   },
   "scripts": {},
   "compile-flags": {
@@ -239,13 +247,15 @@ cat em.json
         "opt": "-O2",
         "version": "-std=c89",
         "flags": "-g -fsanitize=address",
-        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
+        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic",
+        "libs": ""
       },
       "release": {
         "opt": "-O2",
         "version": "-std=c89",
         "flags": "",
-        "warnings": ""
+        "warnings": "",
+        "libs": ""
       }
     },
     "linux": {
@@ -254,13 +264,15 @@ cat em.json
         "opt": "-Og",
         "version": "-std=c89",
         "flags": "-g",
-        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
+        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic",
+        "libs": ""
       },
       "release": {
-        "opt": "-O3",
-        "version": "",
+        "opt": "-O2",
+        "version": "-std=c89",
         "flags": "",
-        "warnings": ""
+        "warnings": "",
+        "libs": ""
       }
     },
     "win32": {
@@ -269,13 +281,15 @@ cat em.json
         "opt": "-O2",
         "version": "-std=c89",
         "flags": "-g",
-        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic"
+        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic",
+        "libs": ""
       },
       "release": {
         "opt": "-O2",
         "version": "-std=c89",
         "flags": "",
-        "warnings": ""
+        "warnings": "",
+        "libs": ""
       }
     }
   },
@@ -314,7 +328,7 @@ cat em.json
     - **flags**: Additional compiler flags (e.g., -g -fsanitize=address).
     - **warnings**: Warning flags to enable (e.g., -Wall -Wextra).
     - **libs** Additional linked static or shared libraries.
-- **dependencies**: A table of dependencies required for the project to run. The key is the full git link to a repository and the value is the version: `latest` for the master branch, or a release tag (`0.1.0`) to fetch that specific archive.
+- **dependencies**: A table of dependencies required for the project to run. The key is the full git link to a repository and the value is the version: `latest` for the master branch, or a release tag (`0.3.2`) to fetch that specific archive.
 - **dev-dependencies**: A table of development dependencies **not** linked with the release version.
 
 **Testing your application and run the test suite:**
