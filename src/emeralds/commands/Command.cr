@@ -6,7 +6,7 @@ abstract class Emeralds::Command
   @func_name = "";
   @silent = false;
 
-  FORBIDDEN_NAME_CHARS = /[<>:"\/\\|?*\x00-\x1F]/;
+  FORBIDDEN_NAME_CHARS = /[<>:"\\|?*\x00-\x1F]/;
   DOT_ONLY_NAME = /\A\.+\z/;
   WINDOWS_RESERVED_NAMES = /^(con|prn|aux|nul|com[1-9]|lpt[1-9]|com[0-9]+|lpt[0-9]+)$/i;
 
@@ -15,18 +15,20 @@ abstract class Emeralds::Command
     @silent = false,
   )
     stripped = name.strip;
+    parts = stripped.split('/');
     unless stripped.empty?
       if(
         stripped.matches?(FORBIDDEN_NAME_CHARS) ||
-        stripped.matches?(DOT_ONLY_NAME) ||
-        stripped.matches?(WINDOWS_RESERVED_NAMES)
+        parts.any?(&.empty?) ||
+        parts.any?(&.matches?(DOT_ONLY_NAME)) ||
+        parts.any?(&.matches?(WINDOWS_RESERVED_NAMES))
       )
         puts "Invalid name: #{name}.".colorize(:red);
         exit 0;
       end
     end
     @name = stripped.gsub(/\s+/, "-");
-    @func_name = stripped.gsub(/[\s-]+/, "_");
+    @func_name = stripped.gsub(/[\s\/-]+/, "_");
   end
 
   # Contains the informational message for the user while performing an Emerald command
