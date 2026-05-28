@@ -132,14 +132,14 @@
     },
     "dependencies": {
       "type": "object",
-      "description": "Runtime dependencies as GitHub user/repo values.",
+      "description": "Runtime dependencies mapping a full git link to a version (`latest` or a release tag).",
       "additionalProperties": {
         "type": "string"
       }
     },
     "dev-dependencies": {
       "type": "object",
-      "description": "Development dependencies as GitHub user/repo values.",
+      "description": "Development dependencies mapping a full git link to a version (`latest` or a release tag).",
       "additionalProperties": {
         "type": "string"
       }

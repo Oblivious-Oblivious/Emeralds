@@ -143,21 +143,26 @@ abstract class Emeralds::Command
     clone_count = 0;
 
     deps.each do |key, value|
-      dep_path = File.join "libs", "#{key}";
+      name = Terminal.repo_name key;
+      dep_path = File.join "libs", name;
       export_path = File.join dep_path, "export";
 
       if File.exists? export_path
-        puts " #{COG} `#{key}` already installed" if display && !@displayed_deps[key]?;
+        puts " #{COG} `#{name}` already installed" if display && !@displayed_deps[key]?;
         @displayed_deps[key] = true;
       else
-        puts " #{COG} Installing `#{key}`" if display && !@displayed_deps[key]?;
+        puts " #{COG} Installing `#{name}`" if display && !@displayed_deps[key]?;
         @displayed_deps[key] = true;
         pending_deps[key] = value;
 
         unless File.exists? dep_path
           clone_count += 1;
           spawn do
-            Terminal.git_clone "https://github.com/#{value}", dep_path;
+            if value == "latest"
+              Terminal.git_clone key, dep_path;
+            else
+              Terminal.fetch_release key, value, dep_path;
+            end
             clones.send nil;
           end
         end
@@ -167,19 +172,20 @@ abstract class Emeralds::Command
     clone_count.times { clones.receive; };
 
     pending_deps.each do |key, value|
-      if File.exists? (File.join "libs", "#{key}")
-        next if File.exists? (File.join "libs", "#{key}", "export");
+      name = Terminal.repo_name key;
+      if File.exists? (File.join "libs", name)
+        next if File.exists? (File.join "libs", name, "export");
 
-        emfile_path = File.join "libs", "#{key}", "em.json";
+        emfile_path = File.join "libs", name, "em.json";
         unless File.exists? emfile_path
-          Terminal.rm (File.join "libs", "#{key}");
+          Terminal.rm (File.join "libs", name);
           next;
         end
 
         dep_emfile = Emfile.from_json File.read(emfile_path);
         install_deps dep_emfile.dependencies;
 
-        Dir.cd (File.join "libs", "#{key}") do
+        Dir.cd (File.join "libs", name) do
           FileUtils.ln_s File.join("..", "..", "libs"), "libs" unless File.exists? "libs";
           Emfile.with_instance(dep_emfile) do
             build_lib dep_emfile.compile_flags.release, display: false;

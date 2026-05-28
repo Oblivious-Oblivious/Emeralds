@@ -7,7 +7,7 @@ class Emeralds::Uninstall < Emeralds::Command
     -> {
       raw = File.read "em.json";
       escaped = Regex.escape @name;
-      updated = raw.gsub(/\n[ \t]*"#{escaped}"\s*:\s*"[^"]*",?/, "");
+      updated = raw.gsub(/\n[ \t]*"[^"]*\/#{escaped}(\.git)?"\s*:\s*"[^"]*",?/, "");
 
       if updated == raw
         puts "#{ARROW} `#{@name}` not found in dependencies".colorize(:yellow);

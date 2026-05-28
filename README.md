@@ -67,7 +67,7 @@ Commands:
     clean                               - Run the clean script
     help                                - Print this help message.
     init [<name>]                       - Initialize a new library with an em.json file.
-    install [ | dev | all]              - Install dependencies into a flattened libs directory.
+    install [ | dev | all | git <link>] - Install dependencies into a flattened libs directory.
     reinstall                           - Reinstall dependencies into a flattened libs directory.
     uninstall [<name>]                  - Remove a dependency from em.json and libs.
     list                                - List dependencies and project modules.
@@ -187,6 +187,14 @@ Emeralds - Resolving all dependencies...
 All done in 3.822 seconds
 ```
 
+**Add and install a dependency from a git link:**
+
+```
+em install git https://github.com/Oblivious-Oblivious/cSpec
+```
+
+This appends `"https://github.com/Oblivious-Oblivious/cSpec": "latest"` to em.json. You can pin versions by changing the value from `latest` to a release tag (such as `0.1.0`).
+
 **Uninstall a dependency:**
 
 ```
@@ -273,7 +281,7 @@ cat em.json
   },
   "dependencies": {},
   "dev-dependencies": {
-    "cSpec": "Oblivious-Oblivious/cSpec"
+    "https://github.com/Oblivious-Oblivious/cSpec": "latest"
   }
 }
 ```
@@ -306,7 +314,7 @@ cat em.json
     - **flags**: Additional compiler flags (e.g., -g -fsanitize=address).
     - **warnings**: Warning flags to enable (e.g., -Wall -Wextra).
     - **libs** Additional linked static or shared libraries.
-- **dependencies**: A table of dependencies required for the project to run. The value grabs any Emeralds-compatible repository on GitHub (_user/repo_).
+- **dependencies**: A table of dependencies required for the project to run. The key is the full git link to a repository and the value is the version: `latest` for the master branch, or a release tag (`0.1.0`) to fetch that specific archive.
 - **dev-dependencies**: A table of development dependencies **not** linked with the release version.
 
 **Testing your application and run the test suite:**

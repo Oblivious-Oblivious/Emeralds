@@ -2,7 +2,7 @@ class Emeralds::List < Emeralds::Command
   private def list(deps)
     if deps
       deps.sanitize.each do |key, value|
-        puts "  #{COG} #{key}";
+        puts "  #{COG} #{Terminal.repo_name(key)}";
       end
     end
   end
