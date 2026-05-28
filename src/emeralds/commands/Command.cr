@@ -67,7 +67,7 @@ abstract class Emeralds::Command
 
   private def delete_excluded_paths(base_dir, exclude_patterns)
     base_dir_path = Path[base_dir];
-    Dir.glob(base_dir_path.join("**", "{*,.*}")) do |path|
+    Dir.glob(base_dir_path.join("**", "{*,.*}"), match: File::MatchOptions.glob_default | File::MatchOptions::DotFiles) do |path|
       path = Path[path];
       relative_path = path.relative_to(base_dir_path).to_posix.to_s.lchop('/');
       next if exclude_patterns.any? do |pattern|
@@ -174,8 +174,6 @@ abstract class Emeralds::Command
     pending_deps.each do |key, value|
       name = Terminal.repo_name key;
       if File.exists? (File.join "libs", name)
-        next if File.exists? (File.join "libs", name, "export");
-
         emfile_path = File.join "libs", name, "em.json";
         unless File.exists? emfile_path
           Terminal.rm (File.join "libs", name);
