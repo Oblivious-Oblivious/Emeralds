@@ -1,3 +1,21 @@
+# Changes for Emeralds 0.11.0 (May 29 2026)
+
+* Added `em add`, `em remove`, and `em uninstall` workflows for managing project modules and dependencies.
+  * `em add` now creates module source, header, and spec files, updates the aggregate project header, and wires the new module into the main spec runner.
+  * `em remove` reverses the generated module changes, including nested module paths.
+  * `em uninstall` removes dependencies from `em.json` and deletes the installed `libs/<name>` directory.
+* Added `em lint` with `lintignore`, and expanded `em list` to show both dependencies and project modules.
+* Generating `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, and `GEMINI.md` links.
+* Added generated default headers and license badges to initialized projects and new modules.
+* Changed dependency declarations to use full git repository links mapped to versions.
+  * `latest` clones the repository default branch.
+  * Release tags download and extract the tagged archive.
+  * `em install git <link>` adds and installs a dependency from a git link.
+* Added deployment and installer automation.
+  * Added `scripts/deploy.rb` for release deployment support.
+  * Added one-line install script support through `scripts/get.sh`.
+  * Added Scoop/Windows install handling, including Crystal/MSVC/Mingw setup.
+
 # Changes for Emeralds 0.10.0 (May 21 2026)
 
 * Added Windows support: installer, cross-platform paths, globs, and compiler defaults.
