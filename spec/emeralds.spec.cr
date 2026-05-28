@@ -1,5 +1,7 @@
 require "./spec_helper";
 
+require "./repo_name.spec";
+
 require "./IT/full-flow/step0-build.spec";
 require "./IT/full-flow/step1-em-init.spec";
 require "./IT/full-flow/step2-em-output.spec";

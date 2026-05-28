@@ -1,4 +1,5 @@
 require "colorize";
+require "compress/zip";
 require "file_utils";
 require "http/client";
 require "json";
@@ -18,6 +19,7 @@ require "./emeralds/commands/Init";
 require "./emeralds/commands/Install";
 require "./emeralds/commands/InstallAll";
 require "./emeralds/commands/InstallDev";
+require "./emeralds/commands/InstallGit";
 require "./emeralds/commands/License";
 require "./emeralds/commands/Lint";
 require "./emeralds/commands/List";

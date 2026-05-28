@@ -83,7 +83,7 @@ class Emeralds::Init < Emeralds::Command
       data << "  },\n";
       data << "  \"dependencies\": {},\n";
       data << "  \"dev-dependencies\": {\n";
-      data << "    \"cSpec\": \"Oblivious-Oblivious/cSpec\"\n";
+      data << "    \"https://github.com/Oblivious-Oblivious/cSpec\": \"latest\"\n";
       data << "  }\n";
       data << "}\n";
     end

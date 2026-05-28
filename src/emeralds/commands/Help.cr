@@ -15,7 +15,7 @@ class Emeralds::Help < Emeralds::Command
       puts "    clean                               - Run the clean script\n";
       puts "    help                                - Print this help message.\n";
       puts "    init [<name>]                       - Initialize a new library with an em.json file.\n";
-      puts "    install [ | dev | all]              - Install dependencies into a flattened libs directory.\n";
+      puts "    install [ | dev | all | git <link>] - Install dependencies into a flattened libs directory.\n";
       puts "    reinstall                           - Reinstall dependencies into a flattened libs directory.\n";
       puts "    uninstall [<name>]                  - Remove a dependency from em.json and libs.\n";
       puts "    list                                - List dependencies and project modules.\n";

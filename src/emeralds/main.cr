@@ -35,6 +35,8 @@ module Emeralds::Main
         InstallDev.new.run;
       elsif ARGV[1] == "all"
         InstallAll.new.run;
+      elsif ARGV[1] == "git" && ARGV.size >= 3
+        InstallGit.new(link: ARGV[2]).run;
       else
         Help.new.run;
       end

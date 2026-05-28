@@ -81,6 +81,59 @@ module Emeralds::Terminal
     puts "Could not clone #{repo_url} to #{repo_name}".colorize(:red);
   end
 
+  def self.repo_name(link)
+    File.basename link.strip.rchop('/').rchop(".git");
+  end
+
+  def self.download(url, output)
+    location = url;
+    5.times do
+      HTTP::Client.get location do |response|
+        if response.status.redirection? && (target = response.headers["location"]?)
+          location = target;
+        elsif response.success?
+          File.open(output, "w") { |file| IO.copy response.body_io, file; };
+          return true;
+        else
+          return false;
+        end
+      end
+    end
+    false;
+  end
+
+  def self.unzip(zip_path, dest_dir)
+    Compress::Zip::File.open zip_path do |zip|
+      zip.entries.each do |entry|
+        path = entry.filename.split('/', 2)[1]?;
+        next if path.nil? || path.empty?;
+        target = File.join dest_dir, path;
+        if entry.dir?
+          FileUtils.mkdir_p target;
+        else
+          FileUtils.mkdir_p File.dirname(target);
+          entry.open { |io| File.open(target, "w") { |file| IO.copy io, file; }; };
+        end
+      end
+    end
+  end
+
+  def self.fetch_release(link, version, dest_dir, display = false)
+    zip_path = "#{dest_dir}.zip";
+    tags = version.starts_with?("v") ? [version] : [version, "v#{version}"];
+
+    tags.each do |tag|
+      url = "#{link}/archive/refs/tags/#{tag}.zip";
+      puts "#{ARROW} download #{url}" if display;
+      next unless download url, zip_path;
+      unzip zip_path, dest_dir;
+      File.delete zip_path;
+      return;
+    end
+
+    puts "Could not download #{link} #{version}".colorize(:red);
+  end
+
   def self.find(path)
     matches = [] of String;
 
