@@ -1,6 +1,6 @@
 require "../../spec_helper";
 
-describe "step 7 - em reinstall / em uninstall" do
+describe "step 8 - em reinstall / em uninstall" do
   it "reinstalls the dependencies" do
     em("reinstall").should contain("Installing `cSpec`");
   end
@@ -11,6 +11,10 @@ describe "step 7 - em reinstall / em uninstall" do
 
   it "uninstalls cSpec" do
     em("uninstall cSpec").should contain("Removed `cSpec`");
+  end
+
+  it "removes the git dependency from em.json" do
+    File.read(File.join(PROJECT, "em.json")).should_not contain("https://github.com/Oblivious-Oblivious/cSpec.git");
   end
 
   it "fails the tests after uninstalling cSpec" do

@@ -13,5 +13,13 @@ describe Emeralds::Terminal do
     it "strips a .git suffix" do
       Emeralds::Terminal.repo_name("https://github.com/Oblivious-Oblivious/cSpec.git").should eq("cSpec");
     end
+
+    it "strips a .git suffix before a trailing slash" do
+      Emeralds::Terminal.repo_name("https://github.com/Oblivious-Oblivious/cSpec.git/").should eq("cSpec");
+    end
+
+    it "derives the name from an ssh link" do
+      Emeralds::Terminal.repo_name("git@github.com:Oblivious-Oblivious/cSpec.git").should eq("cSpec");
+    end
   end
 end

@@ -19,3 +19,7 @@ end
 def em_sandbox(args : String) : String
   run_em args, SANDBOX;
 end
+
+def em_at(args : String, dir : String) : String
+  run_em args, dir;
+end

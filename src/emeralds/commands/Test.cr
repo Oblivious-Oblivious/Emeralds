@@ -43,7 +43,7 @@ class Emeralds::Test < Emeralds::Command
         build_test;
       elsif Emfile.cspec_not_on_deps && Emfile.cspec_not_on_dev_deps
         puts "cSpec is not in the list of dependencies".colorize(:red);
-        puts "#{ARROW} Add the dependency like such:\ndev-dependencies:\n  cSpec: Oblivious-Oblivious/cSpec";
+        puts "#{ARROW} Add the dependency like such:\ndev-dependencies:\n  \"https://github.com/Oblivious-Oblivious/cSpec\": \"latest\"";
       else
         puts "Could not run tests becuase cSpec is not installed".colorize(:red);
         puts "#{ARROW} Please run `em install all`";
