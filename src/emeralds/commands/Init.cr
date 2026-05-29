@@ -100,7 +100,7 @@ class Emeralds::Init < Emeralds::Command
     puts "  #{ARROW} .gitignore";
 
     data = String.build do |data|
-      data << "#Prerequisites\n";
+      data << "# Prerequisites\n";
       data << "*.d\n\n";
 
       data << "# Object files\n";
@@ -148,6 +148,20 @@ class Emeralds::Init < Emeralds::Command
     end
 
     File.write ".gitignore", data;
+  end
+
+  private def write_gitattributes_file
+    puts "  #{ARROW} .gitattributes";
+
+    data = String.build do |data|
+      data << "# Auto detect text files and perform LF normalization\n";
+      data << "* text=auto\n\n";
+
+      data << "*.h linguist-language=C\n";
+      data << "*.c linguist-language=C\n";
+    end
+
+    File.write ".gitattributes", data;
   end
 
   private def create_clangd
@@ -488,6 +502,7 @@ class Emeralds::Init < Emeralds::Command
         create_clangd;
         create_clang_format;
         write_gitignore_file;
+        write_gitattributes_file;
         wget_license;
         generate_readme;
         write_agents_file;
