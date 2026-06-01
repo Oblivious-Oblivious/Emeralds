@@ -6,7 +6,7 @@ private def read_project_emfile
   File.read File.join(PROJECT, "em.json");
 end
 
-private def write_tag_project_emfile(version : String)
+private def write_tag_project_emfile(version)
   emfile_path = File.join TAG_PROJECT, "em.json";
   raw = File.read emfile_path;
   updated = raw.sub(
