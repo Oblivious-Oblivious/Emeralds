@@ -16,7 +16,7 @@ brew install Oblivious-Oblivious/tap/emeralds
 ### One-line install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/v0.11.5/scripts/get.sh | sh
+curl -fsSL https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/v0.11.6/scripts/get.sh | sh
 ```
 
 ### Windows with [scoop.sh](https://scoop.sh/).
