@@ -40,7 +40,7 @@ class Emeralds::Update < Emeralds::Command
       puts "#{ARROW} Updating via curl";
       Terminal.generic_cmd "curl -fsSL https://raw.githubusercontent.com/#{REPO}/v#{version}/scripts/get.sh | sh", display: true;
     else
-      puts "#{ARROW} Built from source; rebuild from the repository to update".colorize(:orange);
+      puts "#{ARROW} Built from source; rebuild from the repository to update".colorize(:yellow);
     end
   end
 
