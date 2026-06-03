@@ -478,6 +478,8 @@ class Emeralds::Init < Emeralds::Command
 
       data << "### Code Style\n\n";
 
+      data << "- Favor C89 compatibility by default; only use newer C features when\n";
+      data << "  explicitly told to.\n";
       data << "- `.clang-format` is authoritative. Don't override it.\n";
       data << "- `.clangd` provides editor intelligence.\n\n";
 
