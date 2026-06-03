@@ -31,7 +31,7 @@ class Emeralds::Update < Emeralds::Command
     case Emeralds::INSTALL_METHOD
     when "scoop"
       puts "#{ARROW} Updating via scoop";
-      Terminal.generic_cmd "scoop update emeralds", display: true;
+      Terminal.generic_cmd "powershell -NoProfile -Command \"scoop update emeralds\"", display: true;
     when "brew"
       puts "#{ARROW} Updating via brew";
       Terminal.generic_cmd "brew update", display: true;
