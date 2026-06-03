@@ -9,6 +9,8 @@ module Emeralds::Main
   end
 
   private def self.validated_script(action)
+    return nil unless File.exists?("em.json")
+
     scripts = Emfile.instance.scripts;
     return nil if scripts.nil?
 
