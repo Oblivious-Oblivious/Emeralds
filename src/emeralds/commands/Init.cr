@@ -356,6 +356,17 @@ class Emeralds::Init < Emeralds::Command
       data << "**Tradeoff:** These guidelines bias toward caution over speed. For trivial\n";
       data << "tasks, use judgment.\n\n";
 
+      data << "## 0. Non-negotiables\n\n";
+
+      data << "These override everything else:\n\n";
+
+      data << "1. **No flattery, no filler.** Start with the answer or action.\n";
+      data << "2. **Disagree when you disagree.** Never agree with false premises to be polite.\n";
+      data << "3. **Never fabricate.** If you don't know, read the file, run the command, or\n";
+      data << "   say so.\n";
+      data << "4. **Touch only what you must.** Every changed line must trace to the user's\n";
+      data << "   request.\n\n";
+
       data << "## 1. Think Before Coding\n\n";
 
       data << "**Don't assume. Don't hide confusion. Surface tradeoffs.**\n\n";
