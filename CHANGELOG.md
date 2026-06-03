@@ -1,3 +1,7 @@
+# Changes for Emeralds 0.12.0 (Jun 04 2026)
+
+* Added `em update` command for downloading the latest version of emeralds.
+
 # Changes for Emeralds 0.11.0 (May 29 2026)
 
 * Added `em add`, `em remove`, and `em uninstall` workflows for managing project modules and dependencies.
