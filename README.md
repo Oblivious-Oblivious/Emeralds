@@ -76,6 +76,7 @@ Commands:
     lint                                - Lint all project sources with clang-format.
     test                                - Run the script of tests.
     version                             - Print the current version of the emerald.
+    update                              - Update emeralds to the newest released version.
     license                             - Update the license notice based on the em.json value.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

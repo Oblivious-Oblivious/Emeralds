@@ -5,7 +5,7 @@ class Emeralds::Help < Emeralds::Command
 
   def block
     -> {
-      puts "Emeralds v#{Emeralds::VERSION}.\n\n";
+      puts "Emeralds v#{Emeralds::VERSION} (#{Emeralds::INSTALL_METHOD}).\n\n";
       puts "emeralds/em [<command>]\n\n";
       puts "Commands:\n";
       puts "    add [<name>]                        - Add a new .c/.h file pair\n";
@@ -24,6 +24,7 @@ class Emeralds::Help < Emeralds::Command
       puts "    lint                                - Lint all project sources with clang-format.\n";
       puts "    test                                - Run the script of tests.\n";
       puts "    version                             - Print the current version of the emerald.\n";
+      puts "    update                              - Update emeralds to the newest released version.\n";
       puts "    license                             - Update the license notice based on the em.json value.\n";
       if File.exists?("em.json")
         scripts = Emfile.instance.scripts;

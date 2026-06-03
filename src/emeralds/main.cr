@@ -1,6 +1,6 @@
 module Emeralds::Main
   private def self.ensure_em_json_or_init
-    if ARGV.size > 0 && ARGV[0] != "init" && !File.exists?("em.json")
+    if ARGV.size > 0 && ARGV[0] != "init" && ARGV[0] != "update" && !File.exists?("em.json")
       puts "#{ARROW} em.json not found. Please run emeralds init first.";
       exit 0;
     elsif ARGV.size == 0
@@ -88,6 +88,8 @@ module Emeralds::Main
       Test.new.run;
     when "lint"
       Lint.new.run;
+    when "update"
+      Update.new.run;
     when "version"
       Version.new.run;
     when "license"

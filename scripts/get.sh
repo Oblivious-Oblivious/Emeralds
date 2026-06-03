@@ -37,6 +37,7 @@ SRCDIR="$(find "$TMPDIR" -maxdepth 1 -type d -name 'Emeralds-*' | head -1)"
 
 cd "$SRCDIR"
 shards install
+export EM_INSTALL_METHOD=curl
 shards build --release --no-debug
 cp bin/emeralds bin/em
 cp bin/em bin/emeralds /usr/local/bin/

@@ -88,6 +88,7 @@ File.write(FORMULA, <<~RUBY);
     depends_on "crystal" => :build
 
     def install
+      ENV["EM_INSTALL_METHOD"] = "brew"
       system "shards", "build", "--release", "--no-debug"
       bin.install "bin/emeralds"
       bin.install_symlink bin/"emeralds" => "em"
@@ -132,6 +133,7 @@ File.write(
         "$env:PATH = \"$crystalDir\\bin;$env:PATH\"",
         "Push-Location (Join-Path $dir 'Emeralds-#{version}')",
         "shards install",
+        "$env:EM_INSTALL_METHOD = 'scoop'",
         "shards build --release --no-debug",
         "Copy-Item bin\\emeralds.exe ..\\emeralds.exe",
         "Copy-Item bin\\emeralds.exe ..\\em.exe",
