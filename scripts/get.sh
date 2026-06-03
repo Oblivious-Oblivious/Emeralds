@@ -40,6 +40,9 @@ shards install
 export EM_INSTALL_METHOD=curl
 shards build --release --no-debug
 cp bin/emeralds bin/em
-cp bin/em bin/emeralds /usr/local/bin/
+for b in em emeralds; do
+  cp "bin/$b" "/usr/local/bin/$b.new"
+  mv -f "/usr/local/bin/$b.new" "/usr/local/bin/$b"
+done
 echo "installed em and emeralds to /usr/local/bin"
 echo "run with 'em help' or 'emeralds help'"
