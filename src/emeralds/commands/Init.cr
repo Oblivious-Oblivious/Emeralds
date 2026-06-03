@@ -356,6 +356,17 @@ class Emeralds::Init < Emeralds::Command
       data << "**Tradeoff:** These guidelines bias toward caution over speed. For trivial\n";
       data << "tasks, use judgment.\n\n";
 
+      data << "## 0. Non-negotiables\n\n";
+
+      data << "These override everything else:\n\n";
+
+      data << "1. **No flattery, no filler.** Start with the answer or action.\n";
+      data << "2. **Disagree when you disagree.** Never agree with false premises to be polite.\n";
+      data << "3. **Never fabricate.** If you don't know, read the file, run the command, or\n";
+      data << "   say so.\n";
+      data << "4. **Touch only what you must.** Every changed line must trace to the user's\n";
+      data << "   request.\n\n";
+
       data << "## 1. Think Before Coding\n\n";
 
       data << "**Don't assume. Don't hide confusion. Surface tradeoffs.**\n\n";
@@ -467,8 +478,97 @@ class Emeralds::Init < Emeralds::Command
 
       data << "### Code Style\n\n";
 
+      data << "- Favor C89 compatibility by default; only use newer C features when\n";
+      data << "  explicitly told to.\n";
       data << "- `.clang-format` is authoritative. Don't override it.\n";
-      data << "- `.clangd` provides editor intelligence.\n";
+      data << "- `.clangd` provides editor intelligence.\n\n";
+
+      data << "# cSpec — Usage Reference\n\n";
+
+      data << "Single-header, C89, compile-time TDD/BDD unit testing (RSpec-style). No linking,\n";
+      data << "no runtime deps — just `#include \"libs/cSpec/export/cSpec.h\"`.\n\n";
+
+      data << "Convention: one module per `<name>.module.spec.h`, plus one `*.spec.c` runner\n";
+      data << "that includes them. Build/run with `em test`.\n\n";
+
+      data << "## Example\n\n";
+
+      data << "```c\n";
+      data << "/* stack.module.spec.h */\n";
+      data << "#include \"../src/cSpec.h\"\n\n";
+
+      data << "module(T_stack, {              /* defines void T_stack(void) */\n";
+      data << "  before_each(&setup);         /* void(void) ptr, runs around every `it` */\n";
+      data << "  after_each(&defer);\n\n";
+
+      data << "  describe(\"stack\", {\n";
+      data << "    int x;\n";
+      data << "    before({ x = 99; });       /* inlined ONCE here, not per-test */\n\n";
+
+      data << "    it(\"pops what it pushed\", {\n";
+      data << "      push(s, x);\n";
+      data << "      assert_that_int(pop(s) equals to x);\n";
+      data << "    });\n\n";
+
+      data << "    after({ /* one-time teardown */ });\n";
+      data << "  });\n";
+      data << "})\n\n";
+
+      data << "/* runner.spec.c */\n";
+      data << "int main(void) {\n";
+      data << "  cspec_run_suite(\"all\", {     /* \"all\" | \"passing\" | \"failing\" | \"skipped\" */\n";
+      data << "    T_stack();                 /* call each module */\n";
+      data << "  });\n";
+      data << "}\n";
+      data << "```\n\n";
+
+      data << "`cspec_run_suite(type, {...})`: all tests run; `type` only filters what prints.\n\n";
+
+      data << "## Structure\n\n";
+
+      data << "- `module(name, {...})` — top-level container; defines callable `name`.\n";
+      data << "- `describe(\"text\", {...})` / `context(...)` — groups (aliases); nest freely.\n";
+      data << "- `it(\"text\", {...})` — one test; independent; any failed assert fails it.\n\n";
+
+      data << "## Setup & teardown\n\n";
+
+      data << "- `before({...})` / `after({...})` — inlined **once** where written (block-level).\n";
+      data << "- `before_each(&fn)` / `after_each(&fn)` — `void fn(void)` run **around every `it`**.\n\n";
+
+      data << "## Assertions\n\n";
+
+      data << "```c\n";
+      data << "assert_that(expr);                  /* fail if false; nassert_that = fail if true */\n";
+      data << "assert_that(len is 0);              /* sugar: is -> ==,  isnot -> != */\n";
+      data << "fail(\"message\");                    /* always fails */\n\n";
+
+      data << "assert_that_int(got equals to 2);   /* typed equality; nassert_that_int negates */\n";
+      data << "assert_that_charptr(s equals to \"\"); /* charptr compares contents */\n";
+      data << "assert_that_int_array(got equals to want with array_size 5);\n";
+      data << "```\n\n";
+
+      data << "Typed `<type>` suffixes (each has 4 forms: `assert_that_<t>`, `nassert_that_<t>`,\n";
+      data << "`..._array`, `nassert..._array`):\n";
+      data << "`char`, `unsigned_char`, `short`, `unsigned_short`, `int`, `unsigned_int`,\n";
+      data << "`long`, `unsigned_long`, `long_long`, `unsigned_long_long`, `size_t`,\n";
+      data << "`ptrdiff_t`, `void_ptr`, `float`, `double`, `long_double`, `charptr`.\n\n";
+
+      data << "Sugar words: `is`=`==`, `isnot`=`!=`, `equals`=`,`, `array_size`=`,`,\n";
+      data << "`to`/`with`=nothing. So `assert_that_int(a equals to b)` is `assert_that_int(a, b)`.\n";
+      data << "Floats compare within `1E-12`; `void_ptr` compares addresses.\n\n";
+
+      data << "## Skipping\n\n";
+
+      data << "Prefix with `x` to skip (body not run, counts as skipped): `xmodule`,\n";
+      data << "`xdescribe`, `xcontext`, `xit`. Shown only under `\"all\"`/`\"skipped\"`.\n\n";
+
+      data << "## Gotchas\n\n";
+
+      data << "- **C89**: declare locals at top of each block; no `//` comments.\n";
+      data << "- `describe` state persists across `it`s unless reset in `before`.\n";
+      data << "- `before`/`after` are one-time, not per-test — use `before_each`/`after_each`.\n";
+      data << "- Runner string must be exactly `all`/`passing`/`failing`/`skipped`, else nothing runs.\n";
+      data << "- Failures auto-report `__FILE__:__LINE__`.\n";
     end
 
     File.write "AGENTS.md", data;
