@@ -157,10 +157,19 @@
         "release": {
           "$ref": "#/definitions/buildConfig"
         },
+        "dev": {
+          "$ref": "#/definitions/buildConfig"
         },
+        "stage": {
+          "$ref": "#/definitions/buildConfig"
         },
+        "preprod": {
+          "$ref": "#/definitions/buildConfig"
         },
+        "prod": {
+          "$ref": "#/definitions/buildConfig"
         }
+      }
     },
     "buildConfig": {
       "$ref": "#/definitions/compilerOptions",

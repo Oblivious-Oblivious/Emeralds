@@ -50,6 +50,14 @@ module Emeralds::Main
           BuildAppDebug.new.run;
         elsif ARGV[2] == "release"
           BuildAppRelease.new.run;
+        elsif ARGV[2] == "dev"
+          BuildAppDev.new.run;
+        elsif ARGV[2] == "stage"
+          BuildAppStage.new.run;
+        elsif ARGV[2] == "preprod"
+          BuildAppPreprod.new.run;
+        elsif ARGV[2] == "prod"
+          BuildAppProd.new.run;
         else
           Help.new.run;
         end
@@ -58,6 +66,14 @@ module Emeralds::Main
           BuildLibDebug.new.run;
         elsif ARGV[2] == "release"
           BuildLibRelease.new.run;
+        elsif ARGV[2] == "dev"
+          BuildLibDev.new.run;
+        elsif ARGV[2] == "stage"
+          BuildLibStage.new.run;
+        elsif ARGV[2] == "preprod"
+          BuildLibPreprod.new.run;
+        elsif ARGV[2] == "prod"
+          BuildLibProd.new.run;
         else
           Help.new.run;
         end

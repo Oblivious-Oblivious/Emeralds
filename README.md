@@ -62,7 +62,8 @@ emeralds/em [<command>]
 Commands:
     add [<name>]                        - Add a new .c/.h file pair
     remove [<name>]                     - Remove a .c/.h file pair
-    build [app | lib] [debug | release] - Build the application in the `export` directory.
+    build [app | lib] [profile]         - Build the project in the `export` directory.
+                                            profiles: debug, release, dev, stage, preprod, prod.
     run                                 - Run the compiled application.
     clean                               - Run the clean script
     help                                - Print this help message.
@@ -284,6 +285,10 @@ cat em.json
   - Platform keys can use Crystal-supported operating system flags (e.g., `win32`, `linux`, `darwin`, `unix`).
   - **debug**: Debug build compiler options as separate array items.
   - **release**: Release build compiler options as separate array items.
+  - **dev**: Development build compiler options as separate array items.
+  - **stage**: Staging build compiler options as separate array items.
+  - **preprod**: Pre-production build compiler options as separate array items.
+  - **prod**: Production build compiler options as separate array items.
 - **dependencies**: A table of dependencies required for the project to run. The key is the full git link to a repository and the value is the version: `latest` for the master branch, or a release tag (`0.3.2`) to fetch that specific archive.
 - **dev-dependencies**: A table of development dependencies **not** linked with the release version.
 

@@ -48,4 +48,20 @@ class Emeralds::CompileFlags
   def release
     selected_platform.release
   end
+
+  def dev
+    selected_platform.dev
+  end
+
+  def stage
+    selected_platform.stage
+  end
+
+  def preprod
+    selected_platform.preprod
+  end
+
+  def prod
+    selected_platform.prod
+  end
 end

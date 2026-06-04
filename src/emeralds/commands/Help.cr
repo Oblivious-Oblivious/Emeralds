@@ -10,7 +10,8 @@ class Emeralds::Help < Emeralds::Command
       puts "Commands:\n";
       puts "    add [<name>]                        - Add a new .c/.h file pair\n";
       puts "    remove [<name>]                     - Remove a .c/.h file pair\n";
-      puts "    build [app | lib] [debug | release] - Build the application in the `export` directory.\n";
+      puts "    build [app | lib] [<profile>]       - Build the project in the `export` directory.\n";
+      puts "                                            profiles: debug, release, dev, stage, preprod, prod.\n";
       puts "    run                                 - Run the compiled application.\n";
       puts "    clean                               - Run the clean script\n";
       puts "    help                                - Print this help message.\n";
