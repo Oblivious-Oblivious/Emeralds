@@ -30,8 +30,7 @@ class Emeralds::Update < Emeralds::Command
   private def update(version)
     case Emeralds::INSTALL_METHOD
     when "scoop"
-      puts "#{ARROW} Updating via scoop";
-      Terminal.generic_cmd "powershell -NoProfile -Command \"scoop update emeralds\"", display: true;
+      puts "#{ARROW} Run `scoop update emeralds` to update".colorize(:yellow);
     when "brew"
       puts "#{ARROW} Updating via brew";
       Terminal.generic_cmd "brew update", display: true;
