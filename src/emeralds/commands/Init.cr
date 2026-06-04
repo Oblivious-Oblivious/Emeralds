@@ -15,7 +15,7 @@ class Emeralds::Init < Emeralds::Command
     data = String.build do |data|
       data << "{\n";
       data << "  \"$schema\": \"https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/master/schema/em.schema.json\",\n";
-      data << "  \"author\": \"\",\n";
+      data << "  \"author\": \"#{Options.author}\",\n";
       data << "  \"name\": \"#{@name}\",\n";
       data << "  \"version\": \"0.0.1\",\n";
       data << "  \"license\": \"mit\",\n";
