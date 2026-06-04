@@ -10,7 +10,8 @@ class Emeralds::Help < Emeralds::Command
       puts "Commands:\n";
       puts "    add [<name>]                        - Add a new .c/.h file pair\n";
       puts "    remove [<name>]                     - Remove a .c/.h file pair\n";
-      puts "    build [app | lib] [debug | release] - Build the application in the `export` directory.\n";
+      puts "    build [app | lib] [<profile>]       - Build the project in the `export` directory.\n";
+      puts "                                            profiles: debug, release, dev, stage, preprod, prod.\n";
       puts "    run                                 - Run the compiled application.\n";
       puts "    clean                               - Run the clean script\n";
       puts "    help                                - Print this help message.\n";
@@ -26,6 +27,7 @@ class Emeralds::Help < Emeralds::Command
       puts "    version                             - Print the current version of the emerald.\n";
       puts "    update                              - Update emeralds to the newest released version.\n";
       puts "    license                             - Update the license notice based on the em.json value.\n";
+      puts "\n#{Options.usage}";
       if File.exists?("em.json")
         scripts = Emfile.instance.scripts;
         if scripts && !scripts.empty?

@@ -1,13 +1,19 @@
 class Emeralds::CompileFlags::PlatformConfig
   include JSON::Serializable;
 
-  property cc : String? = nil;
-  property debug : BuildConfig = BuildConfig.new;
-  property release : BuildConfig = BuildConfig.new;
+  property debug = [] of String;
+  property release = [] of String;
+  property dev = [] of String;
+  property stage = [] of String;
+  property preprod = [] of String;
+  property prod = [] of String;
 
   def initialize(
-    @cc : String? = nil,
-    @debug : BuildConfig = BuildConfig.new,
-    @release : BuildConfig = BuildConfig.new,
+    @debug = [] of String,
+    @release = [] of String,
+    @dev = [] of String,
+    @stage = [] of String,
+    @preprod = [] of String,
+    @prod = [] of String,
   ); end
 end

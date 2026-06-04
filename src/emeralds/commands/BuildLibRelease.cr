@@ -1,11 +1,11 @@
 class Emeralds::BuildLibRelease < Emeralds::Command
   def message
-    "Emeralds - Compiling as a library...";
+    "Emeralds - Compiling as a library in (release) mode...";
   end
 
   def block
     -> {
-      build_lib Emfile.instance.compile_flags.release;
+      Build.new.build_lib Emfile.instance.compile_flags.release;
     };
   end
 end

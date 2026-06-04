@@ -30,19 +30,8 @@ class Emeralds::CompileFlags
     puts "#{ARROW} Add options such as this under `compile-flags` in em.json:";
     puts %(
 "#{operating_system}": {
-  "cc": "cc",
-  "debug": {
-    "opt": "-O2",
-    "version": "-std=c89",
-    "flags": "-g",
-    "warnings": "-Wall"
-  },
-  "release": {
-    "opt": "-O2",
-    "version": "-std=c89",
-    "flags": "",
-    "warnings": ""
-  }
+  "debug": ["cc", "-O2", "-std=c89", "-g", "-Wall"],
+  "release": ["cc", "-O2", "-std=c89"]
 }
 );
     exit 0;
@@ -52,15 +41,27 @@ class Emeralds::CompileFlags
     current_platform[1] || missing_platform_config
   end
 
-  def cc
-    selected_platform.cc
-  end
-
   def debug
     selected_platform.debug
   end
 
   def release
     selected_platform.release
+  end
+
+  def dev
+    selected_platform.dev
+  end
+
+  def stage
+    selected_platform.stage
+  end
+
+  def preprod
+    selected_platform.preprod
+  end
+
+  def prod
+    selected_platform.prod
   end
 end

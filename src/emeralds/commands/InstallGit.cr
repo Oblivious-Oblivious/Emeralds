@@ -25,7 +25,7 @@ class Emeralds::InstallGit < Emeralds::Command
     -> {
       Terminal.mkdir "libs";
       add_dependency @link;
-      install_deps({@link => "latest"});
+      Build.new.install_deps({@link => "latest"});
     };
   end
 end

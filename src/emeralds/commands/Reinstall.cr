@@ -7,8 +7,9 @@ class Emeralds::Reinstall < Emeralds::Command
     -> {
       Terminal.rm "libs";
       Terminal.mkdir "libs";
-      install_deps Emfile.instance.dependencies;
-      install_deps Emfile.instance.dev_dependencies;
+      build = Build.new;
+      build.install_deps Emfile.instance.dependencies;
+      build.install_deps Emfile.instance.dev_dependencies;
     };
   end
 end

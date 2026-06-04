@@ -3,15 +3,25 @@ require "compress/zip";
 require "file_utils";
 require "http/client";
 require "json";
+require "option_parser";
 
 require "./emeralds/extensions/Hash+sanitize";
 
 require "./emeralds/commands/Command";
 require "./emeralds/commands/Add";
+require "./emeralds/commands/Build";
 require "./emeralds/commands/BuildAppDebug";
 require "./emeralds/commands/BuildAppRelease";
+require "./emeralds/commands/BuildAppDev";
+require "./emeralds/commands/BuildAppStage";
+require "./emeralds/commands/BuildAppPreprod";
+require "./emeralds/commands/BuildAppProd";
 require "./emeralds/commands/BuildLibDebug";
 require "./emeralds/commands/BuildLibRelease";
+require "./emeralds/commands/BuildLibDev";
+require "./emeralds/commands/BuildLibStage";
+require "./emeralds/commands/BuildLibPreprod";
+require "./emeralds/commands/BuildLibProd";
 require "./emeralds/commands/Clean";
 require "./emeralds/commands/GenerateMakefile";
 require "./emeralds/commands/Help";
@@ -38,12 +48,12 @@ require "./emeralds/constants/operating_systems";
 require "./emeralds/constants/repository";
 require "./emeralds/constants/version";
 
-require "./emeralds/emfile/BuildConfig";
 require "./emeralds/emfile/CompileFlags";
 require "./emeralds/emfile/PlatformConfig";
 require "./emeralds/emfile/Ignore";
 require "./emeralds/emfile/Emfile";
 
+require "./emeralds/modules/Options";
 require "./emeralds/modules/Terminal";
 
 require "./emeralds/main";

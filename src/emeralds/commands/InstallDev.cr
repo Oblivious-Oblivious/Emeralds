@@ -6,7 +6,7 @@ class Emeralds::InstallDev < Emeralds::Command
   def block
     -> {
       Terminal.mkdir "libs";
-      install_deps Emfile.instance.dev_dependencies;
+      Build.new.install_deps Emfile.instance.dev_dependencies;
     };
   end
 end

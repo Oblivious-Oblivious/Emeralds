@@ -151,43 +151,34 @@
       "description": "Compiler configuration for one operating system.",
       "additionalProperties": false,
       "properties": {
-        "cc": {
-          "type": "string",
-          "description": "The C compiler to use."
-        },
         "debug": {
           "$ref": "#/definitions/buildConfig"
         },
         "release": {
           "$ref": "#/definitions/buildConfig"
+        },
+        "dev": {
+          "$ref": "#/definitions/buildConfig"
+        },
+        "stage": {
+          "$ref": "#/definitions/buildConfig"
+        },
+        "preprod": {
+          "$ref": "#/definitions/buildConfig"
+        },
+        "prod": {
+          "$ref": "#/definitions/buildConfig"
         }
       }
     },
     "buildConfig": {
-      "type": "object",
-      "description": "Compiler flags for one build mode.",
-      "additionalProperties": false,
-      "properties": {
-        "opt": {
-          "type": "string",
-          "description": "Optimization flag."
-        },
-        "version": {
-          "type": "string",
-          "description": "C standard flag."
-        },
-        "flags": {
-          "type": "string",
-          "description": "Additional compiler flags."
-        },
-        "warnings": {
-          "type": "string",
-          "description": "Warning flags."
-        },
-        "libs": {
-          "type": "string",
-          "description": "Additional linked libraries."
-        }
+      "$ref": "#/definitions/compilerOptions",
+      "description": "Compiler flags for one build mode."
+    },
+    "compilerOptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
       }
     }
   }
