@@ -4,24 +4,20 @@ class Emeralds::Test < Emeralds::Command
       print "#{ARROW} ";
       puts "No main spec file found".colorize(:red);
     else
-      driver = msvc? ? "#{Emfile.instance.compile_flags.cc} /nologo" : Emfile.instance.compile_flags.cc.to_s;
-      std_flag = msvc? ? "/std:clatest" : "-std=c2x";
-      out_target = msvc? ? "#{Terminal.output_test}.exe" : Terminal.output_test;
-      out_flag = msvc? ? "/Fe:#{out_target}" : "-o #{out_target}";
+      compile_flags = Emfile.instance.compile_flags.debug;
+      std_flag = msvc?(compile_flags) ? "/std:clatest" : "-std=c2x";
+      out_target = msvc?(compile_flags) ? "#{Terminal.output_test}.exe" : Terminal.output_test;
+      out_flag = msvc?(compile_flags) ? "/Fe:#{out_target}" : "-o #{out_target}";
       Terminal.generic_cmd "\
-        #{driver} \
-        #{Emfile.instance.compile_flags.debug.opt} \
+        #{compile_flags.join(' ')} \
         #{std_flag} \
-        #{Emfile.instance.compile_flags.debug.flags} \
-        #{Emfile.instance.compile_flags.debug.warnings} \
         #{Terminal.deps_includes} \
         #{out_flag} \
         #{Terminal.deps_for_test} \
         #{Terminal.sources_test} \
         #{Terminal.input_test} \
-        #{Emfile.instance.compile_flags.debug.libs} \
       ", display: true;
-      if msvc?
+      if msvc? compile_flags
         Terminal.rm Terminal.find(File.join(".", "*.obj"));
         Terminal.rm Terminal.find(File.join(".", "*.pdb"));
       end

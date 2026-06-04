@@ -45,8 +45,8 @@ abstract class Emeralds::Command
     "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".colorize(:dark_gray);
   end
 
-  private def msvc?
-    (Emfile.instance.compile_flags.cc || "").matches?(/\Acl(\.exe)?\z/i);
+  private def msvc?(compile_flags)
+    (compile_flags.first? || "").matches?(/\Acl(\.exe)?\z/i);
   end
 
   private def move_headers_to_export
@@ -85,22 +85,16 @@ abstract class Emeralds::Command
       print "#{ARROW} ";
       puts "No main file found".colorize(:red);
     else
-      driver = msvc? ? "#{Emfile.instance.compile_flags.cc} /nologo" : Emfile.instance.compile_flags.cc.to_s;
-      out_flag = msvc? ? "/Fe:#{Terminal.output_app}" : "-o #{Terminal.output_app}";
+      out_flag = msvc?(compile_flags) ? "/Fe:#{Terminal.output_app}" : "-o #{Terminal.output_app}";
       Terminal.generic_cmd "\
-        #{driver} \
-        #{compile_flags.opt} \
-        #{compile_flags.version} \
-        #{compile_flags.flags} \
-        #{compile_flags.warnings} \
+        #{compile_flags.join(' ')} \
         #{Terminal.deps_includes} \
         #{out_flag} \
         #{Terminal.deps_release} \
         #{Terminal.sources_app} \
         #{Terminal.input_app} \
-        #{compile_flags.libs} \
       ", display: true;
-      if msvc?
+      if msvc? compile_flags
         Terminal.rm Terminal.find(File.join(".", "*.obj"));
         Terminal.rm Terminal.find(File.join(".", "*.pdb"));
       end
@@ -108,26 +102,22 @@ abstract class Emeralds::Command
   end
 
   def build_lib(compile_flags, display = true)
-    cc = Emfile.instance.compile_flags.cc;
-    opt = compile_flags.opt;
-    version = compile_flags.version;
-    flags = compile_flags.flags;
-    warnings = compile_flags.warnings;
-    deps = Terminal.deps_release;
+    cc = compile_flags.first?;
+    options = compile_flags.join(' ');
     includes = Terminal.deps_includes;
     sources = Terminal.sources_lib;
-    release_out = msvc? ? "#{Emfile.instance.name}.lib" : Terminal.output_lib;
-    test_out = msvc? ? "#{Emfile.instance.name}.test.lib" : "#{Terminal.output_lib}.test";
+    release_out = msvc?(compile_flags) ? "#{Emfile.instance.name}.lib" : Terminal.output_lib;
+    test_out = msvc?(compile_flags) ? "#{Emfile.instance.name}.test.lib" : "#{Terminal.output_lib}.test";
     if !sources.empty?
-      if msvc?
-        Terminal.generic_cmd "#{cc} /nologo #{opt} #{version} #{flags} #{warnings} #{includes} /c #{sources}", display: display;
+      if msvc? compile_flags
+        Terminal.generic_cmd "#{options} #{includes} /c #{sources}", display: display;
         Terminal.generic_cmd "lib /nologo /OUT:#{release_out} *.obj", display: display;
-        Terminal.generic_cmd "#{cc} /nologo #{opt} /std:clatest #{flags} #{warnings} #{includes} /c #{sources}", display: display;
+        Terminal.generic_cmd "#{options} /std:clatest #{includes} /c #{sources}", display: display;
         Terminal.generic_cmd "lib /nologo /OUT:#{test_out} *.obj", display: display;
       else
-        Terminal.generic_cmd "#{cc} #{opt} #{version} #{flags} #{warnings} #{includes} -c #{sources}", display: display;
+        Terminal.generic_cmd "#{options} #{includes} -c #{sources}", display: display;
         Terminal.generic_cmd "#{cc} -o #{release_out} -r *.o", display: display;
-        Terminal.generic_cmd "#{cc} #{opt} -std=c2x #{flags} #{warnings} #{includes} -c #{sources}", display: display;
+        Terminal.generic_cmd "#{options} -std=c2x #{includes} -c #{sources}", display: display;
         Terminal.generic_cmd "#{cc} -o #{test_out} -r *.o", display: display;
       end
     end

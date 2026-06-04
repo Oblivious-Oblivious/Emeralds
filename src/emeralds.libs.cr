@@ -38,7 +38,6 @@ require "./emeralds/constants/operating_systems";
 require "./emeralds/constants/repository";
 require "./emeralds/constants/version";
 
-require "./emeralds/emfile/BuildConfig";
 require "./emeralds/emfile/CompileFlags";
 require "./emeralds/emfile/PlatformConfig";
 require "./emeralds/emfile/Ignore";

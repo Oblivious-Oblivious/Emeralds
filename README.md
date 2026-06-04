@@ -243,55 +243,16 @@ cat em.json
   "scripts": {},
   "compile-flags": {
     "darwin": {
-      "cc": "clang",
-      "debug": {
-        "opt": "-O2",
-        "version": "-std=c89",
-        "flags": "-g -fsanitize=address",
-        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic",
-        "libs": ""
-      },
-      "release": {
-        "opt": "-O2",
-        "version": "-std=c89",
-        "flags": "",
-        "warnings": "",
-        "libs": ""
-      }
+      "debug": ["clang", "-O2", "-std=c89", "-g", "-fsanitize=address", "-Wall", "-Wextra", "-Werror", "-pedantic", "-pedantic-errors", "-Wpedantic"],
+      "release": ["clang", "-O2", "-std=c89"]
     },
     "linux": {
-      "cc": "gcc",
-      "debug": {
-        "opt": "-Og",
-        "version": "-std=c89",
-        "flags": "-g",
-        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic",
-        "libs": ""
-      },
-      "release": {
-        "opt": "-O2",
-        "version": "-std=c89",
-        "flags": "",
-        "warnings": "",
-        "libs": ""
-      }
+      "debug": ["gcc", "-O2", "-std=c89", "-g", "-Wall", "-Wextra", "-Werror", "-pedantic", "-pedantic-errors", "-Wpedantic"],
+      "release": ["gcc", "-O2", "-std=c89"]
     },
     "win32": {
-      "cc": "gcc",
-      "debug": {
-        "opt": "-O2",
-        "version": "-std=c89",
-        "flags": "-g",
-        "warnings": "-Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic",
-        "libs": ""
-      },
-      "release": {
-        "opt": "-O2",
-        "version": "-std=c89",
-        "flags": "",
-        "warnings": "",
-        "libs": ""
-      }
+      "debug": ["gcc", "-O2", "-std=c89", "-g", "-Wall", "-Wextra", "-Werror", "-pedantic", "-pedantic-errors", "-Wpedantic"],
+      "release": ["gcc", "-O2", "-std=c89"]
     }
   },
   "dependencies": {},
@@ -321,14 +282,8 @@ cat em.json
 - **lintignore**: Extensions and project-relative directories ignored by `em lint`.
 - **compile-flags**: The set of compiler flags.
   - Platform keys can use Crystal-supported operating system flags (e.g., `win32`, `linux`, `darwin`, `unix`).
-  - **cc**: The C compiler to use for that platform.
-  - **debug**: Debug build flags for that platform.
-  - **release**: Release build flags for that platform.
-    - **opt**: Optimization level (e.g., -Og, -O0).
-    - **version**: The C standard to use (e.g., -std=c89, -std=c11).
-    - **flags**: Additional compiler flags (e.g., -g -fsanitize=address).
-    - **warnings**: Warning flags to enable (e.g., -Wall -Wextra).
-    - **libs** Additional linked static or shared libraries.
+  - **debug**: Debug build compiler options as separate array items.
+  - **release**: Release build compiler options as separate array items.
 - **dependencies**: A table of dependencies required for the project to run. The key is the full git link to a repository and the value is the version: `latest` for the master branch, or a release tag (`0.3.2`) to fetch that specific archive.
 - **dev-dependencies**: A table of development dependencies **not** linked with the release version.
 
