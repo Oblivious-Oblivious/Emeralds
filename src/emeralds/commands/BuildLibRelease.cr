@@ -5,7 +5,7 @@ class Emeralds::BuildLibRelease < Emeralds::Command
 
   def block
     -> {
-      build_lib Emfile.instance.compile_flags.release;
+      Build.new.build_lib Emfile.instance.compile_flags.release;
     };
   end
 end

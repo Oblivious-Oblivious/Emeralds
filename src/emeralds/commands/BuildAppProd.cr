@@ -5,7 +5,7 @@ class Emeralds::BuildAppProd < Emeralds::Command
 
   def block
     -> {
-      build_app Emfile.instance.compile_flags.prod;
+      Build.new.build_app Emfile.instance.compile_flags.prod;
     };
   end
 end

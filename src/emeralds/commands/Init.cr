@@ -564,7 +564,7 @@ class Emeralds::Init < Emeralds::Command
         create_clang_format;
         write_gitignore_file;
         write_gitattributes_file;
-        wget_license;
+        License.new.wget_license;
         generate_readme;
         write_agents_file;
         create_agents_symlinks;

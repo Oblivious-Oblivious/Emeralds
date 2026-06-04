@@ -5,9 +5,10 @@ class Emeralds::Test < Emeralds::Command
       puts "No main spec file found".colorize(:red);
     else
       compile_flags = Emfile.instance.compile_flags.debug;
-      std_flag = msvc?(compile_flags) ? "/std:clatest" : "-std=c2x";
-      out_target = msvc?(compile_flags) ? "#{Terminal.output_test}.exe" : Terminal.output_test;
-      out_flag = msvc?(compile_flags) ? "/Fe:#{out_target}" : "-o #{out_target}";
+      build = Build.new;
+      std_flag = build.msvc?(compile_flags) ? "/std:clatest" : "-std=c2x";
+      out_target = build.msvc?(compile_flags) ? "#{Terminal.output_test}.exe" : Terminal.output_test;
+      out_flag = build.msvc?(compile_flags) ? "/Fe:#{out_target}" : "-o #{out_target}";
       Terminal.generic_cmd "\
         #{compile_flags.join(' ')} \
         #{std_flag} \
@@ -17,7 +18,7 @@ class Emeralds::Test < Emeralds::Command
         #{Terminal.sources_test} \
         #{Terminal.input_test} \
       ", display: true;
-      if msvc? compile_flags
+      if build.msvc? compile_flags
         Terminal.rm Terminal.find(File.join(".", "*.obj"));
         Terminal.rm Terminal.find(File.join(".", "*.pdb"));
       end

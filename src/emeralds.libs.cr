@@ -9,6 +9,7 @@ require "./emeralds/extensions/Hash+sanitize";
 
 require "./emeralds/commands/Command";
 require "./emeralds/commands/Add";
+require "./emeralds/commands/Build";
 require "./emeralds/commands/BuildAppDebug";
 require "./emeralds/commands/BuildAppRelease";
 require "./emeralds/commands/BuildAppDev";

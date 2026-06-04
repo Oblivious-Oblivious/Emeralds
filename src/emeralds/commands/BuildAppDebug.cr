@@ -5,7 +5,7 @@ class Emeralds::BuildAppDebug < Emeralds::Command
 
   def block
     -> {
-      build_app Emfile.instance.compile_flags.debug;
+      Build.new.build_app Emfile.instance.compile_flags.debug;
     };
   end
 end
