@@ -3,6 +3,7 @@ require "compress/zip";
 require "file_utils";
 require "http/client";
 require "json";
+require "option_parser";
 
 require "./emeralds/extensions/Hash+sanitize";
 
@@ -51,6 +52,7 @@ require "./emeralds/emfile/PlatformConfig";
 require "./emeralds/emfile/Ignore";
 require "./emeralds/emfile/Emfile";
 
+require "./emeralds/modules/Options";
 require "./emeralds/modules/Terminal";
 
 require "./emeralds/main";

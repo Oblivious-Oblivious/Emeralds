@@ -27,6 +27,7 @@ class Emeralds::Help < Emeralds::Command
       puts "    version                             - Print the current version of the emerald.\n";
       puts "    update                              - Update emeralds to the newest released version.\n";
       puts "    license                             - Update the license notice based on the em.json value.\n";
+      puts "\n#{Options.usage}";
       if File.exists?("em.json")
         scripts = Emfile.instance.scripts;
         if scripts && !scripts.empty?

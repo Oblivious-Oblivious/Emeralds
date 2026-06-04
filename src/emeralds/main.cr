@@ -128,6 +128,7 @@ module Emeralds::Main
   end
 
   def self.run
+    Options.parse_args;
     ensure_em_json_or_init;
 
     action = ARGV[0];
