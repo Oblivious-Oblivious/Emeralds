@@ -1,4 +1,4 @@
 module Emeralds
-  VERSION = "0.12.2";
+  VERSION = "0.12.3";
   INSTALL_METHOD = {{ env("EM_INSTALL_METHOD") || "source" }};
 end

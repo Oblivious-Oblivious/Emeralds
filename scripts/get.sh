@@ -2,7 +2,7 @@
 set -e
 
 REPO="Oblivious-Oblivious/Emeralds"
-VERSION="0.12.2"
+VERSION="0.12.3"
 URL="https://github.com/${REPO}/archive/refs/tags/v${VERSION}.tar.gz"
 
 install_crystal() {
