@@ -14,7 +14,7 @@ class Emeralds::Build
     Terminal.rm Terminal.find(File.join(".", "*.pdb"));
     Terminal.mv Terminal.find(File.join(".", "*.a")), "export";
     Terminal.mv Terminal.find(File.join(".", "*.a.test")), "export";
-    Terminal.mv Terminal.find(File.join(".", "*.lib")).reject { |p| p.ends_with?(".test.lib") }, "export";
+    Terminal.mv Terminal.find(File.join(".", "*.lib")).reject(&.ends_with?(".test.lib")), "export";
     Terminal.mv Terminal.find(File.join(".", "*.test.lib")), "export";
   end
 
@@ -118,7 +118,7 @@ class Emeralds::Build
 
     clone_count.times { clones.receive; };
 
-    pending_deps.each do |key, value|
+    pending_deps.each do |key, _|
       name = Terminal.repo_name key;
       if File.exists? (File.join "libs", name)
         emfile_path = File.join "libs", name, "em.json";

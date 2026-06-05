@@ -12,7 +12,7 @@ class Emeralds::GenerateMakefile < Emeralds::Command
 
       puts "  #{ARROW} Makefile";
 
-      data = String.build do |data|
+      result = String.build do |_data|
       #   data << "NAME = #{Emeralds.opt["name"]}\n\n";
 
       #   data << "CC = #{Emeralds.opt["cc"]}\n";
@@ -78,7 +78,7 @@ class Emeralds::GenerateMakefile < Emeralds::Command
       #     data << "$(RM) -r export *.dSYM\n\n";
       end
 
-      File.write "Makefile", data;
+      File.write "Makefile", result;
     };
   end
 end

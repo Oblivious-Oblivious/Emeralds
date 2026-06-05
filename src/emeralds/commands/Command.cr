@@ -16,12 +16,12 @@ abstract class Emeralds::Command
     stripped = name.strip;
     parts = stripped.split('/');
     unless stripped.empty?
-      if(
+      if
         stripped.matches?(FORBIDDEN_NAME_CHARS) ||
         parts.any?(&.empty?) ||
         parts.any?(&.matches?(DOT_ONLY_NAME)) ||
         parts.any?(&.matches?(WINDOWS_RESERVED_NAMES))
-      )
+
         puts "Invalid name: #{name}.".colorize(:red);
         exit 0;
       end

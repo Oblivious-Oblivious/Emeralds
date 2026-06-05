@@ -36,7 +36,7 @@ class Emeralds::Lint < Emeralds::Command
         .glob("**/*.c", "**/*.h")
         .map { |file| Path[file].to_posix.to_s }
         .reject { |file| ignored? file }
-        .sort;
+        .sort!;
 
       if files.empty?
         puts "#{ARROW} No source files found".colorize(:red);
