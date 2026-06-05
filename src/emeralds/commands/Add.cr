@@ -3,14 +3,20 @@ class Emeralds::Add < Emeralds::Command
   @file_name = "";
   @dir_name = "";
   @header_only = false;
+  @source_only = false;
 
   def initialize(name = "", @silent = false)
     super name, @silent;
+    if @name.empty?
+      puts "Invalid name: #{name}.".colorize(:red);
+      exit 0;
+    end
     @header_only = @name.ends_with? ".h";
-    @base_name = @header_only ? @name.rchop(".h") : @name;
+    @source_only = @name.ends_with? ".c";
+    @base_name = @header_only ? @name.rchop(".h") : @source_only ? @name.rchop(".c") : @name;
     @file_name = File.basename @base_name;
     @dir_name = File.dirname @base_name;
-    @dir_name = @base_name if @dir_name == "." && !@header_only;
+    @dir_name = @base_name if @dir_name == "." && !@header_only && !@source_only;
     @dir_name = "" if @dir_name == ".";
     @func_name = @base_name.gsub(/[\s\/-]+/, "_");
   end
@@ -34,6 +40,17 @@ class Emeralds::Add < Emeralds::Command
   private def from_spec(path)
     depth = 1 + (@dir_name.empty? ? 0 : @dir_name.split('/').size);
     File.join(Array.new(depth, "..") + [path]);
+  end
+
+  private def target_files
+    return [path("src", "c")] if @source_only;
+    files = [path("src", "h"), File.join("spec", @dir_name, "#{@file_name}.module.spec.h")];
+    files.unshift path("src", "c") unless @header_only;
+    files;
+  end
+
+  private def reserved?
+    @dir_name.empty? && @file_name == Emfile.instance.name;
   end
 
   private def write_c_file
@@ -130,14 +147,27 @@ class Emeralds::Add < Emeralds::Command
 
   def block
     -> {
+      if reserved?
+        puts "#{ARROW} #{@name} is reserved by the project.".colorize(:yellow);
+        exit 0;
+      end
+
+      unless target_files.none? { |file| File.exists? file }
+        puts "#{ARROW} #{@name} already exists.".colorize(:yellow);
+        exit 0;
+      end
+
       puts "#{ARROW} #{@name}" unless @silent;
       Terminal.mkdir (File.join "src", @dir_name);
       write_c_file unless @header_only;
-      write_h_file;
-      update_app_header;
-      Terminal.mkdir (File.join "spec", @dir_name);
-      write_spec_file;
-      update_spec_main;
+
+      unless @source_only
+        write_h_file;
+        update_app_header;
+        Terminal.mkdir (File.join "spec", @dir_name);
+        write_spec_file;
+        update_spec_main;
+      end
     };
   end
 end

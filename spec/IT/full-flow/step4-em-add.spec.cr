@@ -55,4 +55,41 @@ describe "step 4 - em add / em remove" do
     File.exists?(File.join(PROJECT, "src", "module", "file.h")).should be_false;
     File.exists?(File.join(PROJECT, "spec", "module", "file.module.spec.h")).should be_false;
   end
+
+  it "adds only a flat source file given a .c extension" do
+    em("add four.c").should contain("four.c");
+    File.exists?(File.join(PROJECT, "src", "four.c")).should be_true;
+    File.exists?(File.join(PROJECT, "src", "four.h")).should be_false;
+    File.exists?(File.join(PROJECT, "src", "four", "four.c")).should be_false;
+    File.exists?(File.join(PROJECT, "spec", "four.module.spec.h")).should be_false;
+
+    em("remove four.c").should contain("four.c");
+    File.exists?(File.join(PROJECT, "src", "four.c")).should be_false;
+  end
+
+  it "refuses to add or remove the top-level project source and header" do
+    em("add __testing__.c").should contain("reserved");
+    em("add __testing__.h").should contain("reserved");
+    File.exists?(File.join(PROJECT, "src", "__testing__.c")).should be_true;
+    File.exists?(File.join(PROJECT, "src", "__testing__.h")).should be_true;
+
+    em("remove __testing__.c").should contain("reserved");
+    em("remove __testing__.h").should contain("reserved");
+    File.exists?(File.join(PROJECT, "src", "__testing__.c")).should be_true;
+    File.exists?(File.join(PROJECT, "src", "__testing__.h")).should be_true;
+  end
+
+  it "rejects an empty module name" do
+    em_raw(["add", ""]).should contain("Invalid name");
+    em_raw(["remove", ""]).should contain("Invalid name");
+  end
+
+  it "still allows a subfolder module that shares the project name" do
+    em("add __testing__").should_not contain("reserved");
+    File.exists?(File.join(PROJECT, "src", "__testing__", "__testing__.c")).should be_true;
+    File.exists?(File.join(PROJECT, "src", "__testing__", "__testing__.h")).should be_true;
+
+    em("remove __testing__").should_not contain("reserved");
+    File.exists?(File.join(PROJECT, "src", "__testing__", "__testing__.c")).should be_false;
+  end
 end

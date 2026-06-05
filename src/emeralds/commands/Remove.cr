@@ -3,14 +3,20 @@ class Emeralds::Remove < Emeralds::Command
   @file_name = "";
   @dir_name = "";
   @header_only = false;
+  @source_only = false;
 
   def initialize(name = "", @silent = false)
     super name, @silent;
+    if @name.empty?
+      puts "Invalid name: #{name}.".colorize(:red);
+      exit 0;
+    end
     @header_only = @name.ends_with? ".h";
-    @base_name = @header_only ? @name.rchop(".h") : @name;
+    @source_only = @name.ends_with? ".c";
+    @base_name = @header_only ? @name.rchop(".h") : @source_only ? @name.rchop(".c") : @name;
     @file_name = File.basename @base_name;
     @dir_name = File.dirname @base_name;
-    @dir_name = @base_name if @dir_name == "." && !@header_only;
+    @dir_name = @base_name if @dir_name == "." && !@header_only && !@source_only;
     @dir_name = "" if @dir_name == ".";
     @func_name = @base_name.gsub(/[\s\/-]+/, "_");
   end
@@ -25,6 +31,17 @@ class Emeralds::Remove < Emeralds::Command
 
   private def spec_include_path
     @dir_name.empty? ? "#{@file_name}.module.spec.h" : "#{@dir_name}/#{@file_name}.module.spec.h";
+  end
+
+  private def target_files
+    return [path("src", "c")] if @source_only;
+    files = [path("src", "h"), File.join("spec", @dir_name, "#{@file_name}.module.spec.h")];
+    files.unshift path("src", "c") unless @header_only;
+    files;
+  end
+
+  private def reserved?
+    @dir_name.empty? && @file_name == Emfile.instance.name;
   end
 
   private def remove_empty_parents(path, stop)
@@ -72,19 +89,35 @@ class Emeralds::Remove < Emeralds::Command
 
   def block
     -> {
+      if reserved?
+        puts "#{ARROW} #{@name} is reserved by the project.".colorize(:yellow);
+        exit 0;
+      end
+
+      if target_files.none? { |file| File.exists? file }
+        puts "#{ARROW} #{@name} does not exist".colorize(:yellow);
+        exit 0;
+      end
+
       puts "#{ARROW} #{@name.colorize(:red)}";
-      unless @header_only
+
+      if @source_only
         puts "  #{ARROW} #{@base_name}.c";
         Terminal.rm path("src", "c");
+      else
+        unless @header_only
+          puts "  #{ARROW} #{@base_name}.c";
+          Terminal.rm path("src", "c");
+        end
+        puts "  #{ARROW} #{include_path("h")}";
+        Terminal.rm path("src", "h");
+        remove_empty_parents File.join("src", @dir_name), "src";
+        update_app_header;
+        puts "  #{ARROW} #{@base_name}.module.spec.h";
+        Terminal.rm File.join("spec", @dir_name, "#{@file_name}.module.spec.h");
+        remove_empty_parents File.join("spec", @dir_name), "spec";
+        update_spec_main;
       end
-      puts "  #{ARROW} #{include_path("h")}";
-      Terminal.rm path("src", "h");
-      remove_empty_parents File.join("src", @dir_name), "src";
-      update_app_header;
-      puts "  #{ARROW} #{@base_name}.module.spec.h";
-      Terminal.rm File.join("spec", @dir_name, "#{@file_name}.module.spec.h");
-      remove_empty_parents File.join("spec", @dir_name), "spec";
-      update_spec_main;
     };
   end
 end
