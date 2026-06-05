@@ -20,6 +20,6 @@
     "spec": "em test",
     "document": "rm -rf ./docs && crystal docs src/*.cr",
     "clean": "rm -f bin/em bin/emeralds bin/*.dwarf",
-    "deploy": "./scripts/deploy.rb"
+    "deploy": "ruby scripts/deploy.rb"
   }
 }
