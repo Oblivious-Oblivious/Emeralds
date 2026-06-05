@@ -4,8 +4,8 @@ class Emeralds::Build
 
   private def move_headers_to_export
     Terminal.cp (File.join "src", "*"), "export";
-    Terminal.rm (File.join "export", "*.c");
-    Terminal.rm (File.join "export", "**", "*.c");
+    Terminal.rm(File.join "export", "*.c");
+    Terminal.rm(File.join "export", "**", "*.c");
   end
 
   private def remove_objects_and_move_static_libs_to_export
@@ -14,7 +14,7 @@ class Emeralds::Build
     Terminal.rm Terminal.find(File.join(".", "*.pdb"));
     Terminal.mv Terminal.find(File.join(".", "*.a")), "export";
     Terminal.mv Terminal.find(File.join(".", "*.a.test")), "export";
-    Terminal.mv Terminal.find(File.join(".", "*.lib")).reject { |p| p.ends_with?(".test.lib") }, "export";
+    Terminal.mv Terminal.find(File.join(".", "*.lib")).reject(&.ends_with?(".test.lib")), "export";
     Terminal.mv Terminal.find(File.join(".", "*.test.lib")), "export";
   end
 
@@ -24,9 +24,9 @@ class Emeralds::Build
       path = Path[path];
       relative_path = path.relative_to(base_dir_path).to_posix.to_s.lchop('/');
       next if exclude_patterns.any? do |pattern|
-        pattern = pattern.lchop("./");
-        pattern == relative_path || relative_path.starts_with?("#{pattern}/");
-      end
+                pattern = pattern.lchop("./");
+                pattern == relative_path || relative_path.starts_with?("#{pattern}/");
+              end
       FileUtils.rm_rf(path.to_s) unless File.directory?(path.to_s) && path == base_dir_path;
     end
   end
@@ -43,13 +43,7 @@ class Emeralds::Build
       puts "No main file found.".colorize(:red);
     else
       out_flag = msvc?(compile_flags) ? "/Fe:#{Terminal.output_app}" : "-o #{Terminal.output_app}";
-      Terminal.generic_cmd "\
-        #{compile_flags.join(' ')} \
-        #{Terminal.deps_includes} \
-        #{out_flag} \
-        #{Terminal.deps_release} \
-        #{Terminal.sources_app} \
-        #{Terminal.input_app} \
+      Terminal.generic_cmd "#{compile_flags.join(' ')} #{Terminal.deps_includes} #{out_flag} #{Terminal.deps_release} #{Terminal.sources_app} #{Terminal.input_app} \
       ", display: true;
       if msvc? compile_flags
         Terminal.rm Terminal.find(File.join(".", "*.obj"));
@@ -116,14 +110,14 @@ class Emeralds::Build
       end
     end
 
-    clone_count.times { clones.receive; };
+    clone_count.times { clones.receive }
 
-    pending_deps.each do |key, value|
+    pending_deps.each do |key, _|
       name = Terminal.repo_name key;
-      if File.exists? (File.join "libs", name)
+      if File.exists?(File.join "libs", name)
         emfile_path = File.join "libs", name, "em.json";
         unless File.exists? emfile_path
-          Terminal.rm (File.join "libs", name);
+          Terminal.rm(File.join "libs", name);
           next;
         end
 

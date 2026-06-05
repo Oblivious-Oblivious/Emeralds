@@ -16,7 +16,7 @@ class Emeralds::Options
   private def self.build_parser
     OptionParser.new do |parser|
       parser.banner = "Options:";
-      parser.on("--author NAME", "   - Set the project author") { |name| self.author = name; };
+      parser.on("--author NAME", "   - Set the project author") { |name| self.author = name }
       parser.invalid_option { };
       parser.missing_option { };
     end

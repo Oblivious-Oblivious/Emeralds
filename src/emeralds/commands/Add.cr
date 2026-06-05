@@ -56,19 +56,19 @@ class Emeralds::Add < Emeralds::Command
   private def write_c_file
     puts "  #{ARROW} #{@base_name}.c" unless @silent;
 
-    data = String.build do |data|
+    result = String.build do |data|
       data << "#include \"#{@file_name}.h\"\n\n";
 
       data << "char *#{@func_name}(void) { return \"Hello, World!\"; }\n";
     end
 
-    File.write path("src", "c"), data;
+    File.write path("src", "c"), result;
   end
 
   private def write_h_file
     puts "  #{ARROW} #{include_path("h")}" unless @silent;
 
-    data = String.build do |data|
+    result = String.build do |data|
       data << "#ifndef __#{app_name_upcase}_#{@func_name.upcase}_H_\n";
       data << "#define __#{app_name_upcase}_#{@func_name.upcase}_H_\n\n";
 
@@ -81,7 +81,7 @@ class Emeralds::Add < Emeralds::Command
       data << "#endif\n";
     end
 
-    File.write path("src", "h"), data;
+    File.write path("src", "h"), result;
   end
 
   private def update_app_header
@@ -120,7 +120,7 @@ class Emeralds::Add < Emeralds::Command
   private def write_spec_file
     puts "  #{ARROW} #{@base_name}.module.spec.h" unless @silent;
 
-    data = String.build do |data|
+    result = String.build do |data|
       data << "#ifndef __#{app_name_upcase}_#{@func_name.upcase}_MODULE_SPEC_H_\n";
       data << "#define __#{app_name_upcase}_#{@func_name.upcase}_MODULE_SPEC_H_\n\n";
 
@@ -138,7 +138,7 @@ class Emeralds::Add < Emeralds::Command
       data << "#endif\n";
     end
 
-    File.write File.join("spec", @dir_name, "#{@file_name}.module.spec.h"), data;
+    File.write File.join("spec", @dir_name, "#{@file_name}.module.spec.h"), result;
   end
 
   def message
@@ -158,13 +158,13 @@ class Emeralds::Add < Emeralds::Command
       end
 
       puts "#{ARROW} #{@name}" unless @silent;
-      Terminal.mkdir (File.join "src", @dir_name);
+      Terminal.mkdir(File.join "src", @dir_name);
       write_c_file unless @header_only;
 
       unless @source_only
         write_h_file;
         update_app_header;
-        Terminal.mkdir (File.join "spec", @dir_name);
+        Terminal.mkdir(File.join "spec", @dir_name);
         write_spec_file;
         update_spec_main;
       end

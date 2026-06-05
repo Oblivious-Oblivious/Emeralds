@@ -4,10 +4,10 @@ class Emeralds::Emfile
   property author : String? = nil;
   property name : String? = nil;
   property version : String? = nil;
-  property dependencies :  (Hash(String, String) | Nil) = nil;
+  property dependencies : (Hash(String, String) | Nil) = nil;
 
   @[JSON::Field(key: "dev-dependencies")]
-  property dev_dependencies :  (Hash(String, String) | Nil) = nil;
+  property dev_dependencies : (Hash(String, String) | Nil) = nil;
 
   @[JSON::Field(key: "compile-flags")]
   property compile_flags : CompileFlags = CompileFlags.new;
@@ -25,7 +25,7 @@ class Emeralds::Emfile
   def self.cspec_not_on_deps
     deps = Emfile.instance.dependencies;
     if deps
-      deps.keys.find { |key| Terminal.repo_name(key) == "cSpec" }.not_nil!;
+      deps.keys.find! { |key| Terminal.repo_name(key) == "cSpec" };
     end
     false;
   rescue
@@ -35,7 +35,7 @@ class Emeralds::Emfile
   def self.cspec_not_on_dev_deps
     depsdevs = Emfile.instance.dev_dependencies;
     if depsdevs
-      depsdevs.keys.find { |key| Terminal.repo_name(key) == "cSpec" }.not_nil!;
+      depsdevs.keys.find! { |key| Terminal.repo_name(key) == "cSpec" };
     end
     false;
   rescue
@@ -45,13 +45,13 @@ class Emeralds::Emfile
   def self.instance
     @@instance ||= begin
       Emfile.from_json(File.read("em.json"));
-    rescue err
-      puts "Failed to load or parse em.json: #{err}".colorize(:red);
+    rescue error
+      puts "Failed to load or parse em.json: #{error}".colorize(:red);
       exit 0;
     end
   end
 
-  def self.with_instance(emfile)
+  def self.with_instance(emfile, &)
     previous = @@instance;
     @@instance = emfile;
     yield;

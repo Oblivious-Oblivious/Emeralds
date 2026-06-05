@@ -8,8 +8,12 @@ class Emeralds::Update < Emeralds::Command
   # return -> The version tuple or nil when malformed
   private def parse_version(raw)
     parts = raw.lstrip('v').split('.').map(&.to_i?);
-    return nil if parts.size != 3 || parts.any?(&.nil?);
-    {parts[0].not_nil!, parts[1].not_nil!, parts[2].not_nil!};
+    return nil if parts.size != 3;
+
+    major, minor, patch = parts;
+    return nil unless major && minor && patch;
+
+    {major, minor, patch};
   end
 
   # Read the released version straight from `version.cr` on master, which

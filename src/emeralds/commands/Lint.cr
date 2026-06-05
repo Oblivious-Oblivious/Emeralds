@@ -36,14 +36,14 @@ class Emeralds::Lint < Emeralds::Command
         .glob("**/*.c", "**/*.h")
         .map { |file| Path[file].to_posix.to_s }
         .reject { |file| ignored? file }
-        .sort;
+        .sort!;
 
       if files.empty?
         puts "#{ARROW} No source files found".colorize(:red);
       elsif Process.find_executable("clang-format").nil?
         puts "#{ARROW} clang-format not found".colorize(:red);
       else
-        files.each { |file| format_file file; };
+        files.each { |file| format_file file }
       end
     };
   end

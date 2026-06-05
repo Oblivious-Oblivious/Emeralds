@@ -20,7 +20,7 @@ class Emeralds::Init < Emeralds::Command
   private def write_em_file
     puts "  #{ARROW} em.json";
 
-    data = String.build do |data|
+    result = String.build do |data|
       data << "{\n";
       data << "  \"$schema\": \"https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/master/schema/em.schema.json\",\n";
       data << "  \"author\": \"#{Options.author}\",\n";
@@ -57,7 +57,7 @@ class Emeralds::Init < Emeralds::Command
       data << "}\n";
     end
 
-    File.write "em.json", data;
+    File.write "em.json", result;
   end
 
   private def initialize_git_directory
@@ -68,7 +68,7 @@ class Emeralds::Init < Emeralds::Command
   private def write_gitignore_file
     puts "  #{ARROW} .gitignore";
 
-    data = String.build do |data|
+    result = String.build do |data|
       data << "# Prerequisites\n";
       data << "*.d\n\n";
 
@@ -116,13 +116,13 @@ class Emeralds::Init < Emeralds::Command
       data << "libs/\n";
     end
 
-    File.write ".gitignore", data;
+    File.write ".gitignore", result;
   end
 
   private def write_gitattributes_file
     puts "  #{ARROW} .gitattributes";
 
-    data = String.build do |data|
+    result = String.build do |data|
       data << "# Auto detect text files and perform LF normalization\n";
       data << "* text=auto\n\n";
 
@@ -130,13 +130,13 @@ class Emeralds::Init < Emeralds::Command
       data << "*.c linguist-language=C\n";
     end
 
-    File.write ".gitattributes", data;
+    File.write ".gitattributes", result;
   end
 
   private def create_clangd
     puts "  #{ARROW} .clangd";
 
-    data = String.build do |data|
+    result = String.build do |data|
       data << "CompileFlags:\n";
       data << "  Add:\n";
       data << "    - \"-xc\"\n";
@@ -146,13 +146,13 @@ class Emeralds::Init < Emeralds::Command
       data << "  Suppress: unused-includes\n";
     end
 
-    File.write ".clangd", data;
+    File.write ".clangd", result;
   end
 
   private def create_clang_format
     puts "  #{ARROW} .clang-format";
 
-    data = String.build do |data|
+    result = String.build do |data|
       data << "---\n";
       data << "BasedOnStyle: LLVM\n\n";
 
@@ -202,13 +202,13 @@ class Emeralds::Init < Emeralds::Command
       data << "SpacesInParens: Never\n";
     end
 
-    File.write ".clang-format", data;
+    File.write ".clang-format", result;
   end
 
   private def generate_readme
     puts "  #{ARROW} README.md";
 
-    data = String.build do |data|
+    result = String.build do |data|
       data << "# #{@name}\n\n";
 
       data << "[![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg)](./LICENSE)\n\n";
@@ -241,7 +241,7 @@ class Emeralds::Init < Emeralds::Command
       data << "";
     end
 
-    File.write "README.md", data;
+    File.write "README.md", result;
   end
 
   private def app_name_upcase
@@ -251,7 +251,7 @@ class Emeralds::Init < Emeralds::Command
   private def create_src_header
     puts "    #{ARROW} #{@name}.h";
 
-    data = String.build do |data|
+    result = String.build do |data|
       data << "#ifndef __#{app_name_upcase}_H_\n";
       data << "#define __#{app_name_upcase}_H_\n\n";
 
@@ -260,13 +260,13 @@ class Emeralds::Init < Emeralds::Command
       data << "#endif\n";
     end
 
-    File.write (File.join "src", "#{@name}.h"), data;
+    File.write (File.join "src", "#{@name}.h"), result;
   end
 
   private def create_src_main
     puts "    #{ARROW} #{@name}.c";
 
-    data = String.build do |data|
+    result = String.build do |data|
       data << "#include \"#{@name}.h\"\n\n";
 
       data << "#include <stdio.h>\n\n";
@@ -277,7 +277,7 @@ class Emeralds::Init < Emeralds::Command
       data << "}\n";
     end
 
-    File.write (File.join "src", "#{@name}.c"), data;
+    File.write (File.join "src", "#{@name}.c"), result;
   end
 
   private def create_source_files
@@ -294,7 +294,7 @@ class Emeralds::Init < Emeralds::Command
   private def create_spec_main
     puts "    #{ARROW} #{@name}.spec.c";
 
-    data = String.build do |data|
+    result = String.build do |data|
       data << "#include \"../libs/cSpec/export/cSpec.h\"\n\n";
 
       data << "int main(void) {\n";
@@ -302,7 +302,7 @@ class Emeralds::Init < Emeralds::Command
       data << "}\n";
     end
 
-    File.write (File.join "spec", "#{@name}.spec.c"), data;
+    File.write (File.join "spec", "#{@name}.spec.c"), result;
   end
 
   private def create_spec_files
@@ -316,7 +316,7 @@ class Emeralds::Init < Emeralds::Command
   private def write_agents_file
     puts "  #{ARROW} AGENTS.md";
 
-    data = String.build do |data|
+    result = String.build do |data|
       data << "# AGENTS.md\n\n";
 
       data << "Behavioral guidelines to reduce common LLM coding mistakes. Merge with\n";
@@ -540,7 +540,7 @@ class Emeralds::Init < Emeralds::Command
       data << "- Failures auto-report `__FILE__:__LINE__`.\n";
     end
 
-    File.write "AGENTS.md", data;
+    File.write "AGENTS.md", result;
   end
 
   private def create_agents_symlinks

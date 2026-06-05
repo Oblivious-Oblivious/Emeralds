@@ -91,7 +91,7 @@ module Emeralds::Terminal
         if response.status.redirection? && (target = response.headers["location"]?)
           location = target;
         elsif response.success?
-          File.open(output, "w") { |file| IO.copy response.body_io, file; };
+          File.open(output, "w") { |file| IO.copy response.body_io, file }
           return true;
         else
           return false;
@@ -111,7 +111,7 @@ module Emeralds::Terminal
           FileUtils.mkdir_p target;
         else
           FileUtils.mkdir_p File.dirname(target);
-          entry.open { |io| File.open(target, "w") { |file| IO.copy io, file; }; };
+          entry.open { |io| File.open(target, "w") { |file| IO.copy io, file } }
         end
       end
     end
@@ -140,13 +140,15 @@ module Emeralds::Terminal
       matches << file if File.file? file
     end
 
-    matches.uniq! { |path| File.basename path };
+    matches.uniq! { |file| File.basename file };
   end
 
   def self.sources_app
     c_files = find(File.join("src", "*", "**", "*.c"));
     unix_libs = find(File.join("src", "*", "**", "*.a"));
-    msvc_libs = find(File.join("src", "*", "**", "*.lib")).reject { |p| p.ends_with?(".test.lib") };
+    msvc_libs = find(File.join("src", "*", "**", "*.lib")).reject { |file|
+      file.ends_with?(".test.lib");
+    };
     (c_files + unix_libs + msvc_libs).join(' ').rstrip;
   end
 
@@ -163,7 +165,9 @@ module Emeralds::Terminal
 
   def self.deps_release
     unix_libs = find(File.join("libs", "*", "export", "*.a"));
-    msvc_libs = find(File.join("libs", "*", "export", "*.lib")).reject { |p| p.ends_with?(".test.lib") };
+    msvc_libs = find(File.join("libs", "*", "export", "*.lib")).reject { |file|
+      file.ends_with?(".test.lib");
+    };
     (unix_libs + msvc_libs).join(' ').rstrip;
   end
 
@@ -178,7 +182,9 @@ module Emeralds::Terminal
 
     Dir.glob(File.join("libs", "*", "export").gsub('\\', '/')) do |path|
       test_libs = find(File.join(path, "*.a.test")) + find(File.join(path, "*.test.lib"));
-      release_libs = find(File.join(path, "*.a")) + find(File.join(path, "*.lib")).reject { |p| p.ends_with?(".test.lib") };
+      release_libs = find(File.join(path, "*.a")) + find(File.join(path, "*.lib")).reject { |file|
+        file.ends_with?(".test.lib");
+      };
       deps.concat test_libs.empty? ? release_libs : test_libs;
     end
 
@@ -207,7 +213,7 @@ module Emeralds::Terminal
   end
 
   def self.output_app
-      "#{File.join("export", (Emfile.instance.name || ""))}".rstrip;
+    "#{File.join("export", (Emfile.instance.name || ""))}".rstrip;
   end
 
   def self.output_lib
