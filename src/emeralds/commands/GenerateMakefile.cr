@@ -5,6 +5,11 @@ class Emeralds::GenerateMakefile < Emeralds::Command
 
   def block
     -> {
+      if File.exists? "Makefile"
+        puts "#{ARROW} Makefile already exists.".colorize(:yellow);
+        exit 0;
+      end
+
       puts "  #{ARROW} Makefile";
 
       data = String.build do |data|
