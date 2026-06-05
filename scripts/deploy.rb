@@ -45,7 +45,7 @@ die("tag on origin") unless `git ls-remote --tags origin refs/tags/#{tag}`.strip
 
 puts "deploy: bumping to #{version}";
 File.write("shard.yml", File.read("shard.yml").sub(/^version: .+/, "version: #{version}"));
-File.write("src/emeralds/constants/version.cr", File.read("src/emeralds/constants/version.cr").sub(/VERSION = "[^"]+"/, "VERSION = \"#{version}\""));
+File.write("src/emeralds/constants/version.cr", File.read("src/emeralds/constants/version.cr").sub(/(VERSION\s*=\s*)"[^"]+"/, "\\1\"#{version}\""));
 unless File.read("CHANGELOG.md").include?("#{header} ")
   File.write("CHANGELOG.md", "#{header} (#{Time.now.strftime("%b %d %Y")})\n\n#{File.read("CHANGELOG.md")}");
 end
