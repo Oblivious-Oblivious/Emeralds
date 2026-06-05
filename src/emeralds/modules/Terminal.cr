@@ -45,14 +45,13 @@ module Emeralds::Terminal
   def self.run(executable, display = false)
     puts "#{ARROW} run #{executable}\n\n" if display;
     executable_path = File.join ".", executable;
-    output = IO::Memory.new;
-    error = IO::Memory.new;
-    status = Process.run executable_path, output: output, error: error;
+    status = Process.run executable_path,
+      input: Process::Redirect::Inherit,
+      output: Process::Redirect::Inherit,
+      error: Process::Redirect::Inherit;
 
-    puts output.to_s;
     raise "Process failed with exit status: #{status.exit_code}" if !status.success?;
   rescue ex
-    puts error.to_s;
     puts "#{ex.message}".colorize(:red) if display;
   end
 
