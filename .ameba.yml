@@ -1,0 +1,8 @@
+Lint/Formatting:
+  Enabled: false
+Lint/SpecFilename:
+  Enabled: false
+Naming/Filename:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false

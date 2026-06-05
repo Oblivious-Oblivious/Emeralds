@@ -15,10 +15,11 @@
       "copy /Y bin\\em.exe C:\\msys64\\ucrt64\\bin\\",
       "copy /Y bin\\emeralds.exe C:\\msys64\\ucrt64\\bin\\"
     ],
+    "lint": "ruby scripts/format.rb && ./bin/ameba",
     "test": "crystal spec ./spec/emeralds.spec.cr",
     "spec": "em test",
     "document": "rm -rf ./docs && crystal docs src/*.cr",
-    "clean": "rm -rf bin",
+    "clean": "rm -f bin/em bin/emeralds bin/*.dwarf",
     "deploy": "./scripts/deploy.rb"
   }
 }
