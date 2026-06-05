@@ -158,13 +158,13 @@ class Emeralds::Add < Emeralds::Command
       end
 
       puts "#{ARROW} #{@name}" unless @silent;
-      Terminal.mkdir (File.join "src", @dir_name);
+      Terminal.mkdir(File.join "src", @dir_name);
       write_c_file unless @header_only;
 
       unless @source_only
         write_h_file;
         update_app_header;
-        Terminal.mkdir (File.join "spec", @dir_name);
+        Terminal.mkdir(File.join "spec", @dir_name);
         write_spec_file;
         update_spec_main;
       end

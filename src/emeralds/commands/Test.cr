@@ -9,14 +9,7 @@ class Emeralds::Test < Emeralds::Command
       std_flag = build.msvc?(compile_flags) ? "/std:clatest" : "-std=c2x";
       out_target = build.msvc?(compile_flags) ? "#{Terminal.output_test}.exe" : Terminal.output_test;
       out_flag = build.msvc?(compile_flags) ? "/Fe:#{out_target}" : "-o #{out_target}";
-      Terminal.generic_cmd "\
-        #{compile_flags.join(' ')} \
-        #{std_flag} \
-        #{Terminal.deps_includes} \
-        #{out_flag} \
-        #{Terminal.deps_for_test} \
-        #{Terminal.sources_test} \
-        #{Terminal.input_test} \
+      Terminal.generic_cmd "#{compile_flags.join(' ')} #{std_flag} #{Terminal.deps_includes} #{out_flag} #{Terminal.deps_for_test} #{Terminal.sources_test} #{Terminal.input_test} \
       ", display: true;
       if build.msvc? compile_flags
         Terminal.rm Terminal.find(File.join(".", "*.obj"));

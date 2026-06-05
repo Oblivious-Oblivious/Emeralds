@@ -6,6 +6,6 @@ class Emeralds::Ignore
 
   def initialize(
     @extensions : Array(String)? = nil,
-    @directories : Array(String)? = nil
+    @directories : Array(String)? = nil,
   ); end
 end

@@ -4,10 +4,10 @@ class Emeralds::Emfile
   property author : String? = nil;
   property name : String? = nil;
   property version : String? = nil;
-  property dependencies :  (Hash(String, String) | Nil) = nil;
+  property dependencies : (Hash(String, String) | Nil) = nil;
 
   @[JSON::Field(key: "dev-dependencies")]
-  property dev_dependencies :  (Hash(String, String) | Nil) = nil;
+  property dev_dependencies : (Hash(String, String) | Nil) = nil;
 
   @[JSON::Field(key: "compile-flags")]
   property compile_flags : CompileFlags = CompileFlags.new;

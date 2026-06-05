@@ -91,7 +91,7 @@ module Emeralds::Terminal
         if response.status.redirection? && (target = response.headers["location"]?)
           location = target;
         elsif response.success?
-          File.open(output, "w") { |file| IO.copy response.body_io, file; };
+          File.open(output, "w") { |file| IO.copy response.body_io, file }
           return true;
         else
           return false;
@@ -111,7 +111,7 @@ module Emeralds::Terminal
           FileUtils.mkdir_p target;
         else
           FileUtils.mkdir_p File.dirname(target);
-          entry.open { |io| File.open(target, "w") { |file| IO.copy io, file; }; };
+          entry.open { |io| File.open(target, "w") { |file| IO.copy io, file } }
         end
       end
     end
@@ -213,7 +213,7 @@ module Emeralds::Terminal
   end
 
   def self.output_app
-      "#{File.join("export", (Emfile.instance.name || ""))}".rstrip;
+    "#{File.join("export", (Emfile.instance.name || ""))}".rstrip;
   end
 
   def self.output_lib
