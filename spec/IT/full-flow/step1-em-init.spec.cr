@@ -7,4 +7,9 @@ describe "step 1 - em init" do
 
     em_sandbox("init __testing__").should contain("Creating directory: __testing__");
   end
+
+  it "rejects an empty project name" do
+    em_raw(["init", ""], SANDBOX).should contain("Invalid name");
+    Dir.children(SANDBOX).should eq(["__testing__"]);
+  end
 end
