@@ -1,7 +1,7 @@
 module Emeralds::Main
   private def self.ensure_em_json_or_init
     if ARGV.size > 0 && ARGV[0] != "init" && ARGV[0] != "update" && !File.exists?("em.json")
-      puts "#{ARROW} em.json not found. Please run emeralds init first.";
+      puts "#{ARROW} em.json not found.  Please run emeralds init first.";
       exit 0;
     elsif ARGV.size == 0
       Help.new.run;
@@ -33,14 +33,15 @@ module Emeralds::Main
     when "install"
       if ARGV.size < 2
         Install.new.run;
+      elsif ARGV[1].strip.empty?
+        puts "Invalid name: #{ARGV[1]}.".colorize(:red);
+        exit 0;
       elsif ARGV[1] == "dev"
         InstallDev.new.run;
       elsif ARGV[1] == "all"
         InstallAll.new.run;
-      elsif ARGV[1] == "git" && ARGV.size >= 3
-        InstallGit.new(link: ARGV[2]).run;
       else
-        Help.new.run;
+        InstallLink.new(link: ARGV[1]).run;
       end
     when "build"
       Help.new.run if ARGV.size < 3;

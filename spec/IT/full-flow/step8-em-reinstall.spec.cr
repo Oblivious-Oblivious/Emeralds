@@ -9,6 +9,11 @@ describe "step 8 - em reinstall / em uninstall" do
     em("test").should contain("1 passing");
   end
 
+  it "rejects an empty or blank dependency name" do
+    em_raw(["uninstall", ""]).should contain("Invalid name");
+    em_raw(["uninstall", "   "]).should contain("Invalid name");
+  end
+
   it "uninstalls cSpec" do
     em("uninstall cSpec").should contain("Removed `cSpec`");
   end

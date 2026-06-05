@@ -1,9 +1,13 @@
-class Emeralds::InstallGit < Emeralds::Command
+class Emeralds::InstallLink < Emeralds::Command
   @link = "";
 
   def initialize(link = "")
     super "";
     @link = link.strip;
+    if @link.empty?
+      puts "Invalid name: #{link}.".colorize(:red);
+      exit 0;
+    end
   end
 
   private def add_dependency(link)
