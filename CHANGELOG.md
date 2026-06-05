@@ -1,3 +1,11 @@
+# Changes for Emeralds 0.13.0 (Jun 06 2026)
+
+* Added Ameba linting and Crystal formatting.
+* Added build environments and command option handling to the `em.json` model.
+* Simplified `compile-flags` to a single array and added optional author metadata.
+* Fixed bugs in command workflows so they validate empty names.
+* Fixed `em run` so launched commands remain attached to their running process instead of exiting early.
+
 # Changes for Emeralds 0.12.0 (Jun 04 2026)
 
 * Added `em update` command for downloading the latest version of emeralds.
