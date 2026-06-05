@@ -30,7 +30,7 @@ class Emeralds::Update < Emeralds::Command
   private def update(version)
     case Emeralds::INSTALL_METHOD
     when "scoop"
-      puts "#{ARROW} Run `scoop update emeralds` to update".colorize(:yellow);
+      puts "#{ARROW} Run `scoop update emeralds` to update.".colorize(:yellow);
     when "brew"
       puts "#{ARROW} Updating via brew";
       Terminal.generic_cmd "brew update", display: true;
@@ -39,7 +39,7 @@ class Emeralds::Update < Emeralds::Command
       puts "#{ARROW} Updating via curl";
       Terminal.generic_cmd "curl -fsSL https://raw.githubusercontent.com/#{REPO}/v#{version}/scripts/get.sh | sh", display: true;
     else
-      puts "#{ARROW} Built from source; rebuild from the repository to update".colorize(:yellow);
+      puts "#{ARROW} Built from source; rebuild from the repository to update.".colorize(:yellow);
     end
   end
 
@@ -47,7 +47,7 @@ class Emeralds::Update < Emeralds::Command
     -> {
       latest = latest_version;
       if latest.nil?
-        puts "#{ARROW} Could not determine the latest version".colorize(:red);
+        puts "#{ARROW} Could not determine the latest version.".colorize(:red);
         return;
       end
 

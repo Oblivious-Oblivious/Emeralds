@@ -40,7 +40,7 @@ class Emeralds::Build
 
     if Terminal.sources_app.empty? && Terminal.input_app.empty?
       print "#{ARROW} ";
-      puts "No main file found".colorize(:red);
+      puts "No main file found.".colorize(:red);
     else
       out_flag = msvc?(compile_flags) ? "/Fe:#{Terminal.output_app}" : "-o #{Terminal.output_app}";
       Terminal.generic_cmd "\
@@ -95,7 +95,7 @@ class Emeralds::Build
       export_path = File.join dep_path, "export";
 
       if File.exists? export_path
-        puts " #{COG} `#{name}` already installed" if display && !@displayed_deps[key]?;
+        puts " #{COG} `#{name}` already installed." if display && !@displayed_deps[key]?;
         @displayed_deps[key] = true;
       else
         puts " #{COG} Installing `#{name}`" if display && !@displayed_deps[key]?;

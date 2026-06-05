@@ -16,9 +16,9 @@ private def write_tag_project_emfile(version)
   File.write emfile_path, updated;
 end
 
-describe "step 7 - em install git" do
+describe "step 7 - em install link" do
   it "adds and installs a dependency from a git link" do
-    output = em "install git https://github.com/Oblivious-Oblivious/cSpec.git";
+    output = em "install https://github.com/Oblivious-Oblivious/cSpec.git";
 
     output.should contain("`cSpec` already installed");
     read_project_emfile.should contain("\"https://github.com/Oblivious-Oblivious/cSpec.git\": \"latest\"");
@@ -26,9 +26,14 @@ describe "step 7 - em install git" do
   end
 
   it "does not duplicate an existing git dependency" do
-    em "install git https://github.com/Oblivious-Oblivious/cSpec.git";
+    em "install https://github.com/Oblivious-Oblivious/cSpec.git";
 
     read_project_emfile.scan("https://github.com/Oblivious-Oblivious/cSpec.git").size.should eq(1);
+  end
+
+  it "rejects an empty or blank install argument" do
+    em_raw(["install", ""]).should contain("Invalid name");
+    em_raw(["install", "   "]).should contain("Invalid name");
   end
 
   it "installs a tagged dependency archive" do

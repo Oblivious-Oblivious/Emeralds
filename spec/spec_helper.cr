@@ -23,3 +23,9 @@ end
 def em_at(args, dir)
   run_em args, dir;
 end
+
+def em_raw(args, dir = PROJECT)
+  io = IO::Memory.new;
+  Process.run EM, args, chdir: dir, output: io, error: io;
+  io.to_s;
+end

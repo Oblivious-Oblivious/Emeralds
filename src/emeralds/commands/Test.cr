@@ -2,7 +2,7 @@ class Emeralds::Test < Emeralds::Command
   private def build_test
     if Terminal.input_test.empty?
       print "#{ARROW} ";
-      puts "No main spec file found".colorize(:red);
+      puts "No main spec file found.".colorize(:red);
     else
       compile_flags = Emfile.instance.compile_flags.debug;
       build = Build.new;
@@ -39,10 +39,10 @@ class Emeralds::Test < Emeralds::Command
         Terminal.rm "spec/*.dSYM";
         build_test;
       elsif Emfile.cspec_not_on_deps && Emfile.cspec_not_on_dev_deps
-        puts "cSpec is not in the list of dependencies".colorize(:red);
+        puts "cSpec is not in the list of dependencies.".colorize(:red);
         puts "#{ARROW} Add the dependency like such:\ndev-dependencies:\n  \"https://github.com/Oblivious-Oblivious/cSpec\": \"latest\"";
       else
-        puts "Could not run tests becuase cSpec is not installed".colorize(:red);
+        puts "Could not run tests becuase cSpec is not installed.".colorize(:red);
         puts "#{ARROW} Please run `em install all`";
       end
     };

@@ -68,7 +68,7 @@ Commands:
     clean                               - Run the clean script
     help                                - Print this help message.
     init [<name>]                       - Initialize a new library with an em.json file.
-    install [ | dev | all | git <link>] - Install dependencies into a flattened libs directory.
+    install [ | <link> | dev | all]     - Install dependencies into a flattened libs directory.
     reinstall                           - Reinstall dependencies into a flattened libs directory.
     uninstall [<name>]                  - Remove a dependency from em.json and libs.
     list                                - List dependencies and project modules.
@@ -199,7 +199,7 @@ All done in 3.822 seconds
 **Add and install a dependency from a git link:**
 
 ```
-em install git https://github.com/Oblivious-Oblivious/cSpec
+em install https://github.com/Oblivious-Oblivious/cSpec
 ```
 
 This appends `"https://github.com/Oblivious-Oblivious/cSpec": "latest"` to `em.json`. You can pin versions by changing the value from `latest` to a release tag (such as `0.1.0`).
