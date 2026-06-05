@@ -122,7 +122,7 @@ module Emeralds::Main
     when "help"
       Help.new.run;
     else
-      puts "#{ARROW} Invalid command: #{action}".colorize(:red);
+      puts "#{ARROW} Invalid command: #{action}.".colorize(:red);
       puts "Run `em help` to see available commands.";
       exit 0;
     end

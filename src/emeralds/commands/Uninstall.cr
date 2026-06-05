@@ -18,7 +18,7 @@ class Emeralds::Uninstall < Emeralds::Command
       updated = raw.gsub(/\n[ \t]*"[^"]*\/#{escaped}(\.git)?"\s*:\s*"[^"]*",?/, "");
 
       if updated == raw
-        puts "#{ARROW} `#{@name}` not found in dependencies".colorize(:yellow);
+        puts "#{ARROW} `#{@name}` not found in dependencies.".colorize(:yellow);
         exit 0;
       end
 

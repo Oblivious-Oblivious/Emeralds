@@ -9,7 +9,7 @@ class Emeralds::Init < Emeralds::Command
 
   private def create_lib_directory
     if File.exists? @name
-      puts "An emerald with name: #{@name} already exists".colorize(:red);
+      puts "#{ARROW} An emerald with name: #{@name} already exists.".colorize(:yellow);
       exit 0;
     else
       puts "#{COG} Creating directory: #{@name.colorize(:green).mode(:bold)}";
