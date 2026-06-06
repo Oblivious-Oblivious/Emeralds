@@ -30,7 +30,7 @@ def em_raw(args, dir = PROJECT)
   io.to_s;
 end
 
-require "./repo-name/repo_name.spec";
+require "./repo-name/repo-name.spec";
 
 require "./IT/full-flow/step0-build.spec";
 require "./IT/full-flow/step1-em-init.spec";
