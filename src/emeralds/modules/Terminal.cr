@@ -9,7 +9,7 @@ module Emeralds::Terminal
 
   def self.rm(path, display = false)
     puts "#{ARROW} remove #{path}" if display;
-    pattern = path.is_a?(String) ? path.gsub('\\', '/') : path.map(&.gsub('\\', '/'));
+    pattern = path.is_a?(String) ? path.posix_path : path.map(&.posix_path);
     Dir.glob pattern do |file_path|
       FileUtils.rm_rf file_path;
     end
@@ -19,7 +19,7 @@ module Emeralds::Terminal
 
   def self.cp(src_dir, dest_dir, display = false)
     puts "#{ARROW} copy #{src_dir} to #{dest_dir}" if display;
-    Dir.glob src_dir.gsub('\\', '/') do |file_path|
+    Dir.glob src_dir.posix_path do |file_path|
       FileUtils.cp_r file_path, dest_dir;
     end
   rescue
@@ -105,7 +105,7 @@ module Emeralds::Terminal
     Compress::Zip::File.open zip_path do |zip|
       zip.entries.each do |entry|
         path = entry.filename.split('/', 2)[1]?;
-        next if path.nil? || path.empty?;
+        next if path.nil? || path.blank?;
         target = File.join dest_dir, path;
         if entry.dir?
           FileUtils.mkdir_p target;
@@ -136,7 +136,7 @@ module Emeralds::Terminal
   def self.find(path)
     matches = [] of String;
 
-    Dir.glob(path.gsub('\\', '/')) do |file|
+    Dir.glob(path.posix_path) do |file|
       matches << file if File.file? file
     end
 

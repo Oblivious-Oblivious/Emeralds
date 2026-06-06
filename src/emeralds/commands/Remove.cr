@@ -7,18 +7,18 @@ class Emeralds::Remove < Emeralds::Command
 
   def initialize(name = "", @silent = false)
     super name, @silent;
-    if @name.empty?
+    if @name.blank?
       puts "Invalid name: #{name}.".colorize(:red);
       exit 0;
     end
     @header_only = @name.ends_with? ".h";
     @source_only = @name.ends_with? ".c";
-    @base_name = @header_only ? @name.rchop(".h") : @source_only ? @name.rchop(".c") : @name;
+    @base_name = @name.without_c_extension;
     @file_name = File.basename @base_name;
     @dir_name = File.dirname @base_name;
     @dir_name = @base_name if @dir_name == "." && !@header_only && !@source_only;
     @dir_name = "" if @dir_name == ".";
-    @func_name = @base_name.gsub(/[\s\/-]+/, "_");
+    @func_name = @base_name.to_c_identifier;
   end
 
   private def path(root, ext)

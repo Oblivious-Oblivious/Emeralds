@@ -245,7 +245,7 @@ class Emeralds::Init < Emeralds::Command
   end
 
   private def app_name_upcase
-    @name.gsub(/[\s-]+/, "_").upcase;
+    @name.to_c_identifier.upcase;
   end
 
   private def create_src_header

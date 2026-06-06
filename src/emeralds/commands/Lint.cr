@@ -6,7 +6,7 @@ class Emeralds::Lint < Emeralds::Command
     return true if extensions.includes? File.extname(file);
 
     directories.any? do |directory|
-      directory = Path[directory].to_posix.to_s.chomp("/");
+      directory = directory.posix_path.chomp("/");
       file == directory || file.starts_with? "#{directory}/";
     end
   end
@@ -34,7 +34,7 @@ class Emeralds::Lint < Emeralds::Command
     -> {
       files = Dir
         .glob("**/*.c", "**/*.h")
-        .map { |file| Path[file].to_posix.to_s }
+        .map(&.posix_path)
         .reject { |file| ignored? file }
         .sort!;
 

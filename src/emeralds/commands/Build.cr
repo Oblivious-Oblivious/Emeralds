@@ -38,7 +38,7 @@ class Emeralds::Build
   def build_app(compile_flags)
     Terminal.mkdir "export";
 
-    if Terminal.sources_app.empty? && Terminal.input_app.empty?
+    if sources_app.empty? && input_app.empty?
       print "#{ARROW} ";
       puts "No main file found.".colorize(:red);
     else

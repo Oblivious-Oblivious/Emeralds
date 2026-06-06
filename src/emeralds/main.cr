@@ -33,7 +33,7 @@ module Emeralds::Main
     when "install"
       if ARGV.size < 2
         Install.new.run;
-      elsif ARGV[1].strip.empty?
+      elsif ARGV[1].blank?
         puts "Invalid name: #{ARGV[1]}.".colorize(:red);
         exit 0;
       elsif ARGV[1] == "dev"

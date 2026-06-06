@@ -5,7 +5,9 @@ require "http/client";
 require "json";
 require "option_parser";
 
+require "./emeralds/extensions/Array+shell_join";
 require "./emeralds/extensions/Hash+sanitize";
+require "./emeralds/extensions/String+normalize";
 
 require "./emeralds/commands/Command";
 require "./emeralds/commands/Add";

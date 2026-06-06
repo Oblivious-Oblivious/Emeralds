@@ -15,7 +15,7 @@ abstract class Emeralds::Command
   )
     stripped = name.strip;
     parts = stripped.split('/');
-    unless stripped.empty?
+    unless stripped.blank?
       if stripped.matches?(FORBIDDEN_NAME_CHARS) ||
          parts.any?(&.empty?) ||
          parts.any?(&.matches?(DOT_ONLY_NAME)) ||
@@ -25,7 +25,7 @@ abstract class Emeralds::Command
       end
     end
     @name = stripped.gsub(/\s+/, "-");
-    @func_name = stripped.gsub(/[\s\/-]+/, "_");
+    @func_name = stripped.to_c_identifier;
   end
 
   # Contains the informational message for the user while performing an Emerald command
