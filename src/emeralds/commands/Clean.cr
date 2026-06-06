@@ -5,7 +5,7 @@ class Emeralds::Clean < Emeralds::Command
 
   def block
     -> {
-      Terminal.rm Terminal.output_test, display: true;
+      Terminal.rm Test.new.output_test, display: true;
       Terminal.rm "export", display: true;
       Terminal.rm "*.dSYM";
       Terminal.rm "spec/*.dSYM";

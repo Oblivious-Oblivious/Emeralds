@@ -2,6 +2,52 @@
 class Emeralds::Build
   @displayed_deps = {} of String => Bool;
 
+  def deps_includes
+    paths = [] of String;
+
+    Dir.glob(File.join("libs", "*", "export").posix_path) do |path|
+      paths << path if File.directory? path;
+    end
+    Dir.glob(File.join("libs", "*", "export", "**").posix_path) do |path|
+      paths << path if File.directory? path;
+    end
+
+    paths.uniq.map { |path| "-I#{path}" }.shell_join;
+  end
+
+  def output_app
+    "#{File.join("export", (Emfile.instance.name || ""))}".rstrip;
+  end
+
+  private def sources_app
+    c_files = Terminal.find(File.join("src", "*", "**", "*.c"));
+    unix_libs = Terminal.find(File.join("src", "*", "**", "*.a"));
+    msvc_libs = Terminal.find(File.join("src", "*", "**", "*.lib")).reject { |file|
+      file.ends_with?(".test.lib");
+    };
+    (c_files + unix_libs + msvc_libs).shell_join;
+  end
+
+  private def sources_lib
+    Terminal.find(File.join("src", "*", "**", "*.c")).shell_join;
+  end
+
+  private def deps_release
+    unix_libs = Terminal.find(File.join("libs", "*", "export", "*.a"));
+    msvc_libs = Terminal.find(File.join("libs", "*", "export", "*.lib")).reject { |file|
+      file.ends_with?(".test.lib");
+    };
+    (unix_libs + msvc_libs).shell_join;
+  end
+
+  private def input_app
+    Terminal.find(File.join("src", "*.c")).shell_join;
+  end
+
+  private def output_lib
+    "#{Emfile.instance.name}.a".rstrip;
+  end
+
   private def move_headers_to_export
     Terminal.cp (File.join "src", "*"), "export";
     Terminal.rm(File.join "export", "*.c");
@@ -42,9 +88,8 @@ class Emeralds::Build
       print "#{ARROW} ";
       puts "No main file found.".colorize(:red);
     else
-      out_flag = msvc?(compile_flags) ? "/Fe:#{Terminal.output_app}" : "-o #{Terminal.output_app}";
-      Terminal.generic_cmd "#{compile_flags.join(' ')} #{Terminal.deps_includes} #{out_flag} #{Terminal.deps_release} #{Terminal.sources_app} #{Terminal.input_app} \
-      ", display: true;
+      out_flag = msvc?(compile_flags) ? "/Fe:#{output_app}" : "-o #{output_app}";
+      Terminal.generic_cmd "#{compile_flags.join(' ')} #{deps_includes} #{out_flag} #{deps_release} #{sources_app} #{input_app}", display: true;
       if msvc? compile_flags
         Terminal.rm Terminal.find(File.join(".", "*.obj"));
         Terminal.rm Terminal.find(File.join(".", "*.pdb"));
@@ -55,10 +100,10 @@ class Emeralds::Build
   def build_lib(compile_flags, display = true)
     cc = compile_flags.first?;
     options = compile_flags.join(' ');
-    includes = Terminal.deps_includes;
-    sources = Terminal.sources_lib;
-    release_out = msvc?(compile_flags) ? "#{Emfile.instance.name}.lib" : Terminal.output_lib;
-    test_out = msvc?(compile_flags) ? "#{Emfile.instance.name}.test.lib" : "#{Terminal.output_lib}.test";
+    includes = deps_includes;
+    sources = sources_lib;
+    release_out = msvc?(compile_flags) ? "#{Emfile.instance.name}.lib" : output_lib;
+    test_out = msvc?(compile_flags) ? "#{Emfile.instance.name}.test.lib" : "#{output_lib}.test";
     if !sources.empty?
       if msvc? compile_flags
         Terminal.generic_cmd "#{options} #{includes} /c #{sources}", display: display;
