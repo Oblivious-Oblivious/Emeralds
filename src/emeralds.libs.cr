@@ -11,6 +11,8 @@ require "./emeralds/extensions/String+normalize";
 
 require "./emeralds/commands/Command";
 require "./emeralds/commands/Add";
+require "./emeralds/commands/c/Add";
+require "./emeralds/commands/crystal/Add";
 require "./emeralds/commands/Build";
 require "./emeralds/commands/BuildAppDebug";
 require "./emeralds/commands/BuildAppRelease";
@@ -28,6 +30,8 @@ require "./emeralds/commands/Clean";
 require "./emeralds/commands/GenerateMakefile";
 require "./emeralds/commands/Help";
 require "./emeralds/commands/Init";
+require "./emeralds/commands/c/Init";
+require "./emeralds/commands/crystal/Init";
 require "./emeralds/commands/Install";
 require "./emeralds/commands/InstallAll";
 require "./emeralds/commands/InstallDev";

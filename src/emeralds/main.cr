@@ -26,7 +26,7 @@ module Emeralds::Main
       if ARGV.size == 1
         Help.new.run;
       else
-        Init.new(name: ARGV[1]).run;
+        Options.dispatch_template(Init, name: ARGV[1]);
       end
     when "list"
       List.new.run;
@@ -93,7 +93,7 @@ module Emeralds::Main
       if ARGV.size == 1
         Help.new.run;
       else
-        Add.new(name: ARGV[1]).run;
+        Options.dispatch_template(Add, name: ARGV[1]);
       end
     when "remove"
       if ARGV.size == 1
