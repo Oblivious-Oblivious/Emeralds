@@ -114,7 +114,7 @@ module Emeralds::Main
     when "license"
       License.new.run;
     when "clean"
-      Clean.new.run;
+      Options.dispatch_template(Clean);
     when "makefile"
       GenerateMakefile.new.run;
     when "loc"

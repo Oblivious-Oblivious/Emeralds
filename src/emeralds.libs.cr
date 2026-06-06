@@ -27,6 +27,8 @@ require "./emeralds/commands/BuildLibStage";
 require "./emeralds/commands/BuildLibPreprod";
 require "./emeralds/commands/BuildLibProd";
 require "./emeralds/commands/Clean";
+require "./emeralds/commands/c/Clean";
+require "./emeralds/commands/crystal/Clean";
 require "./emeralds/commands/GenerateMakefile";
 require "./emeralds/commands/Help";
 require "./emeralds/commands/Init";
