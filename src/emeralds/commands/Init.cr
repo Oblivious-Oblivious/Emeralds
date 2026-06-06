@@ -223,10 +223,6 @@ class Emeralds::Init < Emeralds::Command
 
       data << "TODO: Write usage instructions here\n\n";
 
-      data << "## Development\n\n";
-
-      data << "TODO: Write development instructions here\n\n";
-
       data << "## Contributing\n\n";
 
       data << "1. Fork it (<https://github.com/your-github-user/#{@name}/fork>)\n";
