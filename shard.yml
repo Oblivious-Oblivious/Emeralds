@@ -12,6 +12,8 @@ crystal: ">= 1.0.0"
 targets:
   emeralds:
     main: src/emeralds.cr
+  ameba:
+    main: lib/ameba/bin/ameba.cr
 
 development_dependencies:
   ameba:
