@@ -1,9 +1,9 @@
 {
   "scripts": {
-    "build": ["shards build --release --no-debug"],
-    "debug": ["shards build"],
+    "build": ["shards build emeralds -Dpreview_mt --release --no-debug"],
+    "debug": ["shards build emeralds"],
     "all": [
-      "rm -rf bin",
+      "rm -rf bin/emeralds bin/*.dwarf",
       "em build",
       "cp bin/emeralds bin/em",
       "cp bin/emeralds bin/em /usr/local/bin/"
@@ -15,6 +15,7 @@
       "copy /Y bin\\em.exe C:\\msys64\\ucrt64\\bin\\",
       "copy /Y bin\\emeralds.exe C:\\msys64\\ucrt64\\bin\\"
     ],
+    "ameba": ["shards build ameba -Dpreview_mt"],
     "lint": "ruby scripts/format.rb && ./bin/ameba",
     "test": "crystal spec ./spec/emeralds.spec.cr",
     "spec": "em test",
