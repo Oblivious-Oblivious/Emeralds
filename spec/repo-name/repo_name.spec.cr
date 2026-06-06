@@ -1,5 +1,3 @@
-require "./spec_helper";
-
 describe Emeralds::Terminal do
   describe ".repo_name" do
     it "derives the name from a plain link" do

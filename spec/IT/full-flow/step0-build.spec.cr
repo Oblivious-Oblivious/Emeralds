@@ -1,5 +1,3 @@
-require "../../spec_helper";
-
 describe "step 0 - build" do
   it "builds the emeralds library" do
     Process.run("shards", ["build", "emeralds"], chdir: ROOT,

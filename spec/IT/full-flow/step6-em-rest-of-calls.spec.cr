@@ -1,5 +1,3 @@
-require "../../spec_helper";
-
 describe "step 6 - em list / makefile / loc / lint / version / license" do
   it "lists dependencies and modules" do
     em("list").should contain("cSpec");

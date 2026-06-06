@@ -1,5 +1,3 @@
-require "../../spec_helper";
-
 describe "step 8 - em reinstall / em uninstall" do
   it "reinstalls the dependencies" do
     em("reinstall").should contain("Installing `cSpec`");

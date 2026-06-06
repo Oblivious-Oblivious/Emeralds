@@ -1,5 +1,3 @@
-require "../../spec_helper";
-
 TAG_PROJECT = File.join SANDBOX, "__tag_testing__";
 
 private def read_project_emfile

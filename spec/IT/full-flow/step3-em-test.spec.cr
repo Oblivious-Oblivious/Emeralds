@@ -1,5 +1,3 @@
-require "../../spec_helper";
-
 describe "step 3 - em test" do
   it "reports cSpec is missing before installing" do
     em("test").should contain("cSpec is not installed");
