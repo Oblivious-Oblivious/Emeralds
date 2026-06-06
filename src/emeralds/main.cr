@@ -134,6 +134,7 @@ module Emeralds::Main
 
     action = ARGV[0];
     if action != "init"
+      Options.template = Emfile.instance.template;
       if script = validated_script(action)
         script_args = ARGV[1..].join(" ");
         if script.is_a? Array
