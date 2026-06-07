@@ -32,16 +32,16 @@ module Emeralds::Main
       List.new.run;
     when "install"
       if ARGV.size < 2
-        Install.new.run;
+        Options.dispatch_template(Install);
       elsif ARGV[1].blank?
         puts "Invalid name: #{ARGV[1]}.".colorize(:red);
         exit 0;
       elsif ARGV[1] == "dev"
-        InstallDev.new.run;
+        Options.dispatch_template(InstallDev);
       elsif ARGV[1] == "all"
-        InstallAll.new.run;
+        Options.dispatch_template(InstallAll);
       else
-        InstallLink.new(link: ARGV[1]).run;
+        Options.dispatch_template(InstallLink, link: ARGV[1]);
       end
     when "build"
       Help.new.run if ARGV.size < 3;
@@ -82,12 +82,12 @@ module Emeralds::Main
         Help.new.run;
       end
     when "reinstall"
-      Reinstall.new.run;
+      Options.dispatch_template(Reinstall);
     when "uninstall"
       if ARGV.size == 1
         Help.new.run;
       else
-        Uninstall.new(name: ARGV[1]).run;
+        Options.dispatch_template(Uninstall, name: ARGV[1]);
       end
     when "add"
       if ARGV.size == 1
