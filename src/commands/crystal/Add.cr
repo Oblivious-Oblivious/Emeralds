@@ -3,6 +3,10 @@ class Emeralds::Crystal::Add < Emeralds::Add
     @base_name.split(/[\s\/_-]+/).reject(&.empty?).map(&.capitalize).join;
   end
 
+  private def project_namespace
+    (Emfile.instance.name || "").split(/[\s\/_-]+/).reject(&.empty?).map(&.capitalize).join;
+  end
+
   private def target_files
     [path("src", "cr"), File.join("spec", @dir_name, "#{@file_name}.spec.cr")];
   end
@@ -11,8 +15,10 @@ class Emeralds::Crystal::Add < Emeralds::Add
     puts "  #{ARROW} #{@base_name}.cr" unless @silent;
 
     result = String.build do |data|
-      data << "def #{@func_name}\n";
-      data << "  \"Hello, World!\";\n";
+      data << "class #{project_namespace}::#{module_name}\n";
+      data << "  def value\n";
+      data << "    \"Hello, World!\";\n";
+      data << "  end\n";
       data << "end\n";
     end
 
@@ -40,9 +46,9 @@ class Emeralds::Crystal::Add < Emeralds::Add
     puts "  #{ARROW} #{@base_name}.spec.cr" unless @silent;
 
     result = String.build do |data|
-      data << "describe \"##{@func_name}\" do\n";
+      data << "describe #{project_namespace}::#{module_name} do\n";
       data << "  it \"returns Hello, World!\" do\n";
-      data << "    #{@func_name}.should eq \"Hello, World!\";\n";
+      data << "    #{project_namespace}::#{module_name}.new.value.should eq \"Hello, World!\";\n";
       data << "  end\n";
       data << "end\n";
     end

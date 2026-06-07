@@ -85,7 +85,7 @@ class Emeralds::Crystal::Init < Emeralds::Init
     result = String.build do |data|
       data << "require \"./#{@name}.libs\";\n\n";
 
-      data << "puts get_value;\n";
+      data << "puts #{module_name}::GetValue.new.value;\n";
     end
 
     File.write (File.join "src", "#{@name}.cr"), result;
