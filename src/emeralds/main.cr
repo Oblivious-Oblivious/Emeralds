@@ -102,7 +102,7 @@ module Emeralds::Main
         Options.dispatch_template(Remove, name: ARGV[1]);
       end
     when "run"
-      Run.new.run;
+      Options.dispatch_template(Run);
     when "test"
       Test.new.run;
     when "lint"

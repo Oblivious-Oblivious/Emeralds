@@ -1,4 +1,8 @@
 class Emeralds::Crystal::Build < Emeralds::Build
+  def output_app
+    "#{File.join("bin", (Emfile.instance.name || ""))}".rstrip;
+  end
+
   def build_app(compile_flags)
     Terminal.generic_cmd "#{compile_flags.join(" ")} #{Emfile.instance.name}", display: true;
   end

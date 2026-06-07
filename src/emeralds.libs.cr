@@ -76,6 +76,8 @@ require "./emeralds/commands/c/Remove";
 require "./emeralds/commands/crystal/Remove";
 require "./emeralds/commands/Uninstall";
 require "./emeralds/commands/Run";
+require "./emeralds/commands/c/Run";
+require "./emeralds/commands/crystal/Run";
 require "./emeralds/commands/Test";
 require "./emeralds/commands/Update";
 require "./emeralds/commands/Version";

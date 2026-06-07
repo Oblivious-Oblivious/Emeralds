@@ -55,7 +55,6 @@ class Emeralds::Crystal::Init < Emeralds::Init
       data << "  \"scripts\": {\n";
       data << "    \"install\": \"shards install\",\n";
       data << "    \"ameba\": \"shards build ameba\",\n";
-      data << "    \"run\": \"crystal run src/#{@name}.cr\",\n";
       data << "    \"test\": \"crystal spec spec/#{@name}.spec.cr\"\n";
       data << "  },\n";
       data << "  \"compile-flags\": {\n";
