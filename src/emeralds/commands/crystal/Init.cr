@@ -53,7 +53,7 @@ class Emeralds::Crystal::Init < Emeralds::Init
       data << "    \"directories\": [\"lib\"]\n";
       data << "  },\n";
       data << "  \"scripts\": {\n";
-      data << "    \"install\": \"shards install\",\n";
+      data << "    \"shards\": \"shards\",\n";
       data << "    \"ameba\": \"shards build ameba\"\n";
       data << "  },\n";
       data << "  \"compile-flags\": {\n";
