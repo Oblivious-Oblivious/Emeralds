@@ -104,7 +104,7 @@ module Emeralds::Main
     when "run"
       Options.dispatch_template(Run);
     when "test"
-      Test.new.run;
+      Options.dispatch_template(Test);
     when "lint"
       Options.dispatch_template(Lint);
     when "update"

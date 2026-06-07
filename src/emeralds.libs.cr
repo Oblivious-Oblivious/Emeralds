@@ -79,6 +79,8 @@ require "./emeralds/commands/Run";
 require "./emeralds/commands/c/Run";
 require "./emeralds/commands/crystal/Run";
 require "./emeralds/commands/Test";
+require "./emeralds/commands/c/Test";
+require "./emeralds/commands/crystal/Test";
 require "./emeralds/commands/Update";
 require "./emeralds/commands/Version";
 
