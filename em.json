@@ -7,11 +7,11 @@
   "license": "mit",
   "locignore": {
     "extensions": [],
-    "directories": ["libs"]
+    "directories": ["lib"]
   },
   "lintignore": {
     "extensions": [],
-    "directories": ["libs"]
+    "directories": ["lib"]
   },
   "scripts": {
     "shards": "shards",
