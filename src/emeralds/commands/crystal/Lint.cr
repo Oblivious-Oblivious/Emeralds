@@ -71,7 +71,7 @@ class Emeralds::Crystal::Lint < Emeralds::Lint
   def block
     -> {
       unless File.exists? "bin/ameba"
-        puts "#{ARROW} ameba not found. Run `shards build ameba` first.".colorize(:yellow);
+        puts "#{ARROW} ameba not found. Run `em ameba` first.".colorize(:yellow);
         exit 0;
       end
 
