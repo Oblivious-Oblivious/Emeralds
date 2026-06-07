@@ -7,15 +7,14 @@ class Emeralds::Crystal::Lint < Emeralds::Lint
   private def restore(src : String, fmt : String) : String
     a = src.lines.map(&.chomp);
     b = fmt.lines.map(&.chomp);
-    ka = a.map { |l| key l };
-    kb = b.map { |l| key l };
+    ka = a.map { |line| key line };
+    kb = b.map { |line| key line };
     n = a.size;
     m = b.size;
     dp = Array.new(n + 1) { Array.new(m + 1, 0) };
     (n - 1).downto(0) do |i|
       (m - 1).downto(0) do |j|
-        dp[i][j] = ka[i] == kb[j] ?
-          dp[i + 1][j + 1] + 1 : {dp[i + 1][j], dp[i][j + 1]}.max;
+        dp[i][j] = ka[i] == kb[j] ? dp[i + 1][j + 1] + 1 : {dp[i + 1][j], dp[i][j + 1]}.max;
       end;
     end;
     out = b.dup;
