@@ -99,7 +99,7 @@ module Emeralds::Main
       if ARGV.size == 1
         Help.new.run;
       else
-        Remove.new(name: ARGV[1]).run;
+        Options.dispatch_template(Remove, name: ARGV[1]);
       end
     when "run"
       Run.new.run;
