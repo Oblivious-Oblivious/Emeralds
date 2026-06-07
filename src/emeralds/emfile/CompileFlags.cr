@@ -30,8 +30,21 @@ class Emeralds::CompileFlags
     puts "#{ARROW} Add options such as this under `compile-flags` in em.json:";
     puts %(
 "#{operating_system}": {
-  "debug": ["cc", "-O2", "-std=c89", "-g", "-Wall"],
-  "release": ["cc", "-O2", "-std=c89"]
+  "debug": ["your", "debug", "compiler", "flags"],
+  "release": ["your", "release", "flags"]
+}
+);
+    exit 0;
+  end
+
+  private def missing_mode_config(mode)
+    operating_system = current_platform[0];
+
+    puts "No `#{mode}` compile-flags configuration found for #{operating_system}.".colorize(:red);
+    puts "#{ARROW} Add options such as this under `compile-flags` in em.json:";
+    puts %(
+"#{operating_system}": {
+  "#{mode}": ["your", "compiler", "flags"]
 }
 );
     exit 0;
@@ -41,27 +54,31 @@ class Emeralds::CompileFlags
     current_platform[1] || missing_platform_config
   end
 
+  private def flags_for(mode, flags)
+    flags.empty? ? missing_mode_config(mode) : flags;
+  end
+
   def debug
-    selected_platform.debug
+    flags_for "debug", selected_platform.debug
   end
 
   def release
-    selected_platform.release
+    flags_for "release", selected_platform.release
   end
 
   def dev
-    selected_platform.dev
+    flags_for "dev", selected_platform.dev
   end
 
   def stage
-    selected_platform.stage
+    flags_for "stage", selected_platform.stage
   end
 
   def preprod
-    selected_platform.preprod
+    flags_for "preprod", selected_platform.preprod
   end
 
   def prod
-    selected_platform.prod
+    flags_for "prod", selected_platform.prod
   end
 end
