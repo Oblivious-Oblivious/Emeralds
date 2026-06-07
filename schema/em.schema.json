@@ -17,6 +17,10 @@
       "type": "string",
       "description": "The name of the Emeralds application or library."
     },
+    "template": {
+      "type": "string",
+      "description": "The template used by em init."
+    },
     "version": {
       "type": "string",
       "description": "The project version displayed by em version."
