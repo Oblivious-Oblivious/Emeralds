@@ -86,7 +86,8 @@ abstract class Emeralds::Init < Emeralds::Command
     data << "3. **Never fabricate.** If you don't know, read the file, run the command, or\n";
     data << "   say so.\n";
     data << "4. **Touch only what you must.** Every changed line must trace to the user's\n";
-    data << "   request.\n\n";
+    data << "   request.\n";
+    data << "5. **NO committing from an agent!! (human commits only).\n\n";
 
     data << "## 1. Think Before Coding\n\n";
 

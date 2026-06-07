@@ -185,34 +185,24 @@ class Emeralds::Crystal::Init < Emeralds::Init
       data << "- `shard.yml` — targets and dependencies.\n";
       data << "- `em.json` — Emeralds wrapper configuration.\n\n";
 
+      data << "### Code Style\n\n";
+
+      data << "- Run `em lint` to format and lint documents using ameba.\n";
+      data << "- Prefer the standard library over adding dependencies.\n";
+      data << "- Keep Crystal code style local: 2-space indent, final newline, LF,\n";
+      data << "  trimmed trailing whitespace.\n";
+      data << "- Max 80 chars/line. Follow existing script style.\n";
+      data << "- Crystal statements end with semicolons. Match surrounding files.\n";
+      data << "- Add focused tests for real behavior changes when practical.\n";
+      data << "- Single-statement lambdas: `->`; multi: `do...end`.\n\n";
+
       data << "### Testing\n\n";
 
       data << "- Framework: Crystal's built-in `spec`.\n";
       data << "- Spec files live in `spec/` and end in `.spec.cr`.\n";
       data << "- Run with `em test` (uses `crystal spec`).\n\n";
 
-      data << "### Code Style\n\n";
-
-      data << "- Run `em lint` to format and lint documents using ameba.\n";
-      data << "- Prefer the standard library over adding dependencies.\n\n";
-
-      data << "# Crystal spec — Usage Reference\n\n";
-
-      data << "Crystal ships a built-in `spec` module (RSpec-style). No extra deps —\n";
-
-      data << "## Example\n\n";
-
-      data << "```crystal\n";
-      data << "describe MyApp do\n";
-      data << "  describe \"#hello\" do\n";
-      data << "    it \"returns a greeting\" do\n";
-      data << "      MyApp.hello.should eq(\"Hello, World!\")\n";
-      data << "    end\n";
-      data << "  end\n";
-      data << "end\n";
-      data << "```\n\n";
-
-      data << "## Running\n\n";
+      data << "### Running Tests\n\n";
 
       data << "- `em test` wraps `crystal spec`.\n";
       data << "- `crystal spec` runs everything under `spec/`.\n";
