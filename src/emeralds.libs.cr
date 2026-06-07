@@ -40,6 +40,8 @@ require "./emeralds/commands/InstallDev";
 require "./emeralds/commands/InstallLink";
 require "./emeralds/commands/License";
 require "./emeralds/commands/Lint";
+require "./emeralds/commands/c/Lint";
+require "./emeralds/commands/crystal/Lint";
 require "./emeralds/commands/List";
 require "./emeralds/commands/Loc";
 require "./emeralds/commands/Reinstall"

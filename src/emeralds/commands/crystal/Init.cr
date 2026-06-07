@@ -15,7 +15,9 @@ class Emeralds::Crystal::Init < Emeralds::Init
 
       data << "targets:\n";
       data << "  #{@name}:\n";
-      data << "    main: src/#{@name}.cr\n\n";
+      data << "    main: src/#{@name}.cr\n";
+      data << "  ameba:\n";
+      data << "    main: lib/ameba/bin/ameba.cr\n\n";
 
       data << "crystal: \">= 1.0.0\"\n\n";
 
@@ -24,6 +26,8 @@ class Emeralds::Crystal::Init < Emeralds::Init
       data << "dependencies:\n\n";
 
       data << "development_dependencies:\n";
+      data << "  ameba:\n";
+      data << "    github: crystal-ameba/ameba\n\n";
     end
 
     File.write "shard.yml", result;
@@ -50,7 +54,7 @@ class Emeralds::Crystal::Init < Emeralds::Init
       data << "  },\n";
       data << "  \"scripts\": {\n";
       data << "    \"install\": \"shards install\",\n";
-      data << "    \"build\": \"shards build\",\n";
+      data << "    \"build\": \"shards build #{@name}\",\n";
       data << "    \"run\": \"crystal run src/#{@name}.cr\",\n";
       data << "    \"test\": \"crystal spec spec/#{@name}.spec.cr\"\n";
       data << "  },\n";
@@ -207,12 +211,28 @@ class Emeralds::Crystal::Init < Emeralds::Init
     File.write "AGENTS.md", result;
   end
 
+  private def write_ameba_yml
+    puts "  #{ARROW} .ameba.yml";
+
+    result = String.build do |data|
+      data << "Lint/Formatting:\n";
+      data << "  Enabled: false\n";
+      data << "Lint/SpecFilename:\n";
+      data << "  Enabled: false\n";
+      data << "Naming/Filename:\n";
+      data << "  Enabled: false\n";
+    end
+
+    File.write ".ameba.yml", result;
+  end
+
   def write_language_files
     write_em_json;
     write_gitignore_file;
     write_spec_files;
     write_source_files;
     write_shard_yml;
+    write_ameba_yml;
     write_agents_file;
   end
 end
