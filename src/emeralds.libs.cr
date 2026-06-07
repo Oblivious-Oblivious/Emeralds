@@ -107,6 +107,7 @@ require "./emeralds/emfile/PlatformConfig";
 require "./emeralds/emfile/Ignore";
 require "./emeralds/emfile/Emfile";
 
+require "./emeralds/modules/Console";
 require "./emeralds/modules/Options";
 require "./emeralds/modules/Terminal";
 

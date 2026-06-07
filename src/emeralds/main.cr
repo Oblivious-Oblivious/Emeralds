@@ -20,11 +20,38 @@ module Emeralds::Main
     script;
   end
 
+  private def self.abort_setup
+    puts "Aborted.".colorize(:red);
+    exit 0;
+  end
+
+  private def self.read_or_abort(question)
+    Console.prompt(question) || abort_setup;
+  end
+
+  private def self.interactive_init
+    puts "Emeralds - Interactive project setup".colorize(:white).mode(:bold);
+
+    name = "";
+    while name.blank?
+      name = read_or_abort "#{ARROW} Project name: ";
+      puts "Project name cannot be empty.".colorize(:red) if name.blank?;
+    end
+
+    author = read_or_abort "#{ARROW} Author: ";
+    Options.author = author unless author.blank?;
+
+    Options.template = Console.select("#{ARROW} Template", Options::TEMPLATES, "c") || abort_setup;
+
+    name;
+  end
+
   private def self.dispatch(action)
     case action
     when "init"
       if ARGV.size == 1
-        Help.new.run;
+        name = interactive_init;
+        Options.dispatch_template(Init, name: name);
       else
         Options.dispatch_template(Init, name: ARGV[1]);
       end
