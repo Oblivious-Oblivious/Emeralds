@@ -1,26 +1,51 @@
 {
+  "$schema": "https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/master/schema/em.schema.json",
+  "author": "atha",
+  "name": "emeralds",
+  "template": "crystal",
+  "version": "0.13.1",
+  "license": "mit",
+  "locignore": {
+    "extensions": [],
+    "directories": ["libs"]
+  },
+  "lintignore": {
+    "extensions": [],
+    "directories": ["libs"]
+  },
   "scripts": {
-    "build": ["shards build emeralds -Dpreview_mt --release --no-debug"],
-    "debug": ["shards build emeralds"],
+    "shards": "shards",
+    "ameba": "shards build ameba -Dpreview_mt",
     "all": [
       "rm -rf bin/emeralds bin/*.dwarf",
-      "em build",
+      "em build app release",
       "cp bin/emeralds bin/em",
       "cp bin/emeralds bin/em /usr/local/bin/"
     ],
     "all-windows": [
       "if exist bin rmdir /s /q bin",
-      "shards.exe build --release --no-debug",
+      "em.exe build app release",
       "copy /Y bin\\emeralds.exe bin\\em.exe",
       "copy /Y bin\\em.exe C:\\msys64\\ucrt64\\bin\\",
       "copy /Y bin\\emeralds.exe C:\\msys64\\ucrt64\\bin\\"
     ],
-    "ameba": ["shards build ameba -Dpreview_mt"],
-    "lint": "crystal run scripts/format.cr && ./bin/ameba",
-    "test": "crystal spec ./spec/emeralds.spec.cr",
-    "spec": "em test",
     "document": "rm -rf ./docs && crystal docs src/*.cr",
-    "clean": "rm -f bin/em bin/emeralds bin/*.dwarf",
     "deploy": "ruby scripts/deploy.rb"
-  }
+  },
+  "compile-flags": {
+    "darwin": {
+      "debug": ["shards", "build"],
+      "release": ["shards", "build", "-Dpreview_mt", "--release", "--no-debug"]
+    },
+    "linux": {
+      "debug": ["shards", "build"],
+      "release": ["shards", "build", "-Dpreview_mt", "--release", "--no-debug"]
+    },
+    "win32": {
+      "debug": ["shards", "build"],
+      "release": ["shards", "build", "-Dpreview_mt", "--release", "--no-debug"]
+    }
+  },
+  "dependencies": {},
+  "dev-dependencies": {}
 }

@@ -54,7 +54,7 @@ class Emeralds::Crystal::Init < Emeralds::Init
       data << "  },\n";
       data << "  \"scripts\": {\n";
       data << "    \"shards\": \"shards\",\n";
-      data << "    \"ameba\": \"shards build ameba\"\n";
+      data << "    \"ameba\": \"shards build ameba -Dpreview_mt\"\n";
       data << "  },\n";
       data << "  \"compile-flags\": {\n";
       data << "    \"darwin\": {\n";
