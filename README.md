@@ -67,7 +67,7 @@ Commands:
     run                                 - Run the compiled application.
     clean                               - Run the clean script
     help                                - Print this help message.
-    init [<name>]                       - Initialize a new library with an em.json file.
+    init [<name>]                       - Initialize a new project; runs an interactive setup when no name is given.
     install [ | <link> | dev | all]     - Install dependencies into a flattened libs directory.
     reinstall                           - Reinstall dependencies into a flattened libs directory.
     uninstall [<name>]                  - Remove a dependency from em.json and libs.
@@ -87,6 +87,9 @@ Commands:
 ```
 em init YourApp
 ```
+
+Run `em init` with no name to start an interactive setup that prompts for the
+project name, author, and template (defaults to `c`).
 
 ```
 Emeralds - Initializing a new project

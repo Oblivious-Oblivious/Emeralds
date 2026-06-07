@@ -1,5 +1,3 @@
-require "../../spec_helper";
-
 describe "step 4 - em add / em remove" do
   it "adds module one" do
     em("add one").should contain("one.c");

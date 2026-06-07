@@ -46,6 +46,7 @@ die("tag on origin") unless `git ls-remote --tags origin refs/tags/#{tag}`.strip
 puts "deploy: bumping to #{version}";
 File.write("shard.yml", File.read("shard.yml").sub(/^version: .+/, "version: #{version}"));
 File.write("src/emeralds/constants/version.cr", File.read("src/emeralds/constants/version.cr").sub(/(VERSION\s*=\s*)"[^"]+"/, "\\1\"#{version}\""));
+File.write("em.json", File.read("em.json").sub(/("version":\s*)"[^"]+"/, "\\1\"#{version}\""));
 unless File.read("CHANGELOG.md").include?("#{header} ")
   File.write("CHANGELOG.md", "#{header} (#{Time.now.strftime("%b %d %Y")})\n\n#{File.read("CHANGELOG.md")}");
 end
@@ -63,7 +64,7 @@ puts "deploy: verifying build";
 cmd("shards", "build", "--release", "--no-debug");
 branch = cmd!("git", "rev-parse", "--abbrev-ref", "HEAD").strip;
 puts "deploy: committing version bump";
-cmd("git", "add", "shard.yml", "src/emeralds/constants/version.cr", "README.md", "scripts/get.sh");
+cmd("git", "add", "shard.yml", "src/emeralds/constants/version.cr", "em.json", "README.md", "scripts/get.sh");
 cmd!("git", "commit", "-m", "[master] - new version.");
 
 puts "deploy: tagging #{tag}";

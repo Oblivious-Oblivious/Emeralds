@@ -1,5 +1,3 @@
-require "../../spec_helper";
-
 describe "step 2 - em output" do
   it "prints the help/usage screen" do
     output = em("");

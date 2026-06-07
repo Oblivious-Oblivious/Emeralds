@@ -9,7 +9,7 @@ module Emeralds::Terminal
 
   def self.rm(path, display = false)
     puts "#{ARROW} remove #{path}" if display;
-    pattern = path.is_a?(String) ? path.gsub('\\', '/') : path.map(&.gsub('\\', '/'));
+    pattern = path.is_a?(String) ? path.posix_path : path.map(&.posix_path);
     Dir.glob pattern do |file_path|
       FileUtils.rm_rf file_path;
     end
@@ -19,7 +19,7 @@ module Emeralds::Terminal
 
   def self.cp(src_dir, dest_dir, display = false)
     puts "#{ARROW} copy #{src_dir} to #{dest_dir}" if display;
-    Dir.glob src_dir.gsub('\\', '/') do |file_path|
+    Dir.glob src_dir.posix_path do |file_path|
       FileUtils.cp_r file_path, dest_dir;
     end
   rescue
@@ -105,7 +105,7 @@ module Emeralds::Terminal
     Compress::Zip::File.open zip_path do |zip|
       zip.entries.each do |entry|
         path = entry.filename.split('/', 2)[1]?;
-        next if path.nil? || path.empty?;
+        next if path.nil? || path.blank?;
         target = File.join dest_dir, path;
         if entry.dir?
           FileUtils.mkdir_p target;
@@ -136,91 +136,10 @@ module Emeralds::Terminal
   def self.find(path)
     matches = [] of String;
 
-    Dir.glob(path.gsub('\\', '/')) do |file|
+    Dir.glob(path.posix_path) do |file|
       matches << file if File.file? file
     end
 
     matches.uniq! { |file| File.basename file };
-  end
-
-  def self.sources_app
-    c_files = find(File.join("src", "*", "**", "*.c"));
-    unix_libs = find(File.join("src", "*", "**", "*.a"));
-    msvc_libs = find(File.join("src", "*", "**", "*.lib")).reject { |file|
-      file.ends_with?(".test.lib");
-    };
-    (c_files + unix_libs + msvc_libs).join(' ').rstrip;
-  end
-
-  def self.sources_lib
-    "#{find(File.join("src", "*", "**", "*.c")).join(' ')}".rstrip;
-  end
-
-  def self.sources_test
-    c_files = find(File.join("src", "*", "**", "*.c"));
-    unix_libs = find(File.join("src", "*", "**", "*.a.test"));
-    msvc_libs = find(File.join("src", "*", "**", "*.test.lib"));
-    (c_files + unix_libs + msvc_libs).join(' ').rstrip;
-  end
-
-  def self.deps_release
-    unix_libs = find(File.join("libs", "*", "export", "*.a"));
-    msvc_libs = find(File.join("libs", "*", "export", "*.lib")).reject { |file|
-      file.ends_with?(".test.lib");
-    };
-    (unix_libs + msvc_libs).join(' ').rstrip;
-  end
-
-  def self.deps_test
-    unix_libs = find(File.join("libs", "*", "export", "*.a.test"));
-    msvc_libs = find(File.join("libs", "*", "export", "*.test.lib"));
-    (unix_libs + msvc_libs).join(' ').rstrip;
-  end
-
-  def self.deps_for_test
-    deps = [] of String;
-
-    Dir.glob(File.join("libs", "*", "export").gsub('\\', '/')) do |path|
-      test_libs = find(File.join(path, "*.a.test")) + find(File.join(path, "*.test.lib"));
-      release_libs = find(File.join(path, "*.a")) + find(File.join(path, "*.lib")).reject { |file|
-        file.ends_with?(".test.lib");
-      };
-      deps.concat test_libs.empty? ? release_libs : test_libs;
-    end
-
-    deps.join(' ').rstrip;
-  end
-
-  def self.deps_includes
-    paths = [] of String;
-
-    Dir.glob(File.join("libs", "*", "export").gsub('\\', '/')) do |path|
-      paths << path if File.directory? path;
-    end
-    Dir.glob(File.join("libs", "*", "export", "**").gsub('\\', '/')) do |path|
-      paths << path if File.directory? path;
-    end
-
-    paths.uniq.map { |path| "-I#{path}" }.join(' ').rstrip;
-  end
-
-  def self.input_app
-    "#{find(File.join("src", "*.c")).join(' ')}".rstrip;
-  end
-
-  def self.input_test
-    "#{find(File.join("spec", "*.spec.c")).join(' ')}".rstrip;
-  end
-
-  def self.output_app
-    "#{File.join("export", (Emfile.instance.name || ""))}".rstrip;
-  end
-
-  def self.output_lib
-    "#{Emfile.instance.name}.a".rstrip;
-  end
-
-  def self.output_test
-    "#{File.join("spec", "spec_results")}".rstrip;
   end
 end

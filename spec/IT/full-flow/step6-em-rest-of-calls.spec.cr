@@ -1,5 +1,3 @@
-require "../../spec_helper";
-
 describe "step 6 - em list / makefile / loc / lint / version / license" do
   it "lists dependencies and modules" do
     em("list").should contain("cSpec");
@@ -17,8 +15,8 @@ describe "step 6 - em list / makefile / loc / lint / version / license" do
   it "lints the sources" do
     output = em("lint");
     output.should contain("Linting sources");
-    output.should contain("src/get_value/get_value.c");
-    output.should contain("src/get_value/get_value.h");
+    output.should contain("src/get-value/get-value.c");
+    output.should contain("src/get-value/get-value.h");
     output.should contain("src/__testing__.c");
   end
 

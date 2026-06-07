@@ -20,61 +20,88 @@ module Emeralds::Main
     script;
   end
 
+  private def self.abort_setup
+    puts "Aborted.".colorize(:red);
+    exit 0;
+  end
+
+  private def self.read_or_abort(question)
+    Console.prompt(question) || abort_setup;
+  end
+
+  private def self.interactive_init
+    puts "Emeralds - Interactive project setup".colorize(:white).mode(:bold);
+
+    name = "";
+    while name.blank?
+      name = read_or_abort "#{ARROW} Project name: ";
+      puts "Project name cannot be empty.".colorize(:red) if name.blank?;
+    end
+
+    author = read_or_abort "#{ARROW} Author: ";
+    Options.author = author unless author.blank?;
+
+    Options.template = Console.select("#{ARROW} Template", Options::TEMPLATES, "c") || abort_setup;
+
+    name;
+  end
+
   private def self.dispatch(action)
     case action
     when "init"
       if ARGV.size == 1
-        Help.new.run;
+        name = interactive_init;
+        Options.dispatch_template(Init, name: name);
       else
-        Init.new(name: ARGV[1]).run;
+        Options.dispatch_template(Init, name: ARGV[1]);
       end
     when "list"
       List.new.run;
     when "install"
       if ARGV.size < 2
-        Install.new.run;
-      elsif ARGV[1].strip.empty?
+        Options.dispatch_template(Install);
+      elsif ARGV[1].blank?
         puts "Invalid name: #{ARGV[1]}.".colorize(:red);
         exit 0;
       elsif ARGV[1] == "dev"
-        InstallDev.new.run;
+        Options.dispatch_template(InstallDev);
       elsif ARGV[1] == "all"
-        InstallAll.new.run;
+        Options.dispatch_template(InstallAll);
       else
-        InstallLink.new(link: ARGV[1]).run;
+        Options.dispatch_template(InstallLink, link: ARGV[1]);
       end
     when "build"
       Help.new.run if ARGV.size < 3;
 
       if ARGV[1] == "app"
         if ARGV[2] == "debug"
-          BuildAppDebug.new.run;
+          Options.dispatch_template(BuildAppDebug);
         elsif ARGV[2] == "release"
-          BuildAppRelease.new.run;
+          Options.dispatch_template(BuildAppRelease);
         elsif ARGV[2] == "dev"
-          BuildAppDev.new.run;
+          Options.dispatch_template(BuildAppDev);
         elsif ARGV[2] == "stage"
-          BuildAppStage.new.run;
+          Options.dispatch_template(BuildAppStage);
         elsif ARGV[2] == "preprod"
-          BuildAppPreprod.new.run;
+          Options.dispatch_template(BuildAppPreprod);
         elsif ARGV[2] == "prod"
-          BuildAppProd.new.run;
+          Options.dispatch_template(BuildAppProd);
         else
           Help.new.run;
         end
       elsif ARGV[1] == "lib"
         if ARGV[2] == "debug"
-          BuildLibDebug.new.run;
+          Options.dispatch_template(BuildLibDebug);
         elsif ARGV[2] == "release"
-          BuildLibRelease.new.run;
+          Options.dispatch_template(BuildLibRelease);
         elsif ARGV[2] == "dev"
-          BuildLibDev.new.run;
+          Options.dispatch_template(BuildLibDev);
         elsif ARGV[2] == "stage"
-          BuildLibStage.new.run;
+          Options.dispatch_template(BuildLibStage);
         elsif ARGV[2] == "preprod"
-          BuildLibPreprod.new.run;
+          Options.dispatch_template(BuildLibPreprod);
         elsif ARGV[2] == "prod"
-          BuildLibProd.new.run;
+          Options.dispatch_template(BuildLibProd);
         else
           Help.new.run;
         end
@@ -82,31 +109,31 @@ module Emeralds::Main
         Help.new.run;
       end
     when "reinstall"
-      Reinstall.new.run;
+      Options.dispatch_template(Reinstall);
     when "uninstall"
       if ARGV.size == 1
         Help.new.run;
       else
-        Uninstall.new(name: ARGV[1]).run;
+        Options.dispatch_template(Uninstall, name: ARGV[1]);
       end
     when "add"
       if ARGV.size == 1
         Help.new.run;
       else
-        Add.new(name: ARGV[1]).run;
+        Options.dispatch_template(Add, name: ARGV[1]);
       end
     when "remove"
       if ARGV.size == 1
         Help.new.run;
       else
-        Remove.new(name: ARGV[1]).run;
+        Options.dispatch_template(Remove, name: ARGV[1]);
       end
     when "run"
-      Run.new.run;
+      Options.dispatch_template(Run);
     when "test"
-      Test.new.run;
+      Options.dispatch_template(Test);
     when "lint"
-      Lint.new.run;
+      Options.dispatch_template(Lint);
     when "update"
       Update.new.run;
     when "version"
@@ -114,7 +141,7 @@ module Emeralds::Main
     when "license"
       License.new.run;
     when "clean"
-      Clean.new.run;
+      Options.dispatch_template(Clean);
     when "makefile"
       GenerateMakefile.new.run;
     when "loc"
@@ -134,6 +161,7 @@ module Emeralds::Main
 
     action = ARGV[0];
     if action != "init"
+      Options.template = Emfile.instance.template;
       if script = validated_script(action)
         script_args = ARGV[1..].join(" ");
         if script.is_a? Array

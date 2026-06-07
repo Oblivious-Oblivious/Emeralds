@@ -1,5 +1,3 @@
-require "../../spec_helper";
-
 describe "step 5 - em build / em run / em clean" do
   it "builds the app for release" do
     em("build app release").should contain("export/__testing__");

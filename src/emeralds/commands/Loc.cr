@@ -32,7 +32,7 @@ class Emeralds::Loc < Emeralds::Command
       .gsub(/\/\/.*/, "")
       .lines
       .map(&.strip)
-      .count(&.empty?);
+      .count { |line| !line.empty? };
   end
 
   private def get_lines_of_code
