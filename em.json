@@ -16,7 +16,7 @@
       "copy /Y bin\\emeralds.exe C:\\msys64\\ucrt64\\bin\\"
     ],
     "ameba": ["shards build ameba -Dpreview_mt"],
-    "lint": "ruby scripts/format.rb && ./bin/ameba",
+    "lint": "crystal run scripts/format.cr && ./bin/ameba",
     "test": "crystal spec ./spec/emeralds.spec.cr",
     "spec": "em test",
     "document": "rm -rf ./docs && crystal docs src/*.cr",
