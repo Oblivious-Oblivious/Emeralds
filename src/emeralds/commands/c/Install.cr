@@ -74,10 +74,25 @@ class Emeralds::C::Install < Emeralds::Install
     end
   end
 
+  private def prune_undeclared
+    declared = [Emfile.instance.dependencies, Emfile.instance.dev_dependencies]
+      .compact
+      .flat_map(&.keys)
+      .map { |key| Terminal.repo_name key };
+
+    Dir.glob(File.join "libs", "*") do |path|
+      next unless File.directory? path;
+      next if declared.includes? File.basename path;
+      Terminal.rm path;
+      puts " #{COG} Removed `#{File.basename path}` from libs.";
+    end
+  end
+
   def block
     -> {
       Terminal.mkdir "libs";
       install_deps Emfile.instance.dependencies;
+      prune_undeclared;
     };
   end
 end

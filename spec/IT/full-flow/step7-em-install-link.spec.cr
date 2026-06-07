@@ -16,17 +16,17 @@ end
 
 describe "step 7 - em install link" do
   it "adds and installs a dependency from a git link" do
-    output = em "install https://github.com/Oblivious-Oblivious/cSpec.git";
+    output = em "install https://github.com/Oblivious-Oblivious/cSpec";
 
     output.should contain("`cSpec` already installed");
-    read_project_emfile.should contain("\"https://github.com/Oblivious-Oblivious/cSpec.git\": \"latest\"");
+    read_project_emfile.should contain("\"https://github.com/Oblivious-Oblivious/cSpec\": \"latest\"");
     File.exists?(File.join(PROJECT, "libs", "cSpec", "export", "cSpec.h")).should be_true;
   end
 
   it "does not duplicate an existing git dependency" do
-    em "install https://github.com/Oblivious-Oblivious/cSpec.git";
+    em "install https://github.com/Oblivious-Oblivious/cSpec";
 
-    read_project_emfile.scan("https://github.com/Oblivious-Oblivious/cSpec.git").size.should eq(1);
+    read_project_emfile.scan("https://github.com/Oblivious-Oblivious/cSpec").size.should eq(1);
   end
 
   it "rejects an empty or blank install argument" do
