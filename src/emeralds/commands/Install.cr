@@ -68,7 +68,7 @@ class Emeralds::Install < Emeralds::Command
         Dir.cd (File.join "libs", name) do
           FileUtils.ln_s File.join("..", "..", "libs"), "libs" unless File.exists? "libs";
           Emfile.with_instance(dep_emfile) do
-            build_lib dep_emfile.compile_flags.release, display: false;
+            C::Build.new.build_lib dep_emfile.compile_flags.release, display: false;
           end
           delete_excluded_paths ".", ["export", "libs"];
           Terminal.rm ".git*";

@@ -48,33 +48,33 @@ module Emeralds::Main
 
       if ARGV[1] == "app"
         if ARGV[2] == "debug"
-          BuildAppDebug.new.run;
+          Options.dispatch_template(BuildAppDebug);
         elsif ARGV[2] == "release"
-          BuildAppRelease.new.run;
+          Options.dispatch_template(BuildAppRelease);
         elsif ARGV[2] == "dev"
-          BuildAppDev.new.run;
+          Options.dispatch_template(BuildAppDev);
         elsif ARGV[2] == "stage"
-          BuildAppStage.new.run;
+          Options.dispatch_template(BuildAppStage);
         elsif ARGV[2] == "preprod"
-          BuildAppPreprod.new.run;
+          Options.dispatch_template(BuildAppPreprod);
         elsif ARGV[2] == "prod"
-          BuildAppProd.new.run;
+          Options.dispatch_template(BuildAppProd);
         else
           Help.new.run;
         end
       elsif ARGV[1] == "lib"
         if ARGV[2] == "debug"
-          BuildLibDebug.new.run;
+          Options.dispatch_template(BuildLibDebug);
         elsif ARGV[2] == "release"
-          BuildLibRelease.new.run;
+          Options.dispatch_template(BuildLibRelease);
         elsif ARGV[2] == "dev"
-          BuildLibDev.new.run;
+          Options.dispatch_template(BuildLibDev);
         elsif ARGV[2] == "stage"
-          BuildLibStage.new.run;
+          Options.dispatch_template(BuildLibStage);
         elsif ARGV[2] == "preprod"
-          BuildLibPreprod.new.run;
+          Options.dispatch_template(BuildLibPreprod);
         elsif ARGV[2] == "prod"
-          BuildLibProd.new.run;
+          Options.dispatch_template(BuildLibProd);
         else
           Help.new.run;
         end

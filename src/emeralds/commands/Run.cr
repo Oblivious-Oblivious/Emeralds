@@ -5,7 +5,7 @@ class Emeralds::Run < Emeralds::Command
 
   def block
     -> {
-      executable = Build.new.output_app;
+      executable = C::Build.new.output_app;
       if File.exists? executable
         Terminal.run(executable, display: true);
       else

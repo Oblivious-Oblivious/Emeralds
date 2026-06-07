@@ -34,7 +34,7 @@ class Emeralds::Test < Emeralds::Command
       puts "No main spec file found.".colorize(:red);
     else
       compile_flags = Emfile.instance.compile_flags.debug;
-      build = Build.new;
+      build = C::Build.new;
       std_flag = build.msvc?(compile_flags) ? "/std:clatest" : "-std=c2x";
       out_target = build.msvc?(compile_flags) ? "#{output_test}.exe" : output_test;
       out_flag = build.msvc?(compile_flags) ? "/Fe:#{out_target}" : "-o #{out_target}";
