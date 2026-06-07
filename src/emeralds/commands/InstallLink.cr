@@ -29,7 +29,7 @@ class Emeralds::InstallLink < Emeralds::Command
     -> {
       Terminal.mkdir "libs";
       add_dependency @link;
-      Build.new.install_deps({@link => "latest"});
+      Install.new.install_deps({@link => "latest"});
     };
   end
 end
