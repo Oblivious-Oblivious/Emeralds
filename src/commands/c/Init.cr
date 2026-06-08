@@ -12,7 +12,7 @@ class Emeralds::C::Init < Emeralds::Init
       data << "  \"license\": \"mit\",\n";
       data << "  \"locignore\": {\n";
       data << "    \"extensions\": [],\n";
-      data << "    \"directories\": [\"libs\"]\n";
+      data << "    \"directories\": [\"libs\", \".opencode\", \".claude\"]\n";
       data << "  },\n";
       data << "  \"lintignore\": {\n";
       data << "    \"extensions\": [],\n";

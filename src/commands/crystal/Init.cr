@@ -46,7 +46,7 @@ class Emeralds::Crystal::Init < Emeralds::Init
       data << "  \"license\": \"mit\",\n";
       data << "  \"locignore\": {\n";
       data << "    \"extensions\": [],\n";
-      data << "    \"directories\": [\"lib\"]\n";
+      data << "    \"directories\": [\"lib\", \".opencode\", \".claude\"]\n";
       data << "  },\n";
       data << "  \"lintignore\": {\n";
       data << "    \"extensions\": [],\n";
