@@ -184,7 +184,9 @@ module Emeralds
     ensure_em_json_or_init;
 
     action = ARGV[0];
-    if action != "init"
+    if action == "update"
+      dispatch action;
+    elsif action != "init"
       Options.template = Emfile.instance.template;
       if script = validated_script(action)
         script_args = ARGV[1..].join(" ");
