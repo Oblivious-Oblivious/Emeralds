@@ -114,7 +114,7 @@ module Emeralds::Console
   private def self.draw_menu(options, index, first)
     print "\e[#{options.size}A" unless first;
     options.each_with_index do |option, i|
-      line = i == index ? "❯ #{option}".colorize(:green).mode(:bold).to_s : "  #{option}";
+      line = i == index ? "❯ #{option}".colorize(:green).mode(:bold) : "  #{option}";
       print "\r\e[K#{line}\r\n";
     end
     STDOUT.flush;

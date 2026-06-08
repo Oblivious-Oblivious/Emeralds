@@ -5,11 +5,11 @@ class Emeralds::Loc < Emeralds::Command
   end
 
   private def spec_file?(file)
-    file.to_s.starts_with? File.join("spec", "");
+    file.starts_with? File.join("spec", "");
   end
 
   private def ignored_file?(file)
-    path = file.to_s;
+    path = file;
     locignore = Emfile.instance.locignore;
     extension = File.extname(path);
     extensions = locignore.extensions || [] of String;
@@ -30,9 +30,8 @@ class Emeralds::Loc < Emeralds::Command
       .read(file)
       .gsub(/\/\*.*?\*\//m, "")
       .gsub(/\/\/.*/, "")
-      .lines
-      .map(&.strip)
-      .count { |line| !line.empty? };
+      .each_line
+      .count { |line| !line.strip.empty? };
   end
 
   private def get_lines_of_code

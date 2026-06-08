@@ -21,7 +21,7 @@ class Emeralds::Options
   end
 
   def self.usage
-    build_parser.to_s;
+    build_parser;
   end
 
   private def self.build_parser

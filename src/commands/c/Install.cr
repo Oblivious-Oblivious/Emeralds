@@ -10,7 +10,7 @@ class Emeralds::C::Install < Emeralds::Install
                 pattern = pattern.lchop("./");
                 pattern == relative_path || relative_path.starts_with?("#{pattern}/");
               end
-      FileUtils.rm_rf(path.to_s) unless File.directory?(path.to_s) && path == base_dir_path;
+      FileUtils.rm_rf(path) unless File.directory?(path) && path == base_dir_path;
     end
   end
 

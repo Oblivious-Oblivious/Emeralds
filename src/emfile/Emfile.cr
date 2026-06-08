@@ -26,7 +26,7 @@ class Emeralds::Emfile
   def self.cspec_not_on_deps
     deps = Emfile.instance.dependencies;
     if deps
-      deps.keys.find! { |key| Terminal.repo_name(key) == "cSpec" };
+      deps.each_key.find! { |key| Terminal.repo_name(key) == "cSpec" };
     end
     false;
   rescue
@@ -36,7 +36,7 @@ class Emeralds::Emfile
   def self.cspec_not_on_dev_deps
     depsdevs = Emfile.instance.dev_dependencies;
     if depsdevs
-      depsdevs.keys.find! { |key| Terminal.repo_name(key) == "cSpec" };
+      depsdevs.each_key.find! { |key| Terminal.repo_name(key) == "cSpec" };
     end
     false;
   rescue

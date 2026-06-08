@@ -63,8 +63,8 @@ class Emeralds::Crystal::Lint < Emeralds::Lint
     output = IO::Memory.new;
     error = IO::Memory.new;
     status = Process.run("./bin/ameba", output: output, error: error);
-    puts output.to_s;
-    STDERR.puts error.to_s unless error.to_s.empty?;
+    puts output;
+    STDERR.puts error unless error.empty?;
     status;
   end
 
