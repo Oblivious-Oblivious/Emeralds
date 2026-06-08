@@ -1,3 +1,8 @@
+# Changes for Emeralds 0.14.0 (Jun 08 2026)
+
+* Added `em init` interactive command to scaffold a new project.
+* Added support for Crystal along with C.
+
 # Changes for Emeralds 0.13.0 (Jun 06 2026)
 
 * Added Ameba linting and Crystal formatting.
