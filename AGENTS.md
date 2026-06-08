@@ -158,7 +158,7 @@ implementation rather than after mistakes.
   `JSON::Serializable`.
 - Current repository tests are minimal smoke coverage only. Add focused tests
   for real behavior changes when practical.
-- Update both `shard.yml` and `src/emeralds/constants/version.cr` for version
+- Update both `shard.yml` and `src/constants/version.cr` for version
   changes; update `CHANGELOG.md` for releases.
 
 ### Ruby Scripts
