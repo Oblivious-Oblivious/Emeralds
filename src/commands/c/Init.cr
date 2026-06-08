@@ -228,6 +228,10 @@ class Emeralds::C::Init < Emeralds::Init
       data << "# MacOS\n";
       data << ".DS_Store\n\n";
 
+      data << "# AI\n";
+      data << ".claude\n";
+      data << ".opencode\n\n";
+
       data << "libs/\n";
     end
 

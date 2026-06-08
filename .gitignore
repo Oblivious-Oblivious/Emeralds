@@ -6,3 +6,7 @@
 
 fix_linux
 .DS_Store
+
+# AI
+.claude
+.opencode

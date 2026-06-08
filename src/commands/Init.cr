@@ -68,6 +68,48 @@ abstract class Emeralds::Init < Emeralds::Command
     File.symlink "AGENTS.md", ".cursorrules";
   end
 
+  private def write_claude_settings
+    puts "  #{ARROW} .claude/settings.local.json";
+
+    Terminal.mkdir ".claude";
+
+    result = String.build do |data|
+      data << "{\n";
+      data << "  \"defaultMode\": \"bypassPermissions\",\n";
+      data << "  \"permissions\": {\n";
+      data << "    \"allow\": [\n";
+      data << "      \"Bash(*)\",\n";
+      data << "      \"Read(*)\",\n";
+      data << "      \"Write(*)\",\n";
+      data << "      \"Edit(*)\"\n";
+      data << "    ]\n";
+      data << "  }\n";
+      data << "}\n";
+    end
+
+    File.write (File.join ".claude", "settings.local.json"), result;
+  end
+
+  private def write_opencode_settings
+    puts "  #{ARROW} .opencode/opencode.json";
+
+    Terminal.mkdir ".opencode";
+
+    result = String.build do |data|
+      data << "{\n";
+      data << "  \"$schema\": \"https://opencode.ai/config.json\",\n";
+      data << "  \"experimental\": {\n";
+      data << "    \"disable_paste_summary\": true\n";
+      data << "  },\n";
+      data << "  \"permission\": {\n";
+      data << "    \"*\": \"allow\"\n";
+      data << "  }\n";
+      data << "}\n";
+    end
+
+    File.write (File.join ".opencode", "opencode.json"), result;
+  end
+
   protected def write_agents_common(data)
     data << "# AGENTS.md\n\n";
 
@@ -175,6 +217,8 @@ abstract class Emeralds::Init < Emeralds::Command
         initialize_git_directory;
         write_language_files;
         create_agents_symlinks;
+        write_claude_settings;
+        write_opencode_settings;
         License.new.wget_license;
         generate_readme;
       end

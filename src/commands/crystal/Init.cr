@@ -146,7 +146,11 @@ class Emeralds::Crystal::Init < Emeralds::Init
       data << "fix_linux\n\n";
 
       data << "# MacOS\n";
-      data << ".DS_Store\n";
+      data << ".DS_Store\n\n";
+
+      data << "# AI\n";
+      data << ".claude\n";
+      data << ".opencode\n";
     end
 
     File.write ".gitignore", result;
