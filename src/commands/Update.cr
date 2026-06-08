@@ -23,7 +23,7 @@ class Emeralds::Update < Emeralds::Command
   private def latest_version
     response = HTTP::Client.get VERSION_URL;
     return nil unless response.success?;
-    match = response.body.match(/VERSION = "(\d+\.\d+\.\d+)"/);
+    match = response.body.match(/VERSION\s+=\s+"(\d+\.\d+\.\d+)"/);
     match ? parse_version(match[1]) : nil;
   rescue
     nil;
