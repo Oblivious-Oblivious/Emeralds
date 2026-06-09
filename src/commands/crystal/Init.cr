@@ -219,37 +219,35 @@ class Emeralds::Crystal::Init < Emeralds::Init
 
       data << "Source: https://crystal-lang.org/reference/1.20/guides/performance.html\n\n";
 
-      data << "- Avoid unnecessary heap allocations; they are slower and increase GC\n";
-      data << "  pressure.\n";
+      data << "- Avoid unnecessary heap allocations; they are slower and increase GC pressure.\n";
       data << "- Prefer writing directly to `IO` instead of building intermediate strings.\n";
       data << "  Implement `to_s(io)` rather than `to_s` for custom types.\n";
       data << "- Use string interpolation over manual string concatenation.\n";
-      data << "- Use `String.build` for efficient string construction instead of\n";
-      data << "  allocating an `IO::Memory` yourself.\n";
+      data << "- Use `String.build` for efficient string construction instead of allocating an\n";
+      data << "  `IO::Memory` yourself.\n";
       data << "- Avoid repeated temporary objects in hot paths, especially inside loops.\n";
-      data << "  Prefer tuples for fixed literal collections, and use iterator methods\n";
-      data << "  like `Hash#each_key` instead of allocating arrays via `Hash#keys`.\n";
-      data << "- Use `struct` for small immutable value objects when appropriate, but\n";
-      data << "  remember structs are passed by value.\n";
-      data << "- Be careful with string indexing: Crystal strings are UTF-8, so `str[i]`\n";
-      data << "  and `str.size` can be costly. Prefer `each_char`, `each_byte`,\n";
-      data << "  `each_codepoint`, or `Char::Reader`.\n";
+      data << "  Prefer tuples for fixed literal collections, and use iterator methods like\n";
+      data << "  `Hash#each_key` instead of allocating arrays via `Hash#keys`.\n";
+      data << "- Use `struct` for small immutable value objects when appropriate, but remember\n";
+      data << "  structs are passed by value.\n";
+      data << "- Be careful with string indexing: Crystal strings are UTF-8, so `str[i]` and\n";
+      data << "  `str.size` can be costly. Prefer `each_char`, `each_byte`, `each_codepoint`,\n";
+      data << "  or `Char::Reader`.\n";
       data << "- General rule: reduce allocations, stream into buffers/IOs, use Crystal's\n";
       data << "  iteration APIs, and verify every performance change with profiling.\n\n";
 
       data << "### Concurrency\n\n";
 
-      data << "- Crystal concurrency is based on **fibers** (lightweight user-space\n";
-      data << "  tasks), not OS threads.\n";
+      data << "- Crystal concurrency is based on **fibers** (lightweight user-space tasks),\n";
+      data << "  not OS threads.\n";
       data << "- Create concurrent work with `spawn`.\n";
       data << "- Prefer **message passing via `Channel`** over shared mutable state.\n";
-      data << "- Fibers communicate using channels (`send` / `receive`) in a CSP-style\n";
-      data << "  model similar to Go.\n";
-      data << "- Fiber scheduling is cooperative; blocking operations such as I/O,\n";
-      data << "  channel operations, and `sleep` yield execution.\n";
+      data << "- Fibers communicate using channels (`send` / `receive`) in a CSP-style model\n";
+      data << "  similar to Go.\n";
+      data << "- Fiber scheduling is cooperative; blocking operations such as I/O, channel\n";
+      data << "  operations, and `sleep` yield execution.\n";
       data << "- Use `select` to wait on multiple channel operations.\n";
-      data << "- Design concurrent systems as independent fibers communicating through\n";
-      data << "  channels.\n";
+      data << "- Design concurrent systems as independent fibers communicating through channels.\n";
       data << "- Avoid shared mutable state whenever possible.\n";
       data << "- If shared state is necessary in parallel execution contexts, use\n";
       data << "  synchronization primitives (`Mutex`, atomics, etc.).\n";
@@ -267,6 +265,8 @@ class Emeralds::Crystal::Init < Emeralds::Init
       data << "Lint/SpecFilename:\n";
       data << "  Enabled: false\n";
       data << "Naming/Filename:\n";
+      data << "  Enabled: false\n";
+      data << "Metrics/CyclomaticComplexity:\n";
       data << "  Enabled: false\n";
     end
 
