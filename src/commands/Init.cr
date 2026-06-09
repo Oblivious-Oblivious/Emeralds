@@ -129,7 +129,9 @@ abstract class Emeralds::Init < Emeralds::Command
     data << "   say so.\n";
     data << "4. **Touch only what you must.** Every changed line must trace to the user's\n";
     data << "   request.\n";
-    data << "5. **NO committing from an agent!! (human commits only).\n\n";
+    data << "5. **NO committing from an agent!!** (human commits only).\n";
+    data << "6. **Do not write comments** unless they are javadoc style comments.  Even\n";
+    data << "   in that case, only write them if the project looks like a library not an app.\n\n";
 
     data << "## 1. Think Before Coding\n\n";
 

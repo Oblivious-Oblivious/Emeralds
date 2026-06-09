@@ -191,6 +191,8 @@ class Emeralds::Crystal::Init < Emeralds::Init
 
       data << "### Code Style\n\n";
 
+      data << "- Avoid manual types AT ALL COSTS.  Only type when necessary, let\n";
+      data << "  type inference do the work.\n";
       data << "- Run `em lint` to format and lint documents using ameba.\n";
       data << "- Prefer the standard library over adding dependencies.\n";
       data << "- Keep Crystal code style local: 2-space indent, final newline, LF,\n";
