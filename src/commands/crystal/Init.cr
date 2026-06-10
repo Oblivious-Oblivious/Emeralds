@@ -197,6 +197,8 @@ class Emeralds::Crystal::Init < Emeralds::Init
       data << "- Prefer the standard library over adding dependencies.\n";
       data << "- Keep Crystal code style local: 2-space indent, final newline, LF,\n";
       data << "  trimmed trailing whitespace.\n";
+      data << "- When creating/extending classes, private methods are first, then\n";
+      data << "  initialize method, then protected, then public.\n";
       data << "- Max 80 chars/line. Follow existing script style.\n";
       data << "- Crystal statements end with semicolons. Match surrounding files.\n";
       data << "- Add focused tests for real behavior changes when practical.\n";
