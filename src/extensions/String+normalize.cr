@@ -16,7 +16,7 @@ class String
       .reject(&.empty?)
       .map(&.split(/[\s_-]+/)
       .reject(&.empty?)
-      .map(&.capitalize).join)
+      .map(&.sub(/^./) { |char| char.upcase }).join)
       .join("::");
   end
 
