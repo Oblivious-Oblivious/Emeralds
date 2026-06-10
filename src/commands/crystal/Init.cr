@@ -1,6 +1,6 @@
 class Emeralds::Crystal::Init < Emeralds::Init
   private def module_name
-    @name.split(/[\s\/_-]+/).reject(&.empty?).map(&.capitalize).join;
+    @name.to_crystal_namespace;
   end
 
   private def write_shard_yml

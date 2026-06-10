@@ -1,10 +1,10 @@
 class Emeralds::Crystal::Add < Emeralds::Add
   private def module_name
-    @base_name.split(/[\s\/_-]+/).reject(&.empty?).map(&.capitalize).join;
+    @base_name.to_crystal_namespace;
   end
 
   private def project_namespace
-    (Emfile.instance.name || "").split(/[\s\/_-]+/).reject(&.empty?).map(&.capitalize).join;
+    (Emfile.instance.name || "").to_crystal_namespace;
   end
 
   private def target_files

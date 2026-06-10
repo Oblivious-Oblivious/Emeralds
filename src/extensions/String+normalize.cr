@@ -11,6 +11,15 @@ class String
     gsub(/[\s\/-]+/, "_");
   end
 
+  def to_crystal_namespace
+    split("/")
+      .reject(&.empty?)
+      .map(&.split(/[\s_-]+/)
+      .reject(&.empty?)
+      .map(&.capitalize).join)
+      .join("::");
+  end
+
   def without_c_extension
     ends_with?(".h") || ends_with?(".c") ? rchop(File.extname(self)) : self;
   end
