@@ -2,45 +2,42 @@ class Emeralds::C::Init < Emeralds::Init
   private def write_em_json
     puts "  #{ARROW} em.json";
 
-    result = String.build do |data|
-      data << "{\n";
-      data << "  \"$schema\": \"https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/master/schema/em.schema.json\",\n";
-      data << "  \"author\": \"#{Options.author}\",\n";
-      data << "  \"name\": \"#{@name}\",\n";
-      data << "  \"template\": \"#{Options.template}\",\n";
-      data << "  \"version\": \"0.0.1\",\n";
-      data << "  \"license\": \"mit\",\n";
-      data << "  \"locignore\": {\n";
-      data << "    \"extensions\": [],\n";
-      data << "    \"directories\": [\"libs\", \".opencode\", \".claude\"]\n";
-      data << "  },\n";
-      data << "  \"lintignore\": {\n";
-      data << "    \"extensions\": [],\n";
-      data << "    \"directories\": [\"libs\"]\n";
-      data << "  },\n";
-      data << "  \"scripts\": {},\n";
-      data << "  \"compile-flags\": {\n";
-      data << "    \"darwin\": {\n";
-      data << "      \"debug\": [\"clang\", \"-O2\", \"-std=c89\", \"-g\", \"-fsanitize=address\", \"-Wall\", \"-Wextra\", \"-Werror\", \"-pedantic\", \"-pedantic-errors\", \"-Wpedantic\"],\n";
-      data << "      \"release\": [\"clang\", \"-O2\", \"-std=c89\"]\n";
-      data << "    },\n";
-      data << "    \"linux\": {\n";
-      data << "      \"debug\": [\"gcc\", \"-O2\", \"-std=c89\", \"-g\", \"-Wall\", \"-Wextra\", \"-Werror\", \"-pedantic\", \"-pedantic-errors\", \"-Wpedantic\"],\n";
-      data << "      \"release\": [\"gcc\", \"-O2\", \"-std=c89\"]\n";
-      data << "    },\n";
-      data << "    \"win32\": {\n";
-      data << "      \"debug\": [\"gcc\", \"-O2\", \"-std=c89\", \"-g\", \"-Wall\", \"-Wextra\", \"-Werror\", \"-pedantic\", \"-pedantic-errors\", \"-Wpedantic\"],\n";
-      data << "      \"release\": [\"gcc\", \"-O2\", \"-std=c89\"]\n";
-      data << "    }\n";
-      data << "  },\n";
-      data << "  \"dependencies\": {},\n";
-      data << "  \"dev-dependencies\": {\n";
-      data << "    \"https://github.com/Oblivious-Oblivious/cSpec\": \"latest\"\n";
-      data << "  }\n";
-      data << "}\n";
-    end
-
-    File.write "em.json", result;
+    File.write "em.json", {
+      "$schema"   => "https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/master/schema/em.schema.json",
+      "author"    => Options.author,
+      "name"      => @name,
+      "template"  => Options.template,
+      "version"   => "0.0.1",
+      "license"   => "mit",
+      "locignore" => {
+        "extensions"  => [] of String,
+        "directories" => ["libs", ".opencode", ".claude"],
+      },
+      "lintignore" => {
+        "extensions"  => [] of String,
+        "directories" => ["libs"],
+      },
+      "scripts"       => {} of String => String,
+      "compile-flags" => {
+        "darwin" => {
+          "debug"   => ["clang", "-O2", "-std=c89", "-g", "-fsanitize=address", "-Wall", "-Wextra", "-Werror", "-pedantic", "-pedantic-errors", "-Wpedantic"],
+          "release" => ["clang", "-O2", "-std=c89"],
+        },
+        "linux" => {
+          "debug"   => ["gcc", "-O2", "-std=c89", "-g", "-Wall", "-Wextra", "-Werror", "-pedantic", "-pedantic-errors", "-Wpedantic"],
+          "release" => ["gcc", "-O2", "-std=c89"],
+        },
+        "win32" => {
+          "debug"   => ["gcc", "-O2", "-std=c89", "-g", "-Wall", "-Wextra", "-Werror", "-pedantic", "-pedantic-errors", "-Wpedantic"],
+          "release" => ["gcc", "-O2", "-std=c89"],
+        },
+      },
+      "link"             => [] of String,
+      "dependencies"     => {} of String => String,
+      "dev-dependencies" => {
+        "https://github.com/Oblivious-Oblivious/cSpec" => "latest",
+      },
+    }.to_pretty_json + "\n";
   end
 
   private def create_src_header

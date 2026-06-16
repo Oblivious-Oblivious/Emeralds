@@ -13,10 +13,12 @@ class Emeralds::C::InstallLink < Emeralds::InstallLink
   def block
     -> {
       Terminal.mkdir "libs";
-      C::Install.new.install_deps({@link => "latest"});
+      install = C::Install.new;
+      install.install_deps({@link => "latest"});
       if File.exists? File.join("libs", Terminal.repo_name(@link), "export");
         add_dependency @link;
       end
+      install.promote_links;
     };
   end
 end

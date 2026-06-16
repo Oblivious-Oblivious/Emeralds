@@ -12,6 +12,8 @@ class Emeralds::Emfile
   @[JSON::Field(key: "compile-flags")]
   property compile_flags : CompileFlags = CompileFlags.new;
 
+  property link : (Array(String) | Nil) = nil;
+
   property template : String = "c";
   property license : String? = nil;
   property scripts : (Hash(String, String | Array(String)) | Nil) = nil;

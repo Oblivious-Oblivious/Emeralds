@@ -1,5 +1,6 @@
 class Emeralds::C::Install < Emeralds::Install
   @displayed_deps = {} of String => Bool;
+  @dependency_links = [] of String;
 
   private def delete_excluded_paths(base_dir, exclude_patterns)
     base_dir_path = Path[base_dir];
@@ -59,6 +60,7 @@ class Emeralds::C::Install < Emeralds::Install
         end
 
         dep_emfile = Emfile.from_json File.read(emfile_path);
+        dep_emfile.link.try { |link| @dependency_links.concat link };
         install_deps dep_emfile.dependencies;
 
         Dir.cd (File.join "libs", name) do
@@ -88,11 +90,41 @@ class Emeralds::C::Install < Emeralds::Install
     end
   end
 
+  def promote_links
+    links = @dependency_links.uniq;
+    return if links.empty?;
+
+    json = JSON.parse(File.read "em.json");
+    compile_flags = json["compile-flags"]?;
+    return unless compile_flags;
+
+    changed = false;
+    compile_flags.as_h.each_value do |platform|
+      next unless platform.as_h?;
+
+      platform.as_h.each_value do |mode_flags|
+        next unless mode_flags.as_a?;
+
+        current = mode_flags.as_a.compact_map(&.as_s?);
+        next if current.empty?;
+
+        to_add = links - current;
+        next if to_add.empty?;
+
+        to_add.each { |link| mode_flags.as_a << JSON::Any.new(link) };
+        changed = true;
+      end;
+    end;
+
+    File.write "em.json", json.to_pretty_json if changed;
+  end
+
   def block
     -> {
       Terminal.mkdir "libs";
       install_deps Emfile.instance.dependencies;
       prune_undeclared;
+      promote_links;
     };
   end
 end

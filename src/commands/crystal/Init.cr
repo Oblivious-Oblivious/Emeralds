@@ -36,47 +36,43 @@ class Emeralds::Crystal::Init < Emeralds::Init
   private def write_em_json
     puts "  #{ARROW} em.json";
 
-    result = String.build do |data|
-      data << "{\n";
-      data << "  \"$schema\": \"https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/master/schema/em.schema.json\",\n";
-      data << "  \"author\": \"#{Options.author}\",\n";
-      data << "  \"name\": \"#{@name}\",\n";
-      data << "  \"template\": \"#{Options.template}\",\n";
-      data << "  \"version\": \"0.0.1\",\n";
-      data << "  \"license\": \"mit\",\n";
-      data << "  \"locignore\": {\n";
-      data << "    \"extensions\": [],\n";
-      data << "    \"directories\": [\"lib\", \".opencode\", \".claude\"]\n";
-      data << "  },\n";
-      data << "  \"lintignore\": {\n";
-      data << "    \"extensions\": [],\n";
-      data << "    \"directories\": [\"lib\"]\n";
-      data << "  },\n";
-      data << "  \"scripts\": {\n";
-      data << "    \"shards\": \"shards\",\n";
-      data << "    \"docs\": \"crystal docs src/*.cr\",\n";
-      data << "    \"ameba\": \"shards build ameba -Dpreview_mt\"\n";
-      data << "  },\n";
-      data << "  \"compile-flags\": {\n";
-      data << "    \"darwin\": {\n";
-      data << "      \"debug\": [\"shards\", \"build\"],\n";
-      data << "      \"release\": [\"shards\", \"build\", \"-Dpreview_mt\", \"--release\", \"--no-debug\"]\n";
-      data << "    },\n";
-      data << "    \"linux\": {\n";
-      data << "      \"debug\": [\"shards\", \"build\"],\n";
-      data << "      \"release\": [\"shards\", \"build\", \"-Dpreview_mt\", \"--release\", \"--no-debug\"]\n";
-      data << "    },\n";
-      data << "    \"win32\": {\n";
-      data << "      \"debug\": [\"shards\", \"build\"],\n";
-      data << "      \"release\": [\"shards\", \"build\", \"-Dpreview_mt\", \"--release\", \"--no-debug\"]\n";
-      data << "    }\n";
-      data << "  },\n";
-      data << "  \"dependencies\": {},\n";
-      data << "  \"dev-dependencies\": {}\n";
-      data << "}\n";
-    end
-
-    File.write "em.json", result;
+    File.write "em.json", {
+      "$schema"   => "https://raw.githubusercontent.com/Oblivious-Oblivious/Emeralds/master/schema/em.schema.json",
+      "author"    => Options.author,
+      "name"      => @name,
+      "template"  => Options.template,
+      "version"   => "0.0.1",
+      "license"   => "mit",
+      "locignore" => {
+        "extensions"  => [] of String,
+        "directories" => ["lib", ".opencode", ".claude"],
+      },
+      "lintignore" => {
+        "extensions"  => [] of String,
+        "directories" => ["lib"],
+      },
+      "scripts" => {
+        "shards" => "shards",
+        "docs"   => "crystal docs src/*.cr",
+        "ameba"  => "shards build ameba -Dpreview_mt",
+      },
+      "compile-flags" => {
+        "darwin" => {
+          "debug"   => ["shards", "build"],
+          "release" => ["shards", "build", "-Dpreview_mt", "--release", "--no-debug"],
+        },
+        "linux" => {
+          "debug"   => ["shards", "build"],
+          "release" => ["shards", "build", "-Dpreview_mt", "--release", "--no-debug"],
+        },
+        "win32" => {
+          "debug"   => ["shards", "build"],
+          "release" => ["shards", "build", "-Dpreview_mt", "--release", "--no-debug"],
+        },
+      },
+      "dependencies"     => {} of String => String,
+      "dev-dependencies" => {} of String => String,
+    }.to_pretty_json + "\n";
   end
 
   private def create_src_main

@@ -134,6 +134,13 @@
         }
       }
     },
+    "link": {
+      "type": "array",
+      "description": "Linker flags promoted into consumers' compile-flags on install (e.g. -lm, -lcurl).",
+      "items": {
+        "type": "string"
+      }
+    },
     "dependencies": {
       "type": "object",
       "description": "Runtime dependencies mapping a full git link to a version (`latest` or a release tag).",
