@@ -292,6 +292,7 @@ cat em.json
   - **stage**: Staging build compiler options as separate array items.
   - **preprod**: Pre-production build compiler options as separate array items.
   - **prod**: Production build compiler options as separate array items.
+- **link**: Linker flags this package needs to build against (e.g. `["-lm", "-lcurl"]`). Promotes these on the compiler-flags on install.
 - **dependencies**: A table of dependencies required for the project to run. The key is the full git link to a repository and the value is the version: `latest` for the master branch, or a release tag (`0.3.2`) to fetch that specific archive.
 - **dev-dependencies**: A table of development dependencies **not** linked with the release version.
 
