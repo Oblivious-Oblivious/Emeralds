@@ -1,8 +1,8 @@
 class Emeralds::Options
   TEMPLATES = ["c", "crystal"];
 
-  class_property author : String? = nil;
-  class_property template : String = "c";
+  class_property author = "";
+  class_property template = "c";
 
   macro dispatch_template(command, **named_args)
     case Options.template
