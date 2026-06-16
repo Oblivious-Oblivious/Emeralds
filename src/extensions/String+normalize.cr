@@ -15,8 +15,9 @@ class String
     split("/")
       .reject(&.empty?)
       .map(&.split(/[\s_-]+/)
-      .reject(&.empty?)
-      .map(&.sub(/^./) { |char| char.upcase }).join)
+        .reject(&.empty?)
+        .map(&.sub(/^./, &.upcase)).join
+      )
       .join("::");
   end
 
