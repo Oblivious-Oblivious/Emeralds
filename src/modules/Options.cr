@@ -27,10 +27,10 @@ class Emeralds::Options
   private def self.build_parser
     OptionParser.new do |parser|
       parser.banner = "Options:";
-      parser.on("--author NAME", "   - Set the project author") { |name|
+      parser.on("--author NAME", "        - Set the project author") { |name|
         self.author = name;
       };
-      parser.on("--template NAME", "   - Set the project template (#{TEMPLATES.join(", ")})") { |name|
+      parser.on("--template NAME", "        - Set the project template (#{TEMPLATES.join(", ")})") { |name|
         self.template = name.downcase;
       };
       parser.invalid_option { };
