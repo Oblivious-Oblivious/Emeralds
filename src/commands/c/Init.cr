@@ -177,6 +177,24 @@ class Emeralds::C::Init < Emeralds::Init
     File.write ".clang-format", result;
   end
 
+  private def write_clang_tidy
+    puts "  #{ARROW} .clang-tidy";
+
+    result = String.build do |data|
+      data << "---\n";
+      data << "Checks:\n";
+      data << "  - '*'\n";
+      data << "  - '-llvm-header-guard'\n";
+      data << "  - '-bugprone-reserved-identifier'\n";
+      data << "  - '-cert-dcl37-c'\n";
+      data << "  - '-cert-dcl51-cpp'\n";
+      data << "  - '-llvmlibc-restrict-system-libc-headers'\n";
+      data << "  - '-misc-include-cleaner'\n";
+    end
+
+    File.write ".clang-tidy", result;
+  end
+
   private def write_gitignore_file
     puts "  #{ARROW} .gitignore";
 
@@ -395,6 +413,7 @@ class Emeralds::C::Init < Emeralds::Init
   def write_language_files
     write_em_json;
     write_clang_format;
+    write_clang_tidy;
     write_clangd;
     write_gitattributes_file;
     write_gitignore_file;

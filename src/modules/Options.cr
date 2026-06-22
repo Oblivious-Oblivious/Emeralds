@@ -3,6 +3,7 @@ class Emeralds::Options
 
   class_property author = "";
   class_property template = "c";
+  class_property output = "";
 
   macro dispatch_template(command, **named_args)
     case Options.template
@@ -32,6 +33,9 @@ class Emeralds::Options
       };
       parser.on("--template NAME", "        - Set the project template (#{TEMPLATES.join(", ")})") { |name|
         self.template = name.downcase;
+      };
+      parser.on("--output FILE", "        - Write lint analysis findings to a file") { |file|
+        self.output = file;
       };
       parser.invalid_option { };
       parser.missing_option { };

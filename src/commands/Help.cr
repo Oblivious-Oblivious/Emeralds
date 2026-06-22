@@ -8,7 +8,6 @@ class Emeralds::Help < Emeralds::Command
       puts "Emeralds v#{Emeralds::VERSION} (#{Emeralds::INSTALL_METHOD}).\n\n";
       puts "emeralds/em [<command>]\n\n";
       puts "Commands:\n";
-      puts "    lint                                - Lint all project sources with clang-format.\n";
       puts "    add [<name>]                             - Add a new .c/.h file pair\n";
       puts "    remove [<name>]                          - Remove a .c/.h file pair\n";
       puts "    build [app | lib] [<profile>]            - Build the project in the `export` directory.\n";
@@ -23,6 +22,7 @@ class Emeralds::Help < Emeralds::Command
       puts "    list                                     - List dependencies and project modules.\n";
       puts "    makefile                                 - Generate a makefile for independent compilation\n";
       puts "    loc                                      - Count the significant lines of code in the project\n";
+      puts "    lint [--output <file>]                   - Format and analyze project sources.\n";
       puts "    test                                     - Run the script of tests.\n";
       puts "    version                                  - Print the current version of the emerald.\n";
       puts "    update                                   - Update emeralds to the newest released version.\n";
