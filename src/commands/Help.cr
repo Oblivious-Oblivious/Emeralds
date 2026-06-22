@@ -22,6 +22,7 @@ class Emeralds::Help < Emeralds::Command
       puts "    list                                     - List dependencies and project modules.\n";
       puts "    makefile                                 - Generate a makefile for independent compilation\n";
       puts "    loc                                      - Count the significant lines of code in the project\n";
+      puts "    docs                                     - Generate project documentation.\n";
       puts "    lint [--output <file>]                   - Format and analyze project sources.\n";
       puts "    test                                     - Run the script of tests.\n";
       puts "    version                                  - Print the current version of the emerald.\n";
