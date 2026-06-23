@@ -11,36 +11,87 @@ class Emeralds::C::Lint < Emeralds::Lint
     end
   end
 
-  private def format_file(file)
-    output = IO::Memory.new;
-    status = Process.run "clang-format", [file], output: output, error: Process::Redirect::Inherit;
-    formatted = output.to_s;
+  private def format(files)
+    files.each do |file|
+      output = IO::Memory.new;
+      status = Process.run "clang-format", [file], output: output, error: Process::Redirect::Inherit;
+      formatted = output.to_s;
 
-    if !status.success?
-      puts "#{ARROW} #{file}".colorize(:red);
-    elsif formatted == File.read(file)
-      puts "#{ARROW} #{file}".colorize(:dark_gray);
+      if !status.success?
+        puts "#{ARROW} #{file}".colorize(:red);
+      elsif formatted == File.read(file)
+        puts "#{ARROW} #{file}".colorize(:dark_gray);
+      else
+        File.write file, formatted;
+        puts "#{ARROW} #{file}";
+      end
+    end
+  end
+
+  private def deps_include_args
+    paths = [] of String;
+
+    Dir.glob(File.join("libs", "*", "export").posix_path) do |path|
+      paths << path if File.directory? path;
+    end
+    Dir.glob(File.join("libs", "*", "export", "**").posix_path) do |path|
+      paths << path if File.directory? path;
+    end
+
+    paths.uniq.map { |path| "-I#{path}" };
+  end
+
+  private def analyze(files)
+    puts "#{ARROW} Running static analysis...";
+    args = Emfile.instance.compile_flags.debug[1..] + deps_include_args;
+    findings = IO::Memory.new;
+
+    files.each do |file|
+      Process.run("clang-tidy", [
+        file,
+        "--quiet",
+        "--",
+        "-x", "c",
+      ] + args, output: findings, error: findings);
+    end
+
+    if output_path = Options.output.presence
+      File.write(output_path, findings.to_s);
+      puts "#{ARROW} Analysis findings written to #{output_path}";
     else
-      File.write file, formatted;
-      puts "#{ARROW} #{file}";
+      print findings.to_s;
+    end
+  end
+
+  private def execute_tool(tool, file_globs, &)
+    files = Dir
+      .glob(file_globs)
+      .map(&.posix_path)
+      .reject { |file| ignored? file }
+      .sort!;
+
+    if files.empty?
+      puts "#{ARROW} No source files found".colorize(:red);
+    elsif Process.find_executable(tool).nil?
+      puts "#{ARROW} #{tool} not found".colorize(:red);
+    else
+      yield files;
     end
   end
 
   def block
     -> {
-      files = Dir
-        .glob("**/*.c", "**/*.h")
-        .map(&.posix_path)
-        .reject { |file| ignored? file }
-        .sort!;
+      execute_tool("clang-format", [
+        File.join("**", "*.c"),
+        File.join("**", "*.h"),
+      ]) { |files| format files };
 
-      if files.empty?
-        puts "#{ARROW} No source files found".colorize(:red);
-      elsif Process.find_executable("clang-format").nil?
-        puts "#{ARROW} clang-format not found".colorize(:red);
-      else
-        files.each { |file| format_file file }
-      end
+      puts separator;
+
+      execute_tool("clang-tidy", [
+        File.join("src", "**", "*.c"),
+        File.join("src", "**", "*.h"),
+      ]) { |files| analyze files };
     };
   end
 end

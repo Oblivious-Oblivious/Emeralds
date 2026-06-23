@@ -166,6 +166,8 @@ module Emeralds
       License.new.run;
     when "clean"
       Options.dispatch_template(Clean);
+    when "docs"
+      Options.dispatch_template(Docs);
     when "makefile"
       GenerateMakefile.new.run;
     when "loc"

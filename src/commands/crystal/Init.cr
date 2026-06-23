@@ -53,7 +53,6 @@ class Emeralds::Crystal::Init < Emeralds::Init
       },
       "scripts" => {
         "shards" => "shards",
-        "docs"   => "crystal docs src/*.cr",
         "ameba"  => "shards build ameba -Dpreview_mt",
       },
       "compile-flags" => {
