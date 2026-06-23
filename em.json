@@ -29,7 +29,6 @@
       "copy /Y bin\\em.exe C:\\msys64\\ucrt64\\bin\\",
       "copy /Y bin\\emeralds.exe C:\\msys64\\ucrt64\\bin\\"
     ],
-    "document": "rm -rf ./docs && crystal docs src/*.cr",
     "deploy": "ruby scripts/deploy.rb"
   },
   "compile-flags": {
