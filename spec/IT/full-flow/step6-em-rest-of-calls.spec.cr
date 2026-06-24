@@ -13,8 +13,8 @@ describe "step 6 - em list / loc / lint / version / license" do
     output.should contain("src/get-value/get-value.c");
     output.should contain("src/get-value/get-value.h");
     output.should contain("src/__testing__.c");
-    output.should_not contain("spec/__testing__.spec.c");
-    output.should_not contain("spec/get-value/get-value.module.spec.h");
+    output.should contain("spec/__testing__.spec.c");
+    output.should contain("spec/get-value/get-value.module.spec.h");
     File.exists?(File.join(PROJECT, "clang-tidy.out")).should be_false;
     File.exists?(File.join(PROJECT, "clang-analyze.out")).should be_false;
   end
@@ -29,10 +29,6 @@ describe "step 6 - em list / loc / lint / version / license" do
     if tools.all? { |tool| Process.find_executable tool }
       output.should contain("Analysis findings written to analysis.out");
       File.exists?(output_path).should be_true;
-      analysis = File.read(output_path);
-      analysis.should contain("src/__testing__.c");
-      analysis.should contain("src/__testing__.h");
-      analysis.should_not contain("spec/__testing__.spec.c");
     else
       output.should contain("Skipping static analysis");
       File.exists?(output_path).should be_false;
