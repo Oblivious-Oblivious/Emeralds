@@ -41,6 +41,20 @@ class Emeralds::C::Lint < Emeralds::Lint
     paths.uniq.map { |path| "-I#{path}" };
   end
 
+  private def reject_libs_findings(findings)
+    libs = "#{File.expand_path("libs").posix_path}/";
+    keep = true;
+    String.build do |io|
+      findings.each_line(chomp: false) do |line|
+        if match = line.match(/^(.+?):\d+:\d+:\s+(?:warning|error):/)
+          path = File.expand_path(match[1]).posix_path;
+          keep = !path.starts_with?(libs);
+        end
+        io << line if keep;
+      end
+    end
+  end
+
   private def analyze(files)
     puts "#{ARROW} Running static analysis...";
     args = Emfile.instance.compile_flags.debug[1..] + deps_include_args;
@@ -55,11 +69,12 @@ class Emeralds::C::Lint < Emeralds::Lint
       ] + args, output: findings, error: findings);
     end
 
+    output = reject_libs_findings findings.to_s;
     if output_path = Options.output.presence
-      File.write(output_path, findings.to_s);
+      File.write(output_path, output);
       puts "#{ARROW} Analysis findings written to #{output_path}";
     else
-      print findings.to_s;
+      print output;
     end
   end
 
