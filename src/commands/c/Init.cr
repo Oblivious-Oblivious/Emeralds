@@ -115,7 +115,7 @@ class Emeralds::C::Init < Emeralds::Init
       data << "    - \"-std=c23\"\n\n";
 
       data << "Diagnostics:\n";
-      data << "  Suppress: unused-includes\n";
+      data << "  Suppress: [unused-includes, hicpp-use-nullptr]\n";
     end
 
     File.write ".clangd", result;
@@ -184,12 +184,17 @@ class Emeralds::C::Init < Emeralds::Init
       data << "---\n";
       data << "Checks:\n";
       data << "  - '*'\n";
-      data << "  - '-llvm-header-guard'\n";
+      data << "  - '-altera-unroll-loops'\n";
+      data << "  - '-bugprone-multi-level-implicit-pointer-conversion'\n";
       data << "  - '-bugprone-reserved-identifier'\n";
       data << "  - '-cert-dcl37-c'\n";
       data << "  - '-cert-dcl51-cpp'\n";
+      data << "  - '-llvm-header-guard'\n";
       data << "  - '-llvmlibc-restrict-system-libc-headers'\n";
       data << "  - '-misc-include-cleaner'\n";
+      data << "  - '-modernize-use-nullptr'\n";
+      data << "  - '-readability-function-cognitive-complexity'\n";
+      data << "  - '-readability-identifier-length'\n";
     end
 
     File.write ".clang-tidy", result;
