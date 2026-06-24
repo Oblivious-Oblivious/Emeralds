@@ -168,8 +168,6 @@ module Emeralds
       Options.dispatch_template(Clean);
     when "docs"
       Options.dispatch_template(Docs);
-    when "makefile"
-      GenerateMakefile.new.run;
     when "loc"
       Loc.new.run;
     when "help"

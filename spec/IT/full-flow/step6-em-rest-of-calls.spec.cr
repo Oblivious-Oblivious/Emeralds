@@ -1,11 +1,6 @@
-describe "step 6 - em list / makefile / loc / lint / version / license" do
+describe "step 6 - em list / loc / lint / version / license" do
   it "lists dependencies and modules" do
     em("list").should contain("cSpec");
-  end
-
-  it "generates an empty makefile" do
-    em "makefile";
-    File.read(File.join(PROJECT, "Makefile")).should be_empty;
   end
 
   it "counts the lines of code" do

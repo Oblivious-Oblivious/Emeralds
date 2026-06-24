@@ -72,7 +72,6 @@ Commands:
     reinstall                                - Reinstall dependencies into a flattened libs directory.
     uninstall [<name>]                       - Remove a dependency from em.json and libs.
     list                                     - List dependencies and project modules.
-    makefile                                 - Generate a makefile for independent compilation
     loc                                      - Count the significant lines of code in the project
     docs                                     - Generate project documentation.
     lint [--output]                          - Format and analyze project sources.

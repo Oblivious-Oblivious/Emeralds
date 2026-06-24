@@ -28,7 +28,6 @@ require "./commands/crystal/Clean";
 require "./commands/Docs";
 require "./commands/c/Docs";
 require "./commands/crystal/Docs";
-require "./commands/GenerateMakefile";
 require "./commands/Help";
 require "./commands/Init";
 require "./commands/c/Init";

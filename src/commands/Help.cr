@@ -20,7 +20,6 @@ class Emeralds::Help < Emeralds::Command
       puts "    reinstall                                - Reinstall dependencies into a flattened libs directory.\n";
       puts "    uninstall [<name>]                       - Remove a dependency from em.json and libs.\n";
       puts "    list                                     - List dependencies and project modules.\n";
-      puts "    makefile                                 - Generate a makefile for independent compilation\n";
       puts "    loc                                      - Count the significant lines of code in the project\n";
       puts "    docs                                     - Generate project documentation.\n";
       puts "    lint [--output <file>]                   - Format and analyze project sources.\n";
