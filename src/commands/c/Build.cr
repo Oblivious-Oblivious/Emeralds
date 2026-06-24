@@ -97,7 +97,7 @@ class Emeralds::C::Build < Emeralds::Build
       else
         Terminal.generic_cmd "#{options} #{includes} -c #{sources}", display: display;
         Terminal.generic_cmd "#{cc} -o #{release_out} -r *.o", display: display;
-        Terminal.generic_cmd "#{options} -std=c2x #{includes} -c #{sources}", display: display;
+        Terminal.generic_cmd "#{options} -std=c23 #{includes} -c #{sources}", display: display;
         Terminal.generic_cmd "#{cc} -o #{test_out} -r *.o", display: display;
       end
     end

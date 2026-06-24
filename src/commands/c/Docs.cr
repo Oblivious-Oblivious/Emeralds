@@ -16,7 +16,7 @@ class Emeralds::C::Docs < Emeralds::Docs
       else
         includes = C::Build.new.deps_includes;
         Terminal.generic_cmd "clang-doc --output=docs --format=html " \
-                             "#{files.shell_join} -- -x c -std=c2x #{includes}",
+                             "#{files.shell_join} -- -x c -std=c23 #{includes}",
           display: true;
       end
     };

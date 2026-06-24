@@ -112,7 +112,7 @@ class Emeralds::C::Init < Emeralds::Init
       data << "CompileFlags:\n";
       data << "  Add:\n";
       data << "    - \"-xc\"\n";
-      data << "    - \"-std=c2x\"\n\n";
+      data << "    - \"-std=c23\"\n\n";
 
       data << "Diagnostics:\n";
       data << "  Suppress: unused-includes\n";
