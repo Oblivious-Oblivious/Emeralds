@@ -6,7 +6,7 @@
   "version": "0.14.2",
   "license": "mit",
   "locignore": {
-    "extensions": [],
+    "extensions": [".md"],
     "directories": ["lib"]
   },
   "lintignore": {

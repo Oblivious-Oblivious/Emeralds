@@ -1,5 +1,5 @@
 class Emeralds::Options
-  TEMPLATES = ["c", "crystal"];
+  TEMPLATES = ["c", "crystal", "ruby"];
 
   class_property author = "";
   class_property template = "c";

@@ -11,7 +11,7 @@ class String
     gsub(/[\s\/-]+/, "_");
   end
 
-  def to_crystal_namespace
+  def to_ruby_crystal_namespace
     split("/")
       .reject(&.empty?)
       .map(&.split(/[\s_-]+/)

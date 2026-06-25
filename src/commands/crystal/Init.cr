@@ -1,6 +1,6 @@
 class Emeralds::Crystal::Init < Emeralds::Init
   private def module_name
-    @name.to_crystal_namespace;
+    @name.to_ruby_crystal_namespace;
   end
 
   private def write_shard_yml
